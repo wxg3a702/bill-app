@@ -6,7 +6,8 @@ var {
     AppStateIOS,
     TabBarIOS,
     Platform,
-    View
+    View,
+    Text
     } = React;
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
@@ -90,7 +91,7 @@ var TabView = React.createClass({
         } else {
             return (
                 <View>
-
+                    <Text>123</Text>
                 </View>
             )
         }

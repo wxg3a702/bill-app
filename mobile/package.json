@@ -15,7 +15,9 @@
     "keymirror": "^0.1.1",
     "lodash": "^4.6.1",
     "qs": "^6.1.0",
+    "react-native-dismiss-keyboard": "0.0.3",
     "react-native-fs": "^1.2.0",
-    "react-native-icons": "^0.7.1"
+    "react-native-icons": "^0.7.1",
+    "react-native-progress-hud": "^1.0.3"
   }
 }

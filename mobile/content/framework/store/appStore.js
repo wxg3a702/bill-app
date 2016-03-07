@@ -8,6 +8,8 @@ var CHANGE_EVENT = 'change';
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var initLoadingState = false;
+var RequestState = require('../../constants/requestState');
+var requestLoadingState = RequestState.IDEL;
 var AppStore = assign({}, EventEmitter.prototype, {
 
     getInitLoadingState: ()=>initLoadingState,
@@ -23,5 +25,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
     },
 
     getToken: ()=>_data.token,
+
+    requestLoadingState: ()=>requestLoadingState,
 });
 module.exports = AppStore;
