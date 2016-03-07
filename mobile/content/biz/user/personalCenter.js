@@ -16,6 +16,7 @@ var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var certificateState = require('../../constants/certificateState')
 var {Icon,} = require('react-native-icons');
+var RNVectorIcons=require('react-native-vector-icons')
 var AppStore=require('../../framework/store/appStore');
 var AppAction=require('../../framework/action/appAction');
 var NavBarView = require('../../framework/system/navBarView');
@@ -25,8 +26,6 @@ var PersonalCenter = React.createClass({
         var user = AppStore.getUserInfoBean();
         return {
             //userName: user.userName,
-            //phoneNum: user.mobileNo,
-            phoneNum:'15312631211'
             //userType: user.userType,
             //userTypeValue: (user.userType == "REGISTERED") ? "注册用户" : "认证用户",
             //orgState: AppStore.getOrgBeans()[0].biStatus,
@@ -120,13 +119,10 @@ var PersonalCenter = React.createClass({
                                 <Image style={styles.circle}
                                        source={require('../../image/user/securityCenter.png')}/>
                                 <View style={{marginLeft:16}}>
-                                    <Text style={styles.title}>安全设置</Text>
+                                    <Text style={styles.title}>设置</Text>
                                 </View>
                             </View>
                             <View style={[styles.flexRow,{alignItems:'center'}]}>
-                                <View>
-                                    <Text style={styles.date}>{phoneNumber(this.state.phoneNum)}</Text>
-                                </View>
                                 <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
                             </View>
                         </View>

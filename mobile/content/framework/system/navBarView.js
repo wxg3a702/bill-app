@@ -55,8 +55,8 @@ var NavBarView = React.createClass({
     getDefaultProps() {
         return {
             color: '#00c0b2',
-            backgroundColor: '#f6f6f6',
-            fontColor: "#323232",
+            backgroundColor: '#f7f7f7',
+            fontColor: "#333333",
             contentBackgroundColor: '#f0f0f0',
             actionButton: null,
             customLoading: false,
@@ -110,7 +110,7 @@ var NavBarView = React.createClass({
                                         {this.getBack()}
                                     </View>
                                     <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                        <Text style={{fontSize:20,color:this.props.fontColor}}>
+                                        <Text style={{fontSize:18,color:this.props.fontColor}}>
                                             {this.props.title}
                                         </Text>
                                     </View>
