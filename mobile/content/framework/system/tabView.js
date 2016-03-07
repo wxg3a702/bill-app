@@ -6,7 +6,7 @@ var {
     AppStateIOS,
     TabBarIOS,
     Platform,
-    Image
+    View
     } = React;
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
@@ -14,7 +14,6 @@ var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/user/personalCenter")
 var AppAction = require('../action/appAction');
 var AppStore = require('../store/appStore');
-var ScrollableTabView = require('react-native-scrollable-tab-view');
 var TabView = React.createClass({
     getStateFromStores() {
     },
@@ -43,12 +42,6 @@ var TabView = React.createClass({
             this.getStateFromStores(),
             {selectedTab: 'home'}
         );
-    },
-
-    returnImage(source){
-        return (
-            <Image style={{width:40,height:40}} resizeMode="stretch" source={source}/>
-        )
     },
 
     render: function () {
@@ -96,12 +89,9 @@ var TabView = React.createClass({
             );
         } else {
             return (
-                <ScrollableTabView tabBarPosition="bottom">
-                    <Home tabLabel={this.returnImage(require('../../image/tab/home.png'))}/>
-                    <Bill tabLabel="React"/>
-                    <Message tabLabel="Flow"/>
-                    <PersonCenter tabLabel="Jest"/>
-                </ScrollableTabView>
+                <View>
+
+                </View>
             )
         }
     },
