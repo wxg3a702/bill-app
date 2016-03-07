@@ -4,14 +4,18 @@ var React = require('react-native');
 var {
     View,
     StyleSheet,
-    Text
+    Text,
+    ScrollView
     }=React
+var NavBarView = require('../../framework/system/navBarView');
 var Home = React.createClass({
     render(){
         return(
-            <View>
-                <Text>222</Text>
-            </View>
+            <NavBarView navigator={this.props.navigator} title="首页" showBack={false} showBar={true}>
+                <ScrollView  automaticallyAdjustContentInsets={false} horizontal={false}>
+
+                </ScrollView>
+            </NavBarView>
         )
     }
 })

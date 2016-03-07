@@ -4,7 +4,9 @@ var React = require('react-native');
 var {
     View,
     TouchableOpacity,
-    Text
+    Text,
+    StyleSheet,
+    Platform
     } = React;
 var AppStore = require('../store/appStore');
 var RequestState = require('../../constants/requestState');
@@ -18,7 +20,7 @@ var NavBarView = React.createClass({
 
     componentDidMount() {
         AppStore.addChangeListener(this._onChange, "rpc");
-        this.curRoute = this.props.navigator.getCurrentRoutes().slice().pop();
+        //this.curRoute = this.props.navigator.getCurrentRoutes().slice().pop();
     },
 
     componentWillUnmount: function () {
@@ -103,16 +105,16 @@ var NavBarView = React.createClass({
                         if (this.props.showBar) {
                             return (
                                 <View
-                                    style={{ flexDirection: 'row',  paddingTop:20,height:70,backgroundColor:this.props.backgroundColor,borderBottomWidth:this.props.navBarBottomWidth, borderColor: '#c8c7cc',}}>
-                                    <View style={ {width:50  ,justifyContent:"center",alignItems:"stretch"} }>
+                                    style={[{flexDirection: 'row',backgroundColor:this.props.backgroundColor,borderBottomWidth:this.props.navBarBottomWidth, borderColor: '#c8c7cc'},styles.comStyle]}>
+                                    <View style={{width:70,justifyContent:"center",alignItems:"stretch"}}>
                                         {this.getBack()}
                                     </View>
                                     <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                        <Text style={[ {fontSize:20,color:this.props.fontColor}]}>
+                                        <Text style={{fontSize:20,color:this.props.fontColor}}>
                                             {this.props.title}
                                         </Text>
                                     </View>
-                                    <View style={ {width:70,justifyContent:"center",alignItems:"stretch"} }>
+                                    <View style={{width:70,justifyContent:"center",alignItems:"stretch"}}>
                                         {this.props.actionButton}
                                     </View>
                                 </View>
@@ -133,5 +135,10 @@ var NavBarView = React.createClass({
         )
     }
 })
-
+var styles = StyleSheet.create({
+    comStyle: {
+        height: (Platform.OS === 'ios') ? 64 : 44,
+        paddingTop: (Platform.OS === 'ios') ? 20 : 0
+    },
+})
 module.exports = NavBarView;

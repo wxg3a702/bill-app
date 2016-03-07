@@ -5,12 +5,13 @@ var {
     View,
     StyleSheet
     }=React
+var NavBarView = require('../../framework/system/navBarView');
 var MessageList = React.createClass({
     render(){
-        return(
-            <View>
+        return (
+            <NavBarView navigator={this.props.navigator} showBack={false} title="消息" showBar={true}>
 
-            </View>
+            </NavBarView>
         )
     }
 })
