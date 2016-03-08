@@ -14,7 +14,7 @@ var {
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require("../../framework/action/appAction")
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./textEdit')
 var Position = require('./position')
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
@@ -170,8 +170,7 @@ var UserInfo = React.createClass({
                         <View style={{alignItems:'center',flexDirection:'row'}}>
                             <Text style={{fontSize: 15, color: '#7f7f7f', textAlign: 'right'}}
                                   numberOfLines={1}>{value}</Text>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC'
-                                  style={{width: 35, height: 35}}/>
+                            <VIcon/>
                         </View>
                     </View>
                 </TouchableHighlight>
@@ -191,8 +190,7 @@ var UserInfo = React.createClass({
                             <View >
                                 <Text style={[{fontSize: 15,width:width-184,color: '#7f7f7f'}]}>{value}</Text>
                             </View>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC'
-                                  style={{width: 35, height: 35}}/>
+                            <VIcon/>
                         </View>
                     </View>
                 </TouchableHighlight>

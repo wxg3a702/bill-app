@@ -9,7 +9,7 @@ var {
     Image,
     View,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../store/appStore');
 var AppAction = require("../../framework/action/appAction")
 var NavBarView = require('../../framework/system/navBarView')

@@ -7,7 +7,7 @@ var {
     Text,
     View,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var KeyPoint=require('./keyPoint')
 var Instruction=require('./instruction')
@@ -27,13 +27,13 @@ var HelpCenter = React.createClass({
                     <TouchableHighlight underlayColor='#cccccc' activeOpacity={0.8} style={[styles.borderTop,styles.borderBottom]} onPress={()=>this.toOther(Instruction)}>
                         <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:10,height:51}]}>
                             <Text style={{fontSize:18,color:'#323232',fontWeight:'bold'}}>使用手册</Text>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight underlayColor='#cccccc' activeOpacity={0.8} style={[styles.borderBottom]} onPress={()=>this.toOther(KeyPoint)}>
                         <View style={[{flexDirection:'row',alignItems:'center',justifyContent:'space-between',paddingLeft:10,height:51}]}>
                             <Text style={{fontSize:18,color:'#323232',fontWeight:'bold'}}>热点问题</Text>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
                 </View>

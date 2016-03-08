@@ -15,6 +15,10 @@ var VIcon = React.createClass({
                 return 'chevron-left'
             case 'right':
                 return 'chevron-right'
+            case 'down':
+                return 'chevron-down'
+            case 'load':
+                return 'load-a'
         }
     },
 

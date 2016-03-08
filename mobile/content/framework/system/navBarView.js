@@ -10,7 +10,7 @@ var {
     } = React;
 var AppStore = require('../store/appStore');
 var RequestState = require('../../constants/requestState');
-var { Icon, } = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var ProgressHUD = require('react-native-progress-hud');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Alert = require('../../comp/utils/alert');
@@ -86,8 +86,8 @@ var NavBarView = React.createClass({
                 <TouchableOpacity
                     style={{flex:1,justifyContent:"center",alignItems:"flex-start" ,paddingLeft:10}}
                     onPress={() => {this.props.navigator.pop()}}>
-                    <Icon
-                        name='ion|ios-arrow-back'
+                    <VIcon
+                        direction='left'
                         size={35}
                         color={this.props.fontColor}
                         style={{width:35,height:35}}

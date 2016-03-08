@@ -8,7 +8,7 @@ var {
     Text,
     View,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
@@ -66,7 +66,7 @@ var SecurityCenter = React.createClass({
                             </View>
                             <View style={[styles.flexRow,{alignItems:'center'}]}>
                                 <Text style={styles.date}>{phoneNumber(this.state.phoneNum)}</Text>
-                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>
@@ -80,7 +80,7 @@ var SecurityCenter = React.createClass({
                                 </View>
                             </View>
                             <View style={[styles.flexRow]}>
-                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>

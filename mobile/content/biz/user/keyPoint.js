@@ -11,7 +11,7 @@ var {
     } = React;
 var AppStore=require('../../framework/store/appStore');
 var NavBarView = require('../../framework/system/navBarView')
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var RefreshListView = require('react-native-refreshable-listview')
 var PointDetail = require('./pointDetail')
 var Message = React.createClass({
@@ -66,7 +66,7 @@ var Message = React.createClass({
                 <View style={[{height:51,justifyContent:'center',},styles.borderBottom]}>
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginLeft:12,alignItems:'center'}}>
                         <Text numberOfLines={1} style={{fontSize:18,color:'#323232',width:width-50}}>{item.title}</Text>
-                        <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                        <VIcon/>
                     </View>
                 </View>
             </TouchableHighlight>

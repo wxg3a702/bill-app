@@ -8,7 +8,7 @@ var {
     Text,
     View,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var NoRisk = require('./noRisk')
 var NavBarView = require('../../framework/system/navBarView')
 var Calculator = require('./calculator')
@@ -35,7 +35,7 @@ var ToolHome = React.createClass({
                                     <Text style={styles.title}>贴现利率计算器</Text>
                                 </View>
                             </View>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={()=>this.toOther(NoRisk)}>
@@ -48,7 +48,7 @@ var ToolHome = React.createClass({
                                     <Text style={styles.title}>风险票据查询</Text>
                                 </View>
                             </View>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
                 </View>

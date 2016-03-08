@@ -18,7 +18,6 @@ var certificateState = require('../../constants/certificateState')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
 var NavBarView = require('../../framework/system/navBarView');
-var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
 var VIcon = require('../../comp/icon/vIcon')
 var PersonalCenter = React.createClass({
     getStateFromStores() {

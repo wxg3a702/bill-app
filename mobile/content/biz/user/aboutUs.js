@@ -9,7 +9,7 @@ var {
     View,
     TouchableHighlight,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var Advantage = require('./advantage')
 var NavBarView = require('../../framework/system/navBarView')
 var Communications = require('react-native-communications');
@@ -73,8 +73,7 @@ var AboutUs = React.createClass({
                     <TouchableHighlight underlayColor='#cccccc' onPress={this.toAdvantage}>
                         <View style={[styles.style,styles.borderBottom,{paddingRight:0}]}>
                             <Text style={{fontSize:16,color:'#333333'}}>平台优势：</Text>
-                            <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC'
-                                  style={{width: 35, height: 35}}/>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
                 </View>

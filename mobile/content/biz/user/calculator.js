@@ -10,7 +10,7 @@ var {
     TextInput,
     } = React;
 var _ = require('lodash');
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
@@ -122,9 +122,7 @@ var Calculator = React.createClass({
                                 <View style={{flex:1}}>
                                     <Text style={styles.value}>{this.state.discountDate}</Text>
                                 </View>
-                                <View>
-                                    <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
-                                </View>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>
@@ -138,9 +136,7 @@ var Calculator = React.createClass({
                                 <View style={{flex:1}}>
                                     <Text style={styles.value}>{this.state.dueDate}</Text>
                                 </View>
-                                <View>
-                                    <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
-                                </View>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>

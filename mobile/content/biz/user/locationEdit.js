@@ -9,7 +9,7 @@ var {
     ScrollView,
     ListView,
     } = React;
-var {Icon,} = require('react-native-icons');
+var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require("../../framework/action/appAction")
@@ -72,8 +72,7 @@ var LocationEdit = React.createClass({
                                             <View
                                                 style={{paddingLeft:16,paddingVertical:8,flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:'white',borderBottomColor: '#cccccc', borderBottomWidth: 1}}>
                                                 <Text>{res}</Text>
-                                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC'
-                                                      style={{width: 35, height: 35}}/>
+                                                <VIcon/>
                                             </View>
                                         </TouchableHighlight>
                                     )
@@ -91,7 +90,7 @@ var LocationEdit = React.createClass({
                 <View
                     style={{paddingLeft:16,paddingVertical:8,flexDirection:'row',alignItems:'center',justifyContent:'space-between',backgroundColor:'white',borderBottomColor: '#cccccc', borderBottomWidth: 1}}>
                     <Text>{item.name}</Text>
-                    <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={{width: 35, height: 35}}/>
+                    <VIcon/>
                 </View>
             </TouchableHighlight>
         )
