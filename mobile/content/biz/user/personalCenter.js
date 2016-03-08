@@ -15,12 +15,11 @@ var ToolHome = require('./toolHome')
 var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var certificateState = require('../../constants/certificateState')
-var {Icon,} = require('react-native-icons');
-var RNVectorIcons=require('react-native-vector-icons')
-var AppStore=require('../../framework/store/appStore');
-var AppAction=require('../../framework/action/appAction');
+var AppStore = require('../../framework/store/appStore');
+var AppAction = require('../../framework/action/appAction');
 var NavBarView = require('../../framework/system/navBarView');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
+var VIcon = require('../../comp/icon/vIcon')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var user = AppStore.getUserInfoBean();
@@ -65,7 +64,7 @@ var PersonalCenter = React.createClass({
                             <Text style={styles.title}>{desc}</Text>
                         </View>
                     </View>
-                    <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                    <VIcon/>
                 </View>
             </TouchableHighlight>
         )
@@ -86,32 +85,29 @@ var PersonalCenter = React.createClass({
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="个人中心" showBack={false} showBar={true}>
-                <View style={[styles.flexColumn,{backgroundColor:'white',marginTop:18,height:90},styles.borderTop,styles.borderBottom]}>
+                <View style={[styles.flexColumn,{backgroundColor:'white',marginTop:18},styles.borderTop,styles.borderBottom]}>
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#f0f0f0' onPress={()=>this.toOther(UserInfo)}>
-                        <View style={[styles.flexRow,styles.between,{paddingTop:10,paddingBottom:10}]}>
+                        <View style={[styles.flexRow,styles.between,{paddingTop:10,paddingBottom:10,height:84,alignItems:'center'}]}>
                             <View style={[styles.flexOne,styles.flexRow]}>
                                 <Image style={styles.head} resizeMode="stretch"
                                        source={this.returnImg()}/>
                                 <View style={{marginLeft:13,marginTop:10}}>
                                     <Text style={[styles.title]}>{this.state.userName}</Text>
                                     <View style={[styles.flexRow]}>
-                                        <Image style={[styles.circle,{marginTop:14,borderColor: '#cccccc', borderBottomWidth: 1}]} resizeMode="stretch"
-                                               source={this.state.userType=='REGISTERED'?require('../../image/user/register.png'):
+                                        <Image
+                                            style={[styles.circle,{marginTop:14,borderColor: '#cccccc', borderBottomWidth: 1}]}
+                                            resizeMode="stretch"
+                                            source={this.state.userType=='REGISTERED'?require('../../image/user/register.png'):
                                                require('../../image/user/certify.png')}/>
-                                        <View>
-                                            <Text
-                                                style={[styles.date,{marginTop:16,marginLeft:8}]}>{this.state.userTypeValue}</Text>
-                                        </View>
+                                        <Text style={[styles.date,{marginTop:16,marginLeft:8}]}>{this.state.userTypeValue}</Text>
                                     </View>
                                 </View>
                             </View>
-                            <View>
-                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC'
-                                      style={[styles.icon,{marginTop:15}]}/>
-                            </View>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
-                    <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' style={{marginTop:23}}
+                    <View style={[{height:23,backgroundColor:'#f7f7f7'}]}></View>
+                    <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc'
                                         onPress={()=>this.toOther(SecurityCenter)}>
                         <View
                             style={[styles.listLayout,styles.borderBottom,styles.borderTop,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
@@ -123,7 +119,7 @@ var PersonalCenter = React.createClass({
                                 </View>
                             </View>
                             <View style={[styles.flexRow,{alignItems:'center'}]}>
-                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>
@@ -139,7 +135,7 @@ var PersonalCenter = React.createClass({
                                 </View>
                             </View>
                             <View style={[styles.flexRow,{alignItems:'center'}]}>
-                                <Icon name='ion|ios-arrow-forward' size={26} color='C7C7CC' style={styles.icon}/>
+                                <VIcon/>
                             </View>
                         </View>
                     </TouchableHighlight>

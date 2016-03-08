@@ -9,8 +9,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var _data = {};
 var _compInfoLevel = {}
-//var initLoadingState = true;
-var initLoadingState = false;
+var initLoadingState = true;
 var CHANGE_EVENT = 'change';
 var netWorkState = false;
 var requestHandle;
@@ -284,14 +283,18 @@ var _appInit = function (data) {
             netWorkState = isConnected;
         }
     );
-    Persister.getAppData(function (data) {
-        initLoadingState = false;
-        _data = data;
-        _initOrgBean();
-        isLogout = false;
-        _data.orgBeans[0] = _initCompStatus();
-        AppStore.emitChange();
-    });
+    Persister.getAppData(
+        function (data) {
+            initLoadingState = false;
+            _data = data;
+            _initOrgBean();
+            isLogout = false;
+            _data.orgBeans[0] = _initCompStatus();
+            AppStore.emitChange();
+        }),
+        function () {
+            initLoadingState = true;
+        }
 }
 
 var _login = function (data) {

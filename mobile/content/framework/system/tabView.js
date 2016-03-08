@@ -15,6 +15,7 @@ var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/user/personalCenter")
 var AppAction = require('../action/appAction');
 var AppStore = require('../store/appStore');
+//var TabBarIOS=require('./tabBarIOS.ios.fas')
 var TabView = React.createClass({
     getStateFromStores() {
     },
