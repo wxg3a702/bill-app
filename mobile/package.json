@@ -17,6 +17,7 @@
     "lodash": "^4.6.1",
     "numeral": "^1.5.3",
     "qs": "^6.1.0",
+    "react-native-auto-updater": "^0.2.5",
     "react-native-communications": "^0.2.3",
     "react-native-dismiss-keyboard": "0.0.3",
     "react-native-fs": "^1.2.0",

@@ -41,9 +41,9 @@ var Register_checkPhone = React.createClass({
     },
     isRead(){
         if (this.state.agree) {
-            return (require('../../resource/login/radioChecked.png'))
+            return (require('../../image/utils/radioChecked.png'))
         } else {
-            return (require('../../resource/login/radioUncheck.png'))
+            return (require('../../image/utils/radioUncheck.png'))
         }
     },
     changeAgree(){

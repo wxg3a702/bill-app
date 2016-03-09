@@ -78,7 +78,7 @@ var Verify = React.createClass({
         return (
             <View style={{height:47,flexDirection: 'row'}}>
                 <View style={[styles.view,styles.radius,{width:width-126}]}>
-                    <Image source={require('../../resource/login/picCode.png')}
+                    <Image source={require('../../image/utils/picCode.png')}
                            style={{height:16,width:16,marginLeft:9}}/>
                     <TextInput style={[styles.input,{width:width-180}]} placeholder="验证码"
                                onChangeText={(text) => this.textOnchange(text,'verify')}

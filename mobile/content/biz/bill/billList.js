@@ -10,7 +10,6 @@ var {
     Dimensions,
     Animated,
     Image,
-    StyleSheet
     }=React
 var Demo = require('./demo')
 var Detail = require('./billDetail');
@@ -20,7 +19,6 @@ var DrawerDesc = require('./drawerDesc')
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
-var Alert = require('../../comp/utils/alert');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
 const DropDown = require('../../comp/dropDown/dropDown');
@@ -200,7 +198,6 @@ var BillList = React.createClass({
 
     },
     changeRenderFuc: function (value) {
-
         if (value == this.props.segctldata[0]) {
             this.setState({flag: 0, renderFuc: this.renderRec, filterValue: '全部', status: ''});
         } else {

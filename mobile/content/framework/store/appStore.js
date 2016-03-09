@@ -9,7 +9,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var _data = {};
 var _compInfoLevel = {}
-var initLoadingState = true;
+var initLoadingState = false;
 var CHANGE_EVENT = 'change';
 var netWorkState = false;
 var requestHandle;
@@ -108,7 +108,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
     getBillRevViewItems(status){
         if (status == "" || status === null || status === undefined) {
-            return _data.revBillBean.contentList;
+            return _data.revBillBean == null ? null : _data.revBillBean.contentList;
         }
         else {
             var ret = new Array();
@@ -237,8 +237,8 @@ var _initCompStatus = function () {
 }
 
 var _initOrgBean = function () {
-    if (typeof (_data.orgBeans) == 'undefined' || typeof(_data.orgBeans[0]) == 'undefined') {
-        var defaultAdd = '../../resource/personIcon/defaultAdd.png';
+    if (_data.orgBeans == null || typeof (_data.orgBeans) == 'undefined' || typeof(_data.orgBeans[0]) == 'undefined') {
+        var defaultAdd = '../../image/user/defaultAdd.png';
         var orgBean = ({
             orgCode: '',
             orgName: '',
@@ -291,10 +291,7 @@ var _appInit = function (data) {
             isLogout = false;
             _data.orgBeans[0] = _initCompStatus();
             AppStore.emitChange();
-        }),
-        function () {
-            initLoadingState = true;
-        }
+        })
 }
 
 var _login = function (data) {

@@ -29,7 +29,6 @@ var Message = React.createClass({
     getStateFromStores() {
         var mainMsgBean = AppStore.getMainMsgBean();
         return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans];
-
     },
     componentDidMount() {
         this.fetchData();

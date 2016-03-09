@@ -1,9 +1,7 @@
-//var host = "http://139.196.174.42:9001"
 //var host="http://192.168.64.205:8383";
 var host = "http://192.168.64.205:9101";
 //var host="http://192.168.64.252:9081";
 var Qs = require('qs');
-var React = require('react-native');
 var Alert = require('../../comp/utils/alert');
 var FileUpload = require('NativeModules').FileUpload;
 //var RNFS = require('react-native-fs');

@@ -12,11 +12,9 @@
 'use strict';
 
 var React = require('React');
-var {
-    StyleSheet,
-    TabBarItemIOS,
-    View
-    }=React
+var StyleSheet = require('StyleSheet');
+var TabBarItemIOS = require('TabBarItemIOS');
+var View = require('View');
 
 var requireNativeComponent = require('requireNativeComponent');
 
