@@ -88,7 +88,7 @@ var NavBarView = React.createClass({
                     onPress={() => {this.props.navigator.pop()}}>
                     <VIcon
                         direction='left'
-                        size={35}
+                        size={30}
                         color={this.props.fontColor}
                         style={{width:35,height:35}}
                     />

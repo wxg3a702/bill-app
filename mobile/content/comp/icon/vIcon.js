@@ -1,10 +1,10 @@
 var React = require('react-native')
-var Icon = require('react-native-vector-icons/FontAwesome');
+var Icon = require('react-native-vector-icons/Ionicons');
 var VIcon = React.createClass({
     getDefaultProps(){
         return {
-            size: 24,
-            color: 'blue',
+            size: 26,
+            color: 'black',
             direction: 'right'
         }
     },
@@ -12,11 +12,11 @@ var VIcon = React.createClass({
     direction(){
         switch (this.props.direction) {
             case 'left':
-                return 'chevron-left'
+                return 'ios-arrow-back'
             case 'right':
-                return 'chevron-right'
+                return 'ios-arrow-right'
             case 'down':
-                return 'chevron-down'
+                return 'ios-arrow-down'
             case 'load':
                 return 'load-a'
         }

@@ -99,13 +99,11 @@ var TabView = React.createClass({
             call();
         }
     },
-
-    //changeTab(i){
-    //    if ((i == 1 || i == 2) && this.state.token == null) {
-    //        this.props.navigator.push({comp: Login})
-    //    }
-    //},
-    //onChangeTab={()=>this.changeTab(i)}
+    changeTab(value){
+        if (this.state.token == null && (value.i == 1 || value.i == 2)) {
+            this.props.navigator.push({comp: Login})
+        }
+    },
 
     render: function () {
         var navigator = this.props.navigator;
@@ -152,9 +150,8 @@ var TabView = React.createClass({
             );
         } else {
             return (
-                <ScrollableTabView initialPage={1} locked={true}
+                <ScrollableTabView initialPage={0} locked={true} onChangeTab={(value)=>{this.changeTab(value)}}
                                    renderTabBar={() => <AndroidTabBar />}>
-
                     <ScrollView
                         tabLabel="ios-home"
                         tabDesc="首页"
@@ -174,10 +171,10 @@ var TabView = React.createClass({
                     <ScrollView
                         tabLabel="chatbubble-working"
                         tabDesc="消息"
-                        badge=' '
+                        badge=" "
                         icon={require('../../image/tab/message.png')}
                         selectedIcon={require('../../image/tab/message_selected.png')}>
-                        <Message navigator={this.props.navigator}></Message>
+                        <Message navigator={this.props.navigator}/>
                     </ScrollView>
 
                     <ScrollView
@@ -185,12 +182,9 @@ var TabView = React.createClass({
                         tabDesc="我的"
                         icon={require('../../image/tab/member.png')}
                         selectedIcon={require('../../image/tab/member_selected.png')}>
-
-                        <PersonCenter navigator={this.props.navigator}></PersonCenter>
+                        <PersonCenter navigator={this.props.navigator}/>
                     </ScrollView>
-
                 </ScrollableTabView>
-
             )
         }
     },

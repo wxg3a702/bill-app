@@ -8,6 +8,7 @@ var {
     Image,
     Text
     }=React
+var Login = require('../login/login')
 var Advice = require('./advice')
 var UserInfo = require('./userInfo')
 var SecurityCenter = require('./securityCenter')
@@ -21,14 +22,22 @@ var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
+        var token = AppStore.getToken();
         var user = AppStore.getUserInfoBean();
-        return {
-            //userName: user.userName,
-            //userType: user.userType,
-            //userTypeValue: (user.userType == "REGISTERED") ? "注册用户" : "认证用户",
-            //orgState: AppStore.getOrgBeans()[0].biStatus,
-            //photoStoreId:user.photoStoreId
-        };
+        if (token == null) {
+            return {
+                userName: '未登录',
+                token: token
+            }
+        } else {
+            return {
+                userName: user.userName,
+                userType: user.userType,
+                userTypeValue: (user.userType == "REGISTERED") ? "注册用户" : "认证用户",
+                orgState: AppStore.getOrgBeans()[0].biStatus,
+                photoStoreId: user.photoStoreId
+            };
+        }
     },
 
     getInitialState: function () {
@@ -45,11 +54,18 @@ var PersonalCenter = React.createClass({
         this.setState(this.getStateFromStores());
     },
     toOther(name){
-        const { navigator } = this.props;
+        const {navigator}=this.props;
         if (navigator) {
             navigator.push({
                 comp: name,
             })
+        }
+    },
+    toPage(call){
+        if (this.state.token == null) {
+            this.props.navigator.push({comp: Login})
+        } else {
+            call();
         }
     },
     returnItem(path, desc, imgPath){
@@ -84,9 +100,12 @@ var PersonalCenter = React.createClass({
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="个人中心" showBack={false} showBar={true}>
-                <View style={[styles.flexColumn,{backgroundColor:'white',marginTop:18},styles.borderTop,styles.borderBottom]}>
-                    <TouchableHighlight activeOpacity={0.8} underlayColor='#f0f0f0' onPress={()=>this.toOther(UserInfo)}>
-                        <View style={[styles.flexRow,styles.between,{paddingTop:10,paddingBottom:10,height:84,alignItems:'center'}]}>
+                <View
+                    style={[styles.flexColumn,{backgroundColor:'white',marginTop:18},styles.borderTop,styles.borderBottom]}>
+                    <TouchableHighlight activeOpacity={0.8} underlayColor='#f0f0f0'
+                                        onPress={()=>this.toPage(()=>this.toOther(UserInfo))}>
+                        <View
+                            style={[styles.flexRow,styles.between,{paddingTop:10,paddingBottom:10,height:84,alignItems:'center'}]}>
                             <View style={[styles.flexOne,styles.flexRow]}>
                                 <Image style={styles.head} resizeMode="stretch"
                                        source={this.returnImg()}/>
@@ -98,7 +117,8 @@ var PersonalCenter = React.createClass({
                                             resizeMode="stretch"
                                             source={this.state.userType=='REGISTERED'?require('../../image/user/register.png'):
                                                require('../../image/user/certify.png')}/>
-                                        <Text style={[styles.date,{marginTop:16,marginLeft:8}]}>{this.state.userTypeValue}</Text>
+                                        <Text
+                                            style={[styles.date,{marginTop:16,marginLeft:8}]}>{this.state.userTypeValue}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -107,7 +127,7 @@ var PersonalCenter = React.createClass({
                     </TouchableHighlight>
                     <View style={[{height:23,backgroundColor:'#f7f7f7'}]}></View>
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc'
-                                        onPress={()=>this.toOther(SecurityCenter)}>
+                                        onPress={()=>this.toPage(()=>this.toOther(SecurityCenter))}>
                         <View
                             style={[styles.listLayout,styles.borderBottom,styles.borderTop,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
                             <View style={[styles.flexRow,styles.flexOne]}>
@@ -123,7 +143,7 @@ var PersonalCenter = React.createClass({
                         </View>
                     </TouchableHighlight>
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc'
-                                        onPress={()=>this.toOther(CompCertification)}>
+                                        onPress={()=>this.toPage(()=>this.toOther(CompCertification))}>
                         <View
                             style={[styles.listLayout,styles.borderBottom,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
                             <View style={[styles.flexRow,styles.flexOne]}>
@@ -140,7 +160,19 @@ var PersonalCenter = React.createClass({
                     </TouchableHighlight>
                     {this.returnItem(ToolHome, '工具', require('../../image/user/tool.png'))}
                     {this.returnItem(HelpCenter, '帮助中心', require('../../image/user/helpCenter.png'))}
-                    {this.returnItem(Advice, '意见反馈', require('../../image/user/advice.png'))}
+                    <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc'
+                                        onPress={()=>this.toPage(()=>this.toOther(Advice))}>
+                        <View
+                            style={[styles.listLayout,styles.borderBottom,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
+                            <View style={[styles.flexRow,styles.flexOne]}>
+                                <Image style={styles.circle} source={require('../../image/user/advice.png')}/>
+                                <View style={{marginLeft:16}}>
+                                    <Text style={styles.title}>意见反馈</Text>
+                                </View>
+                            </View>
+                            <VIcon/>
+                        </View>
+                    </TouchableHighlight>
                     {this.returnItem(AboutUs, '关于我们', require('../../image/user/aboutUs.png'))}
                 </View>
             </NavBarView>

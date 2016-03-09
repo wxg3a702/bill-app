@@ -87,7 +87,7 @@ var Login = React.createClass({
     render: function () {
         //AppAction.registerAPNS()
         return (
-            <NavBarView title="登录" navigator={this.props.navigator} showBack={true}>
+            <NavBarView title="登录" navigator={this.props.navigator} showBack={false}>
                 <View style={[{flexDirection: 'column',flex:1},styles.paddingLR]}>
 
                     <Input type='default' prompt="用户名/手机号" max={20} field="userName" isPwd={false}
