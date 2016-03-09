@@ -9,7 +9,7 @@ var EventEmitter = require('events').EventEmitter;
 
 var _data = {};
 var _compInfoLevel = {}
-var initLoadingState = true;
+var initLoadingState = false;
 var CHANGE_EVENT = 'change';
 var netWorkState = false;
 var requestHandle;

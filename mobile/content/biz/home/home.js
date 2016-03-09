@@ -43,18 +43,6 @@ var Home = React.createClass({
                     <Text>222</Text>
                 </Animated.View>
 
-                <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
-                    <View style={{flexDirection:'column'}}>
-                        <View style={{height:200,backgroundColor:'#44bcbc'}}>
-                            <Swiper showsPagination={false} showsButtons={false} autoplay={true} horizontal={true}
-                                    loop={true} autoplayTimeout={2}>
-                                {this.returnSwiper(require('../../image/home/banner1.png'))}
-                                {this.returnSwiper(require('../../image/home/banner2.png'))}
-                                {this.returnSwiper(require('../../image/home/banner3.png'))}
-                            </Swiper>
-                        </View>
-                    </View>
-                </ScrollView>
             </NavBarView>
         )
     }
