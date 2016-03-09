@@ -10,7 +10,6 @@ var {
     Dimensions,
     Animated,
     Image,
-    StyleSheet
     }=React
 var Demo = require('./demo')
 var Detail = require('./billDetail');
@@ -20,7 +19,6 @@ var DrawerDesc = require('./drawerDesc')
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
-var Alert = require('../../comp/utils/alert');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
 const DropDown = require('../../comp/dropDown/dropDown');
@@ -37,44 +35,51 @@ var ds = new ListView.DataSource({
 });
 var BillList = React.createClass({
     getStateFromStores() {
-        var contentlist, fuc = this.renderRec
-        if (this.state && this.state.flag == 1) {
-            fuc = this.renderSend;
-        }
-        var flag;
-        if (!this.state || !this.state.flag) {
-            flag = 0;
+        var token = AppStore.getToken();
+        if (token != null) {
+            var contentlist, fuc = this.renderRec
+            if (this.state && this.state.flag == 1) {
+                fuc = this.renderSend;
+            }
+            var flag;
+            if (!this.state || !this.state.flag) {
+                flag = 0;
+            } else {
+                flag = this.state.flag;
+            }
+            if (flag == 1) {
+                contentlist = AppStore.getBillSentViewItems("");
+            } else {
+                contentlist = AppStore.getBillRevViewItems("");
+            }
+            return {
+                flag: flag, renderFuc: fuc, dataSource: ds.cloneWithRows(contentlist), db: contentlist,
+                filterValue: '全部',
+                fadeAnim: new Animated.Value(0),
+                left: new Animated.Value(0)
+            };
         } else {
-            flag = this.state.flag;
+            return {
+                token: token
+            }
         }
-        if (flag == 1) {
-            contentlist = AppStore.getBillSentViewItems("");
-        } else {
-            contentlist = AppStore.getBillRevViewItems("");
-        }
-        return {
-            flag: flag, renderFuc: fuc, dataSource: ds.cloneWithRows(contentlist), db: contentlist,
-            filterValue: '全部',
-            fadeAnim: new Animated.Value(0),
-            left: new Animated.Value(0)
-        };
-
     },
     getInitialState: function () {
         return this.getStateFromStores();
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
-        updatePosition(this.refs['SELECT1']);
-        updatePosition(this.refs['OPTIONLIST']);
-        this.showView();
-        var obj = AppStore.getDemoFlag();
-        if ((obj == undefined || obj.flag != true || (obj.id != AppStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
-            //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
-            this.toOther();
-            AppAction.setDemoFlag();
+        if (AppStore.getToken() != null) {
+            updatePosition(this.refs['SELECT1']);
+            updatePosition(this.refs['OPTIONLIST']);
+            this.showView();
+            var obj = AppStore.getDemoFlag();
+            if ((obj == undefined || obj.flag != true || (obj.id != AppStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
+                //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
+                this.toOther();
+                AppAction.setDemoFlag();
+            }
         }
-
     },
 
     showView: function () {
@@ -92,10 +97,10 @@ var BillList = React.createClass({
         ]).start();
     },
     hiddenView: function () {
-        //Animated.parallel([
-        //    Animated.timing(this.state.left, {toValue: 400, duration: 600})
-        //
-        //]).start();
+        Animated.parallel([
+            Animated.timing(this.state.left, {toValue: 400, duration: 600})
+
+        ]).start();
     },
 
     componentWillUnmount: function () {
@@ -129,78 +134,85 @@ var BillList = React.createClass({
     },
     render: function () {
         var {height, width} = Dimensions.get('window');
-        return (
-            <NavBarView navigator={this.props.navigator} title="票据" showBar={false} showBack={false}
-                        contentBackgroundColor='#f0f0f0'>
-                {this.renderSeg()}
+        if (this.state.token == null) {
+            return (
+                <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
+                            contentBackgroundColor='#f0f0f0'>
+                    <Text>你还没有登陆</Text>
+                </NavBarView>
+            )
+        } else {
+            return (
+                <NavBarView navigator={this.props.navigator} title="票据" showBar={false} showBack={false}
+                            contentBackgroundColor='#f0f0f0'>
+                    {this.renderSeg()}
 
-                {(()=> {
-                    if (this.state.flag == 0) {
-                        return (
-                            <Select
-                                style={{ alignSelf:'center'}}
-                                width={width}
-                                ref="SELECT1"
-                                optionListRef={this._getOptionList}
-                                defaultValue={this.state.filterValue}
-                                onSelect={this._canada}>
-                                <Option>全部</Option>
-                                <Option>新票据</Option>
-                                <Option>已申请</Option>
-                                <Option>受理中</Option>
-                                <Option>已贴现</Option>
-                                <Option>不贴现</Option>
-                            </Select>);
-                    } else {
-                        return (
-                            <Select
-                                style={{ alignSelf:'center'}}
-                                width={width}
-                                ref="SELECT1"
-                                optionListRef={this._getOptionList}
-                                defaultValue={this.state.filterValue}
-                                onSelect={this._canada}>
-                                <Option>全部</Option>
-                                <Option>等待中</Option>
-                                <Option>已贴现</Option>
-                                <Option>不贴现</Option>
-                            </Select>);
-                    }
-
-                })()}
-
-                <Animated.View
-                    style={[{ flex: 1,backgroundColor: '#f0f0f0'},{opacity: this.state.fadeAnim,marginLeft:this.state.left}]}>
                     {(()=> {
-                        if (!_.isEmpty(this.state.db) && this.state.db.length > 0) {
+                        if (this.state.flag == 0) {
                             return (
-                                <ListView
-                                    dataSource={this.state.dataSource}
-                                    renderRow={this.state.renderFuc}
-                                    automaticallyAdjustContentInsets={false}
-                                    style={{backgroundColor: '#f0f0f0' ,width:width}}/>
-                            );
-                        }
-                        else {
+                                <Select
+                                    style={{ alignSelf:'center'}}
+                                    width={width}
+                                    ref="SELECT1"
+                                    optionListRef={this._getOptionList}
+                                    defaultValue={this.state.filterValue}
+                                    onSelect={this._canada}>
+                                    <Option>全部</Option>
+                                    <Option>新票据</Option>
+                                    <Option>已申请</Option>
+                                    <Option>受理中</Option>
+                                    <Option>已贴现</Option>
+                                    <Option>不贴现</Option>
+                                </Select>);
+                        } else {
                             return (
-                                <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
-                                    <Image style={{width:350,height:200}} resizeMode="stretch"
-                                           source={require('../../image/bill/noBill.png')}/>
-                                    <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
-                                </View>
-                            );
+                                <Select
+                                    style={{ alignSelf:'center'}}
+                                    width={width}
+                                    ref="SELECT1"
+                                    optionListRef={this._getOptionList}
+                                    defaultValue={this.state.filterValue}
+                                    onSelect={this._canada}>
+                                    <Option>全部</Option>
+                                    <Option>等待中</Option>
+                                    <Option>已贴现</Option>
+                                    <Option>不贴现</Option>
+                                </Select>);
                         }
+
                     })()}
 
-                </Animated.View>
-                <View style={{height:50}}></View>
-                <OptionList ref="OPTIONLIST" height={this.state.flag==0?72:48}/>
-            </NavBarView>
-        );
+                    <Animated.View
+                        style={[{ flex: 1,backgroundColor: '#f0f0f0'},{opacity: this.state.fadeAnim,marginLeft:this.state.left}]}>
+                        {(()=> {
+                            if (!_.isEmpty(this.state.db) && this.state.db.length > 0) {
+                                return (
+                                    <ListView
+                                        dataSource={this.state.dataSource}
+                                        renderRow={this.state.renderFuc}
+                                        automaticallyAdjustContentInsets={false}
+                                        style={{backgroundColor: '#f0f0f0' ,width:width}}/>
+                                );
+                            }
+                            else {
+                                return (
+                                    <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
+                                        <Image style={{width:350,height:200}} resizeMode="stretch"
+                                               source={require('../../image/bill/noBill.png')}/>
+                                        <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
+                                    </View>
+                                );
+                            }
+                        })()}
 
+                    </Animated.View>
+                    <View style={{height:50}}></View>
+                    <OptionList ref="OPTIONLIST" height={this.state.flag==0?72:48}/>
+                </NavBarView>
+            );
+        }
     },
     changeRenderFuc: function (value) {
-
         if (value == this.props.segctldata[0]) {
             this.setState({flag: 0, renderFuc: this.renderRec, filterValue: '全部', status: ''});
         } else {

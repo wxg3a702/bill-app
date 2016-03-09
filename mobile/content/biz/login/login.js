@@ -68,7 +68,6 @@ var Login = React.createClass({
         }
     },
     toOther: function (name) {
-
         const { navigator } = this.props;
         if (navigator) {
             navigator.push({comp: name})
@@ -88,7 +87,7 @@ var Login = React.createClass({
     render: function () {
         //AppAction.registerAPNS()
         return (
-            <NavBarView title="登录" navigator={this.props.navigator} showBack={false}>
+            <NavBarView title="登录" navigator={this.props.navigator} showBack={true}>
                 <View style={[{flexDirection: 'column',flex:1},styles.paddingLR]}>
 
                     <Input type='default' prompt="用户名/手机号" max={20} field="userName" isPwd={false}

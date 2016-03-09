@@ -15,7 +15,7 @@ var GotoRegister = React.createClass({
         let {width,height} = window;
         return (
             <Image resizeMode="stretch"
-                   source={require('../../resource/register/gotoRegister.png')} style={{width:width,height:height}}>
+                   source={require('../../image/utils/gotoRegister.png')} style={{width:width,height:height}}>
                 <View style={{flex:1,justifyContent:'flex-end',alignItems:'center'}}>
                     <TouchableOpacity
                         onPress={()=>{

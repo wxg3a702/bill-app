@@ -20,7 +20,7 @@ var NavBarView = React.createClass({
 
     componentDidMount() {
         AppStore.addChangeListener(this._onChange, "rpc");
-        //this.curRoute = this.props.navigator.getCurrentRoutes().slice().pop();
+        this.curRoute = this.props.navigator.getCurrentRoutes().slice().pop();
     },
 
     componentWillUnmount: function () {

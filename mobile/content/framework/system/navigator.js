@@ -6,11 +6,10 @@ var {
     Text,
     View,
     } = React;
+var AppAction = require('../action/appAction');
+AppAction.appInit();
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
-var AppAction = require('../action/appAction');
-var cssVar = require('cssVar');
-AppAction.appInit()
 var Alert = require('../../comp/utils/alert');
 var Main = React.createClass({
     getStateFromStores() {
@@ -23,6 +22,7 @@ var Main = React.createClass({
         return this.getStateFromStores();
     },
     componentDidMount() {
+
         AppStore.addChangeListener(this._onChange);
     },
 
@@ -30,7 +30,21 @@ var Main = React.createClass({
         AppStore.removeChangeListener(this._onChange);
     },
     _onChange: function () {
-
+        this.setState(this.getStateFromStores());
+        if (AppStore.isLogout()) {
+            if (AppStore.isForceLogout()) {
+                Alert(
+                    '账号已在别处登陆,系统将切换到登陆界面',
+                    {text: '确定', onPress: () => this.refs.navigator.resetTo({comp: 'home'})}
+                )
+            } else {
+                Promise.resolve().then(function (resolve) {
+                    this.refs.navigator.resetTo({comp: 'tabView'})
+                }.bind(this)).catch(function (e) {
+                    Alert("系统异常")
+                })
+            }
+        }
     },
     renderScene(route, navigator) {
         var Comp = route.comp;

@@ -12,12 +12,9 @@
 'use strict';
 
 var React = require('React');
-var {
-    StyleSheet,
-    TabBarItemIOS,
-    View
-    }=React
-
+var StyleSheet = require('StyleSheet');
+var TabBarItemIOS = require('TabBarItemIOS');
+var View = require('View');
 var requireNativeComponent = require('requireNativeComponent');
 
 var TabBarIOS = React.createClass({
@@ -60,7 +57,5 @@ var styles = StyleSheet.create({
         flex: 1,
     }
 });
-
 var RCTTabBar = requireNativeComponent('FRCTTabBar', TabBarIOS);
-
 module.exports = TabBarIOS;

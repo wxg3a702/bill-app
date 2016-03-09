@@ -27,9 +27,13 @@ var ds = new ListView.DataSource({
 
 var Message = React.createClass({
     getStateFromStores() {
+        var token = AppStore.getToken();
         var mainMsgBean = AppStore.getMainMsgBean();
-        return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans];
-
+        if (token == null) {
+            return {token: token}
+        } else {
+            return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans];
+        }
     },
     componentDidMount() {
         this.fetchData();
@@ -77,7 +81,14 @@ var Message = React.createClass({
         });
     },
     render: function () {
-        if (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+        if(this.state.token==null){
+            return(
+                <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
+                            contentBackgroundColor='#f0f0f0'>
+                    <Text>你还没有登陆</Text>
+                </NavBarView>
+            )
+        } else if (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
             && (_.isEmpty(this.state.data[3][0]))) {
             return (
                 <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
