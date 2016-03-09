@@ -19,7 +19,7 @@
     <string msgid="3421042268587513524" name="abc_shareactionprovider_share_with">"Del med"</string>
     <string msgid="7165123711973476752" name="abc_shareactionprovider_share_with_application">"Del med %s"</string>
     <string msgid="1603543279005712093" name="abc_toolbar_collapse_description">"Skjul"</string>
-    <!-- From: file:/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.20.1/res/values-nb/values-nb.xml -->
+    <!-- From: file:/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.21.0/res/values-nb/values-nb.xml -->
     <eat-comment/>
     <string name="catalyst_debugjs">Debug JS</string>
     <string name="catalyst_element_inspector">Inspiser element</string>

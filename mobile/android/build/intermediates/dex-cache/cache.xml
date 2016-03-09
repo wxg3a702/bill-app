@@ -2,11 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.8.1/jars/classes.jar"
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="9178570a3a28c95fabd3bc746cd68efe99ad2b47">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-9dea3ff87863e16433c0714b299bb1913c491927.jar" />
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-7b5507f0df71d8d3e1bc94ad5222f4d7221adef1.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-7c8b167b9f95073ffef6d30b23f2953f1c6f3c97.jar" />
     </item>
     <item
         jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fbcore/0.8.1/jars/classes.jar"
@@ -16,11 +23,32 @@
         <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-216c2259e30ea70eb4c2ca6eebaf33c11fa7c64e.jar" />
     </item>
     <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.8.1/jars/classes.jar"
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.2/2bf96b7aa8b611c177d329452af1dc933e14501c/commons-cli-1.2.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="845a5b3a624946b2068963ba656c117fc453701c">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-3b8c8f8750efb06c3e4215c843df8e0a048608bb.jar" />
+        sha1="2bf96b7aa8b611c177d329452af1dc933e14501c">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/commons-cli-1.2-a725c6da951ccad846ee0ebc3242d0cc7b2af6d1.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.21.0/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="771892705d7958ec5a294a103a0e52e7f8d0bdc0">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-f6fa5c42de241ae5c30c0315dca0cc535ea0f709.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.21.0/jars/libs/infer-annotations-1.5.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6ed5dc2d162c6a24aeaeb765bca63e2ee5171f8e">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-25d699de24504513d1b8dfbbb8a58096eeefd228.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/mobile/react-native-fs/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2a9af5a547629fb479b9aa30c6b1e0116f3ac9a8">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-e4807ae5fdad411402e135a4228b7e557ed7b3aa.jar" />
     </item>
     <item
         jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/org.webkit/android-jsc/r174650/jars/classes.jar"
@@ -30,11 +58,109 @@
         <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-52b90a44185ab26dc810282c013b5e218975a48f.jar" />
     </item>
     <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.20.1/jars/classes.jar"
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/drawee/0.8.1/jars/classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="2c06af8f68934cbbbc1153a5ab0064483e6ac692">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-388d7132f7164ba56ba62ca525e2cf0d1f378483.jar" />
+        sha1="845a5b3a624946b2068963ba656c117fc453701c">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-3b8c8f8750efb06c3e4215c843df8e0a048608bb.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okhttp-2.5.0-2f5a9052819b47a93e42b5c3e02c283199588131.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-f0862e0c7be45f4e08cef6c7425d6f189dc1c7f1.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.8.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3836ecca4e31e18ea8fbae8e822d49777b0db4f7">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-ebb681a78c1a0b67233c4bc494359d7e75488467.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.facebook.stetho/stetho-okhttp/1.2.0/6c5c9380e245c4ff5be2b2a49dcbb0200c39798e/stetho-okhttp-1.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="6c5c9380e245c4ff5be2b2a49dcbb0200c39798e">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/stetho-okhttp-1.2.0-e277da8ab3d1d56c7a02688423ae272ef2055f12.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-ffdf8035231f72a2a4741b7ccb2bd6a9c5fc590c.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0-7506e00714ee688c8e1d4eff64c9b3e986971e3d.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.facebook.stetho/stetho/1.2.0/1d6cdb8ce8185b8b23213fad48a83987fb6d2d67/stetho-1.2.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1d6cdb8ce8185b8b23213fad48a83987fb6d2d67">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/stetho-1.2.0-c2e415f5abcd973edb6f5d5f99fce6b1e8d50574.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="129874135e6081269ace2312092031558865de12">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-7a145fe8aaf6d5e66c91161e8fb5a653952f878b.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-ws/2.5.0/e9753b7dcae5deca92e871c5c759067070b07bc/okhttp-ws-2.5.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0e9753b7dcae5deca92e871c5c759067070b07bc">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-2.5.0-1f92c6ffb7b63a10d71e73f8aec25d43733fd788.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-aa97167d24a3b1f943b86aaf0cdf27c1bb5a2582.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp/0.8.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="0d5d69b03cb7d68b81543f6483ed04ccb0e2235b">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-82b814c30d5cc14120c255b5a868dc2f70c73b43.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/fresco/0.8.1/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="9178570a3a28c95fabd3bc746cd68efe99ad2b47">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-9dea3ff87863e16433c0714b299bb1913c491927.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="98476622f10715998eacf9240d6b479f12c66143">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okio-1.6.0-5686325362b1110b60687fe7fce0deccdac7bafa.jar" />
+    </item>
+    <item
+        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/mobile/react-native-vector-icons/unspecified/jars/classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="2b1a12778054fd663b743ff3cfa6a1558026842d">
+        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-a0cc176d3dad4bf66cbb1ac5a46b5d5e04f0f778.jar" />
     </item>
     <item
         jar="/usr/local/Cellar/android-sdk/24.4.1_1/extras/android/m2repository/com/android/support/support-annotations/23.0.1/support-annotations-23.0.1.jar"
@@ -49,132 +175,6 @@
         revision="23.0.1"
         sha1="1a0113da2cab5f4c216b4e5e7c1dbfaa67087e14">
         <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/jackson-core-2.2.3-6efb303c3063d450af37ead69dfa36ecdcc71208.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.facebook.stetho/stetho-okhttp/1.2.0/6c5c9380e245c4ff5be2b2a49dcbb0200c39798e/stetho-okhttp-1.2.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="6c5c9380e245c4ff5be2b2a49dcbb0200c39798e">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/stetho-okhttp-1.2.0-e277da8ab3d1d56c7a02688423ae272ef2055f12.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/3.0.0/5871fb60dc68d67da54a663c3fd636a10a532948/jsr305-3.0.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="5871fb60dc68d67da54a663c3fd636a10a532948">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/jsr305-3.0.0-7506e00714ee688c8e1d4eff64c9b3e986971e3d.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/commons-cli/commons-cli/1.2/2bf96b7aa8b611c177d329452af1dc933e14501c/commons-cli-1.2.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="2bf96b7aa8b611c177d329452af1dc933e14501c">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/commons-cli-1.2-a725c6da951ccad846ee0ebc3242d0cc7b2af6d1.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-android/1.1.4/129874135e6081269ace2312092031558865de12/bolts-android-1.1.4.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="129874135e6081269ace2312092031558865de12">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/bolts-android-1.1.4-7a145fe8aaf6d5e66c91161e8fb5a653952f878b.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/library-2.4.0-7c8b167b9f95073ffef6d30b23f2953f1c6f3c97.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-f0862e0c7be45f4e08cef6c7425d6f189dc1c7f1.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.react/react-native/0.20.1/jars/libs/infer-annotations-1.5.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="ffc64da9d9261e18ebc8b5e814f3d6a39aa6cbbe">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/infer-annotations-1.5-c9cc9c0ce03522fd88d0879334df6541481adf0f.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline-okhttp/0.8.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="0d5d69b03cb7d68b81543f6483ed04ccb0e2235b">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-82b814c30d5cc14120c255b5a868dc2f70c73b43.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.0.1/jars/libs/internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/internal_impl-23.0.1-ffdf8035231f72a2a4741b7ccb2bd6a9c5fc590c.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp/2.5.0/4de2b4ed3445c37ec1720a7d214712e845a24636/okhttp-2.5.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4de2b4ed3445c37ec1720a7d214712e845a24636">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okhttp-2.5.0-2f5a9052819b47a93e42b5c3e02c283199588131.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/mobile/react-native-vector-icons/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="8bc7ffce30e1cdb921e556cf9be8a9591835e351">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-a0cc176d3dad4bf66cbb1ac5a46b5d5e04f0f778.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.6.0/98476622f10715998eacf9240d6b479f12c66143/okio-1.6.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="98476622f10715998eacf9240d6b479f12c66143">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okio-1.6.0-5686325362b1110b60687fe7fce0deccdac7bafa.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp/okhttp-ws/2.5.0/e9753b7dcae5deca92e871c5c759067070b07bc/okhttp-ws-2.5.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="0e9753b7dcae5deca92e871c5c759067070b07bc">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/okhttp-ws-2.5.0-1f92c6ffb7b63a10d71e73f8aec25d43733fd788.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/.gradle/caches/modules-2/files-2.1/com.facebook.stetho/stetho/1.2.0/1d6cdb8ce8185b8b23213fad48a83987fb6d2d67/stetho-1.2.0.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1d6cdb8ce8185b8b23213fad48a83987fb6d2d67">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/stetho-1.2.0-c2e415f5abcd973edb6f5d5f99fce6b1e8d50574.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.facebook.fresco/imagepipeline/0.8.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3836ecca4e31e18ea8fbae8e822d49777b0db4f7">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-ebb681a78c1a0b67233c4bc494359d7e75488467.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="4356e230a981d1bbf047d848b91bc0d9b7c5bacc">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-aa97167d24a3b1f943b86aaf0cdf27c1bb5a2582.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/mobile/react-native-fs/unspecified/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="045be22bfc5cace4e0367e33230388116c071782">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-e4807ae5fdad411402e135a4228b7e557ed7b3aa.jar" />
-    </item>
-    <item
-        jar="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.0.1/jars/classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="/Users/amarsoft/git/zxbill-app/mobile/android/app/build/intermediates/pre-dexed/debug/classes-7b5507f0df71d8d3e1bc94ad5222f4d7221adef1.jar" />
     </item>
 
 </items>

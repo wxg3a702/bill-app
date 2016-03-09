@@ -2,12 +2,8 @@
 
 var React = require('react-native');
 var {
-  PushNotificationIOS,
-  AppStateIOS,
   TabBarIOS,
   Platform,
-  ViewPagerAndroid,
-  View,
   ScrollView,
   Image
   } = React;
@@ -46,14 +42,20 @@ var TabView = React.createClass({
   getInitialState: function () {
     return _.assign(
       this.getStateFromStores(),
-      {selectedTab: 'home'}
+      {selectedTab: 'home', androidSelectedTab: 0}
     );
   },
+
+
 
   returnImage(source){
     return (
       <Image style={{width:40,height:40}} resizeMode="stretch" source={source}/>
     )
+  },
+
+  updateSelect(){
+
   },
 
   render: function () {
@@ -101,10 +103,9 @@ var TabView = React.createClass({
       );
     } else {
       return (
-      <ScrollableTabView initialPage={1} renderTabBar={() => <AndroidTabBar />}>
+      <ScrollableTabView initialPage={0} callback renderTabBar={() => <AndroidTabBar />}>
 
         <ScrollView
-          tabLabel="ios-home"
           tabDesc="首页"
           icon={require('../../image/tab/home.png')}
           selectedIcon={require('../../image/tab/home_selected.png')} >
@@ -112,24 +113,6 @@ var TabView = React.createClass({
         </ScrollView>
 
         <ScrollView
-          tabLabel="clipboard"
-          tabDesc="票据"
-          icon={require('../../image/tab/bill.png')}
-          selectedIcon={require('../../image/tab/bill_selected.png')}>
-          <Bill navigator={this.props.navigator}/>
-        </ScrollView>
-
-        <ScrollView
-          tabLabel="chatbubble-working"
-          tabDesc="消息"
-          badge=' '
-          icon={require('../../image/tab/message.png')}
-          selectedIcon={require('../../image/tab/message_selected.png')}>
-          <Message navigator={this.props.navigator}></Message>
-        </ScrollView>
-
-        <ScrollView
-          tabLabel="person-stalker"
           tabDesc="我的"
           icon={require('../../image/tab/member.png')}
           selectedIcon={require('../../image/tab/member_selected.png')}>
@@ -142,5 +125,18 @@ var TabView = React.createClass({
     }
   },
 });
-
+//<ScrollView
+//  tabDesc="票据"
+//  icon={require('../../image/tab/bill.png')}
+//  selectedIcon={require('../../image/tab/bill_selected.png')}>
+//  <Bill navigator={this.props.navigator}/>
+//</ScrollView>
+//
+//<ScrollView
+//tabDesc="消息"
+//badge=' '
+//icon={require('../../image/tab/message.png')}
+//selectedIcon={require('../../image/tab/message_selected.png')}>
+//<Message navigator={this.props.navigator}></Message>
+//</ScrollView>
 module.exports = TabView;

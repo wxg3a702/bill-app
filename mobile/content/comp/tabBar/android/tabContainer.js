@@ -8,11 +8,10 @@ var {
   ScrollView,
   Platform,
   StyleSheet,
-  ViewPagerAndroid,
   PropTypes,
   InteractionManager,
   } = React;
-
+var ViewPagerAndroid = require('./ZXViewPager');
 
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
@@ -49,9 +48,9 @@ var ScrollableTabView = React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    if (props.initialPage !== this.state.currentPage) {
-      this.goToPage(props.initialPage);
-    }
+    //if (props.initialPage !== this.state.currentPage) {
+    //  this.goToPage(props.initialPage);
+    //}
   },
 
   goToPage(pageNumber) {
@@ -164,6 +163,7 @@ var ScrollableTabView = React.createClass({
       goToPage: this.goToPage,
       tabs: this.props.children.map((child) => {
         return {
+          isSelected:child.props.isSelected,
           name: child.props.tabLabel,
           label: child.props.tabDesc,
           badgeNum: child.props.badge,

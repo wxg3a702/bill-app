@@ -17,11 +17,15 @@ uses-permission#android.permission.INTERNET
 ADDED from AndroidManifest.xml:4:5
 	android:name
 		ADDED from AndroidManifest.xml:4:22
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from AndroidManifest.xml:5:1
+	android:name
+		ADDED from AndroidManifest.xml:5:18
 application
 ADDED from AndroidManifest.xml:6:5
 MERGED from com.android.support:appcompat-v7:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
-MERGED from com.facebook.react:react-native:0.20.1:13:5
+MERGED from com.facebook.react:react-native:0.21.0:13:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from org.webkit:android-jsc:r174650:2:3
@@ -29,7 +33,7 @@ MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:appcompat-v7:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
-MERGED from com.facebook.react:react-native:0.20.1:13:5
+MERGED from com.facebook.react:react-native:0.21.0:13:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from org.webkit:android-jsc:r174650:2:3
@@ -37,7 +41,7 @@ MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:appcompat-v7:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
-MERGED from com.facebook.react:react-native:0.20.1:13:5
+MERGED from com.facebook.react:react-native:0.21.0:13:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from com.android.support:support-v4:23.0.1:22:5
 MERGED from org.webkit:android-jsc:r174650:2:3
@@ -79,7 +83,7 @@ uses-sdk
 INJECTED from AndroidManifest.xml:0:0 reason: use-sdk injection requested
 MERGED from com.android.support:appcompat-v7:23.0.1:20:5
 MERGED from com.android.support:support-v4:23.0.1:20:5
-MERGED from com.facebook.react:react-native:0.20.1:7:5
+MERGED from com.facebook.react:react-native:0.21.0:7:5
 MERGED from com.facebook.fresco:fresco:0.8.1:5:5
 MERGED from com.facebook.fresco:imagepipeline:0.8.1:5:5
 MERGED from com.facebook.fresco:fbcore:0.8.1:5:5
@@ -98,7 +102,7 @@ MERGED from com.android.support:support-v4:23.0.1:20:5
 MERGED from com.android.support:appcompat-v7:23.0.1:20:5
 MERGED from com.android.support:support-v4:23.0.1:20:5
 MERGED from mobile:react-native-fs:unspecified:7:5
-MERGED from com.facebook.react:react-native:0.20.1:7:5
+MERGED from com.facebook.react:react-native:0.21.0:7:5
 MERGED from com.facebook.fresco:fresco:0.8.1:5:5
 MERGED from com.facebook.fresco:imagepipeline:0.8.1:5:5
 MERGED from com.facebook.fresco:fbcore:0.8.1:5:5
@@ -117,7 +121,7 @@ MERGED from com.android.support:support-v4:23.0.1:20:5
 MERGED from com.android.support:appcompat-v7:23.0.1:20:5
 MERGED from com.android.support:support-v4:23.0.1:20:5
 MERGED from mobile:react-native-vector-icons:unspecified:7:5
-MERGED from com.facebook.react:react-native:0.20.1:7:5
+MERGED from com.facebook.react:react-native:0.21.0:7:5
 MERGED from com.facebook.fresco:fresco:0.8.1:5:5
 MERGED from com.facebook.fresco:imagepipeline:0.8.1:5:5
 MERGED from com.facebook.fresco:fbcore:0.8.1:5:5
@@ -142,11 +146,11 @@ MERGED from com.android.support:support-v4:23.0.1:20:5
 		INJECTED from AndroidManifest.xml:0:0
 		INJECTED from AndroidManifest.xml:0:0
 uses-permission#android.permission.SYSTEM_ALERT_WINDOW
-ADDED from com.facebook.react:react-native:0.20.1:11:5
-MERGED from com.facebook.react:react-native:0.20.1:11:5
-MERGED from com.facebook.react:react-native:0.20.1:11:5
+ADDED from com.facebook.react:react-native:0.21.0:11:5
+MERGED from com.facebook.react:react-native:0.21.0:11:5
+MERGED from com.facebook.react:react-native:0.21.0:11:5
 	android:name
-		ADDED from com.facebook.react:react-native:0.20.1:11:22
+		ADDED from com.facebook.react:react-native:0.21.0:11:22
 android:uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
 IMPLIED from AndroidManifest.xml:1:1 reason: org.webkit.android_jsc has a targetSdkVersion < 4
 MERGED from mobile:react-native-fs:unspecified:11:5

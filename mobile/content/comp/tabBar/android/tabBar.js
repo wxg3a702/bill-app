@@ -123,18 +123,19 @@ var AndroidTabBar = React.createClass({
     }
   },
 
-  _goToPage(page){
+  _goToPage(tab, page){
     this.setState({
       selected: page
     })
     this.props.goToPage(page)
+
   },
 
   renderTabOption(tab, page) {
     var isTabActive = this.props.activeTab === page;
 
     return (
-      <TouchableWithoutFeedback key={tab.name} onPress={() => this._goToPage(page)} style={[styles.tab]}>
+      <TouchableWithoutFeedback key={tab.label} onPress={() => this._goToPage(tab, page)} style={[styles.tab]}>
         {this.renderTabOptionIcon(tab, page)}
 
 
