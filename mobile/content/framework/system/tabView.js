@@ -93,17 +93,18 @@ var TabView = React.createClass({
 
     toPage(call){
         if (this.state.token == null) {
-            Alert(
-                '您还没有登陆,只能查看首页的内容,确认去登陆么',
-                {
-                    text: '确定去登陆', onPress: ()=> {
-                    this.props.navigator.push({comp: Login})
-                }
-                },
-                {text: '不,我再看看'}
-            )
+            //Alert(
+            //    '您还没有登陆,只能查看首页的内容,确认去登陆么',
+            //    {
+            //        text: '确定去登陆', onPress: ()=> {
+            //        this.props.navigator.push({comp: Login})
+            //    }
+            //    },
+            //    {text: '不,我再看看'}
+            //)
+            call();
         } else {
-            call;
+            call();
         }
     },
 
@@ -162,12 +163,29 @@ var TabView = React.createClass({
                         <Home navigator={this.props.navigator}/>
                     </ScrollView>
 
+                    <ScrollView
+                        tabLabel="clipboard"
+                        tabDesc="票据"
+                        icon={require('../../image/tab/bill.png')}
+                        selectedIcon={require('../../image/tab/bill_selected.png')}>
+                        <Bill navigator={this.props.navigator}/>
+                    </ScrollView>
+
+                    <ScrollView
+                        tabLabel="chatbubble-working"
+                        tabDesc="消息"
+                        badge=' '
+                        icon={require('../../image/tab/message.png')}
+                        selectedIcon={require('../../image/tab/message_selected.png')}>
+                        <Message navigator={this.props.navigator}></Message>
+                    </ScrollView>
 
                     <ScrollView
                         tabLabel="person-stalker"
                         tabDesc="我的"
                         icon={require('../../image/tab/member.png')}
                         selectedIcon={require('../../image/tab/member_selected.png')}>
+
                         <PersonCenter navigator={this.props.navigator}></PersonCenter>
                     </ScrollView>
 
