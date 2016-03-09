@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "407E2A107F8EFE121A5BC03BC0F313247C4DDB68",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "407E2A107F8EFE121A5BC03BC0F313247C4DDB68" : 0,
+    "B013C92BBCC55DDB3C5BDC21E1ECCD9A5952C18D" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "338DAADE-28D5-49C2-8ABB-2AAB949A71BB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "407E2A107F8EFE121A5BC03BC0F313247C4DDB68" : "zxbill-app\/",
+    "B013C92BBCC55DDB3C5BDC21E1ECCD9A5952C18D" : "fas-react-native\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "mobile",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "mobile\/ios\/mobile.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "192.168.64.208:wuhan\/zxbill-app.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "407E2A107F8EFE121A5BC03BC0F313247C4DDB68"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "192.168.64.208:maxwell\/fas-react-native.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B013C92BBCC55DDB3C5BDC21E1ECCD9A5952C18D"
+    }
+  ]
+}
