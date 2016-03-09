@@ -6,6 +6,15 @@ var {
     AppStateIOS,
     Platform,
     } = React;
+  PushNotificationIOS,
+  AppStateIOS,
+  TabBarIOS,
+  Platform,
+  ViewPagerAndroid,
+  View,
+  ScrollView,
+  Image
+  } = React;
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
 var Message = require("../../biz/message/messageList")
@@ -15,6 +24,9 @@ var AppStore = require('../store/appStore');
 var TabBarIOS = require('./tabBarIOS.ios.fas')
 var Alert = require('../../comp/utils/alert');
 var Login = require('../../biz/login/login')
+var ScrollableTabView = require('../../comp/tabBar/android/tabContainer')
+var AndroidTabBar = require('../../comp/tabBar/android/tabBar')
+
 var TabView = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
@@ -75,16 +87,16 @@ var TabView = React.createClass({
         }
     },
 
-    _onChange: function () {
-        this.setState(this.getStateFromStores());
-    },
+  _onChange: function () {
+    this.setState(this.getStateFromStores());
+  },
 
-    getInitialState: function () {
-        return _.assign(
-            this.getStateFromStores(),
-            {selectedTab: 'home'}
-        );
-    },
+  getInitialState: function () {
+    return _.assign(
+      this.getStateFromStores(),
+      {selectedTab: 'home'}
+    );
+  },
 
     toPage(call){
         if (this.state.token == null) {
@@ -147,7 +159,43 @@ var TabView = React.createClass({
             );
         } else {
             return (
-                <Home/>
+                <ScrollableTabView initialPage={1} renderTabBar={() => <AndroidTabBar />}>
+
+                    <ScrollView
+                        tabLabel="ios-home"
+                        tabDesc="首页"
+                        icon={require('../../image/tab/home.png')}
+                        selectedIcon={require('../../image/tab/home_selected.png')} >
+                        <Home navigator={this.props.navigator}/>
+                    </ScrollView>
+
+                    <ScrollView
+                        tabLabel="clipboard"
+                        tabDesc="票据"
+                        icon={require('../../image/tab/bill.png')}
+                        selectedIcon={require('../../image/tab/bill_selected.png')}>
+                        <Bill navigator={this.props.navigator}/>
+                    </ScrollView>
+
+                    <ScrollView
+                        tabLabel="chatbubble-working"
+                        tabDesc="消息"
+                        badge=' '
+                        icon={require('../../image/tab/message.png')}
+                        selectedIcon={require('../../image/tab/message_selected.png')}>
+                        <Message navigator={this.props.navigator}></Message>
+                    </ScrollView>
+
+                    <ScrollView
+                        tabLabel="person-stalker"
+                        tabDesc="我的"
+                        icon={require('../../image/tab/member.png')}
+                        selectedIcon={require('../../image/tab/member_selected.png')}>
+                        <PersonCenter navigator={this.props.navigator}></PersonCenter>
+                    </ScrollView>
+
+                </ScrollableTabView>
+
             )
         }
     },
