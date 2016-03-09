@@ -1,5 +1,5 @@
 /.idea/
 /mobile/node_modules/
 /mobile/android/app/build/
-/mobile/android/app/.gradle/
+/mobile/android/.gradle/
 /mobile/android/build/

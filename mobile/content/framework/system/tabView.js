@@ -5,23 +5,16 @@ var {
     PushNotificationIOS,
     AppStateIOS,
     Platform,
+    ScrollView,
+    TabBarIOS
     } = React;
-  PushNotificationIOS,
-  AppStateIOS,
-  TabBarIOS,
-  Platform,
-  ViewPagerAndroid,
-  View,
-  ScrollView,
-  Image
-  } = React;
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
 var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/user/personalCenter")
 var AppAction = require('../action/appAction');
 var AppStore = require('../store/appStore');
-var TabBarIOS = require('./tabBarIOS.ios.fas')
+//var TabBarIOS = require('./tabBarIOS.ios.fas')
 var Alert = require('../../comp/utils/alert');
 var Login = require('../../biz/login/login')
 var ScrollableTabView = require('../../comp/tabBar/android/tabContainer')
@@ -87,16 +80,16 @@ var TabView = React.createClass({
         }
     },
 
-  _onChange: function () {
-    this.setState(this.getStateFromStores());
-  },
+    _onChange: function () {
+        this.setState(this.getStateFromStores());
+    },
 
-  getInitialState: function () {
-    return _.assign(
-      this.getStateFromStores(),
-      {selectedTab: 'home'}
-    );
-  },
+    getInitialState: function () {
+        return _.assign(
+            this.getStateFromStores(),
+            {selectedTab: 'home'}
+        );
+    },
 
     toPage(call){
         if (this.state.token == null) {
@@ -165,26 +158,10 @@ var TabView = React.createClass({
                         tabLabel="ios-home"
                         tabDesc="首页"
                         icon={require('../../image/tab/home.png')}
-                        selectedIcon={require('../../image/tab/home_selected.png')} >
+                        selectedIcon={require('../../image/tab/home_selected.png')}>
                         <Home navigator={this.props.navigator}/>
                     </ScrollView>
 
-                    <ScrollView
-                        tabLabel="clipboard"
-                        tabDesc="票据"
-                        icon={require('../../image/tab/bill.png')}
-                        selectedIcon={require('../../image/tab/bill_selected.png')}>
-                        <Bill navigator={this.props.navigator}/>
-                    </ScrollView>
-
-                    <ScrollView
-                        tabLabel="chatbubble-working"
-                        tabDesc="消息"
-                        badge=' '
-                        icon={require('../../image/tab/message.png')}
-                        selectedIcon={require('../../image/tab/message_selected.png')}>
-                        <Message navigator={this.props.navigator}></Message>
-                    </ScrollView>
 
                     <ScrollView
                         tabLabel="person-stalker"
