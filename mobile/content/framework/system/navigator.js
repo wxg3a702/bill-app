@@ -8,6 +8,10 @@ var {
     } = React;
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
+var AppAction = require('../action/appAction');
+var cssVar = require('cssVar');
+AppAction.appInit()
+var Alert = require('../../comp/utils/alert');
 var Main = React.createClass({
     getStateFromStores() {
         return {
