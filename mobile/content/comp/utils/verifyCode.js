@@ -80,7 +80,7 @@ var Verify = React.createClass({
                 <View style={[styles.view,styles.radius,{width:width-126}]}>
                     <Image source={require('../../image/utils/picCode.png')}
                            style={{height:16,width:16,marginLeft:9}}/>
-                    <TextInput style={[styles.input,{width:width-180}]} placeholder="验证码"
+                    <TextInput style={[styles.input,{width:width-180}]} placeholder="验证码" underlineColorAndroid="transparent"
                                onChangeText={(text) => this.textOnchange(text,'verify')}
                                autoCapitalize="none" keyboardType={'ascii-capable'}
                                value={this.state.verify} autoCorrect={false} maxLength={4}

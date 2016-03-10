@@ -5,22 +5,34 @@ var {
     TouchableOpacity,
     Text,
     View,
+    StyleSheet,
+    Image
     } = React;
 var RightTopButton = React.createClass({
     getDefaultProps() {
         return {
-            title: '',
-            content: ''
+            content: '',
+            color:'#44bcbc'
         }
     },
     render(){
         return (
             <View>
-                <TouchableOpacity onPress={this.props.func} style={{padding:10}} activeOpacity={0.5}>
-                    <Text style={{color:'#44bcbc',textAlign:'right',marginRight:5,fontSize:15}}>{this.props.content}</Text>
+                <TouchableOpacity onPress={this.logout} style={{padding:10}} activeOpacity={0.5}
+                                  style={{flexDirection:'row',alignItems:'center',height:20}}>
+                    <Image resizeMode="stretch" style={{width:20,height:20}}
+                           source={this.props.source}/>
+                    <Text style={[{color:this.props.color},styles.font]}>{this.props.content}</Text>
                 </TouchableOpacity>
             </View>
         )
+    }
+})
+var styles = StyleSheet.create({
+    font: {
+        textAlign: 'right',
+        marginRight: 5,
+        fontSize: 15
     }
 })
 module.exports = RightTopButton;
