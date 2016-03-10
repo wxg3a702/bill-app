@@ -77,7 +77,7 @@ class Select extends Component {
                         <Option style={ styleOption } styleText={ styleText }>{defaultValue}</Option>
                     </View>
                     <View style={{ flex:1,marginTop:0}}>
-                        <VIcon direction={this.state.arrow} size={20} color='000000'/>
+                        <VIcon direction={this.state.arrow} size={20} color='#000000'/>
                     </View>
                 </View>
             </TouchableWithoutFeedback>

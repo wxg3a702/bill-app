@@ -1,8 +1,8 @@
 'use strict';
 
 var React = require('react-native');
-var {AlertIOS}=React
-var Alert = function (title, _ok, _cancel) {
+var {AlertIOS,Alert,Platform}=React
+var MXAlert = function (title, _ok, _cancel) {
     let btnAry = new Array();
     if (_ok) {
         if (typeof _ok === 'function') {
@@ -37,6 +37,10 @@ var Alert = function (title, _ok, _cancel) {
         btnAry[0] = btnAry[1];
         btnAry[1] = obj;
     }
-    AlertIOS.alert(title, null, btnAry);
+    if (Platform.OS == 'ios') {
+        AlertIOS.alert(title, null, btnAry);
+    } else {
+        Alert.alert(title, null, btnAry)
+    }
 }
-module.exports = Alert;
+module.exports = MXAlert;

@@ -1,6 +1,5 @@
 var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
 var async = require('async')
-var Push = require('../network/push');
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
 var ActionTypes = Command.ActionTypes;
@@ -11,7 +10,6 @@ var Actions = {
     notificationRegister: (token)=>_notificationRegister(token),
     onNotification: (notification)=>_onNotification(notification),
     freshNotification: (notification)=>_onNotification(notification),
-    registerAPNS: ()=>Push.init(),
     sendSMSCodeToNewMobile: (p, c, f)=>PFetch(pub + "/sendSMSCodeToNewMobile", p, c, f),
     sendSMSCodeToOldMobile: (p, c, f)=>PFetch(pub + "/sendSMSCodeToOldMobile", p, c, f),
     sendSMSCodeToNewMobileApi: (p, c, f)=>BFetch(api + "/User/sendSMSCodeToNewMobile", p, c, f),

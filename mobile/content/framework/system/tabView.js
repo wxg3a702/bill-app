@@ -6,6 +6,7 @@ var {
     AppStateIOS,
     Platform,
     ScrollView,
+    Platform,
     TabBarIOS
     } = React;
 var Home = require('../../biz/home/home')
@@ -32,7 +33,9 @@ var TabView = React.createClass({
             });
             sum = billSum;
             var show = sum >= 99 ? "99+" : sum;
-            PushNotificationIOS.setApplicationIconBadgeNumber(sum);
+            if (Platform.OS == 'ios') {
+                PushNotificationIOS.setApplicationIconBadgeNumber(sum);
+            }
             return {
                 billSum: show,
                 token: token
@@ -92,19 +95,6 @@ var TabView = React.createClass({
         );
     },
 
-    toPage(call){
-        if (this.state.token == null) {
-            this.props.navigator.push({comp: Login})
-        } else {
-            call();
-        }
-    },
-    changeTab(value){
-        if (this.state.token == null && (value.i == 1 || value.i == 2)) {
-            this.props.navigator.push({comp: Login})
-        }
-    },
-
     render: function () {
         var navigator = this.props.navigator;
         if (Platform.OS === 'ios') {
@@ -124,7 +114,7 @@ var TabView = React.createClass({
                         icon={require('../../image/tab/bill.png')}
                         selectedIcon={require('../../image/tab/bill_selected.png')}
                         selected={this.state.selectedTab === 'bills'}
-                        onPress={()=>this.toPage(() => {this.setState({selectedTab: 'bills'})})}>
+                        onPress={() => {this.setState({selectedTab: 'bills'})}}>
                         <Bill navigator={this.props.navigator}/>
                     </TabBarIOS.Item>
 
@@ -134,7 +124,7 @@ var TabView = React.createClass({
                         icon={require('../../image/tab/message.png')}
                         selectedIcon={require('../../image/tab/message_selected.png')}
                         selected={this.state.selectedTab === 'messages'}
-                        onPress={()=>this.toPage(() => {this.setState({selectedTab: 'messages'})})}>
+                        onPress={() => {this.setState({selectedTab: 'messages'})}}>
                         <Message navigator={this.props.navigator}></Message>
                     </TabBarIOS.Item>
 
@@ -159,7 +149,7 @@ var TabView = React.createClass({
             );
         } else {
             return (
-                <ScrollableTabView initialPage={0} locked={true} onChangeTab={(value)=>{this.changeTab(value)}}
+                <ScrollableTabView initialPage={0} locked={true}
                                    renderTabBar={() => <AndroidTabBar />}>
                     <ScrollView
                         tabLabel="ios-home"
@@ -178,12 +168,11 @@ var TabView = React.createClass({
                     </ScrollView>
 
                     <ScrollView
-                        tabLabel="chatbubble-working"
                         tabDesc="消息"
-                        badge=" "
+                        badge={this.state.billSum==0?null:this.state.billSum}
                         icon={require('../../image/tab/message.png')}
                         selectedIcon={require('../../image/tab/message_selected.png')}>
-                        <Message navigator={this.props.navigator}/>
+                        <Message navigator={this.props.navigator}></Message>
                     </ScrollView>
 
                     <ScrollView

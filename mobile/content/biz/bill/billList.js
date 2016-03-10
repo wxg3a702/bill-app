@@ -8,35 +8,37 @@ var {
     View,
     SegmentedControlIOS,
     Dimensions,
-    Animated,
     Image,
+    Platform
     }=React
-var Demo = require('./demo')
-var Detail = require('./billDetail');
-var StatusIcon = require('./statusIcon');
-var PayeeDesc = require('./payeeDesc');
-var DrawerDesc = require('./drawerDesc')
+var Login = require('../login/login')
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
-var numeral = require('numeral');
-var dateFormat = require('dateformat');
-const DropDown = require('../../comp/dropDown/dropDown');
 var _ = require('lodash');
 var window = Dimensions.get('window');
+var ds = new ListView.DataSource({
+    rowHasChanged: (row1, row2) => row1 !== row2,
+});
+const DropDown = require('../../comp/dropDown/dropDown');
 const {
     Select,
     Option,
     OptionList,
     updatePosition
     } = DropDown;
-var ds = new ListView.DataSource({
-    rowHasChanged: (row1, row2) => row1 !== row2,
-});
 var BillList = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
         if (token != null) {
+            //updatePosition(this.refs['SELECT1']);
+            //updatePosition(this.refs['OPTIONLIST']);
+            var obj = AppStore.getDemoFlag();
+            if ((obj == undefined || obj.flag != true || (obj.id != AppStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
+                //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
+                this.toOther();
+                AppAction.setDemoFlag();
+            }
             var contentlist, fuc = this.renderRec
             if (this.state && this.state.flag == 1) {
                 fuc = this.renderSend;
@@ -53,10 +55,12 @@ var BillList = React.createClass({
                 contentlist = AppStore.getBillRevViewItems("");
             }
             return {
-                flag: flag, renderFuc: fuc, dataSource: ds.cloneWithRows(contentlist), db: contentlist,
+                token: token,
+                flag: flag,
+                renderFuc: fuc,
+                dataSource: ds.cloneWithRows(contentlist),
+                db: contentlist,
                 filterValue: '全部',
-                fadeAnim: new Animated.Value(0),
-                left: new Animated.Value(0)
             };
         } else {
             return {
@@ -69,38 +73,6 @@ var BillList = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
-        if (AppStore.getToken() != null) {
-            updatePosition(this.refs['SELECT1']);
-            updatePosition(this.refs['OPTIONLIST']);
-            this.showView();
-            var obj = AppStore.getDemoFlag();
-            if ((obj == undefined || obj.flag != true || (obj.id != AppStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
-                //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
-                this.toOther();
-                AppAction.setDemoFlag();
-            }
-        }
-    },
-
-    showView: function () {
-        Animated.sequence([
-            Animated.timing(          // Uses easing functions
-                this.state.fadeAnim,    // The value to drive
-                {toValue: 0, duration: 0}          // Configuration
-            ),
-            Animated.timing(this.state.left, {toValue: window.width, duration: 0}),
-            Animated.timing(          // Uses easing functions
-                this.state.fadeAnim,    // The value to drive
-                {toValue: 1, duration: 0}          // Configuration
-            ),
-            Animated.timing(this.state.left, {toValue: 0, duration: 200})
-        ]).start();
-    },
-    hiddenView: function () {
-        Animated.parallel([
-            Animated.timing(this.state.left, {toValue: 400, duration: 600})
-
-        ]).start();
     },
 
     componentWillUnmount: function () {
@@ -108,7 +80,6 @@ var BillList = React.createClass({
     },
     _onChange: function () {
         this.setState(this.getStateFromStores());
-        this.showView();
     },
     getDefaultProps: function () {
         return {
@@ -125,12 +96,17 @@ var BillList = React.createClass({
         });
     },
     renderSeg: function () {
-        return (
-            <SegmentedControlIOS onValueChange={this.changeRenderFuc} values={this.props.segctldata}
-                                 selectedIndex={this.state.flag}
-                                 style={{ alignSelf:'center',width:200,marginTop:30, height:30}}
-                                 tintColor={'#44bcb2'}/>
-        );
+        if (Platform.OS === 'ios') {
+            return (
+                <SegmentedControlIOS onValueChange={this.changeRenderFuc} values={this.props.segctldata}
+                                     selectedIndex={this.state.flag}
+                                     style={{alignSelf:'center',width:200,marginTop:30, height:30}}
+                                     tintColor={'#44bcb2'}/>
+            );
+        }
+    },
+    toLogin(){
+        this.props.navigator.push({comp: Login})
     },
     render: function () {
         var {height, width} = Dimensions.get('window');
@@ -138,7 +114,12 @@ var BillList = React.createClass({
             return (
                 <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
                             contentBackgroundColor='#f0f0f0'>
-                    <Text>你还没有登陆</Text>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',padding:8}}>
+                        <Text>你还没有登陆</Text>
+                        <TouchableHighlight onPress={this.toLogin}>
+                            <Text>点击去登陆</Text>
+                        </TouchableHighlight>
+                    </View>
                 </NavBarView>
             )
         } else {
@@ -146,12 +127,11 @@ var BillList = React.createClass({
                 <NavBarView navigator={this.props.navigator} title="票据" showBar={false} showBack={false}
                             contentBackgroundColor='#f0f0f0'>
                     {this.renderSeg()}
-
                     {(()=> {
                         if (this.state.flag == 0) {
                             return (
                                 <Select
-                                    style={{ alignSelf:'center'}}
+                                    style={{alignSelf:'center'}}
                                     width={width}
                                     ref="SELECT1"
                                     optionListRef={this._getOptionList}
@@ -167,7 +147,7 @@ var BillList = React.createClass({
                         } else {
                             return (
                                 <Select
-                                    style={{ alignSelf:'center'}}
+                                    style={{alignSelf:'center'}}
                                     width={width}
                                     ref="SELECT1"
                                     optionListRef={this._getOptionList}
@@ -182,32 +162,7 @@ var BillList = React.createClass({
 
                     })()}
 
-                    <Animated.View
-                        style={[{ flex: 1,backgroundColor: '#f0f0f0'},{opacity: this.state.fadeAnim,marginLeft:this.state.left}]}>
-                        {(()=> {
-                            if (!_.isEmpty(this.state.db) && this.state.db.length > 0) {
-                                return (
-                                    <ListView
-                                        dataSource={this.state.dataSource}
-                                        renderRow={this.state.renderFuc}
-                                        automaticallyAdjustContentInsets={false}
-                                        style={{backgroundColor: '#f0f0f0' ,width:width}}/>
-                                );
-                            }
-                            else {
-                                return (
-                                    <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
-                                        <Image style={{width:350,height:200}} resizeMode="stretch"
-                                               source={require('../../image/bill/noBill.png')}/>
-                                        <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
-                                    </View>
-                                );
-                            }
-                        })()}
 
-                    </Animated.View>
-                    <View style={{height:50}}></View>
-                    <OptionList ref="OPTIONLIST" height={this.state.flag==0?72:48}/>
                 </NavBarView>
             );
         }
@@ -223,7 +178,6 @@ var BillList = React.createClass({
     },
 
     flushPage: function () {
-        this.hiddenView();
         var contentlist;
         if (this.state.flag == 0) {
             contentlist = AppStore.getBillRevViewItems(this.state.status);
@@ -231,7 +185,6 @@ var BillList = React.createClass({
             contentlist = AppStore.getBillSentViewItems(this.state.status);
         }
         this.setState({dataSource: this.state.dataSource.cloneWithRows(contentlist), db: contentlist});
-        this.showView();
     },
 
     _getOptionList() {
@@ -263,14 +216,12 @@ var BillList = React.createClass({
                 break;
         }
         this.flushPage();
-
     },
 
     renderDetail: function (team) {
         return (
             <View style={styles.container}>
                 <Text>{team.team_cn}</Text>
-
             </View>
         );
     },

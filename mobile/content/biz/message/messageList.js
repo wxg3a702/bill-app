@@ -10,12 +10,12 @@ var {
     StyleSheet,
     Dimensions
     } = React;
+var Login = require('../login/login')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
 var _ = require('lodash');
-var dateFormat = require('dateformat');
 var MessageDetail = require('./messageDetail')
 var Detail = require('../bill/billDetail');
 var MsgCategory = require('../../constants/notification').MsgCategory;
@@ -26,10 +26,19 @@ var ds = new ListView.DataSource({
 });
 var Message = React.createClass({
     getStateFromStores() {
-        return AppStore.getMessage();
+        var token = AppStore.getToken()
+        if (token == null) {
+            return {token: token}
+        } else {
+            var messageBean = AppStore.getMessage()
+            return {
+                dataSource: ds.cloneWithRows(messageBean),
+                data: messageBean,
+                token: token
+            }
+        }
     },
     componentDidMount() {
-        this.fetchData();
         AppStore.addChangeListener(this._onChange);
     },
 
@@ -37,28 +46,10 @@ var Message = React.createClass({
         AppStore.removeChangeListener(this._onChange);
     },
     _onChange: function () {
-        this.setState({
-            dataSource: ds.cloneWithRows(this.getStateFromStores()),
-            data: this.getStateFromStores()
-        });
+        this.setState(this.getStateFromStores());
     },
     getInitialState: function () {
-        var token = AppStore.getToken()
-        if (token == null) {
-            return {token: token}
-        } else {
-            return {
-                token: token,
-                dataSource: ds.cloneWithRows(this.getStateFromStores()),
-                data: this.getStateFromStores()
-            };
-        }
-    },
-    fetchData: function () {
-        this.setState({
-            dataSource: ds.cloneWithRows(this.getStateFromStores()),
-            data: this.getStateFromStores()
-        });
+        return this.getStateFromStores();
     },
     detail(name){
         var title
@@ -88,12 +79,20 @@ var Message = React.createClass({
             Alert('已读标记设置失败!');
         });
     },
+    toLogin(){
+        this.props.navigator.push({comp: Login})
+    },
     render: function () {
         if (this.state.token == null) {
             return (
                 <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
                             contentBackgroundColor='#f0f0f0'>
-                    <Text>你还没有登陆</Text>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',padding:8}}>
+                        <Text>你还没有登陆</Text>
+                        <TouchableHighlight onPress={this.toLogin}>
+                            <Text>点击去登陆</Text>
+                        </TouchableHighlight>
+                    </View>
                 </NavBarView>
             )
         } else {
