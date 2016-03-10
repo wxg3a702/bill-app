@@ -6,23 +6,43 @@ var {
     TouchableHighlight,
     Text,
     View,
-    StyleSheet
+    StyleSheet,
+    Dimensions
     } = React;
 var VIcon = require('../icon/vIcon')
 var Item = React.createClass({
+    getDefaultProps(){
+        return {
+            img: true,
+            top: false,
+            icon: true
+        }
+    },
+    returnImg(){
+        if (this.props.img) {
+            return (
+                <Image style={styles.circle} source={this.props.imgPath}/>
+            )
+        }
+    },
+    returnIcon(){
+        if (this.props.icon) {
+            return <VIcon/>
+        } else {
+            return <View style={{width:22}}/>
+        }
+    },
     render(){
         return (
             <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.props.func}>
-                <View style={styles.listLayout}>
+                <View style={[styles.listLayout,this.props.top && styles.borderTop]}>
                     <View style={{flex:1,flexDirection:'row'}}>
-                        <Image style={styles.circle} source={this.props.imgPath}/>
-                        <View style={{marginLeft:16}}>
-                            <Text style={styles.title}>{this.props.desc}</Text>
-                        </View>
+                        {this.returnImg()}
+                        <Text style={styles.title} numberOfLines={1}>{this.props.desc}</Text>
                     </View>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text style={[{fontSize: 15,color: '#7f7f7f'}]}>{this.props.value}</Text>
-                        <VIcon/>
+                        {this.returnIcon()}
                     </View>
                 </View>
             </TouchableHighlight>
@@ -30,6 +50,9 @@ var Item = React.createClass({
     }
 })
 var styles = StyleSheet.create({
+    borderTop: {
+        borderTopWidth: 1,
+    },
     listLayout: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -44,11 +67,13 @@ var styles = StyleSheet.create({
         width: 16,
         height: 16,
         borderRadius: 8,
-        marginTop: 1
+        marginTop: 1,
+        marginRight: 16
     },
     title: {
         fontSize: 18,
-        color: '#323232'
+        color: '#323232',
+        width: Dimensions.get('window').width - 20
     },
 })
 module.exports = Item;
