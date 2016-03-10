@@ -1,6 +1,4 @@
-//var host="http://192.168.64.205:8383";
-var host = "http://192.168.64.205:9101";
-//var host="http://192.168.64.252:9081";
+
 var Qs = require('qs');
 var Alert = require('../../comp/utils/alert');
 var FileUpload = require('NativeModules').FileUpload;
@@ -10,7 +8,9 @@ var AppDispatcher = require('../dispatcher/appDispatcher');
 var ChatConstants = require('../../constants/command');
 var ActionTypes = ChatConstants.ActionTypes;
 
-var XFetch = function (url, param, callback, failure, custLoading) {
+var host = require('./host');;
+
+var BFetch = function (url, param, callback, failure, options) {
     var headers = {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -21,10 +21,10 @@ var XFetch = function (url, param, callback, failure, custLoading) {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(param)
-    }, callback, failure, custLoading);
+    }, callback, failure, options);
 
 };
-var PFetch = function (url, param, callback, failure, custLoading) {
+var PFetch = function (url, param, callback, failure, options) {
 
     var headers = {
         'Accept': 'application/json',
@@ -34,38 +34,24 @@ var PFetch = function (url, param, callback, failure, custLoading) {
     rawFetch(host + url + "?" + Qs.stringify(param), {
         method: 'POST',
         headers: headers,
-    }, callback, failure, custLoading);
+    }, callback, failure, options);
 };
 
-var upload = function (url, fileURL, c, f) {
-    var obj = {
-        uploadUrl: host + url,
-        method: 'POST', // default 'POST',support 'POST' and 'PUT'
-        headers: {
-            'Accept': 'application/json',
-            'Authorization': 'Basic  ' + AppStore.getToken()
-        },
-        files: [
-            {
+var UFetch = function (url, param, callback, failure, options) {
 
-                name: 'file',
-                filename: 'fas.jpg', // require, file name
-                filepath: fileURL, // require, file absoluete path
-            },
-        ]
+    var headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data; boundary=6ff46e0b6b5148d984f148b6542e5a5d',
+        'Authorization': 'Basic  ' + AppStore.getToken()
     };
-    FileUpload.upload(obj, function (err, res) {
-        if (err) {
-            f(err)
-        } else {
-            if (res.data && !_.isEmpty(res.data)) {
-                c(JSON.parse(res.data))
-            } else {
-                f({msgContent: "系统异常"})
-            }
 
-        }
-    })
+    var formdata = new FormData();
+    formdata.append('file', param);
+    rawFetch(host + url , {
+        method: 'POST',
+        headers: headers,
+        body:formdata,
+    }, callback, failure, {custLoading:true});
 };
 
 
@@ -145,33 +131,7 @@ var process = function (promoise, callback, failure, option) {
 
 };
 
-var processStatus = function (response) {// process status
-    if (response.status === 200 || response.status === 0) {
-        return Promise.resolve(response)
-    } else {
-        return Promise.reject(new Error('Error loading: ' + url))
-    }
-};
 
-var parseBlob = function (response) {
-    return response.blob();
-};
-
-
-// download/upload
-var downloadFile = function (url) {
-    var headers = {
-        'Authorization': 'Basic  ' + AppStore.getToken()
-    };
-
-
-    return fetch(host + url, {headers: headers})
-        .then(processStatus)
-        .then(parseBlob)
-        .then(function (blob) {
-            var objectURL = URL.createObjectURL(blob);
-        })
-};
 
 var _startRPC = function (option) {
     if (!option.custLoading) {
@@ -191,13 +151,12 @@ var _endRPC = function (option, handle) {
     } else {
         handle()
     }
-
 }
+
 module.exports = {
-    XFetch: XFetch,
+    BFetch: BFetch,
     PFetch: PFetch,
-    upload: upload,
-    downloadFile: downloadFile,
+    UFetch: UFetch,
     host,
     token: AppStore.getToken
 };
