@@ -24,16 +24,9 @@ var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-
 var Message = React.createClass({
     getStateFromStores() {
-        var token = AppStore.getToken();
-        var mainMsgBean = AppStore.getMainMsgBean();
-        if (token == null) {
-            return({token:token})
-        } else {
-            return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans];
-        }
+        return AppStore.getMessage();
     },
     componentDidMount() {
         this.fetchData();
@@ -44,13 +37,28 @@ var Message = React.createClass({
         AppStore.removeChangeListener(this._onChange);
     },
     _onChange: function () {
-        this.setState({dataSource: ds.cloneWithRows(this.getStateFromStores()), data: this.getStateFromStores()});
+        this.setState({
+            dataSource: ds.cloneWithRows(this.getStateFromStores()),
+            data: this.getStateFromStores()
+        });
     },
     getInitialState: function () {
-        return {dataSource: ds.cloneWithRows(this.getStateFromStores()), data: this.getStateFromStores()};
+        var token = AppStore.getToken()
+        if (token == null) {
+            return {token: token}
+        } else {
+            return {
+                token: token,
+                dataSource: ds.cloneWithRows(this.getStateFromStores()),
+                data: this.getStateFromStores()
+            };
+        }
     },
     fetchData: function () {
-        this.setState({dataSource: ds.cloneWithRows(this.getStateFromStores()), data: this.getStateFromStores()});
+        this.setState({
+            dataSource: ds.cloneWithRows(this.getStateFromStores()),
+            data: this.getStateFromStores()
+        });
     },
     detail(name){
         var title
@@ -81,35 +89,37 @@ var Message = React.createClass({
         });
     },
     render: function () {
-        if(this.state.token==null){
-           return(
-               <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
-                           contentBackgroundColor='#f0f0f0'>
-                   <Text>你还没有登陆</Text>
-               </NavBarView>
-           )
-        }else if (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
-            && (_.isEmpty(this.state.data[3][0]))) {
+        if (this.state.token == null) {
             return (
-                <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
+                <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
                             contentBackgroundColor='#f0f0f0'>
-                    <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
-                        <Image style={{width:350,height:200}} resizeMode="stretch"
-                               source={require('../../image/message/noMessage.png')}/>
-                        <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂无消息</Text>
-                    </View>
-                    <View style={{height:100}}></View>
-
+                    <Text>你还没有登陆</Text>
                 </NavBarView>
             )
         } else {
-            return (
-                <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
-                            contentBackgroundColor='#f0f0f0'>
-                    <ListView dataSource={this.state.dataSource} renderRow={this.renderLists}
-                              automaticallyAdjustContentInsets={false}/>
-                </NavBarView>
-            );
+            if (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+                && (_.isEmpty(this.state.data[3][0]))) {
+                return (
+                    <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
+                                contentBackgroundColor='#f0f0f0'>
+                        <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
+                            <Image style={{width:350,height:200}} resizeMode="stretch"
+                                   source={require('../../image/message/noMessage.png')}/>
+                            <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂无消息</Text>
+                        </View>
+                        <View style={{height:100}}></View>
+
+                    </NavBarView>
+                )
+            } else {
+                return (
+                    <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
+                                contentBackgroundColor='#f0f0f0'>
+                        <ListView dataSource={this.state.dataSource} renderRow={this.renderLists}
+                                  automaticallyAdjustContentInsets={false}/>
+                    </NavBarView>
+                );
+            }
         }
     },
     unReadIcon(item){

@@ -11,7 +11,7 @@ var {
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
 var Message = require("../../biz/message/messageList")
-var PersonCenter = require("../../biz/user/personalCenter")
+var PersonCenter = require("../../biz/personalCenter/personalCenter")
 var AppAction = require('../action/appAction');
 var AppStore = require('../store/appStore');
 //var TabBarIOS = require('./tabBarIOS.ios.fas')
@@ -144,6 +144,15 @@ var TabView = React.createClass({
                         selectedIcon={require('../../image/tab/member_selected.png')}
                         selected={this.state.selectedTab === 'personCenter'}
                         onPress={() => {this.setState({selectedTab: 'personCenter'})}}>
+                        <PersonCenter navigator={this.props.navigator}></PersonCenter>
+                    </TabBarIOS.Item>
+
+                    <TabBarIOS.Item
+                        title="个人"
+                        icon={require('../../image/tab/member.png')}
+                        selectedIcon={require('../../image/tab/member_selected.png')}
+                        selected={this.state.selectedTab === '22'}
+                        onPress={()=>AppAction.clear()}>
                         <PersonCenter navigator={this.props.navigator}></PersonCenter>
                     </TabBarIOS.Item>
                 </TabBarIOS>

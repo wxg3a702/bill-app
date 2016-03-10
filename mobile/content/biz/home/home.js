@@ -12,7 +12,7 @@ var {
     Animated
     }=React
 var Swiper = require('../../comp/utils/swiper')
-var Calculator = require('../../biz/user/calculator');
+var Calculator = require('../personalCenter/calculator');
 var NavBarView = require('../../framework/system/navBarView');
 var {height, width} = Dimensions.get('window');
 var Home = React.createClass({

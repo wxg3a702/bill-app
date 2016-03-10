@@ -10,8 +10,8 @@ var {
     }=React
 var Login = require('../login/login')
 var Advice = require('./advice')
-var UserInfo = require('./userInfo')
-var SecurityCenter = require('./securityCenter')
+var UserInfo = require('./../user/userInfo')
+var SecurityCenter = require('./../securityCenter/securityCenter')
 var ToolHome = require('./toolHome')
 var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
@@ -31,6 +31,7 @@ var PersonalCenter = React.createClass({
             }
         } else {
             return {
+                token: token,
                 userName: user.userName,
                 userType: user.userType,
                 userTypeValue: (user.userType == "REGISTERED") ? "注册用户" : "认证用户",

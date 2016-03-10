@@ -16,7 +16,7 @@ var requestHandle;
 var isLogout = false;
 var isForce_Logout = false;
 
-var KeyPointFile = require('../../biz/user/keyPointFile')
+var KeyPointFile = require('../../biz/personalCenter/keyPointFile')
 var LocationJson = require('../../biz/user/locationJson')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Persister = require('../persister/persisterFacade');
@@ -80,6 +80,11 @@ var AppStore = assign({}, EventEmitter.prototype, {
     getArea: ()=>LocationJson,
 
     getKeyPoint: ()=>KeyPointFile,
+
+    getMessage(){
+        var mainMsgBean = _data.mainMsgBean;
+        return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+    },
 
     updateUnReadNum(category){
         switch (category) {

@@ -5,7 +5,8 @@ var {
     StyleSheet,
     TouchableOpacity,
     Text,
-    View
+    View,
+    Platform
     } = React;
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require("../../framework/action/appAction");
@@ -21,6 +22,10 @@ var Alert = require('../../comp/utils/alert');
 var Login = React.createClass({
     getStateFromStores() {
         var user = AppStore.getUserInfoBean();
+        var deviceModel = 'IOS'
+        if (Platform.OS != 'ios') {
+            deviceModel = 'ANDROID'
+        }
         return {
             loaded: false,
             checked: true,
@@ -28,6 +33,7 @@ var Login = React.createClass({
             password: '',
             verify: '',
             active: false,
+            deviceModel: deviceModel,
             APNSToken: AppStore.getAPNSToken()
         };
     },
@@ -54,11 +60,11 @@ var Login = React.createClass({
                     userName: this.state.userName,
                     password: this.state.password,
                     deviceToken: this.state.APNSToken,
-                    deviceModel: 'IOS',
+                    deviceModel: this.state.deviceModel,
                     captcha: this.state.verify
                 },
                 function () {
-                    this.props.navigator.replace({comp: TabView});
+                    this.props.navigator.pop();
                 }.bind(this),
                 function (msg) {
                     Alert(msg.msgContent);

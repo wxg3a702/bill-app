@@ -47,13 +47,16 @@ var Main = React.createClass({
     },
     renderScene(route, navigator) {
         var Comp = route.comp;
-        if (Comp == "tabView")Comp = TabView
+        if (Comp == "tabView") {
+            Comp = TabView
+        }
         navigator.cur = Comp;
-        var res = <Comp param={route.param} navigator={navigator} callback={route.callBack}/>;
-        return res;
+        return (
+            <Comp param={route.param} navigator={navigator} callback={route.callBack}/>
+        )
     },
     render(){
-        var initComp = TabView;
+        var initComp;
         if (this.state.initLoading) {
             return (
                 <View style={styles.container}>
@@ -61,6 +64,7 @@ var Main = React.createClass({
                 </View>
             )
         } else {
+            initComp = TabView
             return (
                 <Navigator ref="navigator" renderScene={this.renderScene} initialRoute={{comp:initComp}}/>
             );

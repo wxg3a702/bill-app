@@ -11,7 +11,7 @@ var {
     } = React;
 var _ = require('lodash');
 var VIcon = require('../../comp/icon/vIcon')
-var TextEdit = require('./textEdit');
+var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
 var Calculator = React.createClass({
