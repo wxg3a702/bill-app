@@ -16,6 +16,7 @@ var ToolHome = require('./toolHome')
 var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var certificateState = require('../../constants/certificateState')
+var CompCertification=require('../company/compCertification')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require('../../framework/action/appAction');
 var NavBarView = require('../../framework/system/navBarView');
@@ -116,8 +117,8 @@ var PersonalCenter = React.createClass({
                                         <Image
                                             style={[styles.circle,{marginTop:14,borderColor: '#cccccc', borderBottomWidth: 1}]}
                                             resizeMode="stretch"
-                                            source={this.state.userType=='REGISTERED'?require('../../image/user/register.png'):
-                                               require('../../image/user/certify.png')}/>
+                                            source={this.state.userType=='REGISTERED'?require('../../image/personalCenter/register.png'):
+                                               require('../../image/personalCenter/certify.png')}/>
                                         <Text
                                             style={[styles.date,{marginTop:16,marginLeft:8}]}>{this.state.userTypeValue}</Text>
                                     </View>
@@ -133,7 +134,7 @@ var PersonalCenter = React.createClass({
                             style={[styles.listLayout,styles.borderBottom,styles.borderTop,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
                             <View style={[styles.flexRow,styles.flexOne]}>
                                 <Image style={styles.circle}
-                                       source={require('../../image/user/securityCenter.png')}/>
+                                       source={require('../../image/personalCenter/securityCenter.png')}/>
                                 <View style={{marginLeft:16}}>
                                     <Text style={styles.title}>设置</Text>
                                 </View>
@@ -149,7 +150,7 @@ var PersonalCenter = React.createClass({
                             style={[styles.listLayout,styles.borderBottom,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
                             <View style={[styles.flexRow,styles.flexOne]}>
                                 <Image style={styles.circle}
-                                       source={require('../../image/user/compCertificate.png')}/>
+                                       source={require('../../image/personalCenter/compCertificate.png')}/>
                                 <View style={{marginLeft:16}}>
                                     <Text style={styles.title}>企业认证</Text>
                                 </View>
@@ -159,14 +160,14 @@ var PersonalCenter = React.createClass({
                             </View>
                         </View>
                     </TouchableHighlight>
-                    {this.returnItem(ToolHome, '工具', require('../../image/user/tool.png'))}
-                    {this.returnItem(HelpCenter, '帮助中心', require('../../image/user/helpCenter.png'))}
+                    {this.returnItem(ToolHome, '工具', require('../../image/personalCenter/tool.png'))}
+                    {this.returnItem(HelpCenter, '帮助中心', require('../../image/personalCenter/helpCenter.png'))}
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc'
                                         onPress={()=>this.toPage(()=>this.toOther(Advice))}>
                         <View
                             style={[styles.listLayout,styles.borderBottom,{alignItems:'center',justifyContent:'space-between',flexDirection:'row'}]}>
                             <View style={[styles.flexRow,styles.flexOne]}>
-                                <Image style={styles.circle} source={require('../../image/user/advice.png')}/>
+                                <Image style={styles.circle} source={require('../../image/personalCenter/advice.png')}/>
                                 <View style={{marginLeft:16}}>
                                     <Text style={styles.title}>意见反馈</Text>
                                 </View>
@@ -174,7 +175,7 @@ var PersonalCenter = React.createClass({
                             <VIcon/>
                         </View>
                     </TouchableHighlight>
-                    {this.returnItem(AboutUs, '关于我们', require('../../image/user/aboutUs.png'))}
+                    {this.returnItem(AboutUs, '关于我们', require('../../image/personalCenter/aboutUs.png'))}
                 </View>
             </NavBarView>
         )

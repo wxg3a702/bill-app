@@ -24,7 +24,7 @@ var VIcon = React.createClass({
 
     render(){
         return (
-            <Icon name={this.direction()} size={this.props.size} style={{marginRight:6}} color={this.props.color}/>
+            <Icon name={this.direction()} size={this.props.size} style={{marginRight:6,marginLeft:6}} color={this.props.color}/>
         )
     }
 })

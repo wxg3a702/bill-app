@@ -8,6 +8,8 @@ var {
     Text,
     View,
     } = React;
+var EditPassword=require('./editPassword')
+var EditPhone=require('./editPhone')
 var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');

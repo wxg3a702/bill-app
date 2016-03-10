@@ -137,14 +137,6 @@ var TabView = React.createClass({
                         <PersonCenter navigator={this.props.navigator}></PersonCenter>
                     </TabBarIOS.Item>
 
-                    <TabBarIOS.Item
-                        title="个人"
-                        icon={require('../../image/tab/member.png')}
-                        selectedIcon={require('../../image/tab/member_selected.png')}
-                        selected={this.state.selectedTab === '22'}
-                        onPress={()=>AppAction.clear()}>
-                        <PersonCenter navigator={this.props.navigator}></PersonCenter>
-                    </TabBarIOS.Item>
                 </TabBarIOS>
             );
         } else {
