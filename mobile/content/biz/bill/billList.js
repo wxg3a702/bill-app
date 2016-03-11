@@ -9,7 +9,7 @@ var {
     SegmentedControlIOS,
     Dimensions,
     Image,
-    Platfor
+    Platform
     }=React
 var Login = require('../login/login')
 var NavBarView = require('../../framework/system/navBarView');

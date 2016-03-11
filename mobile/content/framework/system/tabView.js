@@ -6,7 +6,6 @@ var {
     AppStateIOS,
     Platform,
     ScrollView,
-    Platform,
     TabBarIOS
     } = React;
 var Home = require('../../biz/home/home')
