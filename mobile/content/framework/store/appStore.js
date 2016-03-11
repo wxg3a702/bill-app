@@ -2,14 +2,13 @@ var React = require('react-native');
 var {
     NetInfo
     } = React;
-
 var _ = require('lodash');
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 
 var _data = {};
 var _compInfoLevel = {}
-var initLoadingState = false;
+var initLoadingState = true;
 var CHANGE_EVENT = 'change';
 var netWorkState = false;
 var requestHandle;
@@ -198,48 +197,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
     }
 });
 
-var _initCompStatus = function () {
-    var orgBeans = _data.orgBeans[0];
-    if (!_.isEmpty(orgBeans.orgCode)
-        && !_.isEmpty(orgBeans.orgName)
-        && !_.isEmpty(orgBeans.email)
-        && !_.isEmpty(orgBeans.address)
-        && !_.isEmpty(orgBeans.orgType)
-        && !_.isEmpty(orgBeans.bizLicenseRegNo)
-        && !_.isEmpty(orgBeans.bizLicenseRegLoc)
-        && _.isInteger(orgBeans.foundationDate)
-        && _.isInteger(orgBeans.businessTerm)
-        && !_.isEmpty(orgBeans.businessScope)
-        && _.isInteger(orgBeans.registeredCapital)) {
-        _compInfoLevel.compCertificateOne = true;
-    } else {
-        _compInfoLevel.compCertificateOne = false;
-    }
-    if (!_.isEmpty(orgBeans.licenseCopyFileId)
-        && !_.isEmpty(orgBeans.licenseCopyFileId)
-        && !_.isEmpty(orgBeans.orgCodeCopyFileId)
-        && !_.isEmpty(orgBeans.taxFileId)
-        && !_.isEmpty(orgBeans.corpIdentityFileId)
-        && !_.isEmpty(orgBeans.authFileId)
-        && !_.isEmpty(orgBeans.authIdentityFileId)) {
-        _compInfoLevel.compCertificateTwo = true;
-    } else {
-        _compInfoLevel.compCertificateTwo = false;
-    }
-    if (!_.isEmpty(orgBeans.accountName)
-        && !_.isEmpty(orgBeans.accountNo)
-        && !_.isEmpty(orgBeans.reservedMobileNo)) {
-        _compInfoLevel.compCertificateThree = true;
-    } else {
-        _compInfoLevel.compCertificateThree = false;
-    }
-    if (_compInfoLevel.compCertificateThree && _compInfoLevel.compCertificateTwo && _compInfoLevel.compCertificateOne) {
-        _compInfoLevel.submitable = true
-    } else {
-        _compInfoLevel.submitable = false
-    }
-    return orgBeans;
-}
 
 var _initOrgBean = function () {
     if (_data.orgBeans == null || typeof (_data.orgBeans) == 'undefined' || typeof(_data.orgBeans[0]) == 'undefined') {
@@ -294,7 +251,6 @@ var _appInit = function (data) {
             _data = data;
             _initOrgBean();
             isLogout = false;
-            _data.orgBeans[0] = _initCompStatus();
             AppStore.emitChange();
         })
 }
@@ -302,7 +258,6 @@ var _appInit = function (data) {
 var _login = function (data) {
     _data = data;
     _initOrgBean();
-    _data.orgBeans[0] = _initCompStatus();
     AppStore.emitChange();
     Persister.getAppData((d) => {
         data.demoFlag = d.demoFlag;
@@ -505,7 +460,6 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         case ActionTypes.UPDATE_COMPBASEINFO:
             _data.orgBeans[0] = _.assign(_data.orgBeans[0], action.data);
             _data.userInfoBean = _.assign(_data.userInfoBean, action.data);
-            _initCompStatus();
             Persister.saveOrg(_data.orgBeans);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
