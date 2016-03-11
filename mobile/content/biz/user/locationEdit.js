@@ -12,7 +12,7 @@ var {
 var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction")
+var UserAction = require("../../framework/action/userAction")
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -43,7 +43,7 @@ var LocationEdit = React.createClass({
         this.props.navigator.popToRoute(routes[routes.length - 3]);
     },
     toEdit(name){
-        AppAction.updateUser(
+        UserAction.updateUser(
             {location: this.props.param.item.name + ' ' + name}
             , this.goBack)
     },

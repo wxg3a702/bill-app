@@ -9,12 +9,12 @@ var {
     SegmentedControlIOS,
     Dimensions,
     Image,
-    Platform
+    Platfor
     }=React
 var Login = require('../login/login')
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require('../../framework/action/appAction');
+var BillAction = require('../../framework/action/billAction');
 var _ = require('lodash');
 var window = Dimensions.get('window');
 var ds = new ListView.DataSource({
@@ -37,7 +37,7 @@ var BillList = React.createClass({
             if ((obj == undefined || obj.flag != true || (obj.id != AppStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
                 //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
                 this.toOther();
-                AppAction.setDemoFlag();
+                BillAction.setDemoFlag();
             }
             var contentlist, fuc = this.renderRec
             if (this.state && this.state.flag == 1) {

@@ -35,8 +35,9 @@ var styles = StyleSheet.create({
     layout: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent:'center',
         height: 20,
-        padding: 10
+        padding: 10,
     }
 
 })

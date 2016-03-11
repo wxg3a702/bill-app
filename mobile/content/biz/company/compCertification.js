@@ -11,7 +11,7 @@ var {
     } = React;
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction")
+var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var compInfoLevel;
 var certificateState = require('../../constants/certificateState');

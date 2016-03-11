@@ -8,7 +8,7 @@ var Validation = require('../../comp/utils/validation');
 var VerifyCode = require('../../comp/utils/verifyCode');
 var NavBarView = require('../../framework/system/navBarView');
 var Forget_checkVerify = require('./forget_checkVerify');
-var AppAction = require("../../framework/action/appAction");
+var LoginAction = require("../../framework/action/loginAction");
 var Button = require('../../comp/utils/button');
 var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
@@ -43,7 +43,7 @@ var Forget_checkPhone = React.createClass({
         }
     },
     checkPhone(){
-        AppAction.validateMobileForForgetPwd({
+        LoginAction.validateMobileForForgetPwd({
                 mobileNo: this.state.phoneNumber,
                 captcha: this.state.verify
             },
