@@ -4,9 +4,8 @@ var React = require('react-native');
 var {
     View
     } = React;
-var AppAction = require("../../framework/action/appAction");
+var LoginAction = require("../../framework/action/loginAction");
 var NavBarView = require('../../framework/system/navBarView');
-var TabView = require("../../framework/system/tabView");
 var GotoReister = require("./gotoRegister");
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Button = require('../../comp/utils/button');
@@ -69,7 +68,7 @@ var Register_setInfo = React.createClass({
     },
     setInfo(){
         dismissKeyboard();
-        AppAction.register(
+        LoginAction.register(
             {
                 userName: this.state.userName,
                 password: this.state.password

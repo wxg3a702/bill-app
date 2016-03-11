@@ -6,8 +6,8 @@ var {
     Text,
     View,
     } = React;
-var AppAction = require('../action/appAction');
-AppAction.appInit();
+var CommonAction = require('../action/commonAction');
+CommonAction.appInit();
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
 var Alert = require('../../comp/utils/alert');

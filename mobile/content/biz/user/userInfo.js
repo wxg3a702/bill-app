@@ -13,7 +13,8 @@ var {
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction")
+var UserAction = require("../../framework/action/userAction")
+var LoginAction = require("../../framework/action/loginAction")
 var TextEdit = require('./textEdit')
 var Position = require('./position')
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
@@ -57,7 +58,7 @@ var UserInfo = React.createClass({
         this.setState(this.getStateFromStores());
     },
     callBack(data, cb){
-        AppAction.updateUser(
+        UserAction.updateUser(
             data,
             cb)
     },
@@ -98,7 +99,7 @@ var UserInfo = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                AppAction.updateUserHead(
+                UserAction.updateUserHead(
                     {[name]: source}
                 )
             }
@@ -130,7 +131,7 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        AppAction.logOut()
+        LoginAction.logOut()
     },
     button(){
         return (
@@ -152,7 +153,7 @@ var UserInfo = React.createClass({
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
             if (this.state.photoStoreId.length == 24) {
-                url = {uri: AppAction.getFile(this.state.photoStoreId)}
+                url = {uri: UserAction.getFile(this.state.photoStoreId)}
             } else {
                 url = {uri: this.state.photoStoreId, isStatic: true};
             }

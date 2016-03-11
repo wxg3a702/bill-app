@@ -10,7 +10,7 @@ var {
     Dimensions
     } = React;
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction");
+var MessageAction = require("../../framework/action/messageAction");
 var _ = require('lodash');
 var NavBarView = require('../../framework/system/navBarView');
 var MessageGroupType = require('../../constants/messageGroupType');
@@ -32,7 +32,7 @@ var MessageDetail = React.createClass({
     },
     componentDidMount() {
         this.fetchData();
-        AppAction.clearMessageDetail(MessageGroupType[this.props.param.name]);
+        MessageAction.clearMessageDetail(MessageGroupType[this.props.param.name]);
         AppStore.addChangeListener(this._onChange);
     },
 

@@ -6,7 +6,7 @@ var {
     } = React;
 var RightTopButton = require('../../comp/utils/rightTopButton');
 var Alert = require('../../comp/utils/alert');
-var AppAction = require("../../framework/action/appAction")
+var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var EditPhoneVerify = require('./editPhoneVerify');
 var Validation = require('../../comp/utils/validation');
@@ -34,7 +34,7 @@ var EditPhoneNewPhone = React.createClass({
         }
     },
     checkNewPhone: function () {
-        AppAction.validateMobileForResetMobile(
+        LoginAction.validateMobileForResetMobile(
             {
                 newMobileNo: this.state.newPhoneNumber,
             },

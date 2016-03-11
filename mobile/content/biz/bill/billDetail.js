@@ -12,7 +12,7 @@ var {
 var _ = require('lodash');
 var DisConfirm = require('./disConfirm');
 var cssVar = require('cssVar');
-var AppAction = require("../../framework/action/appAction");
+var BillAction = require("../../framework/action/billAction");
 var JumpLoading = require('../../comp/utils/jumpLoading');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -360,7 +360,7 @@ var Detail = React.createClass({
     ignAction: function () {
         //不贴现
         dismissKeyboard();
-        AppAction.giveUpBillDiscount(
+        BillAction.giveUpBillDiscount(
             {
                 billId: this.state.billId
             },
@@ -374,7 +374,7 @@ var Detail = React.createClass({
     reqAction: function () {
         //撤销
         dismissKeyboard();
-        AppAction.cancleBillDiscount(
+        BillAction.cancleBillDiscount(
             {
                 billId: this.state.billId
             },
@@ -416,7 +416,7 @@ var Detail = React.createClass({
 
                             <View
                                 style={{ flex:4,height:35,borderRadius:5,backgroundColor: '#ffffff',paddingLeft:10,paddingRight:10,borderWidth:1,borderColor:'#ff5b58'}}>
-                                <TouchableHighlight activeOpacity={0.8} underlayColor='ffffff'
+                                <TouchableHighlight activeOpacity={0.8} underlayColor='#ffffff'
                                                     onPress={() => Alert("确认不在平台内将此票据贴现吗？此操作将不可逆。",()=>this.ignAction(),function(){})}
                                                     style={{flex:1}}>
                                     <Text style={{paddingTop: 10,color:'#ff5b58',textAlign:'center'}}>{'不贴现'}</Text>
@@ -444,7 +444,7 @@ var Detail = React.createClass({
 
                             <View
                                 style={{flex:1,height:35,borderRadius:5,backgroundColor: '#ffffff',paddingLeft:10,paddingRight:10,borderWidth:1,borderColor:'#ff5b58'}}>
-                                <TouchableHighlight activeOpacity={0.8} underlayColor='ffffff'
+                                <TouchableHighlight activeOpacity={0.8} underlayColor='#ffffff'
                                                     onPress={() => Alert("确认撤销贴现申请吗？",()=>this.reqAction(),function(){})}
                                                     style={{flex:1}}>
                                     <Text style={{paddingTop: 10,color:'#ff5b58',textAlign:'center'}}>{'撤销申请'}</Text>

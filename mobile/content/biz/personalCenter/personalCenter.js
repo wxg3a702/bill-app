@@ -17,7 +17,7 @@ var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var CompCertification = require('../company/compCertification')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require('../../framework/action/appAction');
+var UserAction = require('../../framework/action/userAction');
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var Item = require('../../comp/utils/item')
@@ -74,7 +74,7 @@ var PersonalCenter = React.createClass({
         var url;
         if (!_.isEmpty(this.state.photoStoreId)) {
             if (this.state.photoStoreId.length == 24) {
-                url = {uri: AppAction.getFile(this.state.photoStoreId)}
+                url = {uri: UserAction.getFile(this.state.photoStoreId)}
             } else {
                 url = {uri: this.state.photoStoreId, isStatic: true};
             }

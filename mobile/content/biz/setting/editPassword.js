@@ -5,7 +5,7 @@ var {
     View
     } = React;
 var RightTopButton = require('../../comp/utils/rightTopButton')
-var AppAction = require("../../framework/action/appAction");
+var LoginAction = require("../../framework/action/loginAction");
 var NavBarView = require('../../framework/system/navBarView')
 var Input = require('../../comp/utils/input')
 var Validation = require('../../comp/utils/validation')
@@ -45,7 +45,7 @@ var EditPassword = React.createClass({
         }
     },
     _confirmPassword(){
-        AppAction.resetPasswordForChangePwd(
+        LoginAction.resetPasswordForChangePwd(
             {
                 password: this.state.password,
                 newPassword: this.state.newPassword

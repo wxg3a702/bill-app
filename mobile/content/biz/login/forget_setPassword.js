@@ -5,7 +5,7 @@ var {
     StyleSheet,
     View
     } = React;
-var AppAction = require("../../framework/action/appAction");
+var LoginAction = require("../../framework/action/loginAction");
 var Alert = require('../../comp/utils/alert');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -56,7 +56,7 @@ var Forget_setPassword = React.createClass({
     },
     setInfo(){
         dismissKeyboard();
-        AppAction.resetPasswordForForgetPwd({
+        LoginAction.resetPasswordForForgetPwd({
                 newPassword: this.state.passwordAgain,
             },
             function () {
