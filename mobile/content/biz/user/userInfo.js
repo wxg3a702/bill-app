@@ -8,7 +8,8 @@ var {
     Image,
     StyleSheet,
     Dimensions,
-    ScrollView
+    ScrollView,
+    Platform
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
@@ -103,6 +104,11 @@ var UserInfo = React.createClass({
             }
         });
     },
+
+    selectAndroid(desc, name){
+       console.log(desc+name);
+    },
+
     toEdit: function (title, name, value, type, maxLength, valid) {
         if (value == '未设置') {
             value = ''
@@ -153,12 +159,20 @@ var UserInfo = React.createClass({
         }
         return url;
     },
+
+    selectPhoto(){
+      if(Platform.OS === 'ios') {
+          this.select('用户头像','photoStoreId')
+      }else{
+          this.selectAndroid('用户头像','photoStoreId')
+      }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="个人信息" actionButton={this.button()}>
                 <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
                     <View style={styles.head}>
-                        <TouchableHighlight onPress={()=>{this.select('用户头像','photoStoreId')}}
+                        <TouchableHighlight onPress={this.selectPhoto}
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={styles.img} resizeMode="stretch" source={this.returnImg()}/>
                         </TouchableHighlight>
