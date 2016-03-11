@@ -18,7 +18,7 @@ var RightTopButton = React.createClass({
     render(){
         return (
             <View>
-                <TouchableOpacity onPress={this.logout} activeOpacity={0.5} style={styles.layout}>
+                <TouchableOpacity onPress={this.props.func} activeOpacity={0.5} style={styles.layout}>
                     <Image resizeMode="stretch" style={{width:20,height:20}} source={this.props.source}/>
                     <Text style={[{color:this.props.color},styles.font]}>{this.props.content}</Text>
                 </TouchableOpacity>
