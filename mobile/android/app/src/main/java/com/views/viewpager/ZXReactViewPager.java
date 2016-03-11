@@ -155,6 +155,16 @@ import com.facebook.react.uimanager.events.EventDispatcher;
     mIsCurrentItemFromJs = false;
   }
 
+  @Override
+  public void setCurrentItem(int item, boolean smoothScroll) {
+    super.setCurrentItem(item, false);
+  }
+
+  @Override
+  public void setCurrentItem(int item) {
+    super.setCurrentItem(item, false);
+  }
+
   /*package*/ void addViewToAdapter(View child, int index) {
     getAdapter().addView(child, index);
   }
