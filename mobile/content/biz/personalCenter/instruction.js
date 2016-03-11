@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var {
-    StyleSheet,
     Image,
     ScrollView,
     Dimensions
@@ -14,13 +13,11 @@ var Instruction = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator} title='使用手册'>
                 <ScrollView>
-                    <Image style={{width:width,height:8*height}}
-                           resizeMode="stretch"
+                    <Image style={{width:width,height:8*height}} resizeMode="stretch"
                            source={require('../../image/user/instruction.png')}/>
                 </ScrollView>
             </NavBarView>
         )
     }
 })
-var styles = StyleSheet.create({});
 module.exports = Instruction;

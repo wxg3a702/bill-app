@@ -8,22 +8,22 @@ var {
     Image,
     StyleSheet,
     Dimensions,
-    TouchableOpacity,
     ScrollView
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var AppAction = require("../../framework/action/appAction")
-var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./textEdit')
 var Position = require('./position')
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
-var EditPhone = require('./../securityCenter/editPhone')
-var EditComp=require('./editComp')
+var EditPhone = require('./../setting/editPhone')
+var EditComp = require('./editComp')
 var Validation = require('../../comp/utils/validation')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var window = Dimensions.get('window');
-var CompCertification=require('../company/compCertification')
+var Item = require('../../comp/utils/item');
+var RightTopButton = require('../../comp/utils/rightTopButton')
+var Space = require('../../comp/utils/space')
 var UserInfo = React.createClass({
     getStateFromStores() {
         var user = AppStore.getUserInfoBean();
@@ -128,15 +128,8 @@ var UserInfo = React.createClass({
     },
     button(){
         return (
-            <View>
-                <TouchableOpacity onPress={this.logout} style={{padding:10}} activeOpacity={0.5}>
-                    <View style={{flexDirection:'row',alignItems:'center',height:20}}>
-                        <Image resizeMode="stretch" style={{width:20,height:20}}
-                               source={require('../../image/user/exit.png')}/>
-                        <Text style={{color:'#ff5b58',textAlign:'right',marginRight:5,fontSize:15}}>退出</Text>
-                    </View>
-                </TouchableOpacity>
-            </View>
+            <RightTopButton func={this.logout} content="退出" color="#ff5b58"
+                            source={require('../../image/user/exit.png')}/>
         )
     },
     toOther(nav){
@@ -144,54 +137,11 @@ var UserInfo = React.createClass({
         if (navigator) {
             navigator.push({
                 comp: nav,
-                param: {
-                    location: this.state.location
-                }
+                param: {location: this.state.location}
             });
         }
     },
 
-    returnItem(desc, key, value, img, type, length, valid){
-        var {height, width} = Dimensions.get('window');
-        if (_.isEmpty(value) || value.length <= 23) {
-            return (
-                <TouchableHighlight underlayColor={'#cccccc'}
-                                    onPress={() => this.toEdit(desc,key,value,type,length,valid)}>
-                    <View
-                        style={{height:50,flexDirection:'row',justifyContent: 'space-between',alignItems:'center',paddingLeft:16,borderBottomColor: '#cccccc', borderBottomWidth: 1}}>
-                        <View style={{flexDirection:'row'}}>
-                            <Image style={{width: 16,height: 16,borderRadius: 8,marginTop: 1}} resizeMode="stretch"
-                                   source={img}/>
-                            <Text style={{marginLeft:16,fontSize: 18, color: '#323232', width: 90}}>{desc}：</Text>
-                        </View>
-                        <View style={{alignItems:'center',flexDirection:'row'}}>
-                            <Text style={{fontSize: 15, color: '#7f7f7f', textAlign: 'right'}}
-                                  numberOfLines={1}>{value}</Text>
-                            <VIcon/>
-                        </View>
-                    </View>
-                </TouchableHighlight>
-            )
-        } else {
-            return (
-                <TouchableHighlight underlayColor={'#cccccc'}
-                                    onPress={() => this.toEdit(desc,key,value,type,length,valid)}>
-                    <View
-                        style={[{flex:1,paddingHorizontal:16,alignItems:'center',flexDirection:'row',borderColor: '#cccccc', borderBottomWidth: 1},styles.paddingOne,value.length>23 && styles.paddingTwo]}>
-                        <View style={{flexDirection:'row',width:132}}>
-                            <Image style={{width: 16,height: 16,borderRadius: 8,marginTop: 1}} resizeMode="stretch"
-                                   source={img}/>
-                            <Text style={{marginLeft:16,fontSize: 18, color: '#323232', width: 90}}>{desc}：</Text>
-                        </View>
-                        <View style={{alignItems:'center',flexDirection:'row',width:width-138}}>
-                            <Text style={[{fontSize: 15,width:width-184,color: '#7f7f7f'}]}>{value}</Text>
-                            <VIcon/>
-                        </View>
-                    </View>
-                </TouchableHighlight>
-            )
-        }
-    },
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
@@ -204,83 +154,52 @@ var UserInfo = React.createClass({
         return url;
     },
     render: function () {
-        var {height, width} = Dimensions.get('window');
         return (
             <NavBarView navigator={this.props.navigator} title="个人信息" actionButton={this.button()}>
                 <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
-                    <View style={[{height:122,backgroundColor:'#f0f0f0',alignItems:'center',flexDirection:'column',}]}>
-                        <TouchableHighlight onPress={()=>{this.select('用户头像','photoStoreId')}} activeOpacity={0.6}
-                                            underlayColor="#ebf1f2">
-                            <Image
-                                style={{width: 63,height: 63,borderRadius: 5, marginTop: 18,borderColor: '#7f7f7f', borderBottomWidth: 1}}
-                                resizeMode="stretch" source={this.returnImg()}/>
+                    <View style={styles.head}>
+                        <TouchableHighlight onPress={()=>{this.select('用户头像','photoStoreId')}}
+                                            activeOpacity={0.6} underlayColor="#ebf1f2">
+                            <Image style={styles.img} resizeMode="stretch" source={this.returnImg()}/>
                         </TouchableHighlight>
-                        <Text style={{fontSize: 15, color: '#333333', marginTop: 8}}>{this.state.userName}</Text>
+                        <Text style={styles.name}>{this.state.userName}</Text>
                     </View>
-                    <View style={{backgroundColor:'white',flexDirection:'column'}}>
-                        {this.returnItem("姓名", 'realName', this.state.realName, require('../../image/user/realName.png'), 'name', 20, Validation.realName)}
-                        <TouchableHighlight underlayColor={'#cccccc'} onPress={()=>this.toOther(EditPhone)}>
-                            <View
-                                style={{height:50,flexDirection:'row',justifyContent: 'space-between',alignItems:'center',paddingLeft:16,borderBottomColor: '#cccccc', borderBottomWidth: 1}}>
-                                <View style={{flex:1,flexDirection:'row'}}>
-                                    <Image style={{width: 16,height: 16,borderRadius: 8,marginTop: 1}}
-                                           resizeMode="stretch"
-                                           source={require('../../image/user/mobileNo.png')}/>
-                                    <View style={{marginLeft:16}}>
-                                        <Text style={{fontSize: 18, color: '#323232', width: 80}}>手机号：</Text>
-                                    </View>
-                                </View>
-                                <View style={{alignItems:'center',flexDirection:'row'}}>
-                                    <View>
-                                        <Text
-                                            style={{fontSize: 15, color: '#7f7f7f', textAlign: 'right'}}>{phoneNumber(this.state.mobileNo)}</Text>
-                                    </View>
-                                    <VIcon/>
-                                </View>
-                            </View>
-                        </TouchableHighlight>
-                        {this.returnItem("座机号", 'telephoneNo', this.state.telephoneNo, require('../../image/user/telephoneNo.png'), 'telephone', 13, Validation.isTelephone)}
-                        {this.returnItem("QQ", 'qqNo', this.state.qqNo, require('../../image/user/qqNo.png'), 'number', 20, Validation.isQQ)}
-                        {this.returnItem("微信", 'wechatNo', this.state.wechatNo, require('../../image/user/wechatNo.png'), '', 40, '')}
-                        {this.returnItem("电子邮箱", 'email', this.state.email, require('../../image/user/email.png'), '', 60, Validation.isEmail)}
-                    </View>
-                    <View style={[{backgroundColor:'white',marginTop:16,flexDirection: 'column',}]}>
-                        <TouchableHighlight underlayColor={'#cccccc'} onPress={()=>this.toOther(EditComp)}>
-                            <View
-                                style={[{flex:1,paddingLeft:16,alignItems:'center',flexDirection:'row',justifyContent:'space-between',borderColor: '#cccccc', borderBottomWidth: 1,borderTopWidth:1},styles.paddingOne,this.state.comp.length>14 && styles.paddingTwo]}>
-                                <View style={{flex:1,flexDirection:'row'}}>
-                                    <Image style={{width: 16,height: 16,borderRadius: 8,marginTop: 1}}
-                                           resizeMode="stretch" source={require('../../image/user/comp.png')}/>
-                                    <Text style={{marginLeft:16,fontSize: 18, color: '#323232', width: 80}}>公司：</Text>
-                                </View>
-                                <View style={{alignItems:'center',flexDirection:'row'}}>
-                                    <Text
-                                        style={[{fontSize: 15, width:width-144,color: '#7f7f7f'},styles.textRight,this.state.comp.length>14 && styles.textLeft]}>
-                                        {this.state.comp}
-                                    </Text>
-                                    <VIcon/>
-                                </View>
-                            </View>
-                        </TouchableHighlight>
-                        {this.returnItem("职务", 'jobTitle', this.state.jobTitle, require('../../image/user/jobTitle.png'), 'name', 20, '')}
-                        <TouchableHighlight underlayColor={'#cccccc'} onPress={()=>this.toOther(Position)}>
-                            <View
-                                style={{height:50,flexDirection:'row',justifyContent: 'space-between',alignItems:'center',paddingLeft:16,borderBottomColor: '#cccccc', borderBottomWidth: 1}}>
-                                <View style={{flex:1,flexDirection:'row'}}>
-                                    <Image style={{width: 16,height: 16,borderRadius: 8,marginTop: 1}}
-                                           resizeMode="stretch"
-                                           source={require('../../image/user/location.png')}/>
-                                    <View style={{marginLeft:16}}>
-                                        <Text style={{fontSize: 18, color: '#323232', width: 80}}>所在地：</Text>
-                                    </View>
-                                </View>
-                                <View style={{alignItems:'center',flexDirection:'row'}}>
-                                    <Text
-                                        style={{fontSize: 15, color: '#7f7f7f', textAlign: 'right'}}>{this.state.location}</Text>
-                                    <VIcon/>
-                                </View>
-                            </View>
-                        </TouchableHighlight>
+                    <View style={{backgroundColor:'white'}}>
+
+                        <Item desc="姓名:" imgPath={require('../../image/user/realName.png')} value={this.state.realName}
+                              func={() => this.toEdit("姓名", 'realName', this.state.realName, 'name', 20, Validation.realName)}/>
+
+                        <Item func={()=>this.toOther(EditPhone)}
+                              desc="手机号:" imgPath={require('../../image/user/mobileNo.png')}
+                              value={phoneNumber(this.state.mobileNo)}/>
+
+                        <Item desc="座机号:" imgPath={require('../../image/user/telephoneNo.png')}
+                              value={this.state.telephoneNo}
+                              func={() => this.toEdit("座机号", 'telephoneNo', this.state.telephoneNo, 'telephone', 13, Validation.isTelephone)}/>
+
+                        <Item desc="QQ:" imgPath={require('../../image/user/qqNo.png')} value={this.state.qqNo}
+                              func={() => this.toEdit("QQ", 'qqNo', this.state.qqNo, 'number', 20, Validation.isQQ)}/>
+
+                        <Item desc="微信:" imgPath={require('../../image/user/wechatNo.png')}
+                              value={this.state.wechatNo}
+                              func={() => this.toEdit("微信", 'wechatNo', this.state.wechatNo, '', 40, '')}/>
+
+                        <Item desc="电子邮箱:" imgPath={require('../../image/user/email.png')}
+                              value={this.state.email}
+                              func={() => this.toEdit("电子邮箱", 'email', this.state.email, '', 60, Validation.isEmail)}/>
+
+                        <Space top={false}/>
+
+                        <Item desc="公司:" imgPath={require('../../image/user/comp.png')} value={this.state.comp}
+                              func={()=>this.toOther(EditComp)}/>
+
+                        <Item desc="职务:" imgPath={require('../../image/user/jobTitle.png')}
+                              value={this.state.jobTitle}
+                              func={() => this.toEdit("职务", 'jobTitle', this.state.jobTitle, 'name', 20, '')}/>
+
+                        <Item desc="所在地:" imgPath={require('../../image/user/location.png')} value={this.state.location}
+                              func={()=>this.toOther(Position)}/>
+
                     </View>
                 </ScrollView>
             </NavBarView>
@@ -288,17 +207,25 @@ var UserInfo = React.createClass({
     }
 })
 var styles = StyleSheet.create({
-    textLeft: {
-        textAlign: 'left'
+    img: {
+        width: 63,
+        height: 63,
+        borderRadius: 5,
+        marginTop: 18,
+        borderColor: '#7f7f7f',
+        borderWidth: 1
     },
-    textRight: {
-        textAlign: 'right'
+    head: {
+        height: 122,
+        backgroundColor: '#f0f0f0',
+        alignItems: 'center',
+        borderColor: '#cccccc',
+        borderBottomWidth: 1
     },
-    paddingOne: {
-        paddingVertical: 16
-    },
-    paddingTwo: {
-        paddingVertical: 10
+    name: {
+        fontSize: 15,
+        color: '#333333',
+        marginTop: 8
     }
 })
 module.exports = UserInfo;

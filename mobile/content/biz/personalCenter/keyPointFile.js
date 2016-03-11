@@ -76,4 +76,4 @@ var KeyPointFile = [{
     title: '19.随时都能贴现吗？',
     content: '你只要您有可贴现的新票据，随时随地都可以点击“我要贴现”进行贴现，提交贴现请求，贴现行会在正常工作时间为您审核，并将审核结果及时反馈与您，请注意查看。'
 }]
-module.exports = KeyPointFile
+module.exports = KeyPointFile;
