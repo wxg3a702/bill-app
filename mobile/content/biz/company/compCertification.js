@@ -11,6 +11,7 @@ var {
     } = React;
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
+var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var compInfoLevel;
@@ -19,8 +20,7 @@ var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utils/button')
 var CompCertification = React.createClass({
     getStateFromStores(){
-        var orgBean = AppStore.getOrgBeans()[0];
-        compInfoLevel = AppStore.getCompInfoLevel()
+        var orgBean = CompStore.getOrgBeans()[0];
         return orgBean
     },
 

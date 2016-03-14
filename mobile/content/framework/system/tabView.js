@@ -14,6 +14,7 @@ var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/personalCenter/personalCenter")
 var CommonAction = require('../action/commonAction');
 var AppStore = require('../store/appStore');
+var MessageStore = require('../../framework/store/messageStore');
 //var TabBarIOS = require('./tabBarIOS.ios.fas')
 var Alert = require('../../comp/utils/alert');
 var Login = require('../../biz/login/login')
@@ -23,7 +24,7 @@ var AndroidTabBar = require('../../comp/tabBar/android/tabBar')
 var TabView = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var mainMsgBean = AppStore.getMainMsgBean();
+        var mainMsgBean = MessageStore.getMainMsgBean();
         if (token != null) {
             var sum = 0;
             var billSum = 0;

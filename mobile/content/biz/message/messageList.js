@@ -12,6 +12,7 @@ var {
     } = React;
 var Login = require('../login/login')
 var AppStore = require('../../framework/store/appStore');
+var MessageStore = require('../../framework/store/messageStore');
 var MessageAction = require('../../framework/action/messageAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
@@ -30,7 +31,7 @@ var Message = React.createClass({
         if (token == null) {
             return {token: token}
         } else {
-            var messageBean = AppStore.getMessage()
+            var messageBean = MessageStore.getMessage()
             return {
                 dataSource: ds.cloneWithRows(messageBean),
                 data: messageBean,
@@ -71,7 +72,7 @@ var Message = React.createClass({
             })
         }
 
-        AppStore.updateUnReadNum(name);
+        MessageStore.updateUnReadNum(name);
         MessageAction.setOtherMsgRead({category: name}, function (data) {
             //更新未读标记
 
@@ -148,8 +149,8 @@ var Message = React.createClass({
     toOther(item){
         let billId = item.billId;
         //remove unread
-        AppStore.updateMessage(billId);
-        let bill = AppStore.getRevBillDetail(billId);
+        MessageStore.updateMessage(billId);
+        let bill = MessageStore.getRevBillDetail(billId);
         if (_.isEmpty(bill)) {
             Alert('票据信息不存在');
         } else {

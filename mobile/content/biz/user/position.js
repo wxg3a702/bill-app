@@ -14,13 +14,14 @@ var LocationEdit = require('./locationEdit')
 var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var UserAction = require("../../framework/action/userAction")
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var Position = React.createClass({
     getStateFromStores() {
-        return AppStore.getArea();
+        return UserStore.getArea();
     },
     componentDidMount() {
         this.fetchData();

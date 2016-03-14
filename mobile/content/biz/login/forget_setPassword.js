@@ -6,7 +6,6 @@ var {
     View
     } = React;
 var LoginAction = require("../../framework/action/loginAction");
-var Alert = require('../../comp/utils/alert');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Button = require('../../comp/utils/button');

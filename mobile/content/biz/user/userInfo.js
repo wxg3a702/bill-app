@@ -13,6 +13,8 @@ var {
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
+var CompStore = require('../../framework/store/compStore');
 var UserAction = require("../../framework/action/userAction")
 var LoginAction = require("../../framework/action/loginAction")
 var TextEdit = require('./textEdit')
@@ -28,8 +30,8 @@ var RightTopButton = require('../../comp/utils/rightTopButton')
 var Space = require('../../comp/utils/space')
 var UserInfo = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
-        var orgBean = AppStore.getOrgBeans()[0];
+        var user = UserStore.getUserInfoBean();
+        var orgBean = CompStore.getOrgBeans()[0];
         return {
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
@@ -107,7 +109,7 @@ var UserInfo = React.createClass({
     },
 
     selectAndroid(desc, name){
-       console.log(desc+name);
+        console.log(desc + name);
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {
@@ -162,11 +164,11 @@ var UserInfo = React.createClass({
     },
 
     selectPhoto(){
-      if(Platform.OS === 'ios') {
-          this.select('用户头像','photoStoreId')
-      }else{
-          this.selectAndroid('用户头像','photoStoreId')
-      }
+        if (Platform.OS === 'ios') {
+            this.select('用户头像', 'photoStoreId')
+        } else {
+            this.selectAndroid('用户头像', 'photoStoreId')
+        }
     },
     render: function () {
         return (

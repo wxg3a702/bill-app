@@ -6,7 +6,7 @@ var {
     } = React;
 var Item = require('../../comp/utils/item')
 var Space = require('../../comp/utils/space')
-var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var NavBarView = require('../../framework/system/navBarView')
 var PointDetail = require('./pointDetail')
 var KeyPoint = React.createClass({
@@ -14,7 +14,7 @@ var KeyPoint = React.createClass({
         var ds = new ListView.DataSource({
             rowHasChanged: (row1, row2) => row1 !== row2,
         });
-        var result = AppStore.getKeyPoint();
+        var result = UserStore.getKeyPoint();
         return {
             dataSource: ds.cloneWithRows(result),
         }

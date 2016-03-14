@@ -8,15 +8,16 @@ var {
     Text,
     View,
     } = React;
-var EditPassword=require('./editPassword')
-var EditPhone=require('./editPhone')
+var EditPassword = require('./editPassword')
+var EditPhone = require('./editPhone')
 var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
 var SecurityCenter = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
+        var user = UserStore.getUserInfoBean();
         var phone = user.mobileNo;
         return {
             phoneNum: user.mobileNo
