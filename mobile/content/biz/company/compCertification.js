@@ -42,6 +42,7 @@ var CompCertification = React.createClass({
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="企业认证" contentBackgroundColor='#f0f0f0'>
+
             </NavBarView>
         )
     }
