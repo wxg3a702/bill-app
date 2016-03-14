@@ -9,12 +9,13 @@ var {
     StyleSheet,
     Dimensions,
     ScrollView,
-    Platform
+    Platform,
+    DeviceEventEmitter,
+    NativeModules
     } = React;
+
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
-var UserStore = require('../../framework/store/userStore');
-var CompStore = require('../../framework/store/compStore');
 var UserAction = require("../../framework/action/userAction")
 var LoginAction = require("../../framework/action/loginAction")
 var TextEdit = require('./textEdit')
@@ -28,11 +29,14 @@ var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utils/rightTopButton')
 var Space = require('../../comp/utils/space')
+var PhotoPic = require('NativeModules').PhotoPicModule;
+
 var UserInfo = React.createClass({
     getStateFromStores() {
-        var user = UserStore.getUserInfoBean();
-        var orgBean = CompStore.getOrgBeans()[0];
+        var user = AppStore.getUserInfoBean();
+        var orgBean = AppStore.getOrgBeans()[0];
         return {
+            imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
             newMobileNo: Validation.isNull(user.newMobileNo) ? '未设置' : user.newMobileNo,
@@ -52,7 +56,17 @@ var UserInfo = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        DeviceEventEmitter.addListener('getPicture', function (e:Event) {
+            // handle event.
+            this.setState({
+                imageSource: e.uri
+            });
+            UserAction.updateUserHead(
+                { ['photoStoreId']: this.state.imageSource}
+            )
+        }.bind(this));
     },
+
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
@@ -110,6 +124,8 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
+        PhotoPic.showImagePic();
+
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {

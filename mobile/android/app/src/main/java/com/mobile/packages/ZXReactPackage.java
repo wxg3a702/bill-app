@@ -1,11 +1,15 @@
-package com.views.viewpager;
+package com.mobile.packages;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.mobile.modules.PhotoPicModule;
+import com.mobile.views.viewpager.*;
+import com.mobile.views.viewpager.ZXViewPagerManager;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +20,9 @@ import java.util.List;
 public class ZXReactPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-        return Collections.emptyList();
+        List<NativeModule> modules = new ArrayList<>();
+        modules.add(new PhotoPicModule(reactContext));
+        return modules;
     }
 
     @Override
