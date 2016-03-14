@@ -15,6 +15,8 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView')
+var UserStore = require('../../framework/store/userStore');
+var CompStore = require('../../framework/store/compStore');
 var AppStore = require('../../framework/store/appStore');
 var UserAction = require("../../framework/action/userAction")
 var LoginAction = require("../../framework/action/loginAction")
@@ -33,8 +35,8 @@ var PhotoPic = require('NativeModules').PhotoPicModule;
 
 var UserInfo = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
-        var orgBean = AppStore.getOrgBeans()[0];
+        var user = UserStore.getUserInfoBean();
+        var orgBean = CompStore.getOrgBeans()[0];
         return {
             imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
