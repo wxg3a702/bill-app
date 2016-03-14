@@ -14,6 +14,7 @@ var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
+var RightTopButton = require('../../comp/utils/rightTopButton')
 var Calculator = React.createClass({
     getInitialState: function () {
         return {
@@ -95,9 +96,25 @@ var Calculator = React.createClass({
             actAmount: this.state.amount - discountAmount
         })
     },
+    clear(){
+      this.setState({
+          discountDate: '',
+          dueDate: '',
+          monthRate: '',
+          amount: null,
+          discountAmount: '',
+          actAmount: '',
+          interestDay: ''
+      })
+    },
+    button(){
+        return (
+            <RightTopButton func={this.clear} content="清空"/>
+        )
+    },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="贴现利率计算器" contentBackgroundColor='#f0f0f0'>
+            <NavBarView navigator={this.props.navigator} title="贴现利率计算器" actionButton={this.button()}>
                 <ScrollView style={[styles.flexColumn,styles.flexOne]} scrollEnabled={false}>
                     <View
                         style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:16,alignItems:'center'}]}>
