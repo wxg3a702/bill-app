@@ -14,18 +14,19 @@ var LocationEdit = require('./locationEdit')
 var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction")
+var UserStore = require('../../framework/store/userStore');
+var UserAction = require("../../framework/action/userAction")
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var Position = React.createClass({
     getStateFromStores() {
-        return AppStore.getArea();
+        return UserStore.getArea();
     },
     componentDidMount() {
         this.fetchData();
         AppStore.addChangeListener(this._onChange);
-        AppAction.getRegion(
+        UserAction.getRegion(
             function (loc) {
                 this.setState({'location': loc, gps: true});
             }.bind(this),
@@ -56,7 +57,7 @@ var Position = React.createClass({
         const { navigator } = this.props;
         if (item.city.length == 1) {
             if (item.city[0].area.length == 1) {
-                AppAction.updateUser(
+                UserAction.updateUser(
                     {location: item.name}
                     , function () {
                         navigator.pop()
@@ -86,7 +87,7 @@ var Position = React.createClass({
     positionEdit(value){
         if (this.state.gps) {
             const { navigator } = this.props;
-            AppAction.updateUser(
+            UserAction.updateUser(
                 {location: value}
                 , function () {
                     navigator.pop()

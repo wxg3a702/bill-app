@@ -9,8 +9,8 @@ var {
     Platform
     } = React;
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction");
-var TabView = require("../../framework/system/tabView");
+var UserStore = require('../../framework/store/userStore');
+var LoginAction = require("../../framework/action/loginAction");
 var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
 var NavBarView = require('../../framework/system/navBarView');
@@ -21,7 +21,7 @@ var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
 var Login = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
+        var user = UserStore.getUserInfoBean();
         var deviceModel = 'IOS'
         if (Platform.OS != 'ios') {
             deviceModel = 'ANDROID'
@@ -55,7 +55,7 @@ var Login = React.createClass({
 
         } else {
             dismissKeyboard()
-            AppAction.login(
+            LoginAction.login(
                 {
                     userName: this.state.userName,
                     password: this.state.password,
@@ -91,7 +91,7 @@ var Login = React.createClass({
         this.textOnchange(value, key);
     },
     render: function () {
-        //AppAction.registerAPNS()
+        //LoginAction.registerAPNS()
         return (
             <NavBarView title="登录" navigator={this.props.navigator} showBack={true}>
                 <View style={[{flexDirection: 'column',flex:1},styles.paddingLR]}>

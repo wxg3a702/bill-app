@@ -7,7 +7,7 @@ var {
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
 var RightTopButton = require('../../comp/utils/rightTopButton')
-var AppAction = require("../../framework/action/appAction")
+var UserAction = require("../../framework/action/userAction")
 var Alert = require('../../comp/utils/alert');
 var Advice = React.createClass({
     getInitialState(){
@@ -17,7 +17,7 @@ var Advice = React.createClass({
     },
     submit(){
         const { navigator } = this.props;
-        AppAction.feedbackOpinion(
+        UserAction.feedbackOpinion(
             {
                 opinion: this.state.opinion
             },

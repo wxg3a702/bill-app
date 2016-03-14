@@ -10,7 +10,8 @@ var {
     Dimensions
     } = React;
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction");
+var MessageStore = require('../../framework/store/messageStore');
+var MessageAction = require("../../framework/action/messageAction");
 var _ = require('lodash');
 var NavBarView = require('../../framework/system/navBarView');
 var MessageGroupType = require('../../constants/messageGroupType');
@@ -23,7 +24,7 @@ var ds = new ListView.DataSource({
 });
 var MessageDetail = React.createClass({
     getStateFromStores() {
-        var results = AppStore.getResult(this.props.param.name);
+        var results = MessageStore.getResult(this.props.param.name);
         return {
             dataSource: ds.cloneWithRows(results),
             renderList: this.renderLists,
@@ -32,7 +33,7 @@ var MessageDetail = React.createClass({
     },
     componentDidMount() {
         this.fetchData();
-        AppAction.clearMessageDetail(MessageGroupType[this.props.param.name]);
+        MessageAction.clearMessageDetail(MessageGroupType[this.props.param.name]);
         AppStore.addChangeListener(this._onChange);
     },
 
@@ -66,7 +67,7 @@ var MessageDetail = React.createClass({
         if (billId == null || billId == undefined) {
             return;
         }
-        let bill = AppStore.getSentBillDetail(billId);
+        let bill = MessageStore.getSentBillDetail(billId);
         if (_.isEmpty(bill)) {
             Alert('票据信息不存在');
         } else {

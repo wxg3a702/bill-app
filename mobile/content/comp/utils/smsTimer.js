@@ -10,7 +10,7 @@ var {
     Dimensions,
     Image
     } = React;
-var AppAction = require("../../framework/action/appAction")
+var LoginAction = require("../../framework/action/loginAction")
 var TimerMixin = require('react-timer-mixin');
 var SMSTimer = React.createClass({
     mixins: [TimerMixin],
@@ -24,7 +24,7 @@ var SMSTimer = React.createClass({
     },
     changeVerify: function () {
         if (this.state.time == "重新获取") {
-            AppAction[this.props.func](
+            LoginAction[this.props.func](
                 {
                     mobileNo: this.props.parameter
                 },

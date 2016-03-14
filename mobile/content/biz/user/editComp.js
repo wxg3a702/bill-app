@@ -3,7 +3,7 @@ var React = require('react-native');
 var {
     View,
     } = React;
-var AppAction = require("../../framework/action/appAction")
+var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var EditComp = React.createClass({
     render(){

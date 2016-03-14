@@ -8,11 +8,18 @@ var {
     Image,
     StyleSheet,
     Dimensions,
-    ScrollView
+    ScrollView,
+    Platform,
+    DeviceEventEmitter,
+    NativeModules
     } = React;
+
 var NavBarView = require('../../framework/system/navBarView')
+var UserStore = require('../../framework/store/userStore');
+var CompStore = require('../../framework/store/compStore');
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require("../../framework/action/appAction")
+var UserAction = require("../../framework/action/userAction")
+var LoginAction = require("../../framework/action/loginAction")
 var TextEdit = require('./textEdit')
 var Position = require('./position')
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
@@ -24,11 +31,14 @@ var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utils/rightTopButton')
 var Space = require('../../comp/utils/space')
+var PhotoPic = require('NativeModules').PhotoPicModule;
+
 var UserInfo = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
-        var orgBean = AppStore.getOrgBeans()[0];
+        var user = UserStore.getUserInfoBean();
+        var orgBean = CompStore.getOrgBeans()[0];
         return {
+            imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
             newMobileNo: Validation.isNull(user.newMobileNo) ? '未设置' : user.newMobileNo,
@@ -48,7 +58,17 @@ var UserInfo = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        DeviceEventEmitter.addListener('getPicture', function (e:Event) {
+            // handle event.
+            this.setState({
+                imageSource: e.uri
+            });
+            UserAction.updateUserHead(
+                { ['photoStoreId']: this.state.imageSource}
+            )
+        }.bind(this));
     },
+
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
@@ -56,7 +76,7 @@ var UserInfo = React.createClass({
         this.setState(this.getStateFromStores());
     },
     callBack(data, cb){
-        AppAction.updateUser(
+        UserAction.updateUser(
             data,
             cb)
     },
@@ -97,12 +117,19 @@ var UserInfo = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                AppAction.updateUserHead(
+                UserAction.updateUserHead(
                     {[name]: source}
                 )
             }
         });
     },
+
+    selectAndroid(desc, name){
+        console.log(desc + name);
+        PhotoPic.showImagePic();
+
+    },
+
     toEdit: function (title, name, value, type, maxLength, valid) {
         if (value == '未设置') {
             value = ''
@@ -124,7 +151,7 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        AppAction.logOut()
+        LoginAction.logOut()
     },
     button(){
         return (
@@ -146,19 +173,27 @@ var UserInfo = React.createClass({
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
             if (this.state.photoStoreId.length == 24) {
-                url = {uri: AppAction.getFile(this.state.photoStoreId)}
+                url = {uri: UserAction.getFile(this.state.photoStoreId)}
             } else {
                 url = {uri: this.state.photoStoreId, isStatic: true};
             }
         }
         return url;
     },
+
+    selectPhoto(){
+        if (Platform.OS === 'ios') {
+            this.select('用户头像', 'photoStoreId')
+        } else {
+            this.selectAndroid('用户头像', 'photoStoreId')
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="个人信息" actionButton={this.button()}>
                 <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
                     <View style={styles.head}>
-                        <TouchableHighlight onPress={()=>{this.select('用户头像','photoStoreId')}}
+                        <TouchableHighlight onPress={this.selectPhoto}
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={styles.img} resizeMode="stretch" source={this.returnImg()}/>
                         </TouchableHighlight>

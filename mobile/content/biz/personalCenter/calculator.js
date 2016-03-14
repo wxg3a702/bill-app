@@ -14,6 +14,7 @@ var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
+var RightTopButton = require('../../comp/utils/rightTopButton')
 var Calculator = React.createClass({
     getInitialState: function () {
         return {
@@ -95,9 +96,25 @@ var Calculator = React.createClass({
             actAmount: this.state.amount - discountAmount
         })
     },
+    clear(){
+        this.setState({
+            discountDate: '',
+            dueDate: '',
+            monthRate: '',
+            amount: null,
+            discountAmount: '',
+            actAmount: '',
+            interestDay: ''
+        })
+    },
+    button(){
+        return (
+            <RightTopButton func={() => this.clear()} content="清空"/>
+        )
+    },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="贴现利率计算器" contentBackgroundColor='#f0f0f0'>
+            <NavBarView navigator={this.props.navigator} title="贴现利率计算器" actionButton={this.button()}>
                 <ScrollView style={[styles.flexColumn,styles.flexOne]} scrollEnabled={false}>
                     <View
                         style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:16,alignItems:'center'}]}>
@@ -105,7 +122,7 @@ var Calculator = React.createClass({
                             <Text style={[styles.text,{color:'#323232'}]}>票面金额</Text>
                         </View>
                         <View style={{flex:1}}>
-                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric"
+                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric" value={this.state.amount}
                                        onChangeText={(text) => this.setState({amount:text})}
                                        placeholderTextColor='#cccccc' placeholder="请输入票面金额"/>
                         </View>
@@ -146,7 +163,7 @@ var Calculator = React.createClass({
                             <Text style={[styles.text]}>月利率</Text>
                         </View>
                         <View style={{flex:1}}>
-                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric"
+                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric" value={this.state.monthRate}
                                        onChangeText={(text) => this.setState({monthRate:text})}
                                        placeholderTextColor='#cccccc' placeholder="请输入月利率"/>
                         </View>
@@ -208,7 +225,7 @@ var styles = StyleSheet.create({
         justifyContent: 'space-between'
     },
     calResult: {
-        justifyContent: 'center', height: 55, paddingLeft: 16,backgroundColor:'#f0f0f0'
+        justifyContent: 'center', height: 55, paddingLeft: 16, backgroundColor: '#f0f0f0'
     },
     result: {
         alignItems: 'center',
@@ -226,11 +243,11 @@ var styles = StyleSheet.create({
         paddingTop: 10,
         paddingBottom: 10,
         alignItems: 'center',
-        justifyContent:'center'
+        justifyContent: 'center'
     },
-    value:{
-        fontSize:18,
-        color:'#7f7f7f'
+    value: {
+        fontSize: 18,
+        color: '#7f7f7f'
     }
 })
 module.exports = Calculator;

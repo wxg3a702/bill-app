@@ -7,28 +7,29 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.views.viewpager;
+package com.mobile.views.viewpager;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.mobile.views.viewpager.ZXReactViewPager;
 
 /**
- * Event emitted by {@link ZXReactViewPager} when user scrolling state changed.
+ * Event emitted by {@link ZXReactViewPager} when selected page changes.
  *
  * Additional data provided by this event:
- *  - pageScrollState - {Idle,Dragging,Settling}
+ *  - position - index of page that has been selected
  */
-class PageScrollStateChangedEvent extends Event<PageScrollStateChangedEvent> {
+/* package */ class PageSelectedEvent extends Event<com.mobile.views.viewpager.PageSelectedEvent> {
 
-  public static final String EVENT_NAME = "topPageScrollStateChanged";
+  public static final String EVENT_NAME = "topPageSelected";
 
-  private final String mPageScrollState;
+  private final int mPosition;
 
-  protected PageScrollStateChangedEvent(int viewTag, long timestampMs, String pageScrollState) {
+  protected PageSelectedEvent(int viewTag, long timestampMs, int position) {
     super(viewTag, timestampMs);
-    mPageScrollState = pageScrollState;
+    mPosition = position;
   }
 
   @Override
@@ -43,7 +44,7 @@ class PageScrollStateChangedEvent extends Event<PageScrollStateChangedEvent> {
 
   private WritableMap serializeEventData() {
     WritableMap eventData = Arguments.createMap();
-    eventData.putString("pageScrollState", mPageScrollState);
+    eventData.putInt("position", mPosition);
     return eventData;
   }
 }

@@ -2,244 +2,66 @@ var React = require('react-native');
 var {
     NetInfo
     } = React;
-
+var info = {
+    initLoadingState: true,
+    CHANGE_EVENT: 'change',
+    netWorkState: false,
+    requestHandle: null,
+    isLogout: false,
+    isForce_Logout: false
+}
+var _data = {};
 var _ = require('lodash');
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
-
-var _data = {};
-var _compInfoLevel = {}
-var initLoadingState = false;
-var CHANGE_EVENT = 'change';
-var netWorkState = false;
-var requestHandle;
-var isLogout = false;
-var isForce_Logout = false;
-
-var KeyPointFile = require('../../biz/personalCenter/keyPointFile')
-var LocationJson = require('../../biz/user/locationJson')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Persister = require('../persister/persisterFacade');
-
 var AppConstants = require('../../constants/command');
 var ActionTypes = AppConstants.ActionTypes;
-var MsgTypes = require('../../constants/notification').MsgTypes;
-var MsgCategory = require('../../constants/notification').MsgCategory;
+var Notification = require('../../constants/notification');
+var MsgTypes = Notification.MsgTypes;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
-
 var AppStore = assign({}, EventEmitter.prototype, {
 
     addChangeListener: function (callback, event) {
-        if (!event)event = CHANGE_EVENT
+        if (!event)event = info.CHANGE_EVENT
         this.on(event, callback);
     },
 
     removeChangeListener: function (callback, event) {
-        if (!event)event = CHANGE_EVENT
+        if (!event)event = info.CHANGE_EVENT
         this.removeListener(event, callback);
     },
 
     emitChange: function (event) {
-        if (!event)event = CHANGE_EVENT
+        if (!event)event = info.CHANGE_EVENT
         this.emit(event);
     },
 
+    getNetWorkState: ()=> info.netWorkState,
 
-    init: function (data) {
-        initLoadingState = false;
-        _data = data;
-    },
-
-    getNetWorkState: ()=> netWorkState,
-
-    getInitLoadingState: ()=>initLoadingState,
+    getInitLoadingState: ()=>info.initLoadingState,
 
     requestLoadingState: ()=>requestLoadingState,
 
-    requestHandle: ()=>requestHandle,
+    requestHandle: ()=>info.requestHandle,
 
-    getCompInfoLevel: ()=>_compInfoLevel,
+    isLogout: ()=>info.isLogout,
 
-    isLogout: ()=>isLogout,
-
-    isForceLogout: ()=>isForce_Logout,
+    isForceLogout: ()=>info.isForce_Logout,
 
     getAPNSToken: ()=>_data.APNSToken,
 
     getToken: ()=>_data.token,
 
-    getUserId: ()=> _data.userInfoBean.id,
+    getData : ()=>_data,
 
-    getUserInfoBean: ()=>_data.userInfoBean,
-
-    getMainMsgBean: ()=>_data.mainMsgBean,
-
-    getOrgBeans: ()=> _data.orgBeans,
-
-    getArea: ()=>LocationJson,
-
-    getKeyPoint: ()=>KeyPointFile,
-
-    getMessage(){
-        var mainMsgBean = _data.mainMsgBean;
-        return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+    init: function (data) {
+        info.initLoadingState = false;
+        _data = data;
     },
-
-    updateUnReadNum(category){
-        switch (category) {
-            case MsgCategory.BILL_SENT:
-                _data.mainMsgBean.billSentBean.unReadNum = 0;
-                break;
-            case MsgCategory.MARKET_NEWS:
-                _data.mainMsgBean.marketNewsBean.unReadNum = 0;
-                break;
-            case MsgCategory.SYSTEM_NOTICE:
-                _data.mainMsgBean.systemNoticeBean.unReadNum = 0;
-                break;
-        }
-        this.emitChange();
-    },
-
-    getResult(name){
-        if (name == MsgCategory.BILL_SENT) {
-            return _data.sentBillMsgBeans
-        } else if (name == MsgCategory.MARKET_NEWS) {
-            return _data.marketMsgBeans
-        } else {
-            return _data.systemMsgBeans
-        }
-    },
-
-    getBillRevViewItems(status){
-        if (status == "" || status === null || status === undefined) {
-            return _data.revBillBean == null ? null : _data.revBillBean.contentList;
-        }
-        else {
-            var ret = new Array();
-            _data.revBillBean.contentList.map((item, index)=> {
-                if (item.status == status) {
-                    ret.push(item);
-                }
-            });
-            return ret;
-        }
-    },
-
-    getRevBillDetail(id){
-        var ret;
-        _data.revBillBean.contentList.map((item, index)=> {
-            if (item.billId == id) {
-                ret = item;
-            }
-        });
-        return ret;
-    },
-
-    getSentBillDetail(id){
-        var ret;
-        _data.sentBillBean.contentList.map((item, index)=> {
-            if (item.billId == id) {
-                ret = item;
-            }
-        });
-        return ret;
-    },
-
-    getBillRevUnreadNum(){
-        return _.isEmpty(_data.mainMsgBean) ? null : _data.mainMsgBean.billRevUnreadNum;
-    },
-
-    getNotificationMsg(){
-        return _.isEmpty(_data.mainMsgBean) ? null : _data.mainMsgBean.billRevUnreadNum;
-    },
-
-    getBillSentViewItems(status){
-        if (status == "" || status === null || status === undefined)
-            return _data.sentBillBean.contentList
-        else if (status == 'WAT') {
-            var ret = new Array();
-            _data.sentBillBean.contentList.map((item, index)=> {
-                if (item.status == 'NEW' || item.status == 'REQ' || item.status == 'HAN') {
-                    ret.push(item);
-                }
-            });
-            return ret;
-        } else {
-            var ret = new Array();
-            _data.sentBillBean.contentList.map((item, index)=> {
-                if (item.status == status) {
-                    ret.push(item);
-                }
-            });
-            return ret;
-        }
-    },
-
-    updateMessage: function (billId) {
-        //更新消息 isRead == 0
-        //_.remove(_data.mainMsgBean.messageBeans,function(item){
-        //    return item.billId == billId
-        //});
-        let f = false;
-        _data.mainMsgBean.messageBeans.map((item, index)=> {
-            if (item.billId == billId && !_data.mainMsgBean.messageBeans[index]["isRead"]) {
-                _data.mainMsgBean.messageBeans[index]["isRead"] = true;
-                f = true;
-            }
-        });
-        Persister.saveMainMsgBean(_data.mainMsgBean);
-        if (f)
-            this.emitChange();
-    },
-
-    getDemoFlag: function () {
-        return _data.demoFlag;
-    }
 });
-
-var _initCompStatus = function () {
-    var orgBeans = _data.orgBeans[0];
-    if (!_.isEmpty(orgBeans.orgCode)
-        && !_.isEmpty(orgBeans.orgName)
-        && !_.isEmpty(orgBeans.email)
-        && !_.isEmpty(orgBeans.address)
-        && !_.isEmpty(orgBeans.orgType)
-        && !_.isEmpty(orgBeans.bizLicenseRegNo)
-        && !_.isEmpty(orgBeans.bizLicenseRegLoc)
-        && _.isInteger(orgBeans.foundationDate)
-        && _.isInteger(orgBeans.businessTerm)
-        && !_.isEmpty(orgBeans.businessScope)
-        && _.isInteger(orgBeans.registeredCapital)) {
-        _compInfoLevel.compCertificateOne = true;
-    } else {
-        _compInfoLevel.compCertificateOne = false;
-    }
-    if (!_.isEmpty(orgBeans.licenseCopyFileId)
-        && !_.isEmpty(orgBeans.licenseCopyFileId)
-        && !_.isEmpty(orgBeans.orgCodeCopyFileId)
-        && !_.isEmpty(orgBeans.taxFileId)
-        && !_.isEmpty(orgBeans.corpIdentityFileId)
-        && !_.isEmpty(orgBeans.authFileId)
-        && !_.isEmpty(orgBeans.authIdentityFileId)) {
-        _compInfoLevel.compCertificateTwo = true;
-    } else {
-        _compInfoLevel.compCertificateTwo = false;
-    }
-    if (!_.isEmpty(orgBeans.accountName)
-        && !_.isEmpty(orgBeans.accountNo)
-        && !_.isEmpty(orgBeans.reservedMobileNo)) {
-        _compInfoLevel.compCertificateThree = true;
-    } else {
-        _compInfoLevel.compCertificateThree = false;
-    }
-    if (_compInfoLevel.compCertificateThree && _compInfoLevel.compCertificateTwo && _compInfoLevel.compCertificateOne) {
-        _compInfoLevel.submitable = true
-    } else {
-        _compInfoLevel.submitable = false
-    }
-    return orgBeans;
-}
 
 var _initOrgBean = function () {
     if (_data.orgBeans == null || typeof (_data.orgBeans) == 'undefined' || typeof(_data.orgBeans[0]) == 'undefined') {
@@ -273,11 +95,11 @@ var _initOrgBean = function () {
         _data.orgBeans = [orgBean]
     }
 };
-
+//
 var _handleConnectivityChange = function (isConnected) {
-    netWorkState = isConnected;
+    info.netWorkState = isConnected;
 }
-
+//
 var _appInit = function (data) {
     NetInfo.isConnected.addEventListener(
         'change',
@@ -285,24 +107,22 @@ var _appInit = function (data) {
     );
     NetInfo.isConnected.fetch().done(
         (isConnected) => {
-            netWorkState = isConnected;
+            info.netWorkState = isConnected;
         }
     );
     Persister.getAppData(
         function (data) {
-            initLoadingState = false;
+            info.initLoadingState = false;
             _data = data;
             _initOrgBean();
-            isLogout = false;
-            _data.orgBeans[0] = _initCompStatus();
+            info.isLogout = false;
             AppStore.emitChange();
         })
 }
-
+//
 var _login = function (data) {
     _data = data;
     _initOrgBean();
-    _data.orgBeans[0] = _initCompStatus();
     AppStore.emitChange();
     Persister.getAppData((d) => {
         data.demoFlag = d.demoFlag;
@@ -312,7 +132,7 @@ var _login = function (data) {
         Persister.saveAppData(data);
     });
 }
-
+//
 var _cancleBillDiscount = function (data) {
     _data.revBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -321,7 +141,7 @@ var _cancleBillDiscount = function (data) {
     });
     AppStore.emitChange();
 }
-
+//
 var _giveupBillDiscount = function (data) {
     _data.revBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -330,7 +150,7 @@ var _giveupBillDiscount = function (data) {
     });
     AppStore.emitChange();
 }
-
+//
 var _allowBillDiscount = function (data) {
     _data.revBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -340,7 +160,7 @@ var _allowBillDiscount = function (data) {
     });
     AppStore.emitChange();
 }
-
+//
 var _rejectBillDiscount = function (data) {
     _data.sentBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -370,7 +190,7 @@ var _getMsgBody = function (msg) {
 var _pushMsg = function (data, key) {
     _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
 }
-
+//
 var _getBillBody = function (msg) {
     return msg.billBody;
 }
@@ -440,7 +260,7 @@ var _analysisMessageData = function (data) {
             break;
     }
 }
-
+//
 var _freshMessageData = function (data) {
     if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
         return;
@@ -455,8 +275,8 @@ var _freshMessageData = function (data) {
 var _force_logout = function () {
     _data.token = null;
     Persister.clearToken();
-    isLogout = true;
-    isForce_Logout = true;
+    info.isLogout = true;
+    info.isForce_Logout = true;
 }
 
 AppStore.dispatchToken = AppDispatcher.register(function (action) {
@@ -465,7 +285,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             _appInit()
             break;
         case ActionTypes.LOGIN:
-            isLogout = false;
+            info.isLogout = false;
             _login(action.data)
             break;
         case ActionTypes.CANCLE_BILL_DISCOUNT:
@@ -480,7 +300,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         case ActionTypes.LOGOUT:
             _data.token = null;
             Persister.clearToken();
-            isLogout = true;
+            info.isLogout = true;
             AppStore.emitChange();
             break;
         case ActionTypes.FORCE_LOGOUT:
@@ -499,13 +319,12 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             break;
         case ActionTypes.REQUEST_END:
             requestLoadingState = RequestState.END
-            requestHandle = action.handle;
+            info.requestHandle = action.handle;
             AppStore.emitChange('rpc');
             break;
         case ActionTypes.UPDATE_COMPBASEINFO:
             _data.orgBeans[0] = _.assign(_data.orgBeans[0], action.data);
             _data.userInfoBean = _.assign(_data.userInfoBean, action.data);
-            _initCompStatus();
             Persister.saveOrg(_data.orgBeans);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();

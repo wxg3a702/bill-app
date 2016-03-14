@@ -9,22 +9,19 @@ import android.os.Message;
 import android.util.Log;
 
 import com.facebook.react.LifecycleState;
-import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactInstanceManager;
-import com.facebook.react.ReactPackage;
 import com.facebook.react.ReactRootView;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
 import com.mobile.service.AppService;
 import com.mobile.utils.AppUtils;
-import com.rnfs.RNFSPackage;
-import com.oblador.vectoricons.VectorIconsPackage;
-import com.views.viewpager.ZXReactPackage;
+import com.mobile.packages.ZXReactPackage;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Random;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
@@ -55,7 +52,6 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
                 .build();
 
         mReactRootView.startReactApplication(mReactInstanceManager, "mobile", null);
-
 
         setContentView(mReactRootView);
 

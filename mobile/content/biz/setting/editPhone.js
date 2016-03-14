@@ -6,7 +6,7 @@ var {
     } = React;
 var RightTopButton = require('../../comp/utils/rightTopButton')
 var EditPhoneNewPhone = require('./editPhoneNewPhone')
-var AppAction = require("../../framework/action/appAction")
+var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
@@ -29,7 +29,7 @@ var EditPhone = React.createClass({
         }
     },
     _validPassword(){
-        AppAction.validatePassword(
+        LoginAction.validatePassword(
             {
                 password: this.state.password
             },

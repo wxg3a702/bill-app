@@ -6,15 +6,15 @@ var {
     AppStateIOS,
     Platform,
     ScrollView,
-    Platform,
     TabBarIOS
     } = React;
 var Home = require('../../biz/home/home')
 var Bill = require("../../biz/bill/billList")
 var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/personalCenter/personalCenter")
-var AppAction = require('../action/appAction');
+var CommonAction = require('../action/commonAction');
 var AppStore = require('../store/appStore');
+var MessageStore = require('../../framework/store/messageStore');
 //var TabBarIOS = require('./tabBarIOS.ios.fas')
 var Alert = require('../../comp/utils/alert');
 var Login = require('../../biz/login/login')
@@ -24,7 +24,7 @@ var AndroidTabBar = require('../../comp/tabBar/android/tabBar')
 var TabView = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var mainMsgBean = AppStore.getMainMsgBean();
+        var mainMsgBean = MessageStore.getMainMsgBean();
         if (token != null) {
             var sum = 0;
             var billSum = 0;
@@ -54,13 +54,13 @@ var TabView = React.createClass({
                 PushNotificationIOS.requestPermissions();
             }
 
-            PushNotificationIOS.removeEventListener('register', AppAction.notificationRegister);
-            PushNotificationIOS.removeEventListener('notification', AppAction.onNotification);
+            PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+            PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
             AppStateIOS.removeEventListener('change', this._handleAppStateChange);
 
 
-            PushNotificationIOS.addEventListener('register', AppAction.notificationRegister);
-            PushNotificationIOS.addEventListener('notification', AppAction.onNotification);
+            PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
+            PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
             AppStateIOS.addEventListener('change', this._handleAppStateChange);
         }
@@ -69,8 +69,8 @@ var TabView = React.createClass({
     componentWillUnmount: function () {
         if (Platform.OS === 'ios') {
             AppStore.removeChangeListener(this._onChange);
-            PushNotificationIOS.removeEventListener('register', AppAction.notificationRegister);
-            PushNotificationIOS.removeEventListener('notification', AppAction.onNotification);
+            PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+            PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
             AppStateIOS.removeEventListener('change', this._handleAppStateChange);
             PushNotificationIOS.setApplicationIconBadgeNumber(0);
         }
@@ -79,7 +79,7 @@ var TabView = React.createClass({
     _handleAppStateChange: function (currentAppState) {
         switch (currentAppState) {
             case "active":
-                AppAction.freshNotification();
+                CommonAction.freshNotification();
                 break;
         }
     },

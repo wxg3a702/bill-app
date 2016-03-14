@@ -17,8 +17,8 @@ var {
 var TimerMixin = require('react-timer-mixin');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var AppAction = require("../../framework/action/appAction");
-var AppStore = require('../../framework/store/appStore');
+var BillAction = require("../../framework/action/billAction");
+var UserStore = require('../../framework/store/userStore');
 var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
 var containerHolder;
@@ -35,7 +35,7 @@ var DisConfirm = React.createClass({
             this.clearInterval(this.state.tim);
         }
         if (this.state.time == "重新获取") {
-            AppAction.sendSMSCodeForDiscount('',
+            BillAction.sendSMSCodeForDiscount('',
                 function () {
                     this.setState({
                         deadline: 60,
@@ -79,12 +79,12 @@ var DisConfirm = React.createClass({
     },
 
     getInitialState: function () {
-        return {time: 60, mobileNo: AppStore.getUserInfoBean().mobileNo, smsCode: ""};
+        return {time: 60, mobileNo: UserStore.getUserInfoBean().mobileNo, smsCode: ""};
     },
 
     validateSuccess: function (data) {
         dismissKeyboard();
-        AppAction.createBillDiscount(
+        BillAction.createBillDiscount(
             {
                 billId: this.state.billId,
                 discountRate: this.state.discountRate,
@@ -108,7 +108,7 @@ var DisConfirm = React.createClass({
             Alert("验证码格式不正确");
         } else {
             dismissKeyboard();
-            AppAction.validateMobileForDiscount({
+            BillAction.validateMobileForDiscount({
                 mobileNo: this.state.mobileNo,
                 smsCode: this.state.smsCode
             }, this.validateSuccess, this.validateFailure);
@@ -176,7 +176,7 @@ var DisConfirm = React.createClass({
     componentDidMount: function () {
         var billBean = this.props.param.billBean;
         this.setState(billBean);
-        AppAction.sendSMSCodeForDiscount('',
+        BillAction.sendSMSCodeForDiscount('',
             function () {
                 this.setState({
                     deadline: 60,

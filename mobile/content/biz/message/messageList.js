@@ -12,7 +12,8 @@ var {
     } = React;
 var Login = require('../login/login')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require('../../framework/action/appAction');
+var MessageStore = require('../../framework/store/messageStore');
+var MessageAction = require('../../framework/action/messageAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
 var _ = require('lodash');
@@ -30,7 +31,7 @@ var Message = React.createClass({
         if (token == null) {
             return {token: token}
         } else {
-            var messageBean = AppStore.getMessage()
+            var messageBean = MessageStore.getMessage()
             return {
                 dataSource: ds.cloneWithRows(messageBean),
                 data: messageBean,
@@ -71,8 +72,8 @@ var Message = React.createClass({
             })
         }
 
-        AppStore.updateUnReadNum(name);
-        AppAction.setOtherMsgRead({category: name}, function (data) {
+        MessageStore.updateUnReadNum(name);
+        MessageAction.setOtherMsgRead({category: name}, function (data) {
             //更新未读标记
 
         }, function (data) {
@@ -148,8 +149,8 @@ var Message = React.createClass({
     toOther(item){
         let billId = item.billId;
         //remove unread
-        AppStore.updateMessage(billId);
-        let bill = AppStore.getRevBillDetail(billId);
+        MessageStore.updateMessage(billId);
+        let bill = MessageStore.getRevBillDetail(billId);
         if (_.isEmpty(bill)) {
             Alert('票据信息不存在');
         } else {
@@ -157,7 +158,7 @@ var Message = React.createClass({
                 param: {title: '详情', record: bill},
                 comp: Detail
             });
-            AppAction.setBillRevRead({id: item.id}, function (data) {
+            MessageAction.setBillRevRead({id: item.id}, function (data) {
             }, function (data) {
                 Alert('已读标记设置失败!')
             });

@@ -7,7 +7,7 @@ var {
     } = React;
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var RightTopButton = require('../../comp/utils/rightTopButton');
-var AppAction = require("../../framework/action/appAction")
+var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var EditPhoneVerifySuccess = require('./editPhoneVerifySuccess');
 var SMSTimer = require('../../comp/utils/smsTimer');
@@ -40,7 +40,7 @@ var EditPhoneVerify = React.createClass({
     },
     isVerify(){
         dismissKeyboard();
-        AppAction.resetMobileNo(
+        LoginAction.resetMobileNo(
             {
                 newMobileNo: this.props.param.phoneNumber,
                 smsCode: this.state.verify

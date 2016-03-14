@@ -17,7 +17,8 @@ var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var CompCertification = require('../company/compCertification')
 var AppStore = require('../../framework/store/appStore');
-var AppAction = require('../../framework/action/appAction');
+var UserStore = require('../../framework/store/userStore');
+var UserAction = require('../../framework/action/userAction');
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var Item = require('../../comp/utils/item')
@@ -25,7 +26,7 @@ var Space = require('../../comp/utils/space')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var user = AppStore.getUserInfoBean();
+        var user = UserStore.getUserInfoBean();
         if (token == null) {
             return {
                 userName: '未登录',
@@ -74,7 +75,7 @@ var PersonalCenter = React.createClass({
         var url;
         if (!_.isEmpty(this.state.photoStoreId)) {
             if (this.state.photoStoreId.length == 24) {
-                url = {uri: AppAction.getFile(this.state.photoStoreId)}
+                url = {uri: UserAction.getFile(this.state.photoStoreId)}
             } else {
                 url = {uri: this.state.photoStoreId, isStatic: true};
             }
@@ -144,12 +145,12 @@ var styles = StyleSheet.create({
     head: {
         width: 63,
         height: 63,
-        backgroundColor: '#f0f0f0',
         borderRadius: 5,
         borderColor: '#cccccc',
         borderWidth: 1,
         marginLeft: 10
     },
+
     circle: {
         width: 16,
         height: 16,

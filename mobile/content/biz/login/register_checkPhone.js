@@ -11,7 +11,7 @@ var {
 var VerifyCode = require('../../comp/utils/verifyCode')
 var NavBarView = require('../../framework/system/navBarView')
 var Register_checkVerify = require('./register_checkVerify');
-var AppAction = require("../../framework/action/appAction");
+var LoginAction = require("../../framework/action/loginAction");
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Protocol = require('./protocol')
 var Validation = require('../../comp/utils/validation')
@@ -66,7 +66,7 @@ var Register_checkPhone = React.createClass({
     },
     checkPhone(){
         dismissKeyboard()
-        AppAction.validateMobileForReg(
+        LoginAction.validateMobileForReg(
             {
                 mobileNo: this.state.phoneNumber,
                 captcha: this.state.verify

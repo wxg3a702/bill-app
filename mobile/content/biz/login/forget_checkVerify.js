@@ -7,7 +7,7 @@ var {
     View,
     } = React;
 var SMSTimer = require('../../comp/utils/smsTimer')
-var AppAction = require("../../framework/action/appAction")
+var LoginAction = require("../../framework/action/loginAction")
 var Forget_setPassword = require('./forget_setPassword');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
@@ -45,7 +45,7 @@ var Forget_checkVerify = React.createClass({
     },
     isVerify(){
         dismissKeyboard();
-        AppAction.validateSMSCode(
+        LoginAction.validateSMSCode(
             {smsCode: this.state.verify},
             function () {
                 const { navigator } = this.props;
