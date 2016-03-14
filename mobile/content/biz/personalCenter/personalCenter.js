@@ -145,12 +145,12 @@ var styles = StyleSheet.create({
     head: {
         width: 63,
         height: 63,
-        backgroundColor: '#f0f0f0',
         borderRadius: 5,
         borderColor: '#cccccc',
         borderWidth: 1,
         marginLeft: 10
     },
+
     circle: {
         width: 16,
         height: 16,
