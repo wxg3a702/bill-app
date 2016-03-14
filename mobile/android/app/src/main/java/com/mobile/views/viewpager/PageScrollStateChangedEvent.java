@@ -7,34 +7,30 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.views.viewpager;
+package com.mobile.views.viewpager;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.events.Event;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
+import com.mobile.views.viewpager.*;
+import com.mobile.views.viewpager.ZXReactViewPager;
 
 /**
- * Event emitted by {@link ZXReactViewPager} when user scrolls between pages (or when animating
- * between pages).
+ * Event emitted by {@link com.mobile.views.viewpager.ZXReactViewPager} when user scrolling state changed.
  *
  * Additional data provided by this event:
- *  - position - index of first page from the left that is currently visible
- *  - offset - value from range [0,1) describing stage between page transitions. Value x means that
- *    (1 - x) fraction of the page at "position" index is visible, and x fraction of the next page
- *    is visible.
+ *  - pageScrollState - {Idle,Dragging,Settling}
  */
-/* package */ class PageScrollEvent extends Event<PageScrollEvent> {
+class PageScrollStateChangedEvent extends Event<com.mobile.views.viewpager.PageScrollStateChangedEvent> {
 
-  public static final String EVENT_NAME = "topPageScroll";
+  public static final String EVENT_NAME = "topPageScrollStateChanged";
 
-  private final int mPosition;
-  private final float mOffset;
+  private final String mPageScrollState;
 
-  protected PageScrollEvent(int viewTag, long timestampMs, int position, float offset) {
+  protected PageScrollStateChangedEvent(int viewTag, long timestampMs, String pageScrollState) {
     super(viewTag, timestampMs);
-    mPosition = position;
-    mOffset = offset;
+    mPageScrollState = pageScrollState;
   }
 
   @Override
@@ -49,8 +45,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 
   private WritableMap serializeEventData() {
     WritableMap eventData = Arguments.createMap();
-    eventData.putInt("position", mPosition);
-    eventData.putDouble("offset", mOffset);
+    eventData.putString("pageScrollState", mPageScrollState);
     return eventData;
   }
 }

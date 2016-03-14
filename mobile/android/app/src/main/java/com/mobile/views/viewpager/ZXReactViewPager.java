@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.views.viewpager;
+package com.mobile.views.viewpager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +23,9 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIManagerModule;
 import com.facebook.react.uimanager.events.EventDispatcher;
+import com.mobile.views.viewpager.*;
+import com.mobile.views.viewpager.PageScrollEvent;
+import com.mobile.views.viewpager.PageSelectedEvent;
 
 /**
  * Wrapper view for {@link ViewPager}. It's forwarding calls to {@link ViewGroup#addView} to add
@@ -91,14 +94,14 @@ import com.facebook.react.uimanager.events.EventDispatcher;
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
       mEventDispatcher.dispatchEvent(
-          new PageScrollEvent(getId(), SystemClock.uptimeMillis(), position, positionOffset));
+          new com.mobile.views.viewpager.PageScrollEvent(getId(), SystemClock.uptimeMillis(), position, positionOffset));
     }
 
     @Override
     public void onPageSelected(int position) {
       if (!mIsCurrentItemFromJs) {
         mEventDispatcher.dispatchEvent(
-            new PageSelectedEvent(getId(), SystemClock.uptimeMillis(), position));
+            new com.mobile.views.viewpager.PageSelectedEvent(getId(), SystemClock.uptimeMillis(), position));
       }
     }
 
