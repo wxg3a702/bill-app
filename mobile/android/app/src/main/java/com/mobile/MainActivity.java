@@ -1,46 +1,115 @@
 package com.mobile;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
+
+import com.facebook.react.LifecycleState;
 import com.facebook.react.ReactActivity;
+import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.ReactRootView;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.shell.MainReactPackage;
+import com.mobile.service.AppService;
+import com.mobile.utils.AppUtils;
 import com.rnfs.RNFSPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.views.viewpager.ZXReactPackage;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
-public class MainActivity extends ReactActivity {
 
-    /**
-     * Returns the name of the main component registered from JavaScript.
-     * This is used to schedule rendering of the component.
-     */
+public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
+    private static ReactInstanceManager mReactInstanceManager;
+    private ReactRootView mReactRootView;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
+
     @Override
-    protected String getMainComponentName() {
-        return "mobile";
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // 竖屏锁定
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        mReactRootView = new ReactRootView(this);
+
+        mReactInstanceManager = ReactInstanceManager.builder()
+                .setApplication(getApplication())
+                .setBundleAssetName("index.android.bundle")
+                .setJSMainModuleName("index.android")
+                .addPackage(new MainReactPackage())
+                .addPackage(new ZXReactPackage())
+                .setUseDeveloperSupport(BuildConfig.DEBUG)
+                .setInitialLifecycleState(LifecycleState.RESUMED)
+                .build();
+
+        mReactRootView.startReactApplication(mReactInstanceManager, "mobile", null);
+
+
+        setContentView(mReactRootView);
+
     }
 
-    /**
-     * Returns whether dev mode should be enabled.
-     * This enables e.g. the dev menu.
-     */
-    @Override
-    protected boolean getUseDeveloperSupport() {
-        return BuildConfig.DEBUG;
+    public static ReactContext getContext() {
+        if (mReactInstanceManager == null) {
+            // This doesn't seem to happen ...
+            throw new IllegalStateException("Instance manager not available");
+        }
+        final ReactContext context = mReactInstanceManager.getCurrentReactContext();
+        if (context == null) {
+            // This really shouldn't happen ...
+            throw new IllegalStateException("React context not available");
+        }
+        return context;
     }
 
-    /**
-     * A list of packages used by the app. If the app uses additional views
-     * or modules besides the default ones, add more packages here.
-     */
     @Override
-    protected List<ReactPackage> getPackages() {
-        return Arrays.<ReactPackage>asList(
-                new MainReactPackage(),
-                new RNFSPackage(),
-                new VectorIconsPackage(),
-                new ZXReactPackage()
-        );
+    public void invokeDefaultOnBackPressed() {
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onPause();
+        }
+    }
+
+    Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            if (!AppUtils.isServiceWork(MainActivity.this, "AppService")) {
+                Intent mIntent = new Intent(MainActivity.this, AppService.class);
+                Log.d("true", "true");
+//            bindService(mIntent, localServiceConnection, BIND_AUTO_CREATE);
+                startService(mIntent);
+            }
+        }
+    };
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onResume(this, this);
+            new Thread(){
+                @Override
+                public void run() {
+                    handler.postDelayed(run, 5000);
+                }
+            }.start();
+        }
     }
 }

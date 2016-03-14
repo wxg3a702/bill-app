@@ -125,4 +125,5 @@ dependencies {
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-fs')
     compile project(':react-native-vector-icons')
+    compile 'com.github.nkzawa:socket.io-client:0.3.0'
 }
