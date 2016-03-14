@@ -9,6 +9,8 @@ var {
     ScrollView,
     TextInput,
     } = React;
+var BottomButton = require('../../comp/utils/bottomButton')
+var numeral = require('../../comp/utils/numberHelper')
 var _ = require('lodash');
 var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./../user/textEdit');
@@ -30,8 +32,7 @@ var Calculator = React.createClass({
     callBack(data, cb){
         var key = _.keys(data)[0];
         var value = data[key];
-        this.setState({[key]: value}),
-            cb()
+        this.setState({[key]: value}), cb()
     },
     toEdit: function (title, name, value, type, length, valid) {
         const { navigator } = this.props;
@@ -101,7 +102,7 @@ var Calculator = React.createClass({
             discountDate: '',
             dueDate: '',
             monthRate: '',
-            amount: null,
+            amount: '',
             discountAmount: '',
             actAmount: '',
             interestDay: ''
@@ -112,128 +113,69 @@ var Calculator = React.createClass({
             <RightTopButton func={() => this.clear()} content="清空"/>
         )
     },
+    returnItem(key, desc, holder, unit, max){
+        return (
+            <View style={styles.layout}>
+                <Text style={[styles.text,{width:109}]}>{desc}</Text>
+                <View style={{flex:1}}>
+                    <TextInput style={{height:32,fontSize:15,color:'#7f7f7f'}} keyboardType="numeric" maxLength={max}
+                               onChangeText={(text) => this.setState({[key]:text})} value={this.state[key]}
+                               placeholderTextColor='#cccccc' placeholder={holder}/>
+                </View>
+                <Text style={styles.text}>{unit}</Text>
+            </View>
+        )
+    },
+    returnDate(key, desc, holder, value, type, word){
+        var color;
+        if (value.length == 0) {
+            value = holder;
+            color = '#cccccc';
+        } else {
+            color = '#7f7f7f'
+        }
+        return (
+            <TouchableHighlight onPress={()=>this.toEdit(word,key,value==holder?'':value,type,'','')}>
+                <View style={[styles.layout,{paddingRight:10}]}>
+                    <Text style={[styles.text,{width:109}]}>{desc}</Text>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                        <Text style={{fontSize:15,color:color}}>{value}</Text>
+                        <VIcon/>
+                    </View>
+                </View>
+            </TouchableHighlight>
+        )
+    },
+    returnResult(desc, value, unit){
+        return (
+            <View style={[styles.result,styles.borderBottom]}>
+                <Text style={[{width:109},styles.text]}>{desc}</Text>
+                <Text style={styles.after}>{value.length == 0 ? '' : numeral.number4(value)}</Text>
+                <Text style={styles.text}>{unit}</Text>
+            </View>
+        )
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="贴现利率计算器" actionButton={this.button()}>
-                <ScrollView style={[styles.flexColumn,styles.flexOne]} scrollEnabled={false}>
-                    <View
-                        style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:16,alignItems:'center'}]}>
-                        <View style={{width:109}}>
-                            <Text style={[styles.text,{color:'#323232'}]}>票面金额</Text>
-                        </View>
-                        <View style={{flex:1}}>
-                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric" value={this.state.amount}
-                                       onChangeText={(text) => this.setState({amount:text})}
-                                       placeholderTextColor='#cccccc' placeholder="请输入票面金额"/>
-                        </View>
-                        <Text>万元</Text>
-                    </View>
-                    <TouchableHighlight
-                        onPress={() => this.toEdit("修改贴现日期","discountDate",this.state.discountDate,"date",'','')}>
-                        <View
-                            style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:4,alignItems:'center'}]}>
-                            <View style={{width:109}}>
-                                <Text style={[styles.text,{color:'#323232'}]}>贴现日期</Text>
-                            </View>
-                            <View style={[styles.between,styles.flexOne,styles.flexRow,{alignItems:'center'}]}>
-                                <View style={{flex:1}}>
-                                    <Text style={styles.value}>{this.state.discountDate}</Text>
-                                </View>
-                                <VIcon/>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => this.toEdit("修改到期日期","dueDate",this.state.dueDate,"date",'','')}>
-                        <View
-                            style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:4,alignItems:'center'}]}>
-                            <View style={{width:109}}>
-                                <Text style={[styles.text,{color:'#323232'}]}>到期日期</Text>
-                            </View>
-                            <View style={[styles.between,styles.flexOne,styles.flexRow,{alignItems:'center'}]}>
-                                <View style={{flex:1}}>
-                                    <Text style={styles.value}>{this.state.dueDate}</Text>
-                                </View>
-                                <VIcon/>
-                            </View>
-                        </View>
-                    </TouchableHighlight>
-                    <View
-                        style={[styles.flexRow,styles.borderBottom,{height:51,backgroundColor:'white',paddingLeft:16,paddingRight:16,alignItems:'center'}]}>
-                        <View style={{width:109}}>
-                            <Text style={[styles.text]}>月利率</Text>
-                        </View>
-                        <View style={{flex:1}}>
-                            <TextInput style={[{height:32},styles.value]} keyboardType="numeric" value={this.state.monthRate}
-                                       onChangeText={(text) => this.setState({monthRate:text})}
-                                       placeholderTextColor='#cccccc' placeholder="请输入月利率"/>
-                        </View>
-                        <Text>‰</Text>
-                    </View>
+                <ScrollView style={{flex:1}} scrollEnabled={false}>
+                    {this.returnItem('amount', '票面金额', '请输入票面金额', '万元', 9)}
+                    {this.returnDate('discountDate', '贴现日期', '请输入贴现日期', this.state.discountDate, 'date', '修改贴现日期')}
+                    {this.returnDate('dueDate', '到期日期', '请输入到期日期', this.state.dueDate, 'date', '修改到期日期')}
+                    {this.returnItem('monthRate', '月利率', '请输入月利率', '‰', 6)}
                     <View style={[styles.calResult,styles.borderBottom]}>
-                        <Text style={[styles.value,{color:'#333333'}]}>计算结果</Text>
+                        <Text style={{color:'#333333',fontSize:15}}>计算结果</Text>
                     </View>
-                    <View style={[styles.result,styles.borderBottom,{paddingRight:16}]}>
-                        <Text style={[{width:109},styles.text]}>计息天数</Text>
-                        <Text style={{flex:1}}>{this.state.interestDay}</Text>
-                        <Text>天</Text>
-                    </View>
-                    <View style={[styles.result,styles.borderBottom,{paddingRight:16}]}>
-                        <Text style={[{width:109},styles.text]}>贴现利息</Text>
-                        <Text style={{flex:1}}>{this.state.discountAmount}</Text>
-                        <Text>万元</Text>
-                    </View>
-                    <View style={[styles.result,styles.borderBottom,{paddingRight:16}]}>
-                        <Text style={[{width:109},styles.text]}>贴现金额</Text>
-                        <Text style={{flex:1}}>{this.state.actAmount}</Text>
-                        <Text>万元</Text>
-                    </View>
+                    {this.returnResult('计息天数', this.state.interestDay, '天')}
+                    {this.returnResult('贴现利息', this.state.discountAmount, '万元')}
+                    {this.returnResult('贴现金额', this.state.actAmount, '万元')}
                 </ScrollView>
-                <View
-                    style={[styles.flexColumn,{justifyContent:'center',padding:7,backgroundColor:'#f7f7f7',borderTopWidth:1,borderTopColor:'#cccccc',opacity:0.9}]}>
-                    <TouchableHighlight style={[styles.radius,styles.button]} activeOpacity={1}
-                                        underlayColor='#a6c7f2' onPress={this.calculate}>
-                        <View>
-                            <Text style={[styles.text,{color:'white'}]}>开始计算</Text>
-                        </View>
-                    </TouchableHighlight>
-                </View>
+                <BottomButton func={this.calculate} content="开始计算"/>
             </NavBarView>
         )
     }
 })
 var styles = StyleSheet.create({
-    flexOne: {
-        flex: 1
-    },
-    flexColumn: {
-        flexDirection: 'column'
-    },
-    flexRow: {
-        flexDirection: 'row'
-    },
-    text: {
-        fontSize: 18,
-    },
-    borderBottom: {
-        borderBottomWidth: 1,
-        borderColor: '#c8c7cc'
-    },
-    icon: {
-        width: 35, height: 35,
-    },
-    between: {
-        justifyContent: 'space-between'
-    },
-    calResult: {
-        justifyContent: 'center', height: 55, paddingLeft: 16, backgroundColor: '#f0f0f0'
-    },
-    result: {
-        alignItems: 'center',
-        height: 51,
-        backgroundColor: 'white',
-        paddingLeft: 16,
-        flexDirection: 'row'
-    },
     radius: {
         borderRadius: 6
     },
@@ -245,9 +187,39 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    value: {
-        fontSize: 18,
-        color: '#7f7f7f'
+    bottom: {
+        padding: 7, backgroundColor: '#f7f7f7', borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+    },
+    borderBottom: {
+        borderBottomWidth: 1, borderColor: '#c8c7cc'
+    },
+    result: {
+        alignItems: 'center',
+        height: 51,
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        paddingHorizontal: 16
+    },
+    calResult: {
+        justifyContent: 'center', height: 55, paddingLeft: 16, backgroundColor: '#f0f0f0'
+    },
+    text: {
+        fontSize: 18, color: '#333333'
+    },
+    after: {
+        fontSize: 15,
+        color: '#7f7f7f',
+        flex: 1
+    },
+    layout: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        height: 50,
+        backgroundColor: 'white',
+        paddingHorizontal: 16,
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: '#c8c7cc'
     }
 })
 module.exports = Calculator;
