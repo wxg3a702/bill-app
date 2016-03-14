@@ -17,6 +17,7 @@ var HelpCenter = require('./helpCenter')
 var AboutUs = require('./aboutUs')
 var CompCertification = require('../company/compCertification')
 var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var UserAction = require('../../framework/action/userAction');
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
@@ -25,7 +26,7 @@ var Space = require('../../comp/utils/space')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var user = AppStore.getUserInfoBean();
+        var user = UserStore.getUserInfoBean();
         if (token == null) {
             return {
                 userName: '未登录',

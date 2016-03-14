@@ -6,12 +6,15 @@ var {
     TouchableHighlight,
     Text,
     View,
+    SegmentedControlIOS,
     Dimensions,
+    Image,
+    Platform
     }=React
 var Login = require('../login/login')
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
-var Login = require('../../framework/action/loginAction');
+var BillAction = require('../../framework/action/billAction');
 var _ = require('lodash');
 var window = Dimensions.get('window');
 var ds = new ListView.DataSource({
@@ -22,7 +25,7 @@ var BillList = React.createClass({
         var token = AppStore.getToken();
         return {
             token: token,
-        };
+        }
     },
     getInitialState: function () {
         return this.getStateFromStores();
@@ -30,6 +33,7 @@ var BillList = React.createClass({
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
     },
+
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
@@ -43,7 +47,8 @@ var BillList = React.createClass({
         var {height, width} = Dimensions.get('window');
         if (this.state.token == null) {
             return (
-                <NavBarView navigator={this.props.navigator} showBack={false} title="票据">
+                <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
+                            contentBackgroundColor='#f0f0f0'>
                     <View style={{flexDirection:'row',justifyContent:'space-between',padding:8}}>
                         <Text>你还没有登陆</Text>
                         <TouchableHighlight onPress={this.toLogin}>
@@ -54,14 +59,14 @@ var BillList = React.createClass({
             )
         } else {
             return (
-                <NavBarView navigator={this.props.navigator} title="票据">
+                <NavBarView navigator={this.props.navigator} title="票据" showBar={false} showBack={false}
+                            contentBackgroundColor='#f0f0f0'>
 
-                    <Text onPress={()=>Login.clear()}>12312414231231231</Text>
+
                 </NavBarView>
             );
         }
     },
-
 });
 
 module.exports = BillList;

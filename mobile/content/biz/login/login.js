@@ -9,6 +9,7 @@ var {
     Platform
     } = React;
 var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var LoginAction = require("../../framework/action/loginAction");
 var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
@@ -20,7 +21,7 @@ var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
 var Login = React.createClass({
     getStateFromStores() {
-        var user = AppStore.getUserInfoBean();
+        var user = UserStore.getUserInfoBean();
         var deviceModel = 'IOS'
         if (Platform.OS != 'ios') {
             deviceModel = 'ANDROID'

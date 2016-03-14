@@ -92,4 +92,20 @@ var _getRegion = function (cb, e) {
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), error, options);
 }
+var uploadFileHandle = function (params, fileFieldName) {
+    return function (callback) {
+        UFetch(api + '/File/uploadFile',
+            {
+                uri: params[name],
+                type: 'image/jpeg',
+                name: name,
+            },
+            function (data) {
+                callback(null, name);
+            },
+            function (err) {
+                callback(err, name);
+            });
+    }
+}
 module.exports = UserActions

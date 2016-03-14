@@ -18,7 +18,7 @@ var TimerMixin = require('react-timer-mixin');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var BillAction = require("../../framework/action/billAction");
-var AppStore = require('../../framework/store/appStore');
+var UserStore = require('../../framework/store/userStore');
 var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
 var containerHolder;
@@ -79,7 +79,7 @@ var DisConfirm = React.createClass({
     },
 
     getInitialState: function () {
-        return {time: 60, mobileNo: AppStore.getUserInfoBean().mobileNo, smsCode: ""};
+        return {time: 60, mobileNo: UserStore.getUserInfoBean().mobileNo, smsCode: ""};
     },
 
     validateSuccess: function (data) {
