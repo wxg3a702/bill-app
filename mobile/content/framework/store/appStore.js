@@ -211,7 +211,7 @@ var _addBillPackByNotify = function (keyName, data) {
 }
 
 var _analysisMessageData = function (data) {
-    //数据插入到对饮的bean中 并替换main里的
+    //数据插入到对应的bean中 并替换main里的
     let d = _getMsgBody(data);
     switch (_getMsgType(data)) {
         case MsgTypes.BILL_DRAW:
@@ -270,6 +270,10 @@ var _freshMessageData = function (data) {
         });
         AppStore.emitChange();
     }
+}
+
+var _getPushMsg = function (data) {
+    //将取到的增量数据存到本地
 }
 
 var _force_logout = function () {
@@ -345,6 +349,8 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         case ActionTypes.DEMO_FLAG:
             _data.demoFlag = {flag: true};
             Persister.saveDemoFlag({flag: true, id: AppStore.getUserId()});
+        case ActionTypes.GET_PUSH_MSG:
+            _getPushMsg(action.data);
         default:
     }
 });

@@ -71,8 +71,16 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
     }
 
     @Override
+    public void onBackPressed() {
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    @Override
     public void invokeDefaultOnBackPressed() {
-
+        super.onBackPressed();
     }
 
     @Override
@@ -103,7 +111,7 @@ public class MainActivity extends Activity implements DefaultHardwareBackBtnHand
             new Thread(){
                 @Override
                 public void run() {
-                    handler.postDelayed(run, 5000);
+                    handler.postDelayed(run, 15000);
                 }
             }.start();
         }

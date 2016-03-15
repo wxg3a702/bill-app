@@ -9,7 +9,7 @@ var {
   DeviceEventEmitter,
   Platform
   } = React;
-var AppAction = require('../action/appAction');
+var AppAction = require('../action/commonAction');
 AppAction.appInit();
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
@@ -39,7 +39,16 @@ var Main = React.createClass({
     AppStore.addChangeListener(this._onChange);
     if (Platform.OS === 'android') {
       DeviceEventEmitter.addListener('Test', function(e: Event) {
-        console.log(e);
+        console.log(e.test);
+        //MessageActions.getPushMsg(
+        //  "",
+        //  function () {
+        //    this.props.navigator.pop();
+        //  }.bind(this),
+        //  function (msg) {
+        //
+        //  }.bind(this)
+        //);
       });
     }
   },

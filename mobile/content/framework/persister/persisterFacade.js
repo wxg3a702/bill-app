@@ -18,6 +18,7 @@ var Actions = {
     saveMsgDetail: (p)=>_saveMsgDetail(p),
     saveDemoFlag: (p)=>_saveDemoFlag(p),
     saveMainMsgBean: (p)=>_saveMainMsgBean(p)
+    //getUnReadnum:
 }
 
 
