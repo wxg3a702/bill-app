@@ -45,40 +45,53 @@ var ds = new ListView.DataSource({
 var BillList = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var contentlist, fuc = this.renderRec
-        var flag;
-        if (!this.state || !this.state.flag) {
-            flag = 0;
+        var sentBill = BillStore.getSentBill();
+        var revBill = BillStore.getRevBill();
+        if (!token) {
+            return {
+                token: token
+            }
         } else {
-            flag = this.state.flag;
-        }
-        if (flag == 1) {
-            contentlist = BillStore.getBillSentViewItems("");
-        } else {
-            contentlist = BillStore.getBillRevViewItems("");
-        }
-        if (this.state && this.state.flag == 1) {
-            fuc = this.renderSend;
-        }
-        return {
-            token: token,
-            flag: flag,
-            renderFuc: fuc,
-            dataSource: ds.cloneWithRows(contentlist),
-            db: contentlist,
-            filterValue: '全部',
-            fadeAnim: new Animated.Value(0),
-            left: new Animated.Value(0)
+            var contentlist, fuc = this.renderRec
+            var flag;
+            if (!this.state || !this.state.flag) {
+                flag = 0;
+            } else {
+                flag = this.state.flag;
+            }
+            if (flag == 1) {
+                contentlist = BillStore.getBillSentViewItems("");
+            } else {
+                contentlist = BillStore.getBillRevViewItems("");
+            }
+            if (this.state && this.state.flag == 1) {
+                fuc = this.renderSend;
+            }
+            return {
+                token: token,
+                flag: flag,
+                renderFuc: fuc,
+                dataSource: ds.cloneWithRows(contentlist),
+                db: contentlist,
+                filterValue: '全部',
+                fadeAnim: new Animated.Value(0),
+                left: new Animated.Value(0)
+            }
+
         }
     },
     getInitialState: function () {
         return this.getStateFromStores();
     },
     componentDidMount() {
+        if (!AppStore.getToken()) {
+
+        } else {
+            updatePosition(this.refs['SELECT1']);
+            updatePosition(this.refs['OPTIONLIST']);
+        }
         AppStore.addChangeListener(this._onChange);
-        updatePosition(this.refs['SELECT1']);
-        updatePosition(this.refs['OPTIONLIST']);
-        this.showView();
+
         //var obj = BillStore.getDemoFlag();
         //if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
         //    //Alert("是否需要引导?",  () => this.toOther(), (text) => console.log('OK pressed'));
@@ -148,7 +161,7 @@ var BillList = React.createClass({
                                 </Select>);
                         }
 
-                        })()}
+                    })()}
                     <View style={{ flex: 1,backgroundColor: '#f0f0f0'}}>
                         {(()=> {
                             if (!_.isEmpty(this.state.db) && this.state.db.length > 0) {
@@ -186,8 +199,8 @@ var BillList = React.createClass({
                                      style={{ alignSelf:'center',width:200,marginTop:30, height:30}}
                                      tintColor={'#44bcb2'}/>
             );
-        }else {
-            return(
+        } else {
+            return (
                 <View>
                     <Text>android</Text>
                 </View>
