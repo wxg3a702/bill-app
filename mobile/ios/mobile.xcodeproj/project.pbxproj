@@ -27,8 +27,8 @@
 		EE728AB91C8ED65100911485 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE728AB81C8ED5B200911485 /* libRCTPushNotification.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		EE728B061C8EF1A300911485 /* FRCTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE728B031C8EF1A300911485 /* FRCTTabBar.m */; };
 		EE728B071C8EF1A300911485 /* FRCTTabBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE728B051C8EF1A300911485 /* FRCTTabBarManager.m */; };
-		EE8663DF1C92608100970BAB /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8663DE1C92608100970BAB /* UIImagePickerManager.m */; };
 		EE8663EC1C92609100970BAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8663EB1C92609100970BAB /* AVFoundation.framework */; };
+		EE8A78651C980F7500640FC1 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -153,9 +153,9 @@
 		EE728B031C8EF1A300911485 /* FRCTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRCTTabBar.m; path = mobile/FRCTTabBar.m; sourceTree = "<group>"; };
 		EE728B041C8EF1A300911485 /* FRCTTabBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRCTTabBarManager.h; path = mobile/FRCTTabBarManager.h; sourceTree = "<group>"; };
 		EE728B051C8EF1A300911485 /* FRCTTabBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRCTTabBarManager.m; path = mobile/FRCTTabBarManager.m; sourceTree = "<group>"; };
-		EE8663DD1C92608100970BAB /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = mobile/UIImagePickerManager.h; sourceTree = "<group>"; };
-		EE8663DE1C92608100970BAB /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = mobile/UIImagePickerManager.m; sourceTree = "<group>"; };
 		EE8663EB1C92609100970BAB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EE8A78631C980F7500640FC1 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "../../../fas-react-native/mobile/ios/fas_wh_rn_ios/UIImagePickerManager.h"; sourceTree = "<group>"; };
+		EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "../../../fas-react-native/mobile/ios/fas_wh_rn_ios/UIImagePickerManager.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,8 +265,8 @@
 		13B07FAE1A68108700A75B9A /* mobile */ = {
 			isa = PBXGroup;
 			children = (
-				EE8663DD1C92608100970BAB /* UIImagePickerManager.h */,
-				EE8663DE1C92608100970BAB /* UIImagePickerManager.m */,
+				EE8A78631C980F7500640FC1 /* UIImagePickerManager.h */,
+				EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */,
 				EE728B021C8EF1A300911485 /* FRCTTabBar.h */,
 				EE728B031C8EF1A300911485 /* FRCTTabBar.m */,
 				EE728B041C8EF1A300911485 /* FRCTTabBarManager.h */,
@@ -632,10 +632,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE728B071C8EF1A300911485 /* FRCTTabBarManager.m in Sources */,
-				EE8663DF1C92608100970BAB /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				EE728B061C8EF1A300911485 /* FRCTTabBar.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				EE8A78651C980F7500640FC1 /* UIImagePickerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
