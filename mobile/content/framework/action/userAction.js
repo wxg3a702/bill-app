@@ -14,7 +14,44 @@ var UserActions = {
     getRegion: (f, e)=>_getRegion(f, e),
 }
 
-var _updateUser = function (u, p, c, f) {
+var uploadFileHandle = function (params, fileFieldName) {
+    return function (callback) {
+        UFetch(api + '/File/uploadFile',
+            {
+                uri: params[fileFieldName],
+                type: 'image/jpeg',
+                name: fileFieldName,
+            },
+            function (data) {
+                callback(null, {[fileFieldName]:data});
+            },
+            function (err) {
+                callback(err, fileFieldName);
+            });
+    }
+}
+
+var _updateUserHead = function (p, c, f) {
+    async.series([uploadFileHandle(p,'photoStoreId')],
+        function (err, res) {
+            if (err) {
+                f();
+            } else {
+                UserActions.updateUser(
+                    {photoStoreId: res[0]['photoStoreId'].fileId},
+                    function(data){
+                        console.log(err);
+                    },
+                    function(err){
+                        console.log(err);
+                    },
+                    {custLoading: true}
+                )
+            }
+        }
+    );
+}
+var _updateUser = function (u, p, c, f,option) {
     var key = _.keys(p)[0];
     var value = p[key]
     BFetch(u, {column: key, value: value},
@@ -24,25 +61,10 @@ var _updateUser = function (u, p, c, f) {
                 data: p
             });
             c(msg);
-        }
+        },
+        f,
+        option
     )
-}
-var _updateUserHead = function (p, c, f) {
-    async.series([uploadFileHandle(p, 'photoStoreId')],
-        function (err, res) {
-            if (err) {
-                f();
-            } else {
-                _updateUser(
-                    {photoStoreId: data.fileId},
-                    function (data) {
-                    },
-                    function (err) {
-                    }
-                )
-            }
-        }
-    );
 }
 var _getRegion = function (cb, e) {
     var options = {
@@ -70,20 +92,5 @@ var _getRegion = function (cb, e) {
     };
     navigator.geolocation.getCurrentPosition(success.bind(this), error, options);
 }
-var uploadFileHandle = function (params, fileFieldName) {
-    return function (callback) {
-        UFetch(api + '/File/uploadFile',
-            {
-                uri: params[name],
-                type: 'image/jpeg',
-                name: name,
-            },
-            function (data) {
-                callback(null, name);
-            },
-            function (err) {
-                callback(err, name);
-            });
-    }
-}
+
 module.exports = UserActions

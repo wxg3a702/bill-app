@@ -9,12 +9,15 @@ var {
     StyleSheet,
     Dimensions,
     ScrollView,
-    Platform
+    Platform,
+    DeviceEventEmitter,
+    NativeModules
     } = React;
+
 var NavBarView = require('../../framework/system/navBarView')
-var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var CompStore = require('../../framework/store/compStore');
+var AppStore = require('../../framework/store/appStore');
 var UserAction = require("../../framework/action/userAction")
 var LoginAction = require("../../framework/action/loginAction")
 var TextEdit = require('./textEdit')
@@ -27,14 +30,15 @@ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utils/rightTopButton')
-var Space = require('../../comp/utils/space');
-var Alert = require('../../comp/utils/alert');
+var Space = require('../../comp/utils/space')
+var PhotoPic = require('NativeModules').PhotoPicModule;
 
 var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
         var orgBean = CompStore.getOrgBeans()[0];
         return {
+            imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
             newMobileNo: Validation.isNull(user.newMobileNo) ? '未设置' : user.newMobileNo,
@@ -54,7 +58,17 @@ var UserInfo = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        DeviceEventEmitter.addListener('getPicture', function (e:Event) {
+            // handle event.
+            this.setState({
+                imageSource: e.uri
+            });
+            UserAction.updateUserHead(
+                { ['photoStoreId']: this.state.imageSource}
+            )
+        }.bind(this));
     },
+
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
@@ -112,6 +126,8 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
+        PhotoPic.showImagePic();
+
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {
@@ -135,11 +151,11 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        Alert('确认退出当前账号?',{text:'确定',onPress:() => LoginAction.logOut()},{text: '取消', onPress: null});
+        LoginAction.logOut()
     },
     button(){
         return (
-            <RightTopButton func={this.logout} content="退出登录" color="#ff5b58"
+            <RightTopButton func={this.logout} content="退出" color="#ff5b58"
                             source={require('../../image/user/exit.png')}/>
         )
     },

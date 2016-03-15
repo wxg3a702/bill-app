@@ -7,7 +7,7 @@
  * of patent rights can be found in the PATENTS file in the same directory.
  */
 
-package com.views.viewpager;
+package com.mobile.views.viewpager;
 
 import java.util.Map;
 
@@ -20,13 +20,17 @@ import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.ViewGroupManager;
 import com.facebook.react.uimanager.ViewManager;
+import com.mobile.views.viewpager.*;
+import com.mobile.views.viewpager.PageScrollEvent;
+import com.mobile.views.viewpager.PageSelectedEvent;
+import com.mobile.views.viewpager.ZXReactViewPager;
 
 import javax.annotation.Nullable;
 
 /**
  * Instance of {@link ViewManager} that provides native {@link ViewPager} view.
  */
-public class ZXViewPagerManager extends ViewGroupManager<ZXReactViewPager> {
+public class ZXViewPagerManager extends ViewGroupManager<com.mobile.views.viewpager.ZXReactViewPager> {
 
   private static final String REACT_CLASS = "ZXViewPager";
 
@@ -39,8 +43,8 @@ public class ZXViewPagerManager extends ViewGroupManager<ZXReactViewPager> {
   }
 
   @Override
-  protected ZXReactViewPager createViewInstance(ThemedReactContext reactContext) {
-    return new ZXReactViewPager(reactContext);
+  protected com.mobile.views.viewpager.ZXReactViewPager createViewInstance(ThemedReactContext reactContext) {
+    return new com.mobile.views.viewpager.ZXReactViewPager(reactContext);
   }
 
   @Override
@@ -51,9 +55,9 @@ public class ZXViewPagerManager extends ViewGroupManager<ZXReactViewPager> {
   @Override
   public Map getExportedCustomDirectEventTypeConstants() {
     return MapBuilder.of(
-        PageScrollEvent.EVENT_NAME, MapBuilder.of("registrationName", "onPageScroll"),
+        com.mobile.views.viewpager.PageScrollEvent.EVENT_NAME, MapBuilder.of("registrationName", "onPageScroll"),
         PageScrollStateChangedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onPageScrollStateChanged"),
-        PageSelectedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onPageSelected")
+        com.mobile.views.viewpager.PageSelectedEvent.EVENT_NAME, MapBuilder.of("registrationName", "onPageSelected")
     );
   }
 
@@ -68,7 +72,7 @@ public class ZXViewPagerManager extends ViewGroupManager<ZXReactViewPager> {
 
   @Override
   public void receiveCommand(
-      ZXReactViewPager viewPager,
+      com.mobile.views.viewpager.ZXReactViewPager viewPager,
       int commandType,
       @Nullable ReadableArray args) {
     Assertions.assertNotNull(viewPager);
@@ -91,22 +95,22 @@ public class ZXViewPagerManager extends ViewGroupManager<ZXReactViewPager> {
   }
 
   @Override
-  public void addView(ZXReactViewPager parent, View child, int index) {
+  public void addView(com.mobile.views.viewpager.ZXReactViewPager parent, View child, int index) {
     parent.addViewToAdapter(child, index);
   }
 
   @Override
-  public int getChildCount(ZXReactViewPager parent) {
+  public int getChildCount(com.mobile.views.viewpager.ZXReactViewPager parent) {
     return parent.getViewCountInAdapter();
   }
 
   @Override
-  public View getChildAt(ZXReactViewPager parent, int index) {
+  public View getChildAt(com.mobile.views.viewpager.ZXReactViewPager parent, int index) {
     return parent.getViewFromAdapter(index);
   }
 
   @Override
-  public void removeViewAt(ZXReactViewPager parent, int index) {
+  public void removeViewAt(com.mobile.views.viewpager.ZXReactViewPager parent, int index) {
     parent.removeViewFromAdapter(index);
   }
 }

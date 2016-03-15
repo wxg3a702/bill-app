@@ -8,6 +8,9 @@ module.exports = {
     number(data){
         return numeral(data).format('0,0');
     },
+    number4(data){
+        return numeral(data).format('0,0.0000');
+    },
     phoneNumber(data){
         return data.substring(0, 3) + "****" + data.substring(7, 11)
     }
