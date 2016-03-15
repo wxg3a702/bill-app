@@ -4,12 +4,11 @@ var React = require('react-native');
 var {
     StyleSheet,
     TouchableHighlight,
-    CameraRoll,
     Text,
     Dimensions,
-    Image,
     View,
     ListView,
+    PanResponder
     } = React;
 var {height, width} = Dimensions.get('window');
 var Space = require('../../comp/utils/space')
@@ -20,10 +19,12 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var Swipeout = require('react-native-swipeout')
 var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+var ret = new Array();
 var Button = require('../../comp/utils/button')
 var res = [
     {
@@ -46,11 +47,18 @@ var res = [
 ]
 var CompCertification = React.createClass({
     getStateFromStores(){
+        let i = 0;
         var orgBean = CompStore.getOrgBeans()[0];
+        res.map((item, index)=> {
+            if (!item.name) {
+                item.name = '认证企业信息' + ++i
+
+            }
+            ret.push(item)
+        });
         return {
             bean: orgBean,
-            num: 0,
-            dataSource: ds.cloneWithRows(res)
+            dataSource: ds.cloneWithRows(ret)
         }
     },
 
@@ -69,19 +77,34 @@ var CompCertification = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
+    toOther(name){
+        //this.props.navigator.push({comp: name})
+    },
+
     returnRow(data){
-        if (data.name.length == 0) {
-            this.setState({num: this.state.num + 1})
-            data.name = '认证企业信息' + this.state.num;
-        }
+        var swipeoutBtns = [
+            {
+                text: '删除',
+                backgroundColor:'red',
+                onPress(){
+
+                }
+            }
+        ]
         return (
-            <View
-                style={{flexDirection:'row',justifyContent:'space-between',padding:16,height:50,alignItems:'center',backgroundColor:'white',borderBottomWidth: 1, borderColor: '#c8c7cc'}}>
-                <Text style={{flex:1}}>{data.name}</Text>
-                <Text
-                    style={{width:60,color:certificateState[data.state].color}}>{certificateState[data.state].desc}</Text>
-                <VIcon/>
-            </View>
+            <Swipeout right={swipeoutBtns}>
+                <TouchableHighlight onPress={()=>this.toOther()}>
+
+                    <View style={styles.item} removeClippedSubviews={true}>
+                        <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
+                            <Text style={{width:width-90}}>{data.name}</Text>
+                            <Text style={{width:50,color:certificateState[data.state].color,}}>{certificateState[data.state].desc}</Text>
+                            <VIcon/>
+                        </View>
+                    </View>
+
+                </TouchableHighlight>
+            </Swipeout>
         )
     },
     returnList(){
@@ -101,10 +124,10 @@ var CompCertification = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator} title="企业认证">
                 <Space backgroundColor="#f0f0f0"/>
-                <View style={{flex:1}}>
+                <View style={{flex: 1}}>
                     {this.returnList()}
                 </View>
-                <BottomButton func={this.addComp} content="新增企业信息"/>
+                <BottomButton func={()=>this.toOther()} content="新增企业信息"/>
             </NavBarView>
         )
     }
@@ -127,5 +150,17 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 16,
+        height: 50,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderBottomWidth: 1,
+        borderColor: '#c8c7cc',
+        width: width,
+        overflow: 'hidden'
+    }
 })
 module.exports = CompCertification;
