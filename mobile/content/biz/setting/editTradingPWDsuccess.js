@@ -23,6 +23,13 @@ var EditTradingPWDsuccess = React.createClass({
         }
     },
 
+    backOnPress: function () {
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.popToTop()
+        }
+    },
+
     render:function(){
         return(
             <NavBarView navigator={this.props.navigator} title='修改成功' contentBackgroundColor="#f0f0f0" showBack={false}>
@@ -36,7 +43,7 @@ var EditTradingPWDsuccess = React.createClass({
                     </View>
 
                     <View style={styles.touchableViewItem}>
-                        <TouchableHighlight activeOpacity={0.8} underlayColor="#44ffff" style={[styles.touchableItem]}>
+                        <TouchableHighlight onPress={this.backOnPress} activeOpacity={0.8} underlayColor="#44ffff" style={[styles.touchableItem]}>
                             <View style={[styles.flex,styles.touchablechildItem]}>
                                 <Text style={styles.touchableTextItem}>返回个人中心</Text>
                             </View>
