@@ -45,13 +45,11 @@ var ds = new ListView.DataSource({
 var BillList = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
-        var sentBill = BillStore.getSentBill();
-        var revBill = BillStore.getRevBill();
         if (!token) {
             return {
-                token: token
+                token: token,
             }
-        } else {
+        }else{
             var contentlist, fuc = this.renderRec
             var flag;
             if (!this.state || !this.state.flag) {
@@ -79,16 +77,18 @@ var BillList = React.createClass({
             }
 
         }
+
     },
     getInitialState: function () {
         return this.getStateFromStores();
     },
     componentDidMount() {
-        if (!AppStore.getToken()) {
+        if(!AppStore.getToken()){
 
-        } else {
+        }else{
             updatePosition(this.refs['SELECT1']);
             updatePosition(this.refs['OPTIONLIST']);
+            this.showView();
         }
         AppStore.addChangeListener(this._onChange);
 
