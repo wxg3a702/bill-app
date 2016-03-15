@@ -22,13 +22,13 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
-		A0D797331C97A844007EB9FC /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0D797321C97A838007EB9FC /* libRNSearchBar.a */; };
+		EE0686D41C97E7D3008039B4 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0686D31C97E77D008039B4 /* libRNSearchBar.a */; };
 		EE728A4C1C8E701A00911485 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = EE728A4B1C8E701A00911485 /* Fonts */; };
 		EE728AB91C8ED65100911485 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE728AB81C8ED5B200911485 /* libRCTPushNotification.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		EE728B061C8EF1A300911485 /* FRCTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = EE728B031C8EF1A300911485 /* FRCTTabBar.m */; };
 		EE728B071C8EF1A300911485 /* FRCTTabBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE728B051C8EF1A300911485 /* FRCTTabBarManager.m */; };
-		EE8663DF1C92608100970BAB /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8663DE1C92608100970BAB /* UIImagePickerManager.m */; };
 		EE8663EC1C92609100970BAB /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE8663EB1C92609100970BAB /* AVFoundation.framework */; };
+		EE8A78651C980F7500640FC1 /* UIImagePickerManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,9 +109,9 @@
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
 		};
-		A0D797311C97A838007EB9FC /* PBXContainerItemProxy */ = {
+		EE0686D21C97E77D008039B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = A0D7972D1C97A838007EB9FC /* RNSearchBar.xcodeproj */;
+			containerPortal = EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNSearchBar;
@@ -146,16 +146,16 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		A0D7972D1C97A838007EB9FC /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
+		EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		EE728A4B1C8E701A00911485 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		EE728AB31C8ED5B200911485 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		EE728B021C8EF1A300911485 /* FRCTTabBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRCTTabBar.h; path = mobile/FRCTTabBar.h; sourceTree = "<group>"; };
 		EE728B031C8EF1A300911485 /* FRCTTabBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRCTTabBar.m; path = mobile/FRCTTabBar.m; sourceTree = "<group>"; };
 		EE728B041C8EF1A300911485 /* FRCTTabBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRCTTabBarManager.h; path = mobile/FRCTTabBarManager.h; sourceTree = "<group>"; };
 		EE728B051C8EF1A300911485 /* FRCTTabBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRCTTabBarManager.m; path = mobile/FRCTTabBarManager.m; sourceTree = "<group>"; };
-		EE8663DD1C92608100970BAB /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = mobile/UIImagePickerManager.h; sourceTree = "<group>"; };
-		EE8663DE1C92608100970BAB /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = mobile/UIImagePickerManager.m; sourceTree = "<group>"; };
 		EE8663EB1C92609100970BAB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		EE8A78631C980F7500640FC1 /* UIImagePickerManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UIImagePickerManager.h; path = "../../../fas-react-native/mobile/ios/fas_wh_rn_ios/UIImagePickerManager.h"; sourceTree = "<group>"; };
+		EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = UIImagePickerManager.m; path = "../../../fas-react-native/mobile/ios/fas_wh_rn_ios/UIImagePickerManager.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -170,7 +170,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0D797331C97A844007EB9FC /* libRNSearchBar.a in Frameworks */,
+				EE0686D41C97E7D3008039B4 /* libRNSearchBar.a in Frameworks */,
 				EE8663EC1C92609100970BAB /* AVFoundation.framework in Frameworks */,
 				EE728AB91C8ED65100911485 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -265,8 +265,8 @@
 		13B07FAE1A68108700A75B9A /* mobile */ = {
 			isa = PBXGroup;
 			children = (
-				EE8663DD1C92608100970BAB /* UIImagePickerManager.h */,
-				EE8663DE1C92608100970BAB /* UIImagePickerManager.m */,
+				EE8A78631C980F7500640FC1 /* UIImagePickerManager.h */,
+				EE8A78641C980F7500640FC1 /* UIImagePickerManager.m */,
 				EE728B021C8EF1A300911485 /* FRCTTabBar.h */,
 				EE728B031C8EF1A300911485 /* FRCTTabBar.m */,
 				EE728B041C8EF1A300911485 /* FRCTTabBarManager.h */,
@@ -300,7 +300,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				A0D7972D1C97A838007EB9FC /* RNSearchBar.xcodeproj */,
+				EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */,
 				EE728AB31C8ED5B200911485 /* RCTPushNotification.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -347,10 +347,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A0D7972E1C97A838007EB9FC /* Products */ = {
+		EE0686C41C97E77D008039B4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A0D797321C97A838007EB9FC /* libRNSearchBar.a */,
+				EE0686D31C97E77D008039B4 /* libRNSearchBar.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -482,8 +482,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = A0D7972E1C97A838007EB9FC /* Products */;
-					ProjectRef = A0D7972D1C97A838007EB9FC /* RNSearchBar.xcodeproj */;
+					ProductGroup = EE0686C41C97E77D008039B4 /* Products */;
+					ProjectRef = EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -565,11 +565,11 @@
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A0D797321C97A838007EB9FC /* libRNSearchBar.a */ = {
+		EE0686D31C97E77D008039B4 /* libRNSearchBar.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libRNSearchBar.a;
-			remoteRef = A0D797311C97A838007EB9FC /* PBXContainerItemProxy */;
+			remoteRef = EE0686D21C97E77D008039B4 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		EE728AB81C8ED5B200911485 /* libRCTPushNotification.a */ = {
@@ -632,10 +632,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE728B071C8EF1A300911485 /* FRCTTabBarManager.m in Sources */,
-				EE8663DF1C92608100970BAB /* UIImagePickerManager.m in Sources */,
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				EE728B061C8EF1A300911485 /* FRCTTabBar.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				EE8A78651C980F7500640FC1 /* UIImagePickerManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
