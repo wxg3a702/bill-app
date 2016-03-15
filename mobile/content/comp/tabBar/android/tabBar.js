@@ -31,10 +31,10 @@ var styles = StyleSheet.create({
     height: 50,
     flexDirection: 'row',
     borderWidth: 1,
-    borderTopWidth: 0,
+    borderBottomWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderBottomColor: 'rgba(0,0,0,0.05)',
+    borderTopColor: '#7f7f7f',
     backgroundColor: '#ffffff'
   },
   badgeNoNumber: {
