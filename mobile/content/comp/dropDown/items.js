@@ -39,7 +39,7 @@ class Items extends Component {
 
       return (
         <TouchableWithoutFeedback onPress={() => onPress(item.props.children, item.props.value) }>
-          <View style={{ padding: 10 ,backgroundColor:"rgba(255,255,255,0.8)",backgroundColor: 'transparent',borderBottomWidth:1,borderColor:'dfdfdf'}}>
+          <View style={{ padding: 10 ,backgroundColor:"rgba(255,255,255,0.8)",backgroundColor: 'transparent',borderBottomWidth:1,borderColor:'#dfdfdf'}}>
             <Text>{item.props.children}</Text>
           </View>
         </TouchableWithoutFeedback>
