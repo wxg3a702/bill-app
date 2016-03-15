@@ -118,7 +118,9 @@ var Calculator = React.createClass({
             <View style={styles.layout}>
                 <Text style={[styles.text,{width:109}]}>{desc}</Text>
                 <View style={{flex:1}}>
-                    <TextInput style={{height:32,fontSize:15,color:'#7f7f7f'}} keyboardType="numeric" maxLength={max}
+                    <TextInput style={{height:32,fontSize:15,color:'#7f7f7f'}}
+                               underlineColorAndroid="transparent"
+                               keyboardType="numeric" maxLength={max}
                                onChangeText={(text) => this.setState({[key]:text})} value={this.state[key]}
                                placeholderTextColor='#cccccc' placeholder={holder}/>
                 </View>

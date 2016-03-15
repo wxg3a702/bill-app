@@ -1,3 +1,6 @@
+/**
+ * Created by vison on 16/3/14.
+ */
 'use strict';
 
 var React = require('react-native');
@@ -9,7 +12,6 @@ var {
     Image,
     View,
     } = React;
-var CompCertifyCopies = require('./compCertifyCopies');
 var Space = require('../../comp/utils/space')
 var BottomButton = require('../../comp/utils/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
@@ -20,7 +22,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utils/button')
-var CompCertification = React.createClass({
+var CompAccountInfo = React.createClass({
     getStateFromStores(){
         var orgBean = CompStore.getOrgBeans()[0];
         return orgBean
@@ -42,14 +44,13 @@ var CompCertification = React.createClass({
         this.setState(this.getStateFromStores());
     },
     addComp(){
-        this.props.navigator.push({comp:CompCertifyCopies});
+       
     },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="企业认证">
-                <Space backgroundColor="#f0f0f0"/>
+            <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1}}></View>
-                <BottomButton func={this.addComp} content="新增企业信息"/>
+                <BottomButton func={this.addComp} content="提交"/>
             </NavBarView>
         )
     }
@@ -73,4 +74,4 @@ var styles = StyleSheet.create({
         justifyContent: 'center'
     },
 })
-module.exports = CompCertification;
+module.exports = CompAccountInfo;
