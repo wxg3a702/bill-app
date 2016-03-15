@@ -22,6 +22,7 @@ var Notification = require('../../constants/notification');
 var MsgTypes = Notification.MsgTypes;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
+
 var AppStore = assign({}, EventEmitter.prototype, {
 
     addChangeListener: function (callback, event) {

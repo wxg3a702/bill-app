@@ -27,7 +27,9 @@ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utils/rightTopButton')
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utils/space');
+var Alert = require('../../comp/utils/alert');
+
 var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
@@ -133,11 +135,11 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        LoginAction.logOut()
+        Alert('确认退出当前账号?',{text:'确定',onPress:() => LoginAction.logOut()},{text: '取消', onPress: null});
     },
     button(){
         return (
-            <RightTopButton func={this.logout} content="退出" color="#ff5b58"
+            <RightTopButton func={this.logout} content="退出登录" color="#ff5b58"
                             source={require('../../image/user/exit.png')}/>
         )
     },
