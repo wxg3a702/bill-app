@@ -56,6 +56,10 @@ var UFetch = function (url, param, callback, failure, options) {
 
 
 var rawFetch = function (url, param, callback, failure, option) {
+
+    console.log('以下打印一次传出去的param:');
+    console.log(param);
+
     if (!option)option = {}
     var p = Promise.race([fetch(url, param), new Promise(function (resolve, reject) {
         setTimeout(()=> reject(new Error("链接超时")), 5000);
@@ -113,7 +117,8 @@ var process = function (promoise, callback, failure, option) {
                 }
 
             }
-
+            console.log('以下打印一次获取到的json:');
+            console.log(json);
             _endRPC(option, handle);
         })
         .catch((error) => {

@@ -87,9 +87,11 @@ var Login = React.createClass({
             this.setState({checked: false})
         }
     },
+
     handleChanged(key, value){
         this.textOnchange(value, key);
     },
+
     render: function () {
         //LoginAction.registerAPNS()
         return (
