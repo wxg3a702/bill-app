@@ -114,7 +114,7 @@ var NavBarView = React.createClass({
                                             {this.props.title}
                                         </Text>
                                     </View>
-                                    <View style={{width:70,justifyContent:"center",alignItems:"stretch"}}>
+                                    <View style={{width:70,justifyContent:"center",alignItems:"stretch",paddingRight:10}}>
                                         {this.props.actionButton}
                                     </View>
                                 </View>

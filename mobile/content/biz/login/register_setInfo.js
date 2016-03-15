@@ -12,6 +12,8 @@ var Button = require('../../comp/utils/button');
 var Input = require('../../comp/utils/input');
 var Validation = require('../../comp/utils/validation');
 var Alert = require('../../comp/utils/alert');
+var Register_setTradingPWD = require('./register_setTradingPWD');
+
 var Register_setInfo = React.createClass({
     getInitialState: function () {
         return {
@@ -21,6 +23,7 @@ var Register_setInfo = React.createClass({
             checked: true,
         }
     },
+
     textOnchange: function (text, type) {
         this.setState({[type]: text})
         if (this.state.userName.length > 0 && this.state.password.length > 0 && this.state.passwordAgain.length > 0) {
@@ -29,9 +32,11 @@ var Register_setInfo = React.createClass({
             this.setState({checked: true})
         }
     },
+
     handleChanged(key, value){
         this.textOnchange(value, key);
     },
+
     next: function () {
         if (this.state.userName.length > 0 && this.state.password.length > 0 && this.state.passwordAgain.length > 0) {
             if (this.state.userName.length < 5) {
@@ -68,21 +73,35 @@ var Register_setInfo = React.createClass({
     },
     setInfo(){
         dismissKeyboard();
-        LoginAction.register(
-            {
-                userName: this.state.userName,
-                password: this.state.password
-            },
-            function () {
-                const { navigator } = this.props;
-                if (navigator) {
-                    navigator.replace({
-                        comp: GotoReister
-                    });
+
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                comp: Register_setTradingPWD,
+                param:{
+                    mobileNo: this.props.param.mobileNo,
+                    userName:this.state.userName,
+                    password:this.state.password,
                 }
-            }.bind(this)
-        )
+            });
+        }
+
+        //LoginAction.register(
+        //    {
+        //        userName: this.state.userName,
+        //        password: this.state.password
+        //    },
+        //    function () {
+        //        const { navigator } = this.props;
+        //        if (navigator) {
+        //            navigator.replace({
+        //                comp: GotoReister
+        //            });
+        //        }
+        //    }.bind(this)
+        //)
     },
+
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="注册">
@@ -94,7 +113,7 @@ var Register_setInfo = React.createClass({
                     <Input type='default' prompt="再输一次密码" max={16} field="passwordAgain" isPwd={true}
                            onChanged={this.handleChanged} icon="password"/>
                     <View style={{marginTop:36}}>
-                        <Button func={this.next} checked={this.state.checked} content='完成'/>
+                        <Button func={this.next} checked={this.state.checked} content='下一步'/>
                     </View>
                 </View>
             </NavBarView>

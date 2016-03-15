@@ -6,7 +6,8 @@ var {
     TouchableHighlight,
     Text,
     View,
-    ScrollView
+    ScrollView,
+    Image
     } = React;
 
 var _ = require('lodash');
@@ -19,6 +20,7 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
 var Alert = require('../../comp/utils/alert');
+var ApplyDiscount = require('./applyDiscount');
 var styles = StyleSheet.create({
 
     container: {
@@ -101,10 +103,7 @@ var Detail = React.createClass({
 
 
     renderBillHeader(){
-        let summaryHeight = 90;
-        if (this.state.role == 'payee' && this.state.status != "IGN") {
-            summaryHeight = 170;
-        }
+        let summaryHeight = 170;
         return (
             <View
                 style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:0,height:summaryHeight}}>
@@ -182,7 +181,7 @@ var Detail = React.createClass({
                     })()}
                 </View>
                 {(() => {
-                    if (this.state.role == "payee" && this.state.status != "IGN") {
+                    if (this.state.role == "payee") {
                         return (
                             <View>
                                 <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row'}}>
@@ -253,24 +252,58 @@ var Detail = React.createClass({
                             case "REQ":
                             case "HAN":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'row',flex:1}}>
-                                        <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请等待承兑行出票'}</Text>
+                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                            <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
+                                        </View>
+                                        <View
+                                            style={{paddingTop:15,justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text
+                                                style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
+                                            <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
+                                        </View>
+                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请等待承兑行出票'}</Text>
+                                        </View>
                                     </View>
                                 );
                                 break;
                             case "IGN":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'row',flex:1}}>
-                                        <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请至承兑行取票'}</Text>
+                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                            <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
+                                        </View>
+                                        <View
+                                            style={{paddingTop:15,justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text
+                                                style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
+                                            <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
+                                        </View>
+                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请至承兑行取票'}</Text>
+                                        </View>
                                     </View>
                                 );
                                 break;
                             case "DIS":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'row',flex:1}}>
-                                        <Text
-                                            style={{ fontSize:18,color:'#44bcb2'}}>{dateFormat(new Date(this.state.discountDate), 'yyyy年mm月dd日')}</Text>
-                                        <Text style={{ fontSize:18,color:'#999999'}}>{'贴现'}</Text>
+                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                            <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
+                                        </View>
+                                        <View
+                                            style={{paddingTop:15,justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text
+                                                style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
+                                            <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
+                                        </View>
+                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                            <Text
+                                                style={{ fontSize:18,color:'#44bcb2'}}>{dateFormat(new Date(this.state.discountDate), 'yyyy年mm月dd日')}</Text>
+                                            <Text style={{ fontSize:18,color:'#999999'}}>{'贴现'}</Text>
+                                        </View>
+
                                     </View>
                                 );
                                 break;
@@ -284,7 +317,7 @@ var Detail = React.createClass({
     },
 
     renderBillDisInfo(){
-        if(this.state.role=="payee" && this.state.status == "IGN"){
+        if(this.state.role=="payee" && (this.state.status == "NEW" || this.state.status == "IGN")){
             return (
                 <View></View>
             );
@@ -292,13 +325,20 @@ var Detail = React.createClass({
             return (
                 <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
                     <View
-                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'贴 现 行：' }</Text>
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
                         <Text
-                            style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.discountBankName}</Text>
+                            style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.dueDate), 'yyyy年mm月dd日')}</Text>
+                        <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
                     </View>
                     <View
                         style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:-10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'贴  现  行：' }</Text>
+                        <Text
+                            style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.discountBankName}</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                         <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'贴现利率：' }</Text>
                         <Text
                             style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{numeral(this.state.discountRate * 1000).format("0,0.00") + "‰"}</Text>
@@ -309,52 +349,96 @@ var Detail = React.createClass({
                         <Text
                             style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.payeeBankAccountNo}</Text>
                     </View>
-
                 </View>
+
             )
         }
     },
 
     renderBillInfo(){
-        return (
-            <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
-                <View
-                    style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'票面金额：' }</Text>
-                    <Text
-                        style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{numeral(this.state.amount / 10000).format("0,0.00") + "万元"}</Text>
-                </View>
-                <View
-                    style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:-10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'开票日期：' }</Text>
-                    <Text
-                        style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.estimatedIssueDate), 'yyyy年mm月dd日')}</Text>
-                </View>
-                <View
-                    style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'到 期 日：' }</Text>
-                    <Text
-                        style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.dueDate), 'yyyy年mm月dd日')}</Text>
-                </View>
-                <View
-                    style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:4, color:'#4e4e4e'}}>{'出 票 人：' }</Text>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:6, color:'#7f7f7f'}}>{this.state.drawerName}</Text>
-                </View>
-                <View
-                    style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'收 款 人：' }</Text>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.payeeName}</Text>
-                </View>
-                <View
-                    style={{marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-                    <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'承兑银行：' }</Text>
-                    <Text
-                        style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.acceptBankName }</Text>
-                </View>
+        if((this.state.role=="payee" && this.state.status == "NEW") || this.state.role=="drawer"){
+            return (
+                <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'票面金额：' }</Text>
+                        <Text
+                            style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{numeral(this.state.amount / 10000).format("0,0.00") + "万元"}</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:-10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'开票日期：' }</Text>
+                        <Text
+                            style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.estimatedIssueDate), 'yyyy年mm月dd日')}</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'到 期 日：' }</Text>
+                        <Text
+                            style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.dueDate), 'yyyy年mm月dd日')}</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4, color:'#4e4e4e'}}>{'出 票 人：' }</Text>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:6, color:'#7f7f7f'}}>{this.state.drawerName}</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'收 款 人：' }</Text>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.payeeName}</Text>
+                    </View>
+                    <View
+                        style={{marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:5,fontSize:17,flex:4,color:'#4e4e4e'}}>{'承兑银行：' }</Text>
+                        <Text
+                            style={{paddingBottom:5,fontSize:17,flex:6,color:'#7f7f7f'}}>{this.state.acceptBankName }</Text>
+                    </View>
 
-            </View>
-        )
+                </View>
+            )
+        }else {
+            return(
+                <View></View>
+            )
+        }
+
+    },
+
+    renderBillStateTrack(){
+        if(this.state.role=="payee" && this.state.status != "NEW"){
+            return (
+                <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'票据状态追踪' }</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',marginLeft:20,marginRight:20,marginTop:-10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Image
+                            style={{width:31,height:65,marginRight:0,marginTop:0}}
+                            source={require('../../image/bill/desc.png')}
+                        />
+                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#7f7f7f'}}>{'申请贴现,请等待银行受理' }</Text>
+                        <Text
+                            style={{marginTop:5,fontSize:12,flex:1,color:'#7f7f7f'}}>15.12.12</Text>
+                    </View>
+                    <View
+                        style={{borderBottomColor:'#f6f6f6',marginLeft:20,marginRight:20,flexDirection: 'row',justifyContent: 'center',flex:1}}>
+                        <Image
+                            style={{width:31,height:65,marginRight:0,marginTop:0}}
+                            source={require('../../image/bill/desc.png')}
+                        />
+                        <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#7f7f7f'}}>{'创建票据信息' }</Text>
+                        <Text
+                            style={{marginTop:5,fontSize:12,flex:1,color:'#7f7f7f'}}>15.12.12</Text>
+                    </View>
+                </View>
+            )
+        }else {
+            return(
+                <View></View>
+            )
+        }
     },
 
     ignAction: function () {
@@ -400,7 +484,7 @@ var Detail = React.createClass({
 
         this.props.navigator.push({
             param: {title: '详情', billBean: item},
-            comp: DisConfirm
+            comp: ApplyDiscount
         });
 
 
@@ -412,20 +496,7 @@ var Detail = React.createClass({
                 case "NEW":
                     return (
                         <View
-                            style={{padding:20,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
-
-                            <View
-                                style={{ flex:4,height:35,borderRadius:5,backgroundColor: '#ffffff',paddingLeft:10,paddingRight:10,borderWidth:1,borderColor:'#ff5b58'}}>
-                                <TouchableHighlight activeOpacity={0.8} underlayColor='#ffffff'
-                                                    onPress={() => Alert("确认不在平台内将此票据贴现吗？此操作将不可逆。",()=>this.ignAction(),function(){})}
-                                                    style={{flex:1}}>
-                                    <Text style={{paddingTop: 10,color:'#ff5b58',textAlign:'center'}}>{'不贴现'}</Text>
-                                </TouchableHighlight>
-                            </View>
-
-                            <View style={{flex:1}}>
-                            </View>
-
+                            style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
                             <View
                                 style={{flex:12,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
                                 <TouchableHighlight activeOpacity={0.8} underlayColor='#44bcbc'
@@ -440,7 +511,7 @@ var Detail = React.createClass({
                 case "REQ":
                     return (
                         <View
-                            style={{padding:20,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
+                            style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
 
                             <View
                                 style={{flex:1,height:35,borderRadius:5,backgroundColor: '#ffffff',paddingLeft:10,paddingRight:10,borderWidth:1,borderColor:'#ff5b58'}}>
@@ -458,7 +529,7 @@ var Detail = React.createClass({
                 case "IGN":
                     return (
                         <View
-                            style={{padding:20,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
+                            style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
 
                             <View
                                 style={{ flex:1,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
@@ -476,7 +547,7 @@ var Detail = React.createClass({
         } else {
             return (
                 <View
-                    style={{padding:20,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
+                    style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
 
                     <View
                         style={{ flex:1,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
@@ -517,6 +588,7 @@ var Detail = React.createClass({
                     {this.renderBillHeader()}
                     {this.renderBillDisInfo()}
                     {this.renderBillInfo()}
+                    {this.renderBillStateTrack()}
                 </ScrollView>
                 {this.renderAction()}
             </View>

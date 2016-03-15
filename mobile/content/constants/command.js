@@ -17,7 +17,8 @@ module.exports = {
         GIVEUP_BILL_DISCOUNT:null,
         CLEAR_MESSAGEDETAIL:null,
         PUSH_NOTIFICATION:null,
-        DEMO_FLAG:null
+        DEMO_FLAG:null,
+        GET_PUSH_MSG:null
     })
 
 };

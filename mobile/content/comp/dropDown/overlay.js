@@ -41,7 +41,7 @@ class Overlay extends Component {
     return (
         <TouchableWithoutFeedback style={styles.container} onPress={onPress}>
           <View style={[styles.overlay, { top: -pageY , left: -pageX}]}>
-            <View style={[{width: window.width,height: window.height}, { position:'relative' ,marginTop:100,backgroundColor:'000000',opacity: 0.5}]}/>
+            <View style={[{width: window.width,height: window.height}, { position:'relative' ,marginTop:100,backgroundColor:'#000000',opacity: 0.5}]}/>
           </View>
         </TouchableWithoutFeedback>
     );

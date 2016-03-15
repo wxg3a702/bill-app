@@ -10,6 +10,7 @@ var {
     ListView,
     PanResponder
     } = React;
+var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
 var Space = require('../../comp/utils/space')
 var BottomButton = require('../../comp/utils/bottomButton')
@@ -78,7 +79,7 @@ var CompCertification = React.createClass({
         this.setState(this.getStateFromStores());
     },
     toOther(name){
-        //this.props.navigator.push({comp: name})
+        this.props.navigator.push({comp: name})
     },
 
     returnRow(data){
@@ -127,7 +128,7 @@ var CompCertification = React.createClass({
                 <View style={{flex: 1}}>
                     {this.returnList()}
                 </View>
-                <BottomButton func={()=>this.toOther()} content="新增企业信息"/>
+                <BottomButton func={()=>this.toOther(CompCertifyCopies)} content="新增企业信息"/>
             </NavBarView>
         )
     }
@@ -150,17 +151,5 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    item: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        padding: 16,
-        height: 50,
-        alignItems: 'center',
-        backgroundColor: 'white',
-        borderBottomWidth: 1,
-        borderColor: '#c8c7cc',
-        width: width,
-        overflow: 'hidden'
-    }
 })
 module.exports = CompCertification;
