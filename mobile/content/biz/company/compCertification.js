@@ -151,5 +151,16 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        padding: 16,
+        height: 50,
+        alignItems: 'center',
+        backgroundColor: 'white',
+        borderBottomWidth: 1,
+        borderColor: '#c8c7cc',
+        width: width,
+    }
 })
 module.exports = CompCertification;
