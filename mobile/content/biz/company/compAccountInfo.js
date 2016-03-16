@@ -12,6 +12,7 @@ var {
     Image,
     View,
     } = React;
+var Realm = require('realm');
 var Space = require('../../comp/utils/space')
 var BottomButton = require('../../comp/utils/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
@@ -20,6 +21,7 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utils/button')
 var CompAccountInfo = React.createClass({
@@ -47,9 +49,23 @@ var CompAccountInfo = React.createClass({
        
     },
     render: function () {
+        var realm = new Realm({schema:[{name:'Dog', properties:{name: 'string'}}]});
+        realm.write(()=>{
+            realm.create('Dog', ['Rex']);
+        })
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
-                <View style={{flex:1}}></View>
+                <View style={{flex:1,marginHorizontal:10}}>
+                    <Input  type='default' prompt="账户名称" max={20} field="userName" isPwd={false}
+                           onChanged={this.handleChanged} icon="user"/>
+                    <Input  type='default' prompt="账户" max={20} field="userName" isPwd={false}
+                           onChanged={this.handleChanged} icon="user"/>
+                    <Input  type='default' prompt="开户预留手机号" max={20} field="userName" isPwd={false}
+                           onChanged={this.handleChanged} icon="user"/>
+                    <Text style={styles.welcome}>
+                        Count of Dogs in Realm: {realm.objects('Dog').length}
+                    </Text>
+                </View>
                 <BottomButton func={this.addComp} content="提交"/>
             </NavBarView>
         )

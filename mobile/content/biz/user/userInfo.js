@@ -195,7 +195,7 @@ var UserInfo = React.createClass({
                     <View style={styles.head}>
                         <TouchableHighlight onPress={this.selectPhoto}
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
-                            <Image style={styles.img} resizeMode="stretch" source={this.returnImg()}/>
+                            <Image style={styles.img} resizeMode="cover" source={this.returnImg()}/>
                         </TouchableHighlight>
                         <Text style={styles.name}>{this.state.userName}</Text>
                     </View>
