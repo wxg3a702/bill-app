@@ -343,7 +343,7 @@ var BillList = React.createClass({
         return (
             <TouchableHighlight onPress={() => this.selectTeam(item)} activeOpacity={0.8} underlayColor='#f0f0f0'>
                 <View
-                    style={{backgroundColor:'#ffffff',borderWidth: 1,marginHorizontal:5,marginTop:5,borderColor:'#dfdfdf',height:171}}>
+                    style={{backgroundColor:'#ffffff',borderWidth: 1,marginHorizontal:5,marginTop:5,borderColor:'#dfdfdf',height:171,flex:1}}>
                     <View style={{flex: 1,flexDirection: 'row',justifyContent: 'space-between',height:136}}>
                         <View style={{flexDirection: 'column',marginLeft:12,marginTop:20}}>
                             <Text style={{fontSize:11,color:'#7f7f7f'}}>票面金额</Text>
