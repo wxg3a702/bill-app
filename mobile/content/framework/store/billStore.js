@@ -8,7 +8,7 @@ var BillStore = assign({}, EventEmitter.prototype, {
     },
     getSentBill: ()=>AppStore.getData().sentBillBean,
 
-    getRevBill: ()=>AppStore.getData.revBillBean,
+    getRevBill: ()=>AppStore.getData().revBillBean,
 
     getBillSentViewItems(status){
         if (status == "" || status === null || status === undefined)

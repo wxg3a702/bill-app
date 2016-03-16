@@ -78,7 +78,7 @@ module.exports = {
         }
     },
     notNull: function (data, desc) {
-        if (data.length == 0) {
+        if (!data) {
             Alert(desc + "为必填项，不能为空");
             return false;
         } else {
@@ -86,11 +86,17 @@ module.exports = {
         }
     },
     isNull: function (data) {
-        if (data == null || data.length == 0) {
+        if (!data) {
             return true;
         } else {
             return false;
         }
+    },
+    returnIsNull(valid, data){
+        if (!valid) {
+            return '';
+        } else {
+            return data;
+        }
     }
-
 };
