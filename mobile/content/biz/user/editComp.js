@@ -56,7 +56,7 @@ var EditComp = React.createClass({
             ret = res
         } else {
             res.map((item, index)=> {
-                if (text.indexOf(item.name) > -1) {
+                if (item.name.indexOf(text) > -1) {
                     ret.push(item)
                 }
             })
