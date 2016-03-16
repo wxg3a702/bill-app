@@ -38,6 +38,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import io.realm.react.RealmReactPackage;
+
 public class MainActivity  extends Activity implements DefaultHardwareBackBtnHandler {
 
     private static final int IMAGE_REQUEST_CODE = 0x01;
@@ -63,6 +65,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
                 .addPackage(new ZXReactPackage())
+                .addPackage((ReactPackage)new RealmReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
