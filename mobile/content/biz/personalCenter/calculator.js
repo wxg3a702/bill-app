@@ -8,6 +8,9 @@ var {
     View,
     ScrollView,
     TextInput,
+    Platform,
+    NativeModules,
+    DeviceEventEmitter
     } = React;
 var BottomButton = require('../../comp/utils/bottomButton')
 var numeral = require('../../comp/utils/numberHelper')
@@ -17,6 +20,7 @@ var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
 var RightTopButton = require('../../comp/utils/rightTopButton')
+var DatePicker = require('NativeModules').DatePickerDialogModule;
 var Calculator = React.createClass({
     getInitialState: function () {
         return {
@@ -28,6 +32,22 @@ var Calculator = React.createClass({
             actAmount: '',
             interestDay: ''
         }
+    },
+    componentDidMount() {
+        DeviceEventEmitter.addListener('getDate', function (e:Event) {
+            console.log(e.date)
+            console.log(e.name)
+            if (e.name=="discountDate"){
+                this.setState({
+                    discountDate: e.date
+                });
+            }else if (e.name=="dueDate"){
+                this.setState({
+                    dueDate: e.date
+                });
+            }
+        }.bind(this));
+
     },
     callBack(data, cb){
         var key = _.keys(data)[0];
@@ -128,6 +148,13 @@ var Calculator = React.createClass({
             </View>
         )
     },
+    showDate(word, key, value, type){
+        if (Platform.OS == 'ios') {
+            ()=>this.toEdit(word, key, value, type, '', '')
+        } else {
+            DatePicker.showDatePickerDialog(key);
+        }
+    },
     returnDate(key, desc, holder, value, type, word){
         var color;
         if (value.length == 0) {
@@ -137,7 +164,7 @@ var Calculator = React.createClass({
             color = '#7f7f7f'
         }
         return (
-            <TouchableHighlight onPress={()=>this.toEdit(word,key,value==holder?'':value,type,'','')}>
+            <TouchableHighlight onPress={()=>this.showDate(word,key,value==holder?'':value,type,'','')}>
                 <View style={[styles.layout,{paddingRight:10}]}>
                     <Text style={[styles.text,{width:109}]}>{desc}</Text>
                     <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
