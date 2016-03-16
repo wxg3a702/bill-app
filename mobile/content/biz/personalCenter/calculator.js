@@ -33,11 +33,20 @@ var Calculator = React.createClass({
             interestDay: ''
         }
     },
-    componentWillMount() {
+    componentDidMount() {
         DeviceEventEmitter.addListener('getDate', function (e:Event) {
             console.log(e.date)
-            this.state.discountDate = e.date;
-        });
+            console.log(e.name)
+            if (e.name=="discountDate"){
+                this.setState({
+                    discountDate: e.date
+                });
+            }else if (e.name=="dueDate"){
+                this.setState({
+                    dueDate: e.date
+                });
+            }
+        }.bind(this));
 
     },
     callBack(data, cb){
@@ -143,7 +152,7 @@ var Calculator = React.createClass({
         if (Platform.OS == 'ios') {
             ()=>this.toEdit(word, key, value, type, '', '')
         } else {
-            DatePicker.showDatePickerDialog();
+            DatePicker.showDatePickerDialog(key);
         }
     },
     returnDate(key, desc, holder, value, type, word){

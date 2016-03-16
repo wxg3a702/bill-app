@@ -24,6 +24,9 @@ var Input = React.createClass({
             case 'user':
                 icon = require('../../image/utils/picCode.png');
                 break;
+            case 'trading_PWD':
+                icon = require('../../image/user/trading_PWD.png');
+                break;
         }
         return icon;
     },

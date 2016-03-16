@@ -14,7 +14,9 @@ var VIcon = require('../../comp/icon/vIcon')
 var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
-var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber
+var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
+var EditTradingPWD = require('./editTradingPWD');
+
 var SecurityCenter = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
@@ -53,10 +55,21 @@ var SecurityCenter = React.createClass({
             })
         }
     },
+
+    toEditTradingPWD: function() {
+        const { navigator } = this.props;
+        if(navigator) {
+            navigator.push({
+                comp:EditTradingPWD
+            });
+        }
+    },
+
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="安全设置" contentBackgroundColor='#f0f0f0'>
                 <View style={[styles.flexColumn,{marginTop:18,backgroundColor:'#eef3fa'}]}>
+
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toEditPhone}>
                         <View
                             style={[styles.flexRow,styles.between,styles.listLayout,styles.borderTop,styles.borderBottom,{alignItems:'center'}]}>
@@ -73,6 +86,7 @@ var SecurityCenter = React.createClass({
                             </View>
                         </View>
                     </TouchableHighlight>
+
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toEditPassword}>
                         <View
                             style={[styles.flexRow,styles.between,styles.listLayout,styles.borderBottom,{alignItems:'center'}]}>
@@ -87,6 +101,24 @@ var SecurityCenter = React.createClass({
                             </View>
                         </View>
                     </TouchableHighlight>
+
+                    <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toEditTradingPWD}>
+                        <View
+                            style={[styles.flexRow,styles.between,styles.listLayout,styles.borderBottom,{alignItems:'center'}]}>
+                            <View style={[styles.flexOne,styles.flexRow,{alignItems:'center'}]}>
+                                <Image style={styles.circle} source={require('../../image/user/changeTradingPWD.png')}/>
+                                <View style={{marginLeft:16}}>
+                                    <Text style={styles.title}>修改交易密码</Text>
+                                </View>
+                            </View>
+                            <View style={[styles.flexRow]}>
+                                <VIcon/>
+                            </View>
+                        </View>
+                    </TouchableHighlight>
+
+
+
                 </View>
             </NavBarView>
         )

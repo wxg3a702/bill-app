@@ -7,6 +7,7 @@ var {
     View,
     ListView,
     StyleSheet,
+  Platform,
     Dimensions
     } = React;
 var AppStore = require('../../framework/store/appStore');
@@ -90,7 +91,7 @@ var MessageDetail = React.createClass({
                             <Text
                                 style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(new Date(item.receiveDate))}</Text>
                         </View>
-                        <Text style={{fontSize:14,color:'#7f7f7f',flex:1,paddingHorizontal:12}}>{item.content}</Text>
+                        <Text style={[{marginLeft:12, fontSize:14,color:'#7f7f7f',flex:1,paddingHorizontal:12}, styles.contentMargin]}>{item.content}</Text>
                         <View
                             style={{marginTop:10,marginHorizontal:10,borderBottomWidth: 0.5, borderColor: '#c8c7cc'}}></View>
                         <View
@@ -105,5 +106,9 @@ var MessageDetail = React.createClass({
     }
 
 })
-var styles = StyleSheet.create({})
+var styles = StyleSheet.create({
+    contentMargin: {
+        marginLeft: (Platform.OS === 'ios') ? 0 : 12
+    }
+})
 module.exports = MessageDetail;

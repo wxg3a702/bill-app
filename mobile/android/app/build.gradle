@@ -126,5 +126,6 @@ dependencies {
     // From node_modules
     compile project(':react-native-fs')
     compile project(':react-native-vector-icons')
+    compile 'com.github.nkzawa:socket.io-client:0.3.0'
     compile project(':lib')
 }

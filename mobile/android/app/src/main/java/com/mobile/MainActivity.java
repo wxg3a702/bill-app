@@ -2,10 +2,13 @@ package com.mobile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
@@ -21,6 +24,8 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.shell.MainReactPackage;
+import com.mobile.service.AppService;
+import com.mobile.utils.AppUtils;
 import com.rnfs.RNFSPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.mobile.packages.ZXReactPackage;
@@ -37,12 +42,19 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
 
     private static final int IMAGE_REQUEST_CODE = 0x01;
     private static final int CAMERA_REQUEST_CODE = 0x02;
-    private ReactInstanceManager mReactInstanceManager;
+    private static ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
-
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // 竖屏锁定
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         mReactRootView = new ReactRootView(this);
 
         mReactInstanceManager = ReactInstanceManager.builder()
@@ -56,11 +68,41 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .build();
 
         mReactRootView.startReactApplication(mReactInstanceManager, "mobile", null);
-
-
         setContentView(mReactRootView);
-        ReactContext reactContext = mReactInstanceManager.getCurrentReactContext();
     }
+
+    public static ReactContext getContext() {
+        if (mReactInstanceManager == null) {
+            // This doesn't seem to happen ...
+            throw new IllegalStateException("Instance manager not available");
+        }
+        final ReactContext context = mReactInstanceManager.getCurrentReactContext();
+        if (context == null) {
+            // This really shouldn't happen ...
+            throw new IllegalStateException("React context not available");
+        }
+        return context;
+    }
+    @Override
+    public void onBackPressed() {
+        if (mReactInstanceManager != null) {
+            mReactInstanceManager.onBackPressed();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    Runnable run = new Runnable() {
+        @Override
+        public void run() {
+            if (!AppUtils.isServiceWork(MainActivity.this, "AppService")) {
+                Intent mIntent = new Intent(MainActivity.this, AppService.class);
+                Log.d("true", "true");
+//            bindService(mIntent, localServiceConnection, BIND_AUTO_CREATE);
+                startService(mIntent);
+            }
+        }
+    };
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {
@@ -90,6 +132,12 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
         super.onResume();
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onResume(this, this);
+            new Thread(){
+                @Override
+                public void run() {
+                    handler.postDelayed(run, 15000);
+                }
+            }.start();
         }
     }
 

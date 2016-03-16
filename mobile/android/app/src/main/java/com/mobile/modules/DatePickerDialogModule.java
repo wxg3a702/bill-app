@@ -32,7 +32,7 @@ public class DatePickerDialogModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void showDatePickerDialog(){
+    public void showDatePickerDialog(final String name){
         Activity currentActivity = getCurrentActivity();
         Calendar calendar = Calendar.getInstance();
         new DatePickerDialog(currentActivity,
@@ -42,6 +42,7 @@ public class DatePickerDialogModule extends ReactContextBaseJavaModule {
                         dateTime = year + "-" + (month + 1) + "-" + dayOfMonth;
                         WritableMap params = Arguments.createMap();
                         params.putString("date", dateTime);
+                        params.putString("name", name);
                         ReactContext reactContext = getReactApplicationContext();
                         //ReactContext reactContext = new ReactContext(getCurrentActivity());
                         sendEvent(reactContext, "getDate", params);

@@ -76,7 +76,7 @@ class Select extends Component {
                     <View ref={SELECT} style={[ {flex:9},style, dimensions ]}>
                         <Option style={ styleOption } styleText={ styleText }>{defaultValue}</Option>
                     </View>
-                    <View style={{ flex:1,marginTop:0}}>
+                    <View style={{ flex:1,marginTop:10}}>
                         <VIcon direction={this.state.arrow} size={20} color='#000000'/>
                     </View>
                 </View>
