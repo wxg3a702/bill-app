@@ -18,8 +18,10 @@ var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
-var Login = require('../login/login');
+var ToLogin = require('../../comp/utils/toLogin');
+var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
+var BillDetail = require('./bilDetail')
 var VIcon = require('../../comp/icon/vIcon')
 var BillStates = require('./billStates')
 var Validation = require('../../comp/utils/validation')
@@ -28,22 +30,26 @@ var ds = new ListView.DataSource({
 });
 var Bill = React.createClass({
     getDataSouce(bean, key1, key2, key3){
-        let ret = new Array();
-        bean.contentList.map((item, index)=> {
-            if (item.status == key1 && !key2 && !key3) {
-                ret.push(item);
-            } else if (item.status == key1 || item.status == key2 || item.status == key3) {
-                ret.push(item);
-            }
-        })
-        return ret;
+        if (!bean) {
+            return ''
+        } else {
+            let ret = new Array();
+            bean.contentList.map((item, index)=> {
+                if (item.status == key1 && !key2 && !key3) {
+                    ret.push(item);
+                } else if (item.status == key1 || item.status == key2 || item.status == key3) {
+                    ret.push(item);
+                }
+            })
+            return ret;
+        }
     },
     getStateFromStores(){
         var sentBill = BillStore.getSentBill();
         var revBill = BillStore.getRevBill();
         var token = AppStore.getToken();
         var resPick = [
-            {desc: '全部', dataSource: Validation.returnIsNull(revBill, revBill.contentList)},
+            {desc: '全部', dataSource: Validation.returnIsNull(revBill, !revBill ? '' : revBill.contentList)},
             {desc: '新票据', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'NEW'))},
             {desc: '已申请', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'REQ'))},
             {desc: '受理中', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'HAN'))},
@@ -51,7 +57,7 @@ var Bill = React.createClass({
             {desc: '不贴现', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'IGN'))}
         ];
         var sentPick = [
-            {desc: '全部', dataSource: Validation.returnIsNull(sentBill, sentBill.contentList)},
+            {desc: '全部', dataSource: Validation.returnIsNull(sentBill, !sentBill ? '' : sentBill.contentList)},
             {desc: '已贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'DIS'))},
             {desc: '不贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'IGN'))},
             {
@@ -59,22 +65,41 @@ var Bill = React.createClass({
                 dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))
             },
         ];
-        return ({
-            token: token,
-            checkColor: 'white',
-            unCheckColor: '#44bcb2',
-            status: '全部',
-            direction: 'left',
-            modalVisible: false,
-            animated: true,
-            pick: resPick,
-            pickStatus: 'rev',
-            backColor: '#f0f0f0',
-            contentColor: 'white',
-            resPick: resPick,
-            sentPick: sentPick,
-            dataSource: resPick[0].dataSource
-        })
+        if (!token) {
+            return {
+                token: token,
+                checkColor: 'white',
+                unCheckColor: '#44bcb2',
+                status: '全部',
+                direction: 'left',
+                modalVisible: false,
+                animated: true,
+                pick: resPick,
+                pickStatus: 'rev',
+                backColor: '#f0f0f0',
+                contentColor: 'white',
+                resPick: resPick,
+                sentPick: sentPick,
+            }
+        } else {
+
+            return ({
+                token: token,
+                checkColor: 'white',
+                unCheckColor: '#44bcb2',
+                status: '全部',
+                direction: 'left',
+                modalVisible: false,
+                animated: true,
+                pick: resPick,
+                pickStatus: 'rev',
+                backColor: '#f0f0f0',
+                contentColor: 'white',
+                resPick: resPick,
+                sentPick: sentPick,
+                dataSource: resPick[0].dataSource
+            })
+        }
     },
     getInitialState: function () {
         return this.getStateFromStores();
@@ -109,7 +134,6 @@ var Bill = React.createClass({
             dataSource: this.state.sentPick[0].dataSource
         })
     },
-
     changePick(){
         this.setState({
             direction: 'down',
@@ -127,10 +151,16 @@ var Bill = React.createClass({
         });
     },
     changePic(data){
-        this.setState({
-            status: data.desc,
-            dataSource: data.dataSource
-        })
+        if (!this.state.token) {
+            this.setState({
+                status: data.desc,
+            })
+        } else {
+            this.setState({
+                status: data.desc,
+                dataSource: data.dataSource
+            })
+        }
         this.hidePick()
     },
     returnPick(data){
@@ -180,36 +210,73 @@ var Bill = React.createClass({
             }
         }
     },
+    toOther(name, item) {
+        this.props.navigator.push({
+            comp: name,
+            param: {
+                record: item
+            }
+        });
+    },
     renderRow(data){
         return (
-            <View style={{backgroundColor:this.state.contentColor,marginTop:5,height:172,paddingLeft:6}}>
-                <View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5}}>
-                    <View style={[{height:131}]}>
-                        <Text style={{fontSize:11,color:'#7f7f7f',marginTop:15}}>票面金额</Text>
-                        <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
-                            <Text
-                                style={{fontSize:28,color:'#44bcb2'}}>{numeral(data.amount / 10000).format('0,0.00')}</Text>
-                            <Text style={{fontSize:15,color:'#7f7f7f',marginTop:8}}>万元</Text>
+            <TouchableHighlight onPress={() => this.toOther(BillDetail,data)} activeOpacity={0.8}
+                                underlayColor='#ebf1f2'>
+                <View style={[{backgroundColor:this.state.contentColor},styles.content]}>
+                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5}}>
+                        <View style={[{height:131}]}>
+                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:15}}>票面金额</Text>
+                            <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                                <Text style={{fontSize:28,color:'#44bcb2'}}>
+                                    {numeral(data.amount / 10000).format('0,0.00')}
+                                </Text>
+                                <Text style={{fontSize:15,color:'#7f7f7f',marginTop:8}}>万元</Text>
+                            </View>
+                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:20}}>开票人</Text>
+                            <Text numberOfLines={1} style={{width:width-170,color:'#7f7f7f',fontSize:15,marginTop:10}}>
+                                {this.state.pick == this.state.resPick ? data.drawerName : data.payeeName}
+                            </Text>
                         </View>
-                        <Text style={{fontSize:11,color:'#7f7f7f',marginTop:20}}>开票人</Text>
-                        <Text numberOfLines={1}
-                              style={{width:width-170,color:'#7f7f7f',fontSize:15,marginTop:10}}>{data.payeeName}</Text>
+                        <Image source={BillStates[this.state.pickStatus][data.status].pic}
+                               style={{width:31,height:116}}/>
                     </View>
-                    <Image source={BillStates[this.state.pickStatus][data.status].pic} style={{width:31,height:116}}/>
-                </View>
-                <View
-                    style={[{flexDirection:'row',justifyContent:'space-between',alignItems:'center',height:36,paddingRight:16},styles.topColor]}>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Image style={{width:13,height:13,marginRight:2}}
-                               source={require('../../image/bill/desc.png')}/>
-                        {this.returnInfo(data.role, data.status, data.discountDate, data.discountDueDate)}
+                    <View style={[styles.contentBottom,styles.topColor]}>
+                        <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Image style={{width:13,height:13,marginRight:2}}
+                                   source={require('../../image/bill/desc.png')}/>
+                            {this.returnInfo(data.role, data.status, data.discountDate, data.discountDueDate)}
+                        </View>
+                        <Text style={{color:'#333333',fontSize:15}}>
+                            {'~' + dateFormat(new Date(data.dueDate), 'yyyy.mm.dd') + ' 到期'}
+                        </Text>
                     </View>
-                    <Text style={{color:'#333333',fontSize:15}}>
-                        {'~' + dateFormat(new Date(data.dueDate), 'yyyy.mm.dd') + ' 到期'}
-                    </Text>
                 </View>
-            </View>
+            </TouchableHighlight>
         )
+    },
+    hasBill(){
+        if (!this.state.token) {
+            return (
+                <ToLogin func={()=>this.toOther(Login)}/>
+            )
+        } else {
+            if (!this.state.dataSource) {
+                return (
+                    <View style={{marginTop:65,alignItems:'center'}}>
+                        <Image style={{width:350,height:200}} resizeMode="stretch"
+                               source={require('../../image/bill/noBill.png')}/>
+                        <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
+                    </View>
+                );
+            } else {
+                return (
+                    <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}
+                              automaticallyAdjustContentInsets={false} style={{paddingHorizontal:5}}/>
+                )
+            }
+        }
+
+
     },
     render(){
         return (
@@ -227,12 +294,12 @@ var Bill = React.createClass({
                     <View style={[styles.comStyle]}>
                         <TouchableOpacity onPress={this.changeRev} activeOpacity={0.9}>
                             <View
-                                style={[styles.titleView,{backgroundColor:this.state.unCheckColor},styles.leftRadius]}>
+                                style={[styles.titleView,styles.leftRadius,{backgroundColor:this.state.unCheckColor}]}>
                                 <Text style={[styles.title,{color:this.state.checkColor}]}>收到的票</Text>
                             </View>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={this.changeSend} activeOpacity={0.9}>
-                            <View style={[styles.titleView,{backgroundColor:this.state.checkColor},styles.rightRadius]}>
+                            <View style={[styles.titleView,styles.rightRadius,{backgroundColor:this.state.checkColor}]}>
                                 <Text style={[styles.title,{color:this.state.unCheckColor}]}>开出的票</Text>
                             </View>
                         </TouchableOpacity>
@@ -244,8 +311,7 @@ var Bill = React.createClass({
                         </View>
                     </TouchableOpacity>
                 </View>
-                <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}
-                          automaticallyAdjustContentInsets={false} style={{paddingHorizontal:5}}/>
+                {this.hasBill()}
             </NavBarView>
         )
     }
@@ -254,9 +320,7 @@ var styles = StyleSheet.create({
     comStyle: {
         height: (Platform.OS === 'ios') ? 64 : 44,
         paddingTop: (Platform.OS === 'ios') ? 20 : 0,
-        justifyContent: 'center',
-        alignItems: 'center',
-        flexDirection: 'row'
+        justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
     },
     title: {
         fontSize: 16, color: '#44bcb2',
@@ -271,11 +335,8 @@ var styles = StyleSheet.create({
         width: 80, height: 29, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#44bcb2'
     },
     pickTitle: {
-        height: 32,
-        paddingHorizontal: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        height: 32, paddingHorizontal: 10,
+        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
     },
     bottomColor: {
         borderBottomWidth: 1, borderColor: '#c8c8c8'
@@ -285,6 +346,12 @@ var styles = StyleSheet.create({
     },
     pickLine: {
         backgroundColor: '#e6e6e6', justifyContent: 'center', height: 50, paddingLeft: 10,
+    },
+    contentBottom: {
+        flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 36, paddingRight: 16
+    },
+    content: {
+        marginTop: 5, height: 172, paddingLeft: 6, borderWidth: 1, borderColor: '#c8c8c8'
     }
 })
 module.exports = Bill;

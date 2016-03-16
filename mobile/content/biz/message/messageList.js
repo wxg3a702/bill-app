@@ -17,6 +17,7 @@ var MessageStore = require('../../framework/store/messageStore');
 var MessageAction = require('../../framework/action/messageAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
+var ToLogin=require('../../comp/utils/toLogin');
 var _ = require('lodash');
 var MessageDetail = require('./messageDetail')
 var Detail = require('../bill/billDetail');
@@ -87,14 +88,8 @@ var Message = React.createClass({
   render: function () {
     if (this.state.token == null) {
       return (
-        <NavBarView navigator={this.props.navigator} showBack={false} title="票据"
-                    contentBackgroundColor='#f0f0f0'>
-          <View style={{flexDirection:'row',justifyContent:'space-between',padding:8}}>
-            <Text>你还没有登陆</Text>
-            <TouchableHighlight onPress={this.toLogin}>
-              <Text>点击去登陆</Text>
-            </TouchableHighlight>
-          </View>
+        <NavBarView navigator={this.props.navigator} showBack={false} title="消息">
+          <ToLogin func={this.toLogin}/>
         </NavBarView>
       )
     } else {
