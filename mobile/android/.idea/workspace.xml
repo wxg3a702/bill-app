@@ -5,92 +5,180 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99312884-e117-4b18-8130-f75404e64d8b" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/apply_fail@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/apply_fail@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/apply_success@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/apply_success@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/apply_success@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/apply_success@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/changeTradingPWD@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/changeTradingPWD@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_dis@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_dis@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_ign@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_ign@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_wait@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/drawer_wait@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_dis@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_dis@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_han@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_han@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_ign@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_ign@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_new@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_new@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_req@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/bill/payee_req@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/trading_PWD@2x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/image/user/trading_PWD@3x.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/service/AppService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/utils/AppUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/utils/LogUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/updatedata/UpdateData.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/framework/network/androidEventDelegate.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/bill/applyDiscount.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/bill/bill.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/bill/comResult.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/bill/conDiscount.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/editTradingPWD.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/editTradingPWDsuccess.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/login/register_setTradingPWD.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/resetTradingPWD.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/comp/utils/searchBae.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/bill/selectBank.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/verifyLoginPWDandPID.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/verifyOldTradingPWD.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/../content/biz/setting/verifyPhone.js" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../content/constants/certificateAction.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/amarsoft.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/amarsoft.xcuserdatad/UserInterfaceState.xcuserstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/liushengwei.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/liushengwei.xcuserdatad/UserInterfaceState.xcuserstate" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mobile/modules/DatePickerDialogModule.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/modules/DatePickerDialogModule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mobile/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile/UIImagePickerManager.h" afterPath="$PROJECT_DIR$/../ios/mobile/UIImagePickerManager.h" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mobile/views/viewpager/ZXReactViewPager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/views/viewpager/ZXReactViewPager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/store/appStore.js" afterPath="$PROJECT_DIR$/../content/framework/store/appStore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/bill/billDetail.js" afterPath="$PROJECT_DIR$/../content/biz/bill/billDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/bill/billList.js" afterPath="$PROJECT_DIR$/../content/biz/bill/billList.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/store/billStore.js" afterPath="$PROJECT_DIR$/../content/framework/store/billStore.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/constants/certificateState.js" afterPath="$PROJECT_DIR$/../content/constants/certificateState.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/constants/command.js" afterPath="$PROJECT_DIR$/../content/constants/command.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/company/compCertification.js" afterPath="$PROJECT_DIR$/../content/biz/company/compCertification.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/bill/drawerDesc.js" afterPath="$PROJECT_DIR$/../content/biz/bill/drawerDesc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/user/editComp.js" afterPath="$PROJECT_DIR$/../content/biz/user/editComp.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/network/fetch.js" afterPath="$PROJECT_DIR$/../content/framework/network/fetch.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/network/host.js" afterPath="$PROJECT_DIR$/../content/framework/network/host.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/utils/input.js" afterPath="$PROJECT_DIR$/../content/comp/utils/input.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/dropDown/items.js" afterPath="$PROJECT_DIR$/../content/comp/dropDown/items.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/login/login.js" afterPath="$PROJECT_DIR$/../content/biz/login/login.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/action/messageAction.js" afterPath="$PROJECT_DIR$/../content/framework/action/messageAction.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/message/messageDetail.js" afterPath="$PROJECT_DIR$/../content/biz/message/messageDetail.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/message/messageList.js" afterPath="$PROJECT_DIR$/../content/biz/message/messageList.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/._androidTest" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/._android" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/._android" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/._com" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/._com" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/._crop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/._crop" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__tile.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._drawable-hdpi" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._drawable-mdpi" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._drawable-v21" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._drawable-xhdpi" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._drawable" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/._java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/._java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._layout" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/._main" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/._res" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/._soundcloud" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/._soundcloud" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/._src" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-ar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-ca" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-de" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-es" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-fr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-in" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-it" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-ja" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-ko" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-land" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-large" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-pt" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-ru" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-sv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-tr" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-v21" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-zh-rCN" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values-zh-rTW" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/._values" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/crop__divider.9.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/crop__ic_cancel.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/crop__ic_done.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/crop__tile.png" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/._AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/._BaseTestCase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._Crop.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/._CropBuilderTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropImageActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropImageView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._HighlightView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._ImageViewTouchBase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._Log.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._MonitoredActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._RotateBitmap.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/._attrs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/._build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/._colors.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-v21/._colors.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/layout/._crop__activity_crop.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/layout/._crop__layout_done_cancel.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable/._crop__selectable_background.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-v21/._crop__selectable_background.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable/._crop__texture.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/._dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-land/._dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-large/._dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ar/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ca/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-de/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-es/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-fr/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-in/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-it/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ja/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ko/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-pt/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ru/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-sv/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-tr/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-zh-rCN/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-zh-rTW/._strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/._styles.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/AndroidManifest.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/BaseTestCase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/Crop.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/CropBuilderTest.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/CropImageActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/CropImageView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/CropUtil.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/HighlightView.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/ImageViewTouchBase.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/Log.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/MonitoredActivity.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/RotateBitmap.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/attrs.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/build.gradle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/colors.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-v21/colors.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/layout/crop__activity_crop.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/layout/crop__layout_done_cancel.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable/crop__selectable_background.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable-v21/crop__selectable_background.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/drawable/crop__texture.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-land/dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-large/dimens.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ar/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ca/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-de/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-es/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-fr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-in/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-it/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ja/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ko/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-pt/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-ru/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-sv/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-tr/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-zh-rCN/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values-zh-rTW/strings.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/src/main/res/values/styles.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/android_jsc_r174650.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_23_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/bolts_android_1_1_4.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/commons_cli_1_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/drawee_0_6_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/drawee_0_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/fbcore_0_6_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/fbcore_0_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/fresco_0_6_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/fresco_0_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/imagepipeline_0_6_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/imagepipeline_0_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/imagepipeline_okhttp_0_6_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/imagepipeline_okhttp_0_8_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/jsr305_3_0_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/library_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_2_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_2_4_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okhttp_ws_2_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okio_1_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/okio_1_6_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/react_native_0_12_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/react_native_0_16_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/react_native_0_21_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_23_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/stetho_1_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/stetho_okhttp_1_2_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/support_annotations_23_0_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_23_0_1.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lib.iml" afterPath="$PROJECT_DIR$/lib/lib.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile.xcodeproj/xcshareddata/xcschemes/mobile.xcscheme" afterPath="$PROJECT_DIR$/../ios/mobile.xcodeproj/xcshareddata/xcschemes/mobile.xcscheme" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/system/navBarView.js" afterPath="$PROJECT_DIR$/../content/framework/system/navBarView.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/system/navigator.js" afterPath="$PROJECT_DIR$/../content/framework/system/navigator.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/dropDown/overlay.js" afterPath="$PROJECT_DIR$/../content/comp/dropDown/overlay.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../package.json" afterPath="$PROJECT_DIR$/../package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/bill/payeeDesc.js" afterPath="$PROJECT_DIR$/../content/biz/bill/payeeDesc.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/persister/persisterFacade.js" afterPath="$PROJECT_DIR$/../content/framework/persister/persisterFacade.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.pbxproj" afterPath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.pbxproj" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/login/register_setInfo.js" afterPath="$PROJECT_DIR$/../content/biz/login/register_setInfo.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/setting/securityCenter.js" afterPath="$PROJECT_DIR$/../content/biz/setting/securityCenter.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/dropDown/select.js" afterPath="$PROJECT_DIR$/../content/comp/dropDown/select.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/bill/statusIcon.js" afterPath="$PROJECT_DIR$/../content/biz/bill/statusIcon.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/tabBar/android/tabBar.js" afterPath="$PROJECT_DIR$/../content/comp/tabBar/android/tabBar.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/comp/tabBar/android/tabContainer.js" afterPath="$PROJECT_DIR$/../content/comp/tabBar/android/tabContainer.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/system/tabView.js" afterPath="$PROJECT_DIR$/../content/framework/system/tabView.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="android.iws" />
@@ -125,16 +213,41 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="56" column="33" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
-              <folding />
+              <folding>
+                <element signature="e#0#313#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#2575#2576#0" expanded="false" />
+                <element signature="e#2623#2624#0" expanded="false" />
+                <element signature="e#2674#2675#0" expanded="false" />
+                <element signature="e#2718#2719#0" expanded="false" />
+                <element signature="e#3250#3251#0" expanded="false" />
+                <element signature="e#3295#3296#0" expanded="false" />
+                <element signature="e#5240#5241#0" expanded="false" />
+                <element signature="e#5291#5292#0" expanded="false" />
+                <element signature="e#5365#5366#0" expanded="false" />
+                <element signature="e#5393#5394#0" expanded="false" />
+                <element signature="e#5458#5459#0" expanded="false" />
+                <element signature="e#5486#5487#0" expanded="false" />
+                <element signature="e#5863#5864#0" expanded="false" />
+                <element signature="e#5912#5913#0" expanded="false" />
+                <element signature="e#5976#5977#0" expanded="false" />
+                <element signature="e#6026#6027#0" expanded="false" />
+                <element signature="e#6083#6084#0" expanded="false" />
+                <element signature="e#6131#6132#0" expanded="false" />
+                <element signature="e#6178#6179#0" expanded="false" />
+                <element signature="e#6224#6225#0" expanded="false" />
+                <element signature="e#6278#6279#0" expanded="false" />
+                <element signature="e#6330#6331#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DatePickerDialogModule.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DatePickerDialogModule.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mobile/modules/DatePickerDialogModule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.614486">
-              <caret line="47" column="67" selection-start-line="47" selection-start-column="67" selection-end-line="47" selection-end-column="67" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,10 +255,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-26.25926">
+            <state vertical-scroll-proportion="0.8362892">
               <caret line="129" column="25" selection-start-line="129" selection-start-column="22" selection-end-line="129" selection-end-column="25" />
               <folding />
             </state>
@@ -178,14 +291,8 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="125" column="44" selection-start-line="125" selection-start-column="44" selection-end-line="125" selection-end-column="44" />
               <folding>
-                <element signature="e#1649#1785#0" expanded="true" />
-                <element signature="e#1784#1785#0" expanded="true" />
-                <element signature="e#3396#3802#0" expanded="true" />
-                <element signature="e#3801#3802#0" expanded="true" />
                 <element signature="e#4164#4165#0" expanded="true" />
                 <element signature="e#4201#4202#0" expanded="true" />
-                <element signature="e#4566#4726#0" expanded="true" />
-                <element signature="e#4725#4726#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -196,7 +303,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -206,10 +315,7 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
-              <folding>
-                <element signature="e#307#325#0" expanded="true" />
-                <element signature="e#481#499#0" expanded="true" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -3371,7 +3477,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="10182571405000" />
+        <entry key="$PROJECT_DIR$" value="11639731124000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -4090,10 +4196,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="298" />
-    <option name="y" value="39" />
+    <option name="x" value="40" />
+    <option name="y" value="23" />
     <option name="width" value="1400" />
-    <option name="height" value="1000" />
+    <option name="height" value="877" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -4118,18 +4224,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
       <pane id="PackagesPane">
         <subPane>
           <PATH>
@@ -4198,6 +4292,18 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -4224,7 +4330,7 @@
     <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="4fd01579" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="192.168.57.101:5555" />
     <property name="FullScreen" value="false" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -4414,11 +4520,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="298" y="39" width="1400" height="1000" extended-state="1" />
+    <frame x="40" y="23" width="1400" height="877" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.48821798" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3285151" sideWeight="0.48821798" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -4470,7 +4576,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4478,7 +4583,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="e#0#313#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2575#2576#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2674#2675#0" expanded="false" />
+            <element signature="e#2718#2719#0" expanded="false" />
+            <element signature="e#3250#3251#0" expanded="false" />
+            <element signature="e#3295#3296#0" expanded="false" />
+            <element signature="e#5240#5241#0" expanded="false" />
+            <element signature="e#5291#5292#0" expanded="false" />
+            <element signature="e#5365#5366#0" expanded="false" />
+            <element signature="e#5393#5394#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5912#5913#0" expanded="false" />
+            <element signature="e#5976#5977#0" expanded="false" />
+            <element signature="e#6026#6027#0" expanded="false" />
+            <element signature="e#6083#6084#0" expanded="false" />
+            <element signature="e#6131#6132#0" expanded="false" />
+            <element signature="e#6178#6179#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6278#6279#0" expanded="false" />
+            <element signature="e#6330#6331#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4504,7 +4634,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4513,14 +4642,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="161" column="53" selection-start-line="161" selection-start-column="53" selection-end-line="161" selection-end-column="53" />
           <folding>
-            <element signature="e#1649#1785#0" expanded="true" />
-            <element signature="e#1784#1785#0" expanded="true" />
-            <element signature="e#3396#3802#0" expanded="true" />
-            <element signature="e#3801#3802#0" expanded="true" />
             <element signature="e#4164#4165#0" expanded="true" />
             <element signature="e#4201#4202#0" expanded="true" />
-            <element signature="e#4566#4726#0" expanded="true" />
-            <element signature="e#4725#4726#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4529,7 +4652,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="68" column="31" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4545,7 +4667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4553,7 +4674,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="e#0#313#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2575#2576#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2674#2675#0" expanded="false" />
+            <element signature="e#2718#2719#0" expanded="false" />
+            <element signature="e#3250#3251#0" expanded="false" />
+            <element signature="e#3295#3296#0" expanded="false" />
+            <element signature="e#5240#5241#0" expanded="false" />
+            <element signature="e#5291#5292#0" expanded="false" />
+            <element signature="e#5365#5366#0" expanded="false" />
+            <element signature="e#5393#5394#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5912#5913#0" expanded="false" />
+            <element signature="e#5976#5977#0" expanded="false" />
+            <element signature="e#6026#6027#0" expanded="false" />
+            <element signature="e#6083#6084#0" expanded="false" />
+            <element signature="e#6131#6132#0" expanded="false" />
+            <element signature="e#6178#6179#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6278#6279#0" expanded="false" />
+            <element signature="e#6330#6331#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4571,7 +4717,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4580,14 +4725,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="5" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
           <folding>
-            <element signature="e#1649#1785#0" expanded="true" />
-            <element signature="e#1784#1785#0" expanded="true" />
-            <element signature="e#3396#3802#0" expanded="true" />
-            <element signature="e#3801#3802#0" expanded="true" />
             <element signature="e#4164#4165#0" expanded="true" />
             <element signature="e#4201#4202#0" expanded="true" />
-            <element signature="e#4566#4726#0" expanded="true" />
-            <element signature="e#4725#4726#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4596,7 +4735,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="56" selection-start-line="20" selection-start-column="56" selection-end-line="20" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4612,7 +4750,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4620,7 +4757,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="e#0#313#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2575#2576#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2674#2675#0" expanded="false" />
+            <element signature="e#2718#2719#0" expanded="false" />
+            <element signature="e#3250#3251#0" expanded="false" />
+            <element signature="e#3295#3296#0" expanded="false" />
+            <element signature="e#5240#5241#0" expanded="false" />
+            <element signature="e#5291#5292#0" expanded="false" />
+            <element signature="e#5365#5366#0" expanded="false" />
+            <element signature="e#5393#5394#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5912#5913#0" expanded="false" />
+            <element signature="e#5976#5977#0" expanded="false" />
+            <element signature="e#6026#6027#0" expanded="false" />
+            <element signature="e#6083#6084#0" expanded="false" />
+            <element signature="e#6131#6132#0" expanded="false" />
+            <element signature="e#6178#6179#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6278#6279#0" expanded="false" />
+            <element signature="e#6330#6331#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4638,7 +4800,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4647,14 +4808,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="85" column="5" selection-start-line="85" selection-start-column="5" selection-end-line="85" selection-end-column="5" />
           <folding>
-            <element signature="e#1649#1785#0" expanded="true" />
-            <element signature="e#1784#1785#0" expanded="true" />
-            <element signature="e#3396#3802#0" expanded="true" />
-            <element signature="e#3801#3802#0" expanded="true" />
             <element signature="e#4164#4165#0" expanded="true" />
             <element signature="e#4201#4202#0" expanded="true" />
-            <element signature="e#4566#4726#0" expanded="true" />
-            <element signature="e#4725#4726#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4663,7 +4818,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="56" selection-start-line="20" selection-start-column="56" selection-end-line="20" selection-end-column="56" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4679,7 +4833,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4687,7 +4840,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="34" column="30" selection-start-line="34" selection-start-column="30" selection-end-line="34" selection-end-column="30" />
-          <folding />
+          <folding>
+            <element signature="e#0#313#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2575#2576#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2674#2675#0" expanded="false" />
+            <element signature="e#2718#2719#0" expanded="false" />
+            <element signature="e#3250#3251#0" expanded="false" />
+            <element signature="e#3295#3296#0" expanded="false" />
+            <element signature="e#5240#5241#0" expanded="false" />
+            <element signature="e#5291#5292#0" expanded="false" />
+            <element signature="e#5365#5366#0" expanded="false" />
+            <element signature="e#5393#5394#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5912#5913#0" expanded="false" />
+            <element signature="e#5976#5977#0" expanded="false" />
+            <element signature="e#6026#6027#0" expanded="false" />
+            <element signature="e#6083#6084#0" expanded="false" />
+            <element signature="e#6131#6132#0" expanded="false" />
+            <element signature="e#6178#6179#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6278#6279#0" expanded="false" />
+            <element signature="e#6330#6331#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4705,7 +4883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="18" column="62" selection-start-line="18" selection-start-column="36" selection-end-line="18" selection-end-column="62" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4723,7 +4900,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4780,7 +4956,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="67" selection-start-line="32" selection-start-column="67" selection-end-line="32" selection-end-column="67" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4827,7 +5002,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="21" column="5" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4835,15 +5009,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="68" column="31" selection-start-line="68" selection-start-column="31" selection-end-line="68" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-26.25926">
-          <caret line="129" column="25" selection-start-line="129" selection-start-column="22" selection-end-line="129" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -4851,7 +5016,32 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="33" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
-          <folding />
+          <folding>
+            <element signature="e#0#313#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#2575#2576#0" expanded="false" />
+            <element signature="e#2623#2624#0" expanded="false" />
+            <element signature="e#2674#2675#0" expanded="false" />
+            <element signature="e#2718#2719#0" expanded="false" />
+            <element signature="e#3250#3251#0" expanded="false" />
+            <element signature="e#3295#3296#0" expanded="false" />
+            <element signature="e#5240#5241#0" expanded="false" />
+            <element signature="e#5291#5292#0" expanded="false" />
+            <element signature="e#5365#5366#0" expanded="false" />
+            <element signature="e#5393#5394#0" expanded="false" />
+            <element signature="e#5458#5459#0" expanded="false" />
+            <element signature="e#5486#5487#0" expanded="false" />
+            <element signature="e#5863#5864#0" expanded="false" />
+            <element signature="e#5912#5913#0" expanded="false" />
+            <element signature="e#5976#5977#0" expanded="false" />
+            <element signature="e#6026#6027#0" expanded="false" />
+            <element signature="e#6083#6084#0" expanded="false" />
+            <element signature="e#6131#6132#0" expanded="false" />
+            <element signature="e#6178#6179#0" expanded="false" />
+            <element signature="e#6224#6225#0" expanded="false" />
+            <element signature="e#6278#6279#0" expanded="false" />
+            <element signature="e#6330#6331#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -4860,14 +5050,8 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="125" column="44" selection-start-line="125" selection-start-column="44" selection-end-line="125" selection-end-column="44" />
           <folding>
-            <element signature="e#1649#1785#0" expanded="true" />
-            <element signature="e#1784#1785#0" expanded="true" />
-            <element signature="e#3396#3802#0" expanded="true" />
-            <element signature="e#3801#3802#0" expanded="true" />
             <element signature="e#4164#4165#0" expanded="true" />
             <element signature="e#4201#4202#0" expanded="true" />
-            <element signature="e#4566#4726#0" expanded="true" />
-            <element signature="e#4725#4726#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -4876,10 +5060,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
-          <folding>
-            <element signature="e#307#325#0" expanded="true" />
-            <element signature="e#481#499#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -4903,17 +5084,27 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="13" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mobile/modules/DatePickerDialogModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.614486">
-          <caret line="47" column="67" selection-start-line="47" selection-start-column="67" selection-end-line="47" selection-end-column="67" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8362892">
+          <caret line="129" column="25" selection-start-line="129" selection-start-column="22" selection-end-line="129" selection-end-column="25" />
+          <folding />
         </state>
       </provider>
     </entry>
