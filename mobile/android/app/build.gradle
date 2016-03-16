@@ -128,4 +128,7 @@ dependencies {
     compile project(':react-native-vector-icons')
     compile 'com.github.nkzawa:socket.io-client:0.3.0'
     compile project(':lib')
+
+    compile project(":realm")
+    compile fileTree(dir: "node_modules/realm/android/libs", include: ["*.jar"])
 }
