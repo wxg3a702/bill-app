@@ -8,6 +8,9 @@ module.exports = {
     number(data){
         return numeral(data).format('0,0');
     },
+    number2(data){
+        return numeral(data/10000).format('0,0.00');
+    },
     number4(data){
         return numeral(data).format('0,0.0000');
     },

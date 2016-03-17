@@ -114,7 +114,8 @@ var NavBarView = React.createClass({
                                             {this.props.title}
                                         </Text>
                                     </View>
-                                    <View style={{width:70,justifyContent:"center",alignItems:"stretch",paddingRight:10}}>
+                                    <View
+                                        style={{width:70,justifyContent:"center",alignItems:"stretch",paddingRight:10}}>
                                         {this.props.actionButton}
                                     </View>
                                 </View>
@@ -126,7 +127,7 @@ var NavBarView = React.createClass({
                 <View style={{flex:1}} backgroundColor={this.props.contentBackgroundColor}>
                     {this.props.children}
                 </View>
-
+                <View style={{height:Platform.OS === 'ios' ?49:0}}/>
                 <ProgressHUD
                     isVisible={this.state.is_hud_visible}
                     isDismissible={false}
