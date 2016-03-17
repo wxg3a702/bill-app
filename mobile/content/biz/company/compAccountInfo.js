@@ -49,10 +49,12 @@ var CompAccountInfo = React.createClass({
        
     },
     render: function () {
-        var realm = new Realm({schema:[{name:'Dog', properties:{name: 'string'}}]});
+        var realm = new Realm({path:Realm.defaultPath.replace("/default.realm","")+"/realm.realm",schema:[{name:'Dog', properties:{name: 'string'}}]});
         realm.write(()=>{
             realm.create('Dog', ['Rex']);
         })
+        console.log(realm.path);
+        //console.log(Realm.defaultPath);
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
@@ -64,6 +66,9 @@ var CompAccountInfo = React.createClass({
                            onChanged={this.handleChanged} icon="user"/>
                     <Text style={styles.welcome}>
                         Count of Dogs in Realm: {realm.objects('Dog').length}
+                    </Text>
+                    <Text style={styles.welcome}>
+                        Count of Dogs in Realm: {realm.objects('Dog').toString()}
                     </Text>
                 </View>
                 <BottomButton func={this.addComp} content="提交"/>
