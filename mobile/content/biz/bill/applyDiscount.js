@@ -17,8 +17,24 @@ var {
 var NavBarView = require('../../framework/system/navBarView');
 var SelectBank = require('./selectBank')
 var ConDiscount = require('./conDiscount')
+var numeral = require('numeral');
+var dateFormat = require('dateformat');
 
 var ApplyDis = React.createClass({
+    //getInitialState(){
+    //
+    //},
+    componentWillMount(){
+        var responseData = this.props.param.billBean;
+        this.setState({loaded: true});
+        this.setState(responseData);
+    },
+    //componentDidMount(){
+    //
+    //},
+    //componentWillUnmount(){
+    //
+    //},
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}
@@ -43,7 +59,7 @@ var ApplyDis = React.createClass({
                     <Text style={{fontSize:15,color:'#fff',flexDirection: 'row'}}>{'参考贴现金额'}</Text>
                 </View>
                 <View style={{flexDirection: 'row',alignItems:'flex-end'}}>
-                    <Text style={{fontSize:42,color:'#f6b63e'}}>{'123,333.33'}</Text>
+                    <Text style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.state.amount / 10000).format("0,0.00")}</Text>
                     <Text style={{fontSize:15,color:'#fff',marginBottom:10}}>{' 万元'}</Text>
                 </View>
             </View>
@@ -66,10 +82,14 @@ var ApplyDis = React.createClass({
                             style={{width:30,height:30,marginLeft:15}}
                             source={require('../../image/bill/payee_new.png')}
                         />
-                        <Text
-                            style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20,flex:3}}
-                            numberOfLines={1}>{'中国银行上海分行 旧沙发框架和第三空间加看哈电视开机'}</Text>
-                        <Text style={{color:'#ff5b58',fontSize:18}}>{'(费率最低)'}</Text>
+                        <View style={{flex:3,flexDirection:'row'}}>
+                            <Text
+                                style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20,flex:6}}
+                                numberOfLines={1}>{'中国银行上海分行'}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:18}}>{'(费率最低)'}</Text>
+                        </View>
+
+
                         <Image
                             style={{width:15,height:15,marginLeft:12,marginRight:12}}
                             source={require('../../image/bill/payee_new.png')}
@@ -88,14 +108,14 @@ var ApplyDis = React.createClass({
                     style={{borderBottomColor:'#e0e0e0',borderBottomWidth:1,marginLeft:12,marginRight:12,marginTop:15,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'贴现利率：' }</Text>
                     <Text
-                        style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{'99.99‰'}</Text>
+                        style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{numeral(this.state.discountRate * 1000).format("0,0.00") + "‰"}</Text>
                 </View>
                 <View
                     style={{borderBottomColor:'#e0e0e0',borderBottomWidth:1,margin:10,marginLeft:12,marginRight:12,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
                     <View style={{flex:6,flexDirection:'row'}}>
                         <Text
-                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{'2015年04月12日'}</Text>
+                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat(new Date(), 'yyyy年mm月dd日')}</Text>
                         <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
                     </View>
                 </View>
@@ -144,7 +164,6 @@ var ApplyDis = React.createClass({
             comp: ConDiscount
         });
     },
-
 });
 
 var styles = StyleSheet.create({
