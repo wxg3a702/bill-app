@@ -8,31 +8,63 @@ var {
     View,
     Platform,
     Dimensions,
-    Image,
-    Modal,
     StyleSheet,
-    TouchableOpacity
     } = React;
+var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
 var Space = require('../../comp/utils/space');
 var DateHelper = require('../../comp/utils/dateHelper');
 var BottomButton = require('../../comp/utils/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
 var BillStates = require('./billStates');
+var BillContent = require('./billContent')
 var NumberHelper = require('../../comp/utils/numberHelper')
+var ApplyDis = require('../bill/applyDiscount')
+var Alert = require('../../comp/utils/alert')
+var ds = new ListView.DataSource({
+    rowHasChanged: (row1, row2) => row1 !== row2,
+});
 var BillDetail = React.createClass({
     getInitialState(){
-        var item = this.props.param.item;
+        let item = this.props.param.item;
         return {
             item: item,
-            type: item.role == 'payee' ? 'rev' : 'sent'
+            type: item.role == 'payee' ? 'rev' : 'sent',
         }
     },
-    func(){
-
+    func(key){
+        const {navigator}=this.props
+        let item = this.state.item;
+        if (key == 'back') {
+            navigator.pop()
+        } else if (key == 'tie') {
+            navigator.push({
+                comp: ApplyDis,
+                param: {
+                    billBean: this.state.item
+                }
+            })
+        } else if (key == 'che') {
+            Alert("确认撤销贴现申请吗？",
+                ()=>BillAction.cancleBillDiscount(
+                    {
+                        billId: this.state.item.billId
+                    },
+                    function () {
+                        Alert("撤销成功!", ()=>this.goBack());
+                    }.bind(this),
+                    function () {
+                    })
+            )
+        }
     },
     viewDetail(){
-
+        this.props.navigator.push({
+            comp: BillContent,
+            param: {
+                item: this.state.item
+            }
+        })
     },
     returnDes(){
         let obj = BillStates[this.state.type][this.state.item.status]
@@ -67,8 +99,8 @@ var BillDetail = React.createClass({
         var fontColor = obj.button == '撤销申请' ? '#ff5b58' : 'white';
         var underColor = obj.button == '撤销申请' ? '#cccccc' : '#a6c7f2';
         return (
-            <BottomButton func={this.func} backColor={backColor} fontColor={fontColor} borderColor={borderColor}
-                          underColor={underColor} content={obj.button}/>
+            <BottomButton func={()=>this.func(obj.go)} backColor={backColor} fontColor={fontColor}
+                          borderColor={borderColor} underColor={underColor} content={obj.button}/>
         )
     },
     returnTitle(){
@@ -98,7 +130,7 @@ var BillDetail = React.createClass({
             </View>
         )
     },
-    returnTitleT(){
+    returnTitleTouchable(){
         if (this.state.item.role == 'payee' && this.state.item.status != 'NEW') {
             return (
                 <TouchableHighlight onPress={this.viewDetail}>
@@ -113,17 +145,61 @@ var BillDetail = React.createClass({
             )
         }
     },
+    returnItem(desc, value){
+        return (
+            <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
+                <Text style={{fontSize:16,color:'#333333',flex:1}}>{desc}</Text>
+                <Text style={{fontSize:16,color:'#7f7f7f',width:235}}>{value}</Text>
+            </View>
+        )
+    },
+    returnItemReference(desc, value){
+        return (
+            <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
+                <Text style={{fontSize:16,color:'#333333',width:width-259}}>{desc}</Text>
+                <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+                    <Text style={{fontSize:16,color:'#7f7f7f'}}>{value}</Text>
+                    <Text style={{fontSize:18,color:'#ff5b58'}}>(参考)</Text>
+                </View>
+            </View>
+        )
+    },
+    isNeedDetail(){
+        let item = this.state.item;
+        if (item.role == "payee" && item.status != "NEW") {
+            if (item.status == 'REQ' || item.status == 'HAN') {
+                return (
+                    <View style={styles.layout}>
+                        {this.returnItemReference('起  息  日：', DateHelper.formatBillContent(item.dueDate))}
+                        {this.returnItem('贴  现  行：', item.discountBankName)}
+                        {this.returnItem('贴现利率：', NumberHelper.formatRate(item.discountRate))}
+                        {this.returnItem('收款账号：', NumberHelper.formatNum(item.payeeBankAccountNo, 3, 2))}
+                    </View>
+                )
+            } else if (item.status == 'DIS') {
+                return (
+                    <View style={styles.layout}>
+                        {this.returnItem('起  息  日：', DateHelper.formatBillContent(item.dueDate))}
+                        {this.returnItem('贴  现  行：', item.discountBankName)}
+                        {this.returnItem('贴现利率：', NumberHelper.formatRate(item.discountRate))}
+                        {this.returnItem('收款账号：', NumberHelper.formatNum(item.payeeBankAccountNo, 3, 2))}
+                    </View>
+                )
+            } else if (item.status == 'IGN') {
+
+            }
+        } else {
+            return (
+                <BillContent param={item} needTitle={false}/>
+            )
+        }
+    },
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="票据详情">
-                {this.returnTitleT()}
+                {this.returnTitleTouchable()}
                 <Space height={6} backgroundColor='#f0f0f0'/>
-                <View style={{paddingTop:4,backgroundColor:'white',paddingHorizontal:12}}>
-                    <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
-                        <Text style={{fontSize:16,color:'#333333',flex:1}}>22</Text>
-                        <Text style={{fontSize:16,color:'#333333',width:235}}>33</Text>
-                    </View>
-                </View>
+                {this.isNeedDetail()}
                 <View style={{flex:1}}/>
                 {this.returnBottom()}
             </NavBarView>
@@ -139,6 +215,9 @@ var styles = StyleSheet.create({
     },
     margin: {
         marginTop: Platform.OS === 'ios' ? 25 : 12
+    },
+    layout: {
+        paddingTop: 4, backgroundColor: 'white', borderBottomWidth: 1, borderColor: '#c8c8c8', paddingHorizontal: 12
     }
 })
 module.exports = BillDetail;

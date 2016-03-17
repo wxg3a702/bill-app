@@ -11,7 +11,7 @@ var {
     } = React;
 var Home = require('../../biz/home/home')
 var BillList = require("../../biz/bill/billList")
-var Bill = require('../../biz/bill/bill')
+var Bill = require('../../biz/billNew/billList')
 var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/personalCenter/personalCenter")
 var CommonAction = require('../action/commonAction');

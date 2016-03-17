@@ -252,8 +252,10 @@ var Detail = React.createClass({
                             case "REQ":
                             case "HAN":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
-                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                    <View
+                                        style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View
+                                            style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
                                             <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
                                         </View>
                                         <View
@@ -262,7 +264,8 @@ var Detail = React.createClass({
                                                 style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
                                             <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
                                         </View>
-                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                        <View
+                                            style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
                                             <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请等待承兑行出票'}</Text>
                                         </View>
                                     </View>
@@ -270,8 +273,10 @@ var Detail = React.createClass({
                                 break;
                             case "IGN":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
-                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                    <View
+                                        style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View
+                                            style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
                                             <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
                                         </View>
                                         <View
@@ -280,7 +285,8 @@ var Detail = React.createClass({
                                                 style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
                                             <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
                                         </View>
-                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                        <View
+                                            style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
                                             <Text style={{color:'#999999',fontSize:18,marginTop:2}}>{' 请至承兑行取票'}</Text>
                                         </View>
                                     </View>
@@ -288,8 +294,10 @@ var Detail = React.createClass({
                                 break;
                             case "DIS":
                                 return (
-                                    <View style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
-                                        <View style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
+                                    <View
+                                        style={{paddingTop:10,justifyContent:'center',flexDirection: 'column',flex:1}}>
+                                        <View
+                                            style={{paddingTop:0,justifyContent:'center',flexDirection: 'row',marginTop:-40}}>
                                             <Text style={{color:'#333333',fontSize:18}}>{'票面金额'}</Text>
                                         </View>
                                         <View
@@ -298,7 +306,8 @@ var Detail = React.createClass({
                                                 style={{color:'#44bcb2',fontSize:42}}>{this.state.status == 'NEW' ? numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00") : numeral(this.state.discountAmount / 10000).format("0,0.00")}</Text>
                                             <Text style={{color:'#4e4e4e',fontSize:15,marginBottom:-10}}>{'万元'}</Text>
                                         </View>
-                                        <View style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
+                                        <View
+                                            style={{justifyContent:'center',alignItems:'center',flexDirection: 'row'}}>
                                             <Text
                                                 style={{ fontSize:18,color:'#44bcb2'}}>{dateFormat(new Date(this.state.discountDate), 'yyyy年mm月dd日')}</Text>
                                             <Text style={{ fontSize:18,color:'#999999'}}>{'贴现'}</Text>
@@ -317,11 +326,11 @@ var Detail = React.createClass({
     },
 
     renderBillDisInfo(){
-        if(this.state.role=="payee" && (this.state.status == "NEW" || this.state.status == "IGN")){
+        if (this.state.role == "payee" && (this.state.status == "NEW" || this.state.status == "IGN")) {
             return (
                 <View></View>
             );
-        }else {
+        } else {
             return (
                 <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
                     <View
@@ -358,7 +367,7 @@ var Detail = React.createClass({
     },
 
     renderBillInfo(){
-        if((this.state.role=="payee" && this.state.status == "NEW") || this.state.role=="drawer"){
+        if ((this.state.role == "payee" && this.state.status == "NEW") || this.state.role == "drawer") {
             return (
                 <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
                     <View
@@ -382,7 +391,8 @@ var Detail = React.createClass({
                     <View
                         style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                         <Text style={{paddingBottom:5,fontSize:17,flex:4, color:'#4e4e4e'}}>{'出 票 人：' }</Text>
-                        <Text style={{paddingBottom:5,fontSize:17,flex:6, color:'#7f7f7f'}}>{this.state.drawerName}</Text>
+                        <Text
+                            style={{paddingBottom:5,fontSize:17,flex:6, color:'#7f7f7f'}}>{this.state.drawerName}</Text>
                     </View>
                     <View
                         style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
@@ -398,8 +408,8 @@ var Detail = React.createClass({
 
                 </View>
             )
-        }else {
-            return(
+        } else {
+            return (
                 <View></View>
             )
         }
@@ -407,7 +417,7 @@ var Detail = React.createClass({
     },
 
     renderBillStateTrack(){
-        if(this.state.role=="payee" && this.state.status != "NEW"){
+        if (this.state.role == "payee" && this.state.status != "NEW") {
             return (
                 <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#ffffff',marginTop:10}}>
                     <View
@@ -436,8 +446,8 @@ var Detail = React.createClass({
                     </View>
                 </View>
             )
-        }else {
-            return(
+        } else {
+            return (
                 <View></View>
             )
         }

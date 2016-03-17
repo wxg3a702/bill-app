@@ -12,6 +12,7 @@ var {
     StyleSheet,
     TouchableOpacity
     } = React;
+var ListBottom = require('../../comp/utils/listBottom')
 var {width,height} = Dimensions.get('window');
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
@@ -20,7 +21,7 @@ var DateHelper = require('../../comp/utils/dateHelper');
 var ToLogin = require('../../comp/utils/toLogin');
 var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
-var BillDetail = require('./bilDetail')
+var BillDetail = require('./billDetail')
 var VIcon = require('../../comp/icon/vIcon')
 var BillStates = require('./billStates')
 var Validation = require('../../comp/utils/validation')
@@ -145,7 +146,8 @@ var Bill = React.createClass({
             )
         } else {
             return (
-                <TouchableHighlight underlayColor='#cccccc' onPress={()=>this.changePic(data)} style={[styles.pickLine,styles.bottomColor]}>
+                <TouchableHighlight underlayColor='#cccccc' onPress={()=>this.changePic(data)}
+                                    style={[styles.pickLine,styles.bottomColor]}>
                     <Text style={{width:width,fontSize:18}}>{data.desc}</Text>
                 </TouchableHighlight>
             )
@@ -303,6 +305,7 @@ var Bill = React.createClass({
                 </View>
                 {this.hasBill()}
                 {this.returnView()}
+                <ListBottom/>
             </NavBarView>
         )
     }
