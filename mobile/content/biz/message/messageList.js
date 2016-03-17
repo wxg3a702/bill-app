@@ -11,6 +11,7 @@ var {
   Platform,
   Dimensions
   } = React;
+var _ = require('lodash');
 var Login = require('../login/login')
 var AppStore = require('../../framework/store/appStore');
 var MessageStore = require('../../framework/store/messageStore');
@@ -20,9 +21,11 @@ var VIcon = require('../../comp/icon/vIcon')
 var _ = require('lodash');
 var MessageDetail = require('./messageDetail')
 var Detail = require('../bill/billDetail');
+var BillDetailByMsg = require('./billDetailByMsg');
 var MsgCategory = require('../../constants/notification').MsgCategory;
 var DateHelper = require("../../comp/utils/dateHelper");
 var Alert = require('../../comp/utils/alert');
+var GiftedListView = require('../../comp/listView/GiftedListView');
 var ds = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -123,6 +126,23 @@ var Message = React.createClass({
       }
     }
   },
+
+  /*_onFetch(page = 1, callback, options) {
+   setTimeout(() => {
+   if (page === this.state.dataSource % 10 == 0 ? this.state.dataSource / 10 : this.state.dataSource / 10 + 1) {
+   callback(this._getDataSource(page), {
+   allLoaded: true, // the end of the list is reached
+   });
+   } else {
+   callback(this._getDataSource(page));
+   }
+   }, 1000); // simulating network fetching
+   },
+   _getDataSource (page) {
+   var totalPage = this.state.dataSource % 10 == 0 ? this.state.dataSource / 10 : this.state.dataSource / 10 + 1;
+   var data = _.at(this.state.dataSource, (page - 1) * 10, 10)
+   return data;
+   },*/
   unReadIcon(item){
     if (item.unReadNum > 0) {
       return (
@@ -157,7 +177,7 @@ var Message = React.createClass({
     } else {
       this.props.navigator.push({
         param: {title: '详情', record: bill},
-        comp: Detail
+        comp: BillDetailByMsg
       });
       MessageAction.setBillRevRead({id: item.id}, function (data) {
       }, function (data) {
@@ -172,6 +192,18 @@ var Message = React.createClass({
       );
     }
   },
+
+  /*renderHeaderView () {
+   if (Array.isArray(item) == true && !_.isEmpty(item[0])) {
+   if (!_.isEmpty(item.category)) {
+   return (
+   <View style={[{flexDirection:'column',marginTop:5,flex:1,backgroundColor:'#f0f0f0'}]}>
+   </View>
+   );
+   }
+   }
+   },*/
+
   renderLists: function (item) {
     var {width,height} = Dimensions.get('window');
     if (!_.isEmpty(item.category)) {
@@ -184,15 +216,17 @@ var Message = React.createClass({
                 {this.unReadIcon(item)}
               </Image>
             </View>
-            <View style={{flexDirection:'column',flex:1}}>
-              <View style={{flexDirection:'row',justifyContent:'space-between',marginTop:15}}>
+            <View style={{height:68, flex:1,flexDirection:'column',justifyContent:'space-between'}}>
+              <View style={{flex: 1,flexDirection:'row',justifyContent:'space-between', marginTop: 12}}>
                 <Text numberOfLines={1}
                       style={{width:width-150,fontSize:16,color:'#333333'}}>{item.title}</Text>
                 <Text
                   style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(item.receiveDate)}</Text>
               </View>
-              <Text style={{fontSize:14,color:'#7f7f7f',marginTop:13}}
-                    numberOfLines={1}>{item.content}</Text>
+              <View style={{marginBottom: 12}}>
+                <Text style={{fontSize:14,color:'#7f7f7f'}}
+                      numberOfLines={1}>{item.content}</Text>
+              </View>
             </View>
           </View>
         </TouchableHighlight>

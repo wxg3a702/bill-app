@@ -152,21 +152,19 @@ var TabView = React.createClass({
             <Home navigator={this.props.navigator}/>
           </ScrollView>
 
-          <ScrollView
-            tabLabel="clipboard"
-            tabDesc="票据"
-            icon={require('../../image/tab/bill.png')}
-            selectedIcon={require('../../image/tab/bill_selected.png')}>
-            <Bill navigator={this.props.navigator}/>
-          </ScrollView>
 
-          <View
-            tabDesc="消息"
-            badge={this.state.billSum==0?null:this.state.billSum}
-            icon={require('../../image/tab/message.png')}
-            selectedIcon={require('../../image/tab/message_selected.png')}>
-            <Message navigator={this.props.navigator}/>
-          </View>
+          <Bill tabLabel="clipboard"
+                tabDesc="票据"
+                icon={require('../../image/tab/bill.png')}
+                selectedIcon={require('../../image/tab/bill_selected.png')}
+                navigator={this.props.navigator}/>
+
+
+          <Message tabDesc="消息"
+                   badge={this.state.billSum==0?null:this.state.billSum}
+                   icon={require('../../image/tab/message.png')}
+                   selectedIcon={require('../../image/tab/message_selected.png')}
+                   navigator={this.props.navigator}/>
 
           <ScrollView
             tabLabel="person-stalker"
