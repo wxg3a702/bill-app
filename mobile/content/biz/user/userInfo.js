@@ -128,7 +128,6 @@ var UserInfo = React.createClass({
     selectAndroid(desc, name){
         console.log(desc + name);
         PhotoPic.showImagePic();
-
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {

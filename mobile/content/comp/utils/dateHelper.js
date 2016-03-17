@@ -3,10 +3,10 @@
  */
 
 'use strict'
-var dateFormat=require('dateformat')
+var dateFormat = require('dateformat')
 var _ = require('lodash');
 module.exports = {
-    format:function(date,fmt){
+    format: function (date, fmt) {
         var o = {
             "M+": date.getMonth() + 1, //月份
             "d+": date.getDate(), //日
@@ -21,21 +21,21 @@ module.exports = {
             if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
         return fmt;
     },
-    formatTimeStamp:function(string){
-        string = string.replace(/-/g,'/');
+    formatTimeStamp: function (string) {
+        string = string.replace(/-/g, '/');
         var date = new Date(string);
         return date.getTime();
     },
 
-    df:function(data,fmt){
+    df: function (data, fmt) {
 
-        return dateFormat(new Date(data),fmt);
+        return dateFormat(new Date(data), fmt);
     },
-    dfy:function(data){
-        if(_.isString(data)) return data;
-        return dateFormat(new Date(data),'yyyy-mm-dd');
+    dfy: function (data) {
+        if (_.isString(data)) return data;
+        return dateFormat(new Date(data), 'yyyy-mm-dd');
     },
-    descDate:function(time){
+    descDate: function (time) {
         var now = new Date();
         var tag = new Date(time);
         // var t = now - time;
@@ -57,5 +57,16 @@ module.exports = {
                 return dateFormat(new Date(time), 'yyyy-mm-dd');
             }
         }
+    },
+    formatBillDetail(data){
+        return dateFormat(new Date(data), 'yyyy年mm月dd日 HH:MM')
+    },
+    formatBillList(data){
+        return dateFormat(new Date(data), 'yyyy.mm.dd HH:MM')
+    },
+    formatBillContent(data){
+        return dateFormat(new Date(data), 'yyyy年mm月dd日')
     }
+
+
 };

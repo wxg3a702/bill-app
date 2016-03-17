@@ -137,7 +137,7 @@ var TextEdit = React.createClass({
                 <NavBarView navigator={this.props.navigator} title={this.props.param.title}
                             contentBackgroundColor='white' actionButton={this.button()}>
                     <View style={[styles.view,{flexDirection:'row',}]}>
-                        <TextInput style={[styles.text,{width:50}]} defaultValue={this.state.oldValue.split("-")[0]}
+                        <TextInput style={[styles.text,{width:80}]} defaultValue={this.state.oldValue.split("-")[0]}
                                    keyboardType='numeric'
                                    maxLength={4}
                                    onChangeText={(text) => this.setState({tele:text})}
