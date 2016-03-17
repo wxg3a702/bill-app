@@ -327,9 +327,11 @@ var Detail = React.createClass({
                     <View
                         style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,margin:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                         <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
-                        <Text
-                            style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.dueDate), 'yyyy年mm月dd日')}</Text>
-                        <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
+                        <View style={{flex:6,flexDirection:'row'}}>
+                            <Text
+                                style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat(new Date(this.state.dueDate), 'yyyy年mm月dd日')}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
+                        </View>
                     </View>
                     <View
                         style={{borderBottomColor:'#f6f6f6',borderBottomWidth:2,marginLeft:20,marginRight:20,marginTop:-10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
@@ -469,15 +471,21 @@ var Detail = React.createClass({
     },
 
     disAction: function () {
-        Alert("你确定要贴现?", () => this.confirmDis({
-                billId: this.state.billId,
-                discountRate: this.state.discountRate,
-                discountAmount: this.state.discountAmount,
-                discountBankName: this.state.discountBankName,
-                payeeBankAccountNo: this.state.payeeBankAccountNo
-            }), {text: '取消', onPress: null}
-        );
-
+        //Alert("你确定要贴现?", () => this.confirmDis({
+        //        billId: this.state.billId,
+        //        discountRate: this.state.discountRate,
+        //        discountAmount: this.state.discountAmount,
+        //        discountBankName: this.state.discountBankName,
+        //        payeeBankAccountNo: this.state.payeeBankAccountNo
+        //    }), {text: '取消', onPress: null}
+        //);
+        this.confirmDis({
+            billId: this.state.billId,
+            discountRate: this.state.discountRate,
+            discountAmount: this.state.discountAmount,
+            discountBankName: this.state.discountBankName,
+            payeeBankAccountNo: this.state.payeeBankAccountNo
+        })
     },
 
     confirmDis: function (item:Object) {
@@ -500,7 +508,7 @@ var Detail = React.createClass({
                             <View
                                 style={{flex:12,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
                                 <TouchableHighlight activeOpacity={0.8} underlayColor='#44bcbc'
-                                                    onPress={() => this.disAction()} style={{flex:1}}>
+                                                    onPress={() => this.confirmDis(this.state)} style={{flex:1}}>
                                     <Text style={{paddingTop: 10,color:'#ffffff',textAlign:'center'}}>{'我要贴现'}</Text>
                                 </TouchableHighlight>
                             </View>
