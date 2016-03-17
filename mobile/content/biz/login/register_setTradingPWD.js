@@ -73,7 +73,7 @@ var Register_setTradingPWD = React.createClass({
 
             var reg = /^\d{6}$/g;
             if (this.state.transactionPassword.length < 6 || (this.state.transactionPassword).indexOf(" ") != -1 ||!reg.test(this.state.transactionPassword)) {
-                Alert("交易密码只能为6位数字");
+                Alert("交易密码为6位数字");
                 return false;
             }
 
@@ -92,7 +92,7 @@ var Register_setTradingPWD = React.createClass({
             {
                 userName: this.state.userName,
                 password: this.state.password,
-                transactionPassword:this.transactionPassword,
+                transactionPassword:this.state.transactionPassword,
             },
             function () {
                 const { navigator } = this.props;

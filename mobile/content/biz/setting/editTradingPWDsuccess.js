@@ -17,12 +17,6 @@ var NavBarView = require('../../framework/system/navBarView');
 
 var EditTradingPWDsuccess = React.createClass({
 
-    getInitialState: function () {
-        return {
-            prompt: '交易密码修改成功!\n请妥善保管您的新密码',
-        }
-    },
-
     backOnPress: function () {
         const { navigator } = this.props;
         if (navigator) {
@@ -30,16 +24,40 @@ var EditTradingPWDsuccess = React.createClass({
         }
     },
 
+    returnResetResult:function(){
+
+        var icon;
+        var resultText;
+        var textPrompt;
+
+        if(this.props.param.resetSuccess){
+            icon = require('../../image/user/apply_success.png');
+            resultText = '修改成功';
+            textPrompt = '请妥善保管您的新密码';
+        }else {
+            icon = require('../../image/user/apply_fail.png');
+            resultText = '修改失败';
+            textPrompt = '';
+        }
+
+        return({
+            icon:icon,
+            resultText:resultText,
+            textPrompt:textPrompt,
+        });
+
+    },
+
     render:function(){
         return(
-            <NavBarView navigator={this.props.navigator} title='修改成功' contentBackgroundColor="#f0f0f0" showBack={false}>
+            <NavBarView navigator={this.props.navigator} title={this.returnResetResult().resultText} contentBackgroundColor="#f0f0f0" showBack={false}>
                 <View style={[styles.flex,{justifyContent:'space-between'}]}>
 
                     <View style={styles.imageViewItem}>
-                        <Image resizeMode="stretch" source={require('../../image/user/apply_success.png')} style={styles.imageItem}>
+                        <Image resizeMode="stretch" source={this.returnResetResult().icon} style={styles.imageItem}>
                         </Image>
-                        <Text numberOfLines={1} style={[styles.textItem,{marginTop:10}]}>交易密码修改成功!</Text>
-                        <Text numberOfLines={1} style={[styles.textItem,{marginTop:5}]}>请妥善保管您的新密码</Text>
+                        <Text numberOfLines={1} style={[styles.textItem,{marginTop:10}]}>{'交易密码'+this.returnResetResult().resultText+'!'}</Text>
+                        <Text numberOfLines={1} style={[styles.textItem,{marginTop:5}]}>{this.returnResetResult().textPrompt}</Text>
                     </View>
 
                     <View style={styles.touchableViewItem}>
