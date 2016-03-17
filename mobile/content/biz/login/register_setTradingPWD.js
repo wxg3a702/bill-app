@@ -49,6 +49,9 @@ var Register_setTradingPWD = React.createClass({
             userName:this.props.param.userName,
             password:this.props.param.password,
         });
+        console.log(this.state.mobileNo);
+        console.log(this.state.userName);
+        console.log(this.state.password);
     },
 
     textOnchange: function (text, type) {

@@ -22,6 +22,8 @@ var ResetTradingPWD = React.createClass({
     getInitialState: function () {
         return {
             checked: true,
+            transPWD:'',
+            transPWD_Again:'',
         }
     },
 
@@ -34,6 +36,19 @@ var ResetTradingPWD = React.createClass({
         }
     },
 
+    handleChanged(key,value){
+        this.textOnchange(value,key);
+    },
+
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.transPWD.length == 0 || this.state.transPWD_Again.length == 0) {
+            this.setState({checked: true,})
+        } else {
+            this.setState({checked: false,})
+        }
+    },
+
     render: function(){
         return(
             <NavBarView navigator={this.props.navigator} title='设置新密码' contentBackgroundColor="#f0f0f0">
@@ -41,11 +56,11 @@ var ResetTradingPWD = React.createClass({
                 <View  style={[styles.flex,{marginLeft:10,marginRight:10}]}>
 
                     <View style={styles.inputViewItem}>
-                        <Input type='default' prompt='交易密码' max={6} field='tradingPWD' isPwd={true}
-                               icon='trading_PWD'/>
+                        <Input type='default' prompt='交易密码' max={6} field='transPWD' isPwd={true}
+                               onChanged={this.handleChanged} icon='trading_PWD'/>
 
-                        <Input type='default' prompt='再输一次交易密码' max={6} field='tradingPWD' isPwd={true}
-                               icon='trading_PWD'/>
+                        <Input type='default' prompt='再输一次交易密码' max={6} field='transPWD_Again' isPwd={true}
+                               onChanged={this.handleChanged} icon='trading_PWD'/>
                     </View>
 
                     <View style={{marginTop:36}}>

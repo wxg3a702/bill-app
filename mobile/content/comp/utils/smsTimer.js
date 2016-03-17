@@ -22,8 +22,13 @@ var SMSTimer = React.createClass({
             click: false,
         };
     },
+    getDefaultProps(){
+      return{
+          isNeed:false
+      }
+    },
     changeVerify: function () {
-        if (this.state.time == "重新获取") {
+        if (this.state.time == "重新获取" || this.props.isNeed) {
             LoginAction[this.props.func](
                 {
                     mobileNo: this.props.parameter
