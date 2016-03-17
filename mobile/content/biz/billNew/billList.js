@@ -216,7 +216,8 @@ var Bill = React.createClass({
                                 </Text>
                                 <Text style={{fontSize:15,color:'#7f7f7f',marginTop:8}}>万元</Text>
                             </View>
-                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>开票人</Text>
+                            <Text
+                                style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>{data.role == 'payee' ? '开票人' : '收款人'}</Text>
                             <Text numberOfLines={1} style={{width:width-170,color:'#7f7f7f',fontSize:15,marginTop:10}}>
                                 {this.state.pick == this.state.resPick ? data.drawerName : data.payeeName}
                             </Text>
