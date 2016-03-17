@@ -17,7 +17,7 @@ var NavBarView = require('../../framework/system/navBarView');
 var BillDetail = React.createClass({
     render(){
         return (
-            <NavBarView></NavBarView>
+            <View></View>
         )
     }
 })

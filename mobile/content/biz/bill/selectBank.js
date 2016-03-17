@@ -17,6 +17,7 @@ var {
     TextInput,
     ScrollView,
     Dimensions,
+    Platform
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
@@ -74,7 +75,7 @@ var SelextBank = React.createClass({
                         placeholder={'搜索'}
                         onChangeText={(text) => this.textChange(text)}
                         returnKeyType={'search'}
-                        style={{height:30,backgroundColor:'#fff',marginLeft:10,marginRight:10}}></TextInput>
+                        style={{height:(Platform.OS === 'ios')?30:60,backgroundColor:'#fff',marginTop:(Platform.OS === 'ios')?0:-15,marginLeft:10,marginRight:10}}></TextInput>
                 </View>
             </View>
         );
