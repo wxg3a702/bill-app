@@ -11,6 +11,7 @@ var {
     Text,
     Image,
     View,
+    Platform
     } = React;
 var Realm = require('realm');
 var Space = require('../../comp/utils/space')
@@ -49,9 +50,16 @@ var CompAccountInfo = React.createClass({
        
     },
     render: function () {
-        var realm = new Realm({path:Realm.defaultPath.replace("/default.realm","")+"/realm.realm",schema:[{name:'Dog', properties:{name: 'string'}}]});
+
+        var realm;
+        if(Platform.OS === 'ios'){
+            var dataPath = Realm.defaultPath.replace("/default.realm","")+"/dogs.realm";
+            realm = new Realm({path:dataPath,schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
+        }else{
+            realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
+        }
         realm.write(()=>{
-            realm.create('Dog', ['Rex']);
+            realm.create('Dog', ['Rex',9]);
         })
         console.log(realm.path);
         //console.log(Realm.defaultPath);
