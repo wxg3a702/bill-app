@@ -12,6 +12,7 @@ var BillActions = {
     giveUpBillDiscount: (p, c)=>_giveUpBillDiscount(api + "/BillDiscountAdmin/giveUpBillDiscount", p, c),
     sendSMSCodeForDiscount: (p, c, f)=>BFetch(api + "/User/sendSMSCodeToOldMobile", p, c, f),
     validateMobileForDiscount: (p, c, f)=>PFetch(api + "/User/validateSMSCodeAfterLogin", p, c, f),
+    validateTransPWD: (p, c, f)=>PFetch(api + "/User/validateTransPWD", p, c, f),
     setDemoFlag: ()=> {
         AppDispatcher.dispatch({type: ActionTypes.DEMO_FLAG});
     },

@@ -14,7 +14,6 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var {Icon,} = require('react-native-icons');
 var VerifyOldTradingPWD = require('./verifyOldTradingPWD');
 var VerifyPhone = require('./verifyPhone');
 var VIcon = require('../../comp/icon/vIcon');
@@ -92,11 +91,6 @@ var styles=StyleSheet.create({
         justifyContent:'space-between'
 
     },
-
-    icon: {
-        width: 35, height: 35,
-    },
-
 })
 
 module.exports = EditTradingPWD;

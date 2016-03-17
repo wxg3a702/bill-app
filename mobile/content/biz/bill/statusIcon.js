@@ -11,7 +11,7 @@ var StatusIcon = React.createClass({
                 case 'NEW':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/payee_new.png')}
                             />
                     );
@@ -19,7 +19,7 @@ var StatusIcon = React.createClass({
                 case 'REQ':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/payee_req.png')}
                             />
                     );
@@ -27,7 +27,7 @@ var StatusIcon = React.createClass({
                 case 'HAN':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/payee_han.png')}
                             />
                     );
@@ -35,7 +35,7 @@ var StatusIcon = React.createClass({
                 case 'DIS':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/payee_dis.png')}
                             />
                     );
@@ -43,7 +43,7 @@ var StatusIcon = React.createClass({
                 case 'IGN':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/payee_ign.png')}
                             />
                     );
@@ -56,7 +56,7 @@ var StatusIcon = React.createClass({
                 case 'HAN':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/drawer_wait.png')}
                             />
                     );
@@ -64,7 +64,7 @@ var StatusIcon = React.createClass({
                 case 'DIS':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/drawer_dis.png')}
                             />
                     );
@@ -72,7 +72,7 @@ var StatusIcon = React.createClass({
                 case 'IGN':
                     return (
                         <Image
-                            style={{width:95,height:95,marginRight:21,marginTop:21}}
+                            style={{width:31,height:116,marginRight:0,marginTop:10}}
                             source={require('../../image/bill/drawer_ign.png')}
                             />
                     );
