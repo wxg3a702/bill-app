@@ -30,17 +30,20 @@ var Model = [
     {
         id: '1',
         bankName: '汉口银行',
-        disRate: 99.99
+        disRate: 9.99,
+        isDefault :false
     },
     {
         id: '2',
         bankName: '湖北省农村信用社',
-        disRate: 99.99
+        disRate: 99.99,
+        isDefault :false
     },
     {
         id: '3',
         bankName: '湖北银行',
-        disRate: 99.99
+        disRate: 0.99,
+        isDefault :false
     },
 ]
 

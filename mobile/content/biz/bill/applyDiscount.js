@@ -12,25 +12,26 @@ var {
     Text,
     View,
     ScrollView,
+    Dimensions
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
+var BottomButton = require('../../comp/utilsUi/bottomButton');
 var SelectBank = require('./selectBank')
 var ConDiscount = require('./conDiscount')
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
+var window = Dimensions.get('window');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 
 var BillAction = require('../../framework/action/billAction');
 
 var ApplyDis = React.createClass({
     //getInitialState(){
-    //
     //},
     componentWillMount(){
         var responseData = this.props.param.billBean;
-        this.setState({loaded: true});
         this.setState(responseData);
     },
     //componentDidMount(){
@@ -39,6 +40,12 @@ var ApplyDis = React.createClass({
     //componentWillUnmount(){
     //
     //},
+    callBack(item){
+        this.setState({
+            discountRate:item.disRate/1000,
+            discountBankName:item.bankName
+        })
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}
@@ -85,6 +92,7 @@ var ApplyDis = React.createClass({
         );
     },
     renderSelectBank(){
+        var {height, width} = Dimensions.get('window');
         return (
             <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#fff',flex:1}}>
                 <View
@@ -101,11 +109,13 @@ var ApplyDis = React.createClass({
                             style={{width:30,height:30,marginLeft:15}}
                             source={require('../../image/bill/payee_new.png')}
                         />
-                        <View style={{flex:3,flexDirection:'row'}}>
+                        <View style={{width:width-175,flex:3,flexDirection:'row'}}>
                             <Text
-                                style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20,flex:6}}
-                                numberOfLines={1}>{'中国银行上海分行'}</Text>
+                                style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20}}
+                                numberOfLines={1}>{this.state.discountBankName}</Text>
+
                             <Text style={{color:'#ff5b58',fontSize:18}}>{'(费率最低)'}</Text>
+
                         </View>
                         <VIcon/>
                     </View>
@@ -153,23 +163,17 @@ var ApplyDis = React.createClass({
     },
     renderApplyBtn(){
         return(
-            <View
-                style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
-                <View
-                    style={{flex:12,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
-                    <TouchableHighlight activeOpacity={0.8} underlayColor='#44bcbc'
-                                        onPress={() => this.goToConDiscount(this.state)}
-                                        style={{flex:1}}>
-                        <Text style={{paddingTop: 10,color:'#ffffff',textAlign:'center'}}>{'发送申请'}</Text>
-                    </TouchableHighlight>
-                </View>
+            <View>
+                <BottomButton func={() => this.goToConDiscount(this.state)} content={'发送申请'}/>
             </View>
+
         );
     },
     goToSelectBank:function (){
         this.props.navigator.push({
             param: {title: '选择贴现行'},
-            comp: SelectBank
+            comp: SelectBank,
+            callBack: this.callBack
         });
     },
     goToConDiscount:function (item:Object){

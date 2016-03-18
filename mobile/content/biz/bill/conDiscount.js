@@ -14,11 +14,13 @@ var {
 var NavBarView = require('../../framework/system/navBarView');
 var ComResult = require('./comResult');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
-var SMSTimer = require('../../comp/utils/smsTimer');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
 var BillAction = require('../../framework/action/billAction');
 var UserStore = require('../../framework/store/userStore');
+var NumberHelper = require('../../comp/utils/numberHelper');
+var Alert = require('../../comp/utils/alert');
 
 var ConDiscount = React.createClass({
     //getStateFromStores() {
@@ -26,18 +28,22 @@ var ConDiscount = React.createClass({
     getInitialState(){
         return {
             checked: true,
-            smsCode: "",
-            transPwd: "",
+            verify:'',
+            smsCode: '',
+            transPwd: '',
+            trading_PWD:'',
             mobileNo: UserStore.getUserInfoBean().mobileNo
         };
     },
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
+
     },
-    //componentDidMount(){
-    //
-    //},
+    componentDidMount(){
+        this.refs['smsTimer'].changeVerify();
+        this.sendSMSCode();
+    },
     //componentWillUnmount(){
     //
     //},
@@ -46,14 +52,13 @@ var ConDiscount = React.createClass({
             <NavBarView navigator={this.props.navigator}
                         title="确认贴现">
                 <View style={{flexDirection:'column',paddingLeft: 12, paddingRight: 12,}}>
-                    <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'已发送短信验证码至手机138****1234'}</Text>
+                    <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'已发送短信验证码至手机'+NumberHelper.phoneNumber(this.state.mobileNo)}</Text>
                     <View style={{flexDirection:'row',marginTop:10}}>
                         <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'sendSMSCodeToNewMobile'}/>
                     </View>
                     <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'请输入注册时设置的交易密码'}</Text>
-                    <Input type='default' prompt="交易密码" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="交易密码" max={20} field="trading_PWD" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-
                     <View style={{marginTop:36}}>
                         <Button func={this.validateSmsCode} content="完成" checked={this.state.checked}/>
                     </View>
@@ -64,7 +69,7 @@ var ConDiscount = React.createClass({
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
-        if (this.state.smsCode.length == 0 || this.state.transPwd.length == 0) {
+        if (this.state.verify.length == 0 || this.state.trading_PWD.length == 0) {
             this.setState({checked: true})
         } else {
             this.setState({checked: false})
@@ -80,34 +85,41 @@ var ConDiscount = React.createClass({
             comp: ComResult
         });
     },
+    sendSMSCode: function () {
+        BillAction.sendSMSCodeForDiscount('',
+            function () {
+            }.bind(this), ''
+        );
+    },
     validateSmsCode: function (data) {
         dismissKeyboard()
         BillAction.validateMobileForDiscount({
             mobileNo: this.state.mobileNo,
-            smsCode: this.state.smsCode
+            smsCode: this.state.verify
         },this.validateSmsCodeSuccess,this.validataSmsCodeFail)
 
     },
     validateSmsCodeSuccess: function (data) {
         dismissKeyboard()
         BillAction.validateTransPWD({
-            transactionPassword:this.state.transPwd
+            transactionPassword:this.state.trading_PWD
         },this.validateTransPwdSuccess,this.validataTransPwdFail)
 
     },
     validataSmsCodeFail: function (data) {
-        Alert(data.msgContent);
+        this.next();
+        //Alert(data.msgContent);
     },
 
     validateTransPwdSuccess: function (data) {
         this.applyDiscountAction();
     },
     validataTransPwdFail: function (data) {
-        Alert(data.msgContent);
+        this.next();
+        //Alert(data.msgContent);
     },
 
     applyDiscountAction: function () {
-
         dismissKeyboard()
         BillAction.createBillDiscount(
             {
@@ -118,7 +130,7 @@ var ConDiscount = React.createClass({
                 payeeBankAccountNo: this.state.payeeBankAccountNo
             },
             function () {
-                Alert("贴现申请提交成功!", ()=>this.next);
+                ()=>this.next;
             }.bind(this)
         );
 
