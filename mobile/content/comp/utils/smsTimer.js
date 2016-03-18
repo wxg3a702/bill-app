@@ -11,6 +11,7 @@ var {
     Image
     } = React;
 var LoginAction = require("../../framework/action/loginAction")
+var BillAction = require('../../framework/action/billAction');
 var TimerMixin = require('react-timer-mixin');
 var SMSTimer = React.createClass({
     mixins: [TimerMixin],
@@ -49,8 +50,38 @@ var SMSTimer = React.createClass({
                 tim: this.setInterval(this.updateText, 1000)
             })
         }
-
     },
+
+    afterLoginChangeVerify:function(){
+        if (this.state.time == "重新获取" || this.props.isNeed) {
+             BillAction.sendSMSCodeForDiscount(
+                 '',
+                 function () {
+                     this.setState({
+                         startTime: new Date().getTime(),
+                         deadline: 60,
+                         click: false,
+                         tim: this.setInterval(this.updateText, 1000)
+                     })
+                 }.bind(this)
+            )
+        } else if (this.state.time == "60秒") {
+            this.setState({
+                startTime: new Date().getTime(),
+                deadline: 60,
+                tim: this.setInterval(this.updateText, 1000)
+            })
+        }
+    },
+
+    makeChangeVerifyType: function () {
+        if (this.props.func == 'afterLoginSendSMSCodeToOldMobile'){
+            return this.afterLoginChangeVerify();
+        }else {
+            return this.changeVerify();
+        }
+    },
+
     updateText: function () {
         var nowTime = new Date().getTime();
         var timeGo = Math.floor((nowTime - this.state.startTime) / 1000);
@@ -96,7 +127,7 @@ var SMSTimer = React.createClass({
                 <View style={{width:75,marginLeft:12}}>
                     <TouchableOpacity
                         style={[{width:75,height:36},styles.radius, styles.button,this.state.click && styles.color]}
-                        onPress={this.changeVerify}>
+                        onPress={this.makeChangeVerifyType}>
                         <Text style={[styles.fontColor]}>{this.state.time}</Text>
                     </TouchableOpacity>
                 </View>

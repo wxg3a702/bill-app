@@ -16,4 +16,4 @@
         android:background="@drawable/crop__texture"
         android:layout_below="@id/done_cancel_bar" />
 
-</RelativeLayout><!-- From: file:/Users/liushengwei/project/zxbill-app/mobile/android/lib/src/main/res/layout/crop__activity_crop.xml -->
+</RelativeLayout><!-- From: file:/Users/wen/project/zxbill-app/mobile/android/lib/src/main/res/layout/crop__activity_crop.xml -->

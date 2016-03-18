@@ -2,4 +2,4 @@
 
 <bitmap xmlns:android="http://schemas.android.com/apk/res/android"
     android:src="@drawable/crop__tile"
-    android:tileMode="repeat" /><!-- From: file:/Users/liushengwei/project/zxbill-app/mobile/android/lib/src/main/res/drawable/crop__texture.xml -->
+    android:tileMode="repeat" /><!-- From: file:/Users/wen/project/zxbill-app/mobile/android/lib/src/main/res/drawable/crop__texture.xml -->
