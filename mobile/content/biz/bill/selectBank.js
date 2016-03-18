@@ -19,7 +19,7 @@ var {
     Dimensions,
     Platform
     } = React;
-
+var SearchBar = require('../../comp/utilsUi/searchBar')
 var NavBarView = require('../../framework/system/navBarView');
 
 var ds = new ListView.DataSource({
@@ -55,30 +55,13 @@ var SelextBank = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator}
                         title="选择贴现行">
-                {this._renderSearchBar()}
+                <SearchBar onChange={this.textChange}/>
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={this._renderRow}
                 />
 
             </NavBarView>
-        );
-    },
-    _renderSearchBar(){
-        return (
-            //<SearchBar placeholder='Search'
-            //           textFieldBackgroundColor='white'>
-            //</SearchBar>
-            <View style={{height:40,backgroundColor:'#7f7f7f'}}>
-                <View
-                    style={{height:30,backgroundColor:'#fff',marginTop:5,marginLeft:10,marginRight:10,borderRadius:4}}>
-                    <TextInput
-                        placeholder={'搜索'}
-                        onChangeText={(text) => this.textChange(text)}
-                        returnKeyType={'search'}
-                        style={{height:(Platform.OS === 'ios')?30:60,backgroundColor:'#fff',marginTop:(Platform.OS === 'ios')?0:-15,marginLeft:10,marginRight:10}}></TextInput>
-                </View>
-            </View>
         );
     },
     textChange(text){
@@ -105,7 +88,7 @@ var SelextBank = React.createClass({
                 <View
                     style={{height:50,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomColor:'#e0e0e0',borderBottomWidth:1}}>
                     <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{item.bankName}</Text>
-                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.disRate+'‰'}</Text>
+                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.disRate + '‰'}</Text>
                 </View>
             </TouchableOpacity>
         );

@@ -32,8 +32,15 @@ var BillDetail = React.createClass({
     getInitialState(){
         let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
-        flow[flow.length - 1].new = true;
-        flow = _(flow).reverse().value()
+        if (!flow) {
+            flow = ''
+        } else {
+            if (!item.new) {
+                flow[flow.length - 1].new = true;
+                flow = _(flow).reverse().value();
+                item.new = true;
+            }
+        }
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',
