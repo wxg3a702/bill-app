@@ -9,6 +9,7 @@ var api = "/api"
 var CompAction = {
     updateCompBaseInfo: (p, c, f)=> _updateCompBaseInfo(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
+    getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f)
 }
 var _updateCompBaseInfo = function (p, c, f) {
 

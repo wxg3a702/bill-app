@@ -18,7 +18,7 @@ var MessageStore = require('../../framework/store/messageStore');
 var MessageAction = require('../../framework/action/messageAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
-var ToLogin=require('../../comp/utilsUi/toLogin');
+var ToLogin = require('../../comp/utilsUi/toLogin');
 var _ = require('lodash');
 var MessageDetail = require('./messageDetail')
 var Detail = require('../bill/billDetail');
@@ -28,85 +28,85 @@ var DateHelper = require("../../comp/utils/dateHelper");
 var Alert = require('../../comp/utils/alert');
 var GiftedListView = require('../../comp/listView/GiftedListView');
 var ds = new ListView.DataSource({
-  rowHasChanged: (row1, row2) => row1 !== row2,
+    rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var Message = React.createClass({
-  getStateFromStores() {
-    var token = AppStore.getToken()
-    if (token == null) {
-      return {token: token}
-    } else {
-      var messageBean = MessageStore.getMessage()
-      return {
-        dataSource: ds.cloneWithRows(messageBean),
-        data: messageBean,
-        token: token
-      }
-    }
-  },
-  componentDidMount() {
-    AppStore.addChangeListener(this._onChange);
-  },
-
-  componentWillUnmount: function () {
-    AppStore.removeChangeListener(this._onChange);
-  },
-  _onChange: function () {
-    this.setState(this.getStateFromStores());
-  },
-  getInitialState: function () {
-    return this.getStateFromStores();
-  },
-  detail(name){
-    var title
-    if (name == MsgCategory.BILL_SENT) {
-      title = '开出的票'
-    } else if (name == MsgCategory.MARKET_NEWS) {
-      title = '市场动态'
-    } else {
-      title = '系统消息'
-    }
-    const { navigator } = this.props;
-    if (navigator) {
-      navigator.push({
-        comp: MessageDetail,
-        param: {
-          name: name,
-          title: title,
+    getStateFromStores() {
+        var token = AppStore.getToken()
+        if (token == null) {
+            return {token: token}
+        } else {
+            var messageBean = MessageStore.getMessage()
+            return {
+                dataSource: ds.cloneWithRows(messageBean),
+                data: messageBean,
+                token: token
+            }
         }
-      })
-    }
+    },
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
+    },
 
-    MessageStore.updateUnReadNum(name);
-    MessageAction.setOtherMsgRead({category: name}, function (data) {
-      //更新未读标记
+    componentWillUnmount: function () {
+        AppStore.removeChangeListener(this._onChange);
+    },
+    _onChange: function () {
+        this.setState(this.getStateFromStores());
+    },
+    getInitialState: function () {
+        return this.getStateFromStores();
+    },
+    detail(name){
+        var title
+        if (name == MsgCategory.BILL_SENT) {
+            title = '开出的票'
+        } else if (name == MsgCategory.MARKET_NEWS) {
+            title = '市场动态'
+        } else {
+            title = '系统消息'
+        }
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                comp: MessageDetail,
+                param: {
+                    name: name,
+                    title: title,
+                }
+            })
+        }
 
-    }, function (data) {
-      Alert('已读标记设置失败!');
-    });
-  },
-  toLogin(){
-    this.props.navigator.push({comp: Login})
-  },
-  render: function () {
-    if (this.state.token == null) {
-      return (
-        <NavBarView navigator={this.props.navigator} showBack={false} title="消息">
-          <ToLogin func={this.toLogin}/>
-        </NavBarView>
-      )
-    } else {
-      if (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
-        && (_.isEmpty(this.state.data[3][0]))) {
-        return (
-          <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
-                      contentBackgroundColor='#f0f0f0'>
-            <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
-              <Image style={{width:350,height:200}} resizeMode="stretch"
-                     source={require('../../image/message/noMessage.png')}/>
-              <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂无消息</Text>
-            </View>
-            <View style={{height:100}}></View>
+        MessageStore.updateUnReadNum(name);
+        MessageAction.setOtherMsgRead({category: name}, function (data) {
+            //更新未读标记
+
+        }, function (data) {
+            Alert('已读标记设置失败!');
+        });
+    },
+    toLogin(){
+        this.props.navigator.push({comp: Login})
+    },
+    render: function () {
+        if (this.state.token == null) {
+            return (
+                <NavBarView navigator={this.props.navigator} showBack={false} title="消息">
+                    <ToLogin func={this.toLogin}/>
+                </NavBarView>
+            )
+        } else {
+            if (_.isEmpty(this.state.data) || (_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+                && (_.isEmpty(this.state.data[3][0])))) {
+                return (
+                    <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
+                                contentBackgroundColor='#f0f0f0'>
+                        <View style={{marginTop:65,flexDirection:'column',alignItems:'center'}}>
+                            <Image style={{width:350,height:200}} resizeMode="stretch"
+                                   source={require('../../image/message/noMessage.png')}/>
+                            <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂无消息</Text>
+                        </View>
+                        <View style={{height:100}}></View>
 
           </NavBarView>
         )
@@ -270,14 +270,14 @@ var Message = React.createClass({
 
 });
 var styles = StyleSheet.create({
-  borderTop: {
-    borderTopWidth: 1,
-  },
-  borderBottom: {
-    borderBottomWidth: 0.5, borderColor: '#c8c7cc'
-  },
-  contentMargin: {
-    marginLeft: (Platform.OS === 'ios') ? 0 : 12
-  }
+    borderTop: {
+        borderTopWidth: 1,
+    },
+    borderBottom: {
+        borderBottomWidth: 0.5, borderColor: '#c8c7cc'
+    },
+    contentMargin: {
+        marginLeft: (Platform.OS === 'ios') ? 0 : 12
+    }
 })
 module.exports = Message;
