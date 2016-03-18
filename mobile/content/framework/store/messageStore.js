@@ -8,7 +8,11 @@ var AppStore = require('./appStore')
 var MessageStore = assign({}, EventEmitter.prototype, {
     getMessage(){
         var mainMsgBean = AppStore.getData().mainMsgBean;
-        return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+        if (!mainMsgBean) {
+            return []
+        } else {
+            return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+        }
     },
     getMainMsgBean: ()=>AppStore.getData().mainMsgBean,
 
