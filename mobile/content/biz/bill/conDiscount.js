@@ -14,9 +14,9 @@ var {
 var NavBarView = require('../../framework/system/navBarView');
 var ComResult = require('./comResult');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
-var SMSTimer = require('../../comp/utils/smsTimer');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
 var BillAction = require('../../framework/action/billAction');
 var UserStore = require('../../framework/store/userStore');
 
