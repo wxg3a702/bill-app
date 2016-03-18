@@ -22,7 +22,7 @@ var UserAction = require('../../framework/action/userAction');
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var Item = require('../../comp/utils/item')
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utilsUi/space')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
@@ -102,7 +102,7 @@ var PersonalCenter = React.createClass({
                                         onPress={()=>this.toPage(()=>this.toOther(UserInfo))}>
                         <View style={styles.layout}>
                             <View style={{flexDirection:'row'}}>
-                                <Image style={styles.head} resizeMode="stretch" source={this.returnImg()}/>
+                                <Image style={styles.head} resizeMode="cover" source={this.returnImg()}/>
                                 <View style={{marginLeft:13,marginTop:10}}>
                                     <Text style={{fontSize: 18,color: '#323232'}}>{this.state.userName}</Text>
                                     <View style={{flexDirection:'row',alignItems:'flex-end'}}>

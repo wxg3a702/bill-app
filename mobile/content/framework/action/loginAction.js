@@ -6,6 +6,7 @@ var ActionTypes = Command.ActionTypes;
 var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
+
 var LoginActions = {
     getProtocol: ()=>host + '/protocol.html',
     login: (p, c, f)=>_login(pub + "/login", p, c, f),
@@ -22,6 +23,11 @@ var LoginActions = {
     sendSMSCodeToOldMobile: (p, c, f)=>PFetch(pub + "/sendSMSCodeToOldMobile", p, c, f),
     resetMobileNo: (p, c, f)=>_resetMobileNo(api + "/User/resetMobileNo", p, c, f),
     resetPasswordForChangePwd: (p, c, f)=>BFetch(api + "/User/resetPasswordForChangePwd", p, c, f),
+
+    validateTransPWD: (p,c,f) =>PFetch(api + "/User/validateTransPWD",p,c,f),
+    validatePWDandPersonID: (p,c,f) => PFetch(api + "/User/validatePWDandPersonID",p,c,f),
+    resetTransactionPassword :(p,c,f) => PFetch(api + "/User/resetTransactionPassword",p,c,f),
+
     forceLogOut: ()=> {
         AppDispatcher.dispatch({type: ActionTypes.FORCE_LOGOUT});
     },
@@ -76,4 +82,6 @@ var _resetMobileNo = function (u, p, c, f) {
         }
     )
 }
+
+
 module.exports = LoginActions;

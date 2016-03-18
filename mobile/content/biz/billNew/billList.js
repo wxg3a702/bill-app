@@ -9,19 +9,19 @@ var {
     Platform,
     Dimensions,
     Image,
-    Modal,
     StyleSheet,
     TouchableOpacity
     } = React;
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var {width,height} = Dimensions.get('window');
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
-var numeral = require('numeral');
-var dateFormat = require('dateformat');
-var ToLogin = require('../../comp/utils/toLogin');
+var NumberHelper = require('../../comp/utils/numberHelper')
+var DateHelper = require('../../comp/utils/dateHelper');
+var ToLogin = require('../../comp/utilsUi/toLogin');
 var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
-var BillDetail = require('./bilDetail')
+var BillDetail = require('./billDetail')
 var VIcon = require('../../comp/icon/vIcon')
 var BillStates = require('./billStates')
 var Validation = require('../../comp/utils/validation')
@@ -65,41 +65,21 @@ var Bill = React.createClass({
                 dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))
             },
         ];
-        if (!token) {
-            return {
-                token: token,
-                checkColor: 'white',
-                unCheckColor: '#44bcb2',
-                status: '全部',
-                direction: 'left',
-                modalVisible: false,
-                animated: true,
-                pick: resPick,
-                pickStatus: 'rev',
-                backColor: '#f0f0f0',
-                contentColor: 'white',
-                resPick: resPick,
-                sentPick: sentPick,
-            }
-        } else {
-
-            return ({
-                token: token,
-                checkColor: 'white',
-                unCheckColor: '#44bcb2',
-                status: '全部',
-                direction: 'left',
-                modalVisible: false,
-                animated: true,
-                pick: resPick,
-                pickStatus: 'rev',
-                backColor: '#f0f0f0',
-                contentColor: 'white',
-                resPick: resPick,
-                sentPick: sentPick,
-                dataSource: resPick[0].dataSource
-            })
-        }
+        return ({
+            token: token,
+            checkColor: 'white',
+            unCheckColor: '#44bcb2',
+            status: '全部',
+            direction: 'left',
+            pick: resPick,
+            pickStatus: 'rev',
+            backColor: '#f0f0f0',
+            contentColor: 'white',
+            resPick: resPick,
+            sentPick: sentPick,
+            opacity: 0,
+            dataSource: !token ? '' : resPick[0].dataSource
+        })
     },
     getInitialState: function () {
         return this.getStateFromStores();
@@ -137,50 +117,53 @@ var Bill = React.createClass({
     changePick(){
         this.setState({
             direction: 'down',
-            modalVisible: true,
             backColor: '#d0d0d0',
-            contentColor: '#e0e0e0'
+            contentColor: '#e0e0e0',
+            opacity: 1
         })
     },
     hidePick(){
         this.setState({
-            modalVisible: false,
             backColor: '#f0f0f0',
             direction: 'left',
-            contentColor: 'white'
+            contentColor: 'white',
+            opacity: 0
         });
     },
     changePic(data){
-        if (!this.state.token) {
-            this.setState({
-                status: data.desc,
-            })
-        } else {
-            this.setState({
-                status: data.desc,
-                dataSource: data.dataSource
-            })
-        }
+        this.setState({
+            status: data.desc,
+            dataSource: !this.state.token ? '' : data.dataSource,
+        })
         this.hidePick()
     },
     returnPick(data){
-        return (
-            <TouchableOpacity onPress={()=>this.changePic(data)} style={[styles.pickLine,styles.bottomColor]}>
-                <Text style={{width:width,fontSize:18}}>{data.desc}</Text>
-            </TouchableOpacity>
-        )
+        if (!this.state.opacity) {
+            return (
+                <View style={[styles.pickLine,styles.bottomColor]}>
+                    <Text style={{width:width,fontSize:18}}>{data.desc}</Text>
+                </View>
+            )
+        } else {
+            return (
+                <TouchableHighlight underlayColor='#cccccc' onPress={()=>this.changePic(data)}
+                                    style={[styles.pickLine,styles.bottomColor]}>
+                    <Text style={{width:width,fontSize:18}}>{data.desc}</Text>
+                </TouchableHighlight>
+            )
+        }
     },
     returnInfo(role, status, discountDate, discountDueDate){
         if (role == 'drawer') {
             if ((status == 'NEW' || status == 'REQ' || status == 'HAN')) {
-                return <Text style={{ color:'#999999'}}>请等待承兑行出票</Text>
+                return <Text style={{color:'#999999'}}>请等待承兑行出票</Text>
             } else if (status == 'IGN') {
-                return <Text style={{ color:'#ff5b58'}}>请至承兑行取票</Text>
+                return <Text style={{color:'#ff5b58'}}>请至承兑行取票</Text>
             } else if (status == 'DIS') {
                 return (
                     <View style={{flexDirection:'row'}}>
-                        <Text style={{ color:'#44bcb2'}}>{dateFormat(new Date(discountDate), 'yyyy.mm.dd')}</Text>
-                        <Text style={{ color:'#999999'}}>贴现</Text>
+                        <Text style={{color:'#44bcb2'}}>{DateHelper.formatBillList(discountDate)}</Text>
+                        <Text style={{color:'#999999'}}>贴现</Text>
                     </View>
                 )
             }
@@ -189,7 +172,7 @@ var Bill = React.createClass({
                 return (
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                         <Text
-                            style={{color:'#ff5b58',fontSize:15}}>{discountDueDate ? dateFormat(new Date(discountDueDate), 'yyyy.mm.dd HH:MM') : "未知日期"}</Text>
+                            style={{color:'#ff5b58',fontSize:15}}>{discountDueDate ? DateHelper.formatBillList(discountDueDate) : "未知日期"}</Text>
                         <Text style={{color:'#333333',fontSize:15}}>出票</Text>
                     </View>
                 );
@@ -201,7 +184,7 @@ var Bill = React.createClass({
                 return (
                     <View style={{flexDirection:'row',alignItems: 'center'}}>
                         <Text
-                            style={{color:'#43bb80',fontSize:15}}>{dateFormat(new Date(discountDate), 'yyyy.mm.dd')}</Text>
+                            style={{color:'#43bb80',fontSize:15}}>{DateHelper.formatBillList(discountDate)}</Text>
                         <Text style={{color:'#7f7f7f',fontSize:15}}>贴现</Text>
                     </View>
                 );
@@ -214,7 +197,7 @@ var Bill = React.createClass({
         this.props.navigator.push({
             comp: name,
             param: {
-                record: item
+                item: item
             }
         });
     },
@@ -223,16 +206,18 @@ var Bill = React.createClass({
             <TouchableHighlight onPress={() => this.toOther(BillDetail,data)} activeOpacity={0.8}
                                 underlayColor='#ebf1f2'>
                 <View style={[{backgroundColor:this.state.contentColor},styles.content]}>
-                    <View style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5}}>
+                    <View
+                        style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5,height:Platform.OS === 'ios'?136:146}}>
                         <View style={[{height:131}]}>
-                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:15}}>票面金额</Text>
+                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:12}}>票面金额</Text>
                             <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
                                 <Text style={{fontSize:28,color:'#44bcb2'}}>
-                                    {numeral(data.amount / 10000).format('0,0.00')}
+                                    {NumberHelper.number2(data.amount)}
                                 </Text>
                                 <Text style={{fontSize:15,color:'#7f7f7f',marginTop:8}}>万元</Text>
                             </View>
-                            <Text style={{fontSize:11,color:'#7f7f7f',marginTop:20}}>开票人</Text>
+                            <Text
+                                style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>{data.role == 'payee' ? '开票人' : '收款人'}</Text>
                             <Text numberOfLines={1} style={{width:width-170,color:'#7f7f7f',fontSize:15,marginTop:10}}>
                                 {this.state.pick == this.state.resPick ? data.drawerName : data.payeeName}
                             </Text>
@@ -247,7 +232,7 @@ var Bill = React.createClass({
                             {this.returnInfo(data.role, data.status, data.discountDate, data.discountDueDate)}
                         </View>
                         <Text style={{color:'#333333',fontSize:15}}>
-                            {'~' + dateFormat(new Date(data.dueDate), 'yyyy.mm.dd') + ' 到期'}
+                            {'~' + DateHelper.formatBillList(data.dueDate) + ' 到期'}
                         </Text>
                     </View>
                 </View>
@@ -257,12 +242,12 @@ var Bill = React.createClass({
     hasBill(){
         if (!this.state.token) {
             return (
-                <ToLogin func={()=>this.toOther(Login)}/>
+                <ToLogin func={()=>this.toOther(Login)} mar={true}/>
             )
         } else {
-            if (!this.state.dataSource) {
+            if (this.state.dataSource.length == 0) {
                 return (
-                    <View style={{marginTop:65,alignItems:'center'}}>
+                    <View style={{marginTop:65,alignItems:'center',flex:1}}>
                         <Image style={{width:350,height:200}} resizeMode="stretch"
                                source={require('../../image/bill/noBill.png')}/>
                         <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
@@ -275,21 +260,29 @@ var Bill = React.createClass({
                 )
             }
         }
-
-
+    },
+    returnView(){
+        if (!this.state.opacity) {
+            return (
+                <View/>
+            )
+        } else {
+            return (
+                <View style={[styles.position,{opacity:this.state.opacity}]}>
+                    <TouchableOpacity onPress={this.hidePick} style={{height:Platform.OS === 'ios' ?96 : 76}}>
+                        <View/>
+                    </TouchableOpacity>
+                    <ListView dataSource={ds.cloneWithRows(this.state.pick)} renderRow={this.returnPick}/>
+                    <TouchableOpacity onPress={this.hidePick} style={{flex:1}}>
+                        <View/>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
     },
     render(){
         return (
             <NavBarView navigator={this.props.navigator} showBar={false} contentBackgroundColor={this.state.backColor}>
-                <Modal animated={this.state.animated} transparent={true}
-                       visible={this.state.modalVisible}>
-                    <TouchableOpacity onPress={this.hidePick} style={{flex:1}}>
-                        <View/>
-                    </TouchableOpacity>
-                    <View style={{position:'absolute',left:0,top:96,}}>
-                        <ListView dataSource={ds.cloneWithRows(this.state.pick)} renderRow={this.returnPick}/>
-                    </View>
-                </Modal>
                 <View style={{backgroundColor:'#f0f0f0'}}>
                     <View style={[styles.comStyle]}>
                         <TouchableOpacity onPress={this.changeRev} activeOpacity={0.9}>
@@ -312,6 +305,8 @@ var Bill = React.createClass({
                     </TouchableOpacity>
                 </View>
                 {this.hasBill()}
+                {this.returnView()}
+                <ListBottom/>
             </NavBarView>
         )
     }
@@ -345,13 +340,18 @@ var styles = StyleSheet.create({
         borderTopWidth: 1, borderColor: '#c8c8c8'
     },
     pickLine: {
-        backgroundColor: '#e6e6e6', justifyContent: 'center', height: 50, paddingLeft: 10,
+        backgroundColor: '#e6e6e6', justifyContent: 'center', height: 40, paddingLeft: 10,
     },
     contentBottom: {
         flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 36, paddingRight: 16
     },
     content: {
-        marginTop: 5, height: 172, paddingLeft: 6, borderWidth: 1, borderColor: '#c8c8c8'
+        marginTop: 5, paddingLeft: 6, borderWidth: 1, borderColor: '#c8c8c8',
+        height: Platform.OS === 'ios' ? 172 : 182,
+    },
+    position: {
+        position: 'absolute',
+        left: 0, top: 0, width: width, height: height
     }
 })
 module.exports = Bill;

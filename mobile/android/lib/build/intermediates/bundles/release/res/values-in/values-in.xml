@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
-    <!-- From: file:/Users/vison/project/zxbill-app/mobile/android/lib/src/main/res/values-in/strings.xml -->
+    <!-- From: file:/Users/alcat/git/zxbill-app/mobile/android/lib/src/main/res/values-in/strings.xml -->
     <eat-comment/>
     <string name="crop__cancel" ns1:ignore="ButtonCase">BATAL</string>
     <string name="crop__done">SELESAI</string>

@@ -11,19 +11,20 @@ var {
     Text,
     Image,
     View,
+    Platform
     } = React;
 var Realm = require('realm');
-var Space = require('../../comp/utils/space')
-var BottomButton = require('../../comp/utils/bottomButton')
+var Space = require('../../comp/utilsUi/space')
+var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
-var Input = require('../../comp/utils/input');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utils/button')
+var Button = require('../../comp/utilsUi/button')
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
         var orgBean = CompStore.getOrgBeans()[0];
@@ -49,9 +50,16 @@ var CompAccountInfo = React.createClass({
        
     },
     render: function () {
-        var realm = new Realm({path:Realm.defaultPath.replace("/default.realm","")+"/realm.realm",schema:[{name:'Dog', properties:{name: 'string'}}]});
+
+        var realm;
+        if(Platform.OS === 'ios'){
+            var dataPath = Realm.defaultPath.replace("/default.realm","")+"/dogs.realm";
+            realm = new Realm({path:dataPath,schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
+        }else{
+            realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
+        }
         realm.write(()=>{
-            realm.create('Dog', ['Rex']);
+            realm.create('Dog', ['Rex',9]);
         })
         console.log(realm.path);
         //console.log(Realm.defaultPath);

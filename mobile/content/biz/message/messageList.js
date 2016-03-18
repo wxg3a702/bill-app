@@ -18,7 +18,7 @@ var MessageStore = require('../../framework/store/messageStore');
 var MessageAction = require('../../framework/action/messageAction');
 var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
-var ToLogin=require('../../comp/utils/toLogin');
+var ToLogin=require('../../comp/utilsUi/toLogin');
 var _ = require('lodash');
 var MessageDetail = require('./messageDetail')
 var Detail = require('../bill/billDetail');
@@ -146,12 +146,7 @@ var Message = React.createClass({
           <Text style={{color:'white',fontSize:11}}>{item.unReadNum >= 99 ? "99+" : item.unReadNum}</Text>
         </View>
       )
-    } else {
-      return (
-        <View></View>
-      )
     }
-
   },
   icon(item){
     if (item.category == 'BILL_SENT') {

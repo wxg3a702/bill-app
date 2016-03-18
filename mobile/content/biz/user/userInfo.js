@@ -29,9 +29,10 @@ var Validation = require('../../comp/utils/validation')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
-var RightTopButton = require('../../comp/utils/rightTopButton')
-var Space = require('../../comp/utils/space')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
+var Space = require('../../comp/utilsUi/space')
 var PhotoPic = require('NativeModules').PhotoPicModule;
+var Alert = require('../../comp/utils/alert');
 
 var UserInfo = React.createClass({
     getStateFromStores() {
@@ -127,7 +128,6 @@ var UserInfo = React.createClass({
     selectAndroid(desc, name){
         console.log(desc + name);
         PhotoPic.showImagePic();
-
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {
@@ -151,11 +151,12 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        LoginAction.logOut()
+
+        Alert('确定退出当前帐号?',{text:'确定', onPress:() => LoginAction.logOut()},{text:'取消',onPress:null});
     },
     button(){
         return (
-            <RightTopButton func={this.logout} content="退出" color="#ff5b58"
+            <RightTopButton func={this.logout} content="退出登录" color="#ff5b58"
                             source={require('../../image/user/exit.png')}/>
         )
     },

@@ -8,15 +8,15 @@ var {
     View,
     Image
     } = React;
-var VerifyCode = require('../../comp/utils/verifyCode')
+var VerifyCode = require('../../comp/utilsUi/verifyCode')
 var NavBarView = require('../../framework/system/navBarView')
 var Register_checkVerify = require('./register_checkVerify');
 var LoginAction = require("../../framework/action/loginAction");
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Protocol = require('./protocol')
 var Validation = require('../../comp/utils/validation')
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Register_checkPhone = React.createClass({
     getInitialState: function () {

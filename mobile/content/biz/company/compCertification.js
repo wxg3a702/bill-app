@@ -12,8 +12,8 @@ var {
     } = React;
 var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
-var Space = require('../../comp/utils/space')
-var BottomButton = require('../../comp/utils/bottomButton')
+var Space = require('../../comp/utilsUi/space')
+var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -26,7 +26,7 @@ var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var ret = new Array();
-var Button = require('../../comp/utils/button')
+var Button = require('../../comp/utilsUi/button')
 var res = [
     {
         id: 1,

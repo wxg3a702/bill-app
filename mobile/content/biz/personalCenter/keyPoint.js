@@ -5,7 +5,7 @@ var {
     ListView,
     } = React;
 var Item = require('../../comp/utils/item')
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utilsUi/space')
 var UserStore = require('../../framework/store/userStore');
 var NavBarView = require('../../framework/system/navBarView')
 var PointDetail = require('./pointDetail')

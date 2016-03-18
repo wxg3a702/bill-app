@@ -1,28 +1,28 @@
 'use strict';
 var React = require('react-native');
 var {
-  Navigator,
-  StyleSheet,
-  Text,
-  View,
-  BackAndroid,
-  DeviceEventEmitter,
-  Platform
-  } = React;
+    Navigator,
+    StyleSheet,
+    Text,
+    View,
+    BackAndroid,
+    DeviceEventEmitter,
+    Platform
+    } = React;
 var AppAction = require('../action/commonAction');
 AppAction.appInit();
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
 var Alert = require('../../comp/utils/alert');
 if (Platform.OS === 'android') {
-  var _navigator;
-  BackAndroid.addEventListener('hardwareBackPress', function () {
-    if (_navigator && _navigator.getCurrentRoutes().length > 1) {
-      _navigator.pop();
-      return true;
-    }
-    return false;
-  });
+    var _navigator;
+    BackAndroid.addEventListener('hardwareBackPress', function () {
+        if (_navigator && _navigator.getCurrentRoutes().length > 1) {
+            _navigator.pop();
+            return true;
+        }
+        return false;
+    });
 }
 var Main = React.createClass({
 

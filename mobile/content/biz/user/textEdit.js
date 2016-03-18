@@ -10,7 +10,7 @@ var {
     } = React;
 var _ = require('lodash');
 var PickerItemIOS = PickerIOS.Item;
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var NavBarView = require('../../framework/system/navBarView')
 var dateFormat = require('dateformat')
 var date = dateFormat(new Date(), 'yyyy-mm-dd');
@@ -137,7 +137,7 @@ var TextEdit = React.createClass({
                 <NavBarView navigator={this.props.navigator} title={this.props.param.title}
                             contentBackgroundColor='white' actionButton={this.button()}>
                     <View style={[styles.view,{flexDirection:'row',}]}>
-                        <TextInput style={[styles.text,{width:50}]} defaultValue={this.state.oldValue.split("-")[0]}
+                        <TextInput style={[styles.text,{width:80}]} defaultValue={this.state.oldValue.split("-")[0]}
                                    keyboardType='numeric'
                                    maxLength={4}
                                    onChangeText={(text) => this.setState({tele:text})}

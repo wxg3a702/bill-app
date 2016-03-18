@@ -12,8 +12,8 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var Input = require('../../comp/utils/input');
-var Button = require('../../comp/utils/button');
+var Input = require('../../comp/utilsUi/input');
+var Button = require('../../comp/utilsUi/button');
 var LoginAction = require("../../framework/action/loginAction");
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var GotoReister = require("./gotoRegister");
@@ -49,6 +49,9 @@ var Register_setTradingPWD = React.createClass({
             userName:this.props.param.userName,
             password:this.props.param.password,
         });
+        console.log(this.state.mobileNo);
+        console.log(this.state.userName);
+        console.log(this.state.password);
     },
 
     textOnchange: function (text, type) {
@@ -70,7 +73,7 @@ var Register_setTradingPWD = React.createClass({
 
             var reg = /^\d{6}$/g;
             if (this.state.transactionPassword.length < 6 || (this.state.transactionPassword).indexOf(" ") != -1 ||!reg.test(this.state.transactionPassword)) {
-                Alert("交易密码只能为6位数字");
+                Alert("交易密码为6位数字");
                 return false;
             }
 
@@ -89,7 +92,7 @@ var Register_setTradingPWD = React.createClass({
             {
                 userName: this.state.userName,
                 password: this.state.password,
-                transactionPassword:this.transactionPassword,
+                transactionPassword:this.state.transactionPassword,
             },
             function () {
                 const { navigator } = this.props;
