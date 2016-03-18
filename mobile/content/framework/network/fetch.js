@@ -59,6 +59,8 @@ var rawFetch = function (url, param, callback, failure, option) {
 
     console.log('以下打印一次传出去的param:');
     console.log(param);
+    console.log('以下打印访问的URL:');
+    console.log(url);
 
     if (!option)option = {}
     var p = Promise.race([fetch(url, param), new Promise(function (resolve, reject) {

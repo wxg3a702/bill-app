@@ -7,12 +7,21 @@ var {
     View,
     } = React;
 var BottomButton = React.createClass({
+    getDefaultProps(){
+        return {
+            backColor: '#44bcb2',
+            underColor: '#a6c7f2',
+            fontColor: 'white',
+            borderColor: '#44bcb2'
+        }
+    },
     render(){
         return (
             <View style={styles.bottom}>
-                <TouchableHighlight style={[styles.radius,styles.button]} activeOpacity={1} underlayColor='#a6c7f2'
-                                    onPress={this.props.func}>
-                    <Text style={{color:'white',fontSize:18}}>{this.props.content}</Text>
+                <TouchableHighlight
+                    style={[styles.radius,styles.button,{backgroundColor:this.props.backColor},{borderColor:this.props.borderColor}]}
+                    activeOpacity={1} underlayColor={this.props.underColor} onPress={this.props.func}>
+                    <Text style={{color:this.props.fontColor,fontSize:18}}>{this.props.content}</Text>
                 </TouchableHighlight>
             </View>
         )
@@ -30,12 +39,12 @@ var styles = StyleSheet.create({
         borderRadius: 6
     },
     button: {
-        backgroundColor: '#44bcbc',
         height: 47,
         paddingTop: 10,
         paddingBottom: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderWidth: 1
     },
 })
 module.exports = BottomButton;

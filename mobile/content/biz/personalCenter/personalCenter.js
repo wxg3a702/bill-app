@@ -102,11 +102,11 @@ var PersonalCenter = React.createClass({
                                         onPress={()=>this.toPage(()=>this.toOther(UserInfo))}>
                         <View style={styles.layout}>
                             <View style={{flexDirection:'row'}}>
-                                <Image style={styles.head} resizeMode="stretch" source={this.returnImg()}/>
+                                <Image style={styles.head} resizeMode="cover" source={this.returnImg()}/>
                                 <View style={{marginLeft:13,marginTop:10}}>
                                     <Text style={{fontSize: 18,color: '#323232'}}>{this.state.userName}</Text>
                                     <View style={{flexDirection:'row',alignItems:'flex-end'}}>
-                                        <Image style={styles.circle} resizeMode="stretch" source={this.returnPic()}/>
+                                        <Image style={styles.circle} resizeMode="cover" source={this.returnPic()}/>
                                         <Text style={{marginTop:16,marginLeft:8, fontSize: 15,color: '#7f7f7f'}}>
                                             {this.state.userTypeValue}
                                         </Text>
