@@ -154,21 +154,19 @@ var BillDetailByMsg = React.createClass({
           </View>
           <View
             style={{marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'center',flex:1}}>
-            <Text style={{paddingBottom:5,fontSize:17,flex:4, color:'#4e4e4e'}}>{'开 票 人：'}</Text>
+            <Text style={{paddingBottom:5,fontSize:17,flex:4, color:'#4e4e4e'}}>{'开  票  人：'}</Text>
             <Text style={{paddingBottom:5,fontSize:17,flex:6, color:'#7f7f7f'}}>{this.state.drawerName}</Text>
           </View>
           {this.discountInfo}
           <View
-            style={{borderTopColor:'#f6f6f6',borderTopWidth:1,marginLeft:20,marginRight:20,marginTop:10,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',flex:1}}>
-            <Text style={{paddingTop:10,paddingBottom: 10,fontSize:14,color:'#ccc'}}>{'去处理'}</Text>
-            <View style={{paddingTop:10,paddingBottom: 10}}>
-              <VIcon
-                direction='right'
-                size={20}
-                color='#7f7f7f'
-                style={{width:20,height:20}}
-              />
-            </View>
+            style={{marginLeft:20,marginRight:20,marginTop:10,borderTopColor:'#f6f6f6',borderTopWidth:1,height:40,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+            <Text style={{fontSize:14,color:'#ccc'}}>去处理</Text>
+            <VIcon
+              direction='right'
+              size={20}
+              color='#7f7f7f'
+              style={{width:20,height:20}}
+            />
           </View>
         </View>
       </TouchableHighlight>

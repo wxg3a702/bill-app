@@ -170,14 +170,16 @@ var Message = React.createClass({
     if (_.isEmpty(bill)) {
       Alert('票据信息不存在');
     } else {
+      let isRead = item.isRead
       this.props.navigator.push({
-        param: {title: '详情', record: bill},
+        param: {title: '详情', record: bill, isRead: isRead},
         comp: BillDetailByMsg
       });
-      MessageAction.setBillRevRead({id: item.id}, function (data) {
-      }, function (data) {
-        Alert('已读标记设置失败!')
-      });
+      MessageStore.setMsgReaded(item.id);
+      //MessageAction.setBillRevRead({id: item.id}, function (data) {
+      //}, function (data) {
+      //  Alert('已读标记设置失败!')
+      //});
     }
   },
   unReadFlag(f){

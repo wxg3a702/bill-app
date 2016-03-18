@@ -65,6 +65,13 @@ var TabView = React.createClass({
       PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
       AppStateIOS.addEventListener('change', this._handleAppStateChange);
+
+      if (Platform.OS === 'android') {
+        DeviceEventEmitter.addListener('Test', function(e: Event) {
+          console.log(e.test);
+          CommonAction.onNotification;
+        });
+      }
     }
   },
 

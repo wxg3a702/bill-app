@@ -26,6 +26,18 @@ var MessageStore = assign({}, EventEmitter.prototype, {
         }
         AppStore.emitChange();
     },
+
+    setMsgReaded(id){
+        var RevBillMsgs = AppStore.getData().mainMsgBean.messageBeans;
+      for(let item of RevBillMsgs) {
+        if (item.id == id) {
+          item.isRead = true;
+          AppStore.emitChange();
+          return;
+        }
+      }
+    },
+
     getResult(name){
         if (name == MsgCategory.BILL_SENT) {
             return AppStore.getData().sentBillMsgBeans

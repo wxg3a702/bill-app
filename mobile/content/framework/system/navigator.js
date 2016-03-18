@@ -37,20 +37,6 @@ var Main = React.createClass({
   },
   componentDidMount() {
     AppStore.addChangeListener(this._onChange);
-    if (Platform.OS === 'android') {
-      DeviceEventEmitter.addListener('Test', function(e: Event) {
-        console.log(e.test);
-        //MessageActions.getPushMsg(
-        //  "",
-        //  function () {
-        //    this.props.navigator.pop();
-        //  }.bind(this),
-        //  function (msg) {
-        //
-        //  }.bind(this)
-        //);
-      });
-    }
   },
 
   componentWillUnmount: function () {
