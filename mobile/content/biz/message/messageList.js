@@ -126,12 +126,7 @@ var Message = React.createClass({
           <Text style={{color:'white',fontSize:11}}>{item.unReadNum >= 99 ? "99+" : item.unReadNum}</Text>
         </View>
       )
-    } else {
-      return (
-        <View></View>
-      )
     }
-
   },
   icon(item){
     if (item.category == 'BILL_SENT') {

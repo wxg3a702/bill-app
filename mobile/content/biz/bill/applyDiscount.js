@@ -35,6 +35,12 @@ var ApplyDis = React.createClass({
     //componentWillUnmount(){
     //
     //},
+    callBack(item){
+        this.setState({
+            discountRate: item.disRate/1000,
+        })
+
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}
@@ -59,7 +65,8 @@ var ApplyDis = React.createClass({
                     <Text style={{fontSize:15,color:'#fff',flexDirection: 'row'}}>{'参考贴现金额'}</Text>
                 </View>
                 <View style={{flexDirection: 'row',alignItems:'flex-end'}}>
-                    <Text style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.state.amount / 10000).format("0,0.00")}</Text>
+                    <Text
+                        style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.state.amount / 10000).format("0,0.00")}</Text>
                     <Text style={{fontSize:15,color:'#fff',marginBottom:10}}>{' 万元'}</Text>
                 </View>
             </View>
@@ -132,13 +139,14 @@ var ApplyDis = React.createClass({
     renderDisaTips(){
         return (
             <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#f0f0f0',marginTop:6}}>
-                <Text style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
+                <Text
+                    style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
 
             </View>
         );
     },
     renderApplyBtn(){
-        return(
+        return (
             <View
                 style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
                 <View
@@ -152,13 +160,14 @@ var ApplyDis = React.createClass({
             </View>
         );
     },
-    goToSelectBank:function (){
+    goToSelectBank: function () {
         this.props.navigator.push({
             param: {title: '选择贴现行'},
-            comp: SelectBank
+            comp: SelectBank,
+            callBack: this.callBack
         });
     },
-    goToConDiscount:function (){
+    goToConDiscount: function () {
         this.props.navigator.push({
             param: {title: '确认贴现'},
             comp: ConDiscount
@@ -166,8 +175,6 @@ var ApplyDis = React.createClass({
     },
 });
 
-var styles = StyleSheet.create({
-
-});
+var styles = StyleSheet.create({});
 
 module.exports = ApplyDis;
