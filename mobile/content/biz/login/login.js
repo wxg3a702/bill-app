@@ -15,9 +15,9 @@ var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var VerifyCode = require('../../comp/utils/verifyCode');
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
+var VerifyCode = require('../../comp/utilsUi/verifyCode');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Login = React.createClass({
     getStateFromStores() {

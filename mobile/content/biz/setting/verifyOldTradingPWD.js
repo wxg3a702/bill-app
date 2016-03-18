@@ -13,9 +13,9 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var SMSTimer = require('../../comp/utils/smsTimer');
-var Input = require('../../comp/utils/input');
-var Button = require('../../comp/utils/button');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
+var Input = require('../../comp/utilsUi/input');
+var Button = require('../../comp/utilsUi/button');
 var ResetTradingPWD = require('./resetTradingPWD');
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');

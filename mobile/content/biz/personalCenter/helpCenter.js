@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react-native');
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utilsUi/space')
 var Item = require('../../comp/utils/item')
 var NavBarView = require('../../framework/system/navBarView')
 var KeyPoint = require('./keyPoint')
