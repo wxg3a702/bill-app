@@ -15,10 +15,14 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
+var VIcon = require('../../comp/icon/vIcon')
 var SelectBank = require('./selectBank')
 var ConDiscount = require('./conDiscount')
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
+var dismissKeyboard = require('react-native-dismiss-keyboard');
+
+var BillAction = require('../../framework/action/billAction');
 
 var ApplyDis = React.createClass({
     //getInitialState(){
@@ -35,12 +39,6 @@ var ApplyDis = React.createClass({
     //componentWillUnmount(){
     //
     //},
-    callBack(item){
-        this.setState({
-            discountRate: item.disRate/1000,
-        })
-
-    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}
@@ -57,6 +55,21 @@ var ApplyDis = React.createClass({
             </NavBarView>
         );
     },
+
+    dataDiff: function (sDate1, sDate2) {
+        var startTime = new Date(Date.parse(sDate1.replace(/-/g, "/"))).getTime();
+        var endTime = new Date(Date.parse(sDate2.replace(/-/g, "/"))).getTime();
+        var days = Math.abs((startTime - endTime)) / (1000 * 60 * 60 * 24);
+        return days;
+    },
+
+    //贴现金额=票面金额*[1-贴现利率*（到期日-贴现日期）/30]
+    calDis: function (amount, discountRate, dueDate) {
+        var days = this.dataDiff(dateFormat(new Date(this.state.dueDate), 'yyyy-mm-dd'), dateFormat(_.now(), 'yyyy-mm-dd'));
+        return amount * (1 - discountRate * days / 30);
+
+    },
+
     renderBillAmount(){
         return (
             <View
@@ -65,8 +78,7 @@ var ApplyDis = React.createClass({
                     <Text style={{fontSize:15,color:'#fff',flexDirection: 'row'}}>{'参考贴现金额'}</Text>
                 </View>
                 <View style={{flexDirection: 'row',alignItems:'flex-end'}}>
-                    <Text
-                        style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.state.amount / 10000).format("0,0.00")}</Text>
+                    <Text style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00")}</Text>
                     <Text style={{fontSize:15,color:'#fff',marginBottom:10}}>{' 万元'}</Text>
                 </View>
             </View>
@@ -95,12 +107,7 @@ var ApplyDis = React.createClass({
                                 numberOfLines={1}>{'中国银行上海分行'}</Text>
                             <Text style={{color:'#ff5b58',fontSize:18}}>{'(费率最低)'}</Text>
                         </View>
-
-
-                        <Image
-                            style={{width:15,height:15,marginLeft:12,marginRight:12}}
-                            source={require('../../image/bill/payee_new.png')}
-                        />
+                        <VIcon/>
                     </View>
                 </TouchableHighlight>
 
@@ -122,7 +129,7 @@ var ApplyDis = React.createClass({
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
                     <View style={{flex:6,flexDirection:'row'}}>
                         <Text
-                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat(new Date(), 'yyyy年mm月dd日')}</Text>
+                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat((new Date((new Date/1000+86400*2)*1000)), 'yyyy年mm月dd日')}</Text>
                         <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
                     </View>
                 </View>
@@ -130,7 +137,7 @@ var ApplyDis = React.createClass({
                     style={{marginLeft:12,marginRight:12,flexDirection: 'row',justifyContent: 'center',flex:1}}>
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'贴现利息：' }</Text>
                     <Text
-                        style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{'0.1万元'}</Text>
+                        style={{paddingBottom:10,fontSize:17,flex:6,color:'#7f7f7f'}}>{numeral((this.state.amount - this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate)) / 10000).format("0,0.00") + '万元'}</Text>
                 </View>
 
             </View>
@@ -139,20 +146,19 @@ var ApplyDis = React.createClass({
     renderDisaTips(){
         return (
             <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#f0f0f0',marginTop:6}}>
-                <Text
-                    style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
+                <Text style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
 
             </View>
         );
     },
     renderApplyBtn(){
-        return (
+        return(
             <View
                 style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
                 <View
                     style={{flex:12,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#44bcbc'
-                                        onPress={() => this.goToConDiscount()}
+                                        onPress={() => this.goToConDiscount(this.state)}
                                         style={{flex:1}}>
                         <Text style={{paddingTop: 10,color:'#ffffff',textAlign:'center'}}>{'发送申请'}</Text>
                     </TouchableHighlight>
@@ -160,21 +166,22 @@ var ApplyDis = React.createClass({
             </View>
         );
     },
-    goToSelectBank: function () {
+    goToSelectBank:function (){
         this.props.navigator.push({
             param: {title: '选择贴现行'},
-            comp: SelectBank,
-            callBack: this.callBack
+            comp: SelectBank
         });
     },
-    goToConDiscount: function () {
+    goToConDiscount:function (item:Object){
         this.props.navigator.push({
-            param: {title: '确认贴现'},
+            param: {title: '确认贴现',billBean:item},
             comp: ConDiscount
         });
     },
 });
 
-var styles = StyleSheet.create({});
+var styles = StyleSheet.create({
+
+});
 
 module.exports = ApplyDis;
