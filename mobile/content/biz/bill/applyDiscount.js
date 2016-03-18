@@ -1,9 +1,4 @@
-/**
- * Created by cui on 16/3/15.
- */
-/**
- * Created by cui on 16/3/9.
- */
+'use strict'
 var React = require('react-native');
 var {
     Image,
@@ -78,7 +73,8 @@ var ApplyDis = React.createClass({
                     <Text style={{fontSize:15,color:'#fff',flexDirection: 'row'}}>{'参考贴现金额'}</Text>
                 </View>
                 <View style={{flexDirection: 'row',alignItems:'flex-end'}}>
-                    <Text style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00")}</Text>
+                    <Text
+                        style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00")}</Text>
                     <Text style={{fontSize:15,color:'#fff',marginBottom:10}}>{' 万元'}</Text>
                 </View>
             </View>
@@ -129,7 +125,7 @@ var ApplyDis = React.createClass({
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
                     <View style={{flex:6,flexDirection:'row'}}>
                         <Text
-                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat((new Date((new Date/1000+86400*2)*1000)), 'yyyy年mm月dd日')}</Text>
+                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat((new Date((new Date / 1000 + 86400 * 2) * 1000)), 'yyyy年mm月dd日')}</Text>
                         <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
                     </View>
                 </View>
@@ -146,13 +142,14 @@ var ApplyDis = React.createClass({
     renderDisaTips(){
         return (
             <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#f0f0f0',marginTop:6}}>
-                <Text style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
+                <Text
+                    style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
 
             </View>
         );
     },
     renderApplyBtn(){
-        return(
+        return (
             <View
                 style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
                 <View
@@ -166,22 +163,20 @@ var ApplyDis = React.createClass({
             </View>
         );
     },
-    goToSelectBank:function (){
+    goToSelectBank: function () {
         this.props.navigator.push({
             param: {title: '选择贴现行'},
             comp: SelectBank
         });
     },
-    goToConDiscount:function (item:Object){
+    goToConDiscount: function (item:Object) {
         this.props.navigator.push({
-            param: {title: '确认贴现',billBean:item},
+            param: {title: '确认贴现', billBean: item},
             comp: ConDiscount
         });
     },
 });
 
-var styles = StyleSheet.create({
-
-});
+var styles = StyleSheet.create({});
 
 module.exports = ApplyDis;

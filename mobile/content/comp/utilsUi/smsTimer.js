@@ -95,7 +95,7 @@ var SMSTimer = React.createClass({
                 </View>
                 <View style={{width:75,marginLeft:12}}>
                     <TouchableOpacity
-                        style={[{width:75,height:36},styles.radius, styles.button,this.state.click && styles.color]}
+                        style={[{width:75,height:47},styles.radius, styles.button,this.state.click && styles.color]}
                         onPress={this.changeVerify}>
                         <Text style={[styles.fontColor]}>{this.state.time}</Text>
                     </TouchableOpacity>
@@ -106,21 +106,22 @@ var SMSTimer = React.createClass({
 })
 var styles = StyleSheet.create({
     view: {
-        height: 36, borderColor: '#cccccc', borderWidth: 0.5, backgroundColor: 'white',
+        height: 47, borderColor: '#cccccc', borderWidth: 0.5, backgroundColor: 'white',
         flexDirection: 'row', alignItems: 'center', flex: 1
     },
     input: {
-        fontSize: 14, color: '#7f7f7f', marginLeft: 9
+        fontSize: 18, color: '#7f7f7f', marginLeft: 9
     },
     radius: {
         borderRadius: 4
     },
     button: {
         backgroundColor: '#9ad6d1',
-        height: 36,
+        height: 47,
         paddingTop: 10,
         paddingBottom: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent:'center'
     },
     fontColor: {
         color: 'white'

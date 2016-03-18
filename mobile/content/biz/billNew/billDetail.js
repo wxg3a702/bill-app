@@ -11,6 +11,7 @@ var {
     Dimensions,
     StyleSheet,
     } = React;
+var Adjust = require('../../comp/utils/adjust')
 var Circle = require('./circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
@@ -168,15 +169,15 @@ var BillDetail = React.createClass({
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
                 <Text style={{fontSize:16,color:'#333333',flex:1}}>{desc}</Text>
-                <Text style={{fontSize:16,color:'#7f7f7f',width:235}}>{value}</Text>
+                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}>{value}</Text>
             </View>
         )
     },
     returnItemReference(desc, value){
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
-                <Text style={{fontSize:16,color:'#333333',width:width-259}}>{desc}</Text>
-                <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+                <Text style={{fontSize:16,color:'#333333',width:width-Adjust.width(259)}}>{desc}</Text>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Text style={{fontSize:16,color:'#7f7f7f'}}>{value}</Text>
                     <Text style={{fontSize:18,color:'#ff5b58'}}>(参考)</Text>
                 </View>
@@ -260,7 +261,7 @@ var BillDetail = React.createClass({
 })
 var styles = StyleSheet.create({
     circle: {
-        width: 49, height: 18, borderRadius: 8, justifyContent: 'center', alignItems: 'center'
+        width: Adjust.width(49), height: 18, borderRadius: 8, justifyContent: 'center', alignItems: 'center'
     },
     center: {
         flexDirection: 'row', justifyContent: 'center', alignItems: 'center',
