@@ -6,6 +6,7 @@ var {
     Dimensions,
     Text
     }=React
+var Adjust=require('../../comp/utils/adjust')
 var {width,height} = Dimensions.get('window');
 var Circle = React.createClass({
     getDefaultProps(){
@@ -60,7 +61,7 @@ var styles = StyleSheet.create({
         position: 'absolute', top: 1, left: 32, width: width - 125, fontSize: 15, color: '#7f7f7f'
     },
     date: {
-        position: 'absolute', top: 1, left: width - 75, fontSize: 13, color: '#7f7f7f'
+        position: 'absolute', top: 1, left: width - 90, fontSize: 13, color: '#7f7f7f'
     }
 })
 module.exports = Circle;

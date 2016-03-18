@@ -8,7 +8,11 @@ var AppStore = require('./appStore')
 var MessageStore = assign({}, EventEmitter.prototype, {
     getMessage(){
         var mainMsgBean = AppStore.getData().mainMsgBean;
-        return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+        if (!mainMsgBean) {
+            return []
+        } else {
+            return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
+        }
     },
     getMainMsgBean: ()=>AppStore.getData().mainMsgBean,
 
@@ -26,6 +30,18 @@ var MessageStore = assign({}, EventEmitter.prototype, {
         }
         AppStore.emitChange();
     },
+
+    setMsgReaded(id){
+        var RevBillMsgs = AppStore.getData().mainMsgBean.messageBeans;
+      for(let item of RevBillMsgs) {
+        if (item.id == id) {
+          item.isRead = true;
+          AppStore.emitChange();
+          return;
+        }
+      }
+    },
+
     getResult(name){
         if (name == MsgCategory.BILL_SENT) {
             return AppStore.getData().sentBillMsgBeans

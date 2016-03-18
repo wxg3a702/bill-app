@@ -14,6 +14,7 @@ var {
     Dimensions,
     Platform
     } = React;
+var Adjust = require('../../comp/utils/adjust')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
@@ -184,7 +185,7 @@ var styles = StyleSheet.create({
     },
     image: {
         height: 113,
-        width: Dimensions.get("window").width / 2 - 20,
+        width: Dimensions.get("window").width / 2 - Adjust.width(20),
         backgroundColor: "#f0f0f0",
         marginTop: 5
     },

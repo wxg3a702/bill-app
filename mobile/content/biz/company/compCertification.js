@@ -10,6 +10,7 @@ var {
     ListView,
     PanResponder
     } = React;
+var Adjust=require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
 var Space = require('../../comp/utilsUi/space')
@@ -98,8 +99,8 @@ var CompCertification = React.createClass({
 
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{width:width-90}}>{data.name}</Text>
-                            <Text style={{width:50,color:certificateState[data.state].color,}}>{certificateState[data.state].desc}</Text>
+                            <Text style={{width:width-Adjust.width(90)}}>{data.name}</Text>
+                            <Text style={{width:Adjust.width(50),color:certificateState[data.state].color,}}>{certificateState[data.state].desc}</Text>
                             <VIcon/>
                         </View>
                     </View>

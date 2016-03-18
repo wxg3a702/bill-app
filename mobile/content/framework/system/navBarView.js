@@ -109,8 +109,8 @@ var NavBarView = React.createClass({
                                     <View style={{width:70,justifyContent:"center",alignItems:"stretch"}}>
                                         {this.getBack()}
                                     </View>
-                                    <View style={{flex:1,justifyContent:"center",alignItems:"center"}}>
-                                        <Text style={{fontSize:18,color:this.props.fontColor}}>
+                                    <View style={{flex:1,justifyContent:"center",alignItems:"center", width:120}}>
+                                        <Text numberOfLines={1} style={{fontSize:18,color:this.props.fontColor, justifyContent:"center"}}>
                                             {this.props.title}
                                         </Text>
                                     </View>
