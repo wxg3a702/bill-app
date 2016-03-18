@@ -14,9 +14,9 @@ var {
 var Circle = require('./circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
-var Space = require('../../comp/utils/space');
+var Space = require('../../comp/utilsUi/space');
 var DateHelper = require('../../comp/utils/dateHelper');
-var BottomButton = require('../../comp/utils/bottomButton');
+var BottomButton = require('../../comp/utilsUi/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
 var BillStates = require('./billStates');
 var BillContent = require('./billContent')

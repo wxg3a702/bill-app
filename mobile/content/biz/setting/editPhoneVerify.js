@@ -6,11 +6,11 @@ var {
     Text
     } = React;
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var RightTopButton = require('../../comp/utils/rightTopButton');
+var RightTopButton = require('../../comp/utilsUi/rightTopButton');
 var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var EditPhoneVerifySuccess = require('./editPhoneVerifySuccess');
-var SMSTimer = require('../../comp/utils/smsTimer');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
 var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
 var EditPhoneVerify = React.createClass({

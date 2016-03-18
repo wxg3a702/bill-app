@@ -6,7 +6,7 @@ var {
     TextInput,
     } = React;
 var NavBarView = require('../../framework/system/navBarView')
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var UserAction = require("../../framework/action/userAction")
 var Alert = require('../../comp/utils/alert');
 var Advice = React.createClass({

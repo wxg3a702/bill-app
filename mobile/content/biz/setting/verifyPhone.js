@@ -13,8 +13,8 @@ var{
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var SMSTimer = require('../../comp/utils/smsTimer');
-var Button = require('../../comp/utils/button');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
+var Button = require('../../comp/utilsUi/button');
 var VerifyLoginPWDandPID = require('./verifyLoginPWDandPID');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;

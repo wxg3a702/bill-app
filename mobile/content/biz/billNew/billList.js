@@ -12,13 +12,13 @@ var {
     StyleSheet,
     TouchableOpacity
     } = React;
-var ListBottom = require('../../comp/utils/listBottom')
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var {width,height} = Dimensions.get('window');
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var NumberHelper = require('../../comp/utils/numberHelper')
 var DateHelper = require('../../comp/utils/dateHelper');
-var ToLogin = require('../../comp/utils/toLogin');
+var ToLogin = require('../../comp/utilsUi/toLogin');
 var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
 var BillDetail = require('./billDetail')

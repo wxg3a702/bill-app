@@ -13,8 +13,8 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var Input = require('../../comp/utils/input');
-var Button = require('../../comp/utils/button');
+var Input = require('../../comp/utilsUi/input');
+var Button = require('../../comp/utilsUi/button');
 var ResetTradingPWD = require('./resetTradingPWD');
 var UserStore = require('../../framework/store/userStore');
 var dismissKeyBoard = require('react-native-dismiss-keyboard');

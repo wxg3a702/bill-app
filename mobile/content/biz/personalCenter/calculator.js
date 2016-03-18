@@ -12,14 +12,14 @@ var {
     NativeModules,
     DeviceEventEmitter
     } = React;
-var BottomButton = require('../../comp/utils/bottomButton')
+var BottomButton = require('../../comp/utilsUi/bottomButton')
 var numeral = require('../../comp/utils/numberHelper')
 var _ = require('lodash');
 var VIcon = require('../../comp/icon/vIcon')
 var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var DatePicker = require('NativeModules').DatePickerDialogModule;
 var Calculator = React.createClass({
     getInitialState: function () {

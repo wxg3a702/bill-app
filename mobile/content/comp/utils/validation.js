@@ -1,7 +1,7 @@
 'use strict'
 var React = require('react-native');
 var _ = require('lodash');
-var Alert = require('../../comp/utils/alert');
+var Alert = require('alert');
 module.exports = {
     isPhone: function (data) {
         if (data.length == 0) {

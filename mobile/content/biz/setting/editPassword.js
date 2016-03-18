@@ -4,10 +4,10 @@ var React = require('react-native');
 var {
     View
     } = React;
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var LoginAction = require("../../framework/action/loginAction");
 var NavBarView = require('../../framework/system/navBarView')
-var Input = require('../../comp/utils/input')
+var Input = require('../../comp/utilsUi/input')
 var Validation = require('../../comp/utils/validation')
 var Alert = require('../../comp/utils/alert');
 var EditPassword = React.createClass({

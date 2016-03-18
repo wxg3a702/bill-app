@@ -12,7 +12,7 @@ var {
     Dimensions
     } = React;
 var {host}=require('../../framework/network/fetch');
-var Alert = require('../../comp/utils/alert');
+var Alert = require('alert');
 var Verify = React.createClass({
     getInitialState(){
         return {

@@ -29,8 +29,8 @@ var Validation = require('../../comp/utils/validation')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
-var RightTopButton = require('../../comp/utils/rightTopButton')
-var Space = require('../../comp/utils/space')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
+var Space = require('../../comp/utilsUi/space')
 var PhotoPic = require('NativeModules').PhotoPicModule;
 var Alert = require('../../comp/utils/alert');
 
