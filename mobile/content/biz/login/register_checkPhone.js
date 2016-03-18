@@ -8,6 +8,7 @@ var {
     View,
     Image
     } = React;
+var Adjust = require('../../comp/utils/adjust')
 var VerifyCode = require('../../comp/utilsUi/verifyCode')
 var NavBarView = require('../../framework/system/navBarView')
 var Register_checkVerify = require('./register_checkVerify');
@@ -122,7 +123,7 @@ var Register_checkPhone = React.createClass({
 })
 var styles = StyleSheet.create({
     rememberMe: {
-        flexDirection: 'row', alignItems: 'center', height: 60, width: 21
+        flexDirection: 'row', alignItems: 'center', height: 60, width: Adjust.width(21)
     },
     container: {
         flex: 1, flexDirection: 'column',

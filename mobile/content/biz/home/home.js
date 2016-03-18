@@ -12,6 +12,7 @@ var {
     Platform,
     Animated
     }=React
+var Adjust=require('../../comp/utils/adjust')
 var ReturnNum = require('./returnNum')
 var NoRisk = require('../personalCenter/noRisk')
 var Swiper = require('../../comp/utils/swiper')
@@ -68,7 +69,7 @@ var Home = React.createClass({
             <TouchableHighlight underlayColor='#ebf1f2' onPress={()=>this.toOther(path,desc)}
                                 style={{flex:1,borderColor:'#cccccc',borderRightWidth:1}}>
                 <View style={{flexDirection:'column',alignItems:'center'}}>
-                    <Image style={{height:74,width:74,marginTop:12}} source={img}/>
+                    <Image style={{height:74,width:Adjust.width(74),marginTop:12}} source={img}/>
                     <Text style={{marginTop:18,fontSize:13,color:'#333333'}}>{desc}</Text>
                 </View>
             </TouchableHighlight>
@@ -107,7 +108,7 @@ var Home = React.createClass({
                             <Image style={{marginTop:12,width:width,height:20}} resizeMode="stretch"
                                    source={require('../../image/home/calTitle.png')}>
                                 <Text
-                                    style={{marginLeft:(width-100)/2,marginTop:2,width:100,fontSize:16,color:'#7f7f7f'}}>累计贴现金额</Text>
+                                    style={{marginLeft:(width-Adjust.width(100))/2,marginTop:2,width:Adjust.width(100),fontSize:16,color:'#7f7f7f'}}>累计贴现金额</Text>
                             </Image>
                             <View style={{flex:1,flexDirection:'row',marginTop:14,height:80}}>
                                 {this.state.number.map((item, index)=> {

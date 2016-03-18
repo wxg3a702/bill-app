@@ -8,6 +8,7 @@ var {
     Image,
     Dimensions
     } = React;
+var Adjust=require('../../comp/utils/adjust')
 var Input = React.createClass({
     textOnchange: function (text, type) {
         this.props.onChanged(type, text)
@@ -39,7 +40,7 @@ var Input = React.createClass({
                 <View style={[styles.view,styles.radius]}>
                     <Image style={{height:16,width:16,marginLeft:9}}
                            source={this.icon()}/>
-                    <TextInput style={[styles.input,{width:width-80}]} underlineColorAndroid="transparent"
+                    <TextInput style={[styles.input,{width:width-Adjust.width(80)}]} underlineColorAndroid="transparent"
                                onChangeText={(text) => this.textOnchange(text,this.props.field)}
                                maxLength={this.props.max}
                                placeholder={this.props.prompt} secureTextEntry={this.props.isPwd} autoCorrect={false}
