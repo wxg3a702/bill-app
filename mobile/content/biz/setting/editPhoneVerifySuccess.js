@@ -6,7 +6,7 @@ var {
     View,
     Image,
     } = React;
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var NavBarView = require('../../framework/system/navBarView')
 var EditPhoneVerifySuccess = React.createClass({
     button(){

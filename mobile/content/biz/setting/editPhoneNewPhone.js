@@ -4,13 +4,13 @@ var React = require('react-native');
 var {
     View,
     } = React;
-var RightTopButton = require('../../comp/utils/rightTopButton');
+var RightTopButton = require('../../comp/utilsUi/rightTopButton');
 var Alert = require('../../comp/utils/alert');
 var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var EditPhoneVerify = require('./editPhoneVerify');
 var Validation = require('../../comp/utils/validation');
-var Input = require('../../comp/utils/input');
+var Input = require('../../comp/utilsUi/input');
 var EditPhoneNewPhone = React.createClass({
     getInitialState: function () {
         return {

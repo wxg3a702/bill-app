@@ -5,12 +5,12 @@ var {
     View
     } = React;
 var Validation = require('../../comp/utils/validation');
-var VerifyCode = require('../../comp/utils/verifyCode');
+var VerifyCode = require('../../comp/utilsUi/verifyCode');
 var NavBarView = require('../../framework/system/navBarView');
 var Forget_checkVerify = require('./forget_checkVerify');
 var LoginAction = require("../../framework/action/loginAction");
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Forget_checkPhone = React.createClass({
     getInitialState: function () {

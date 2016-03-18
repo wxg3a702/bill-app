@@ -8,11 +8,10 @@ var {
   ScrollView,
   Platform,
   StyleSheet,
-  ViewPagerAndroid,
   PropTypes,
   InteractionManager,
   } = React;
-//var ViewPagerAndroid = require('./ZXViewPager');
+var ViewPagerAndroid = require('./ZXViewPager');
 
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;

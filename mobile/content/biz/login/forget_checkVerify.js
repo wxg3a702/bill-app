@@ -6,13 +6,13 @@ var {
     Text,
     View,
     } = React;
-var SMSTimer = require('../../comp/utils/smsTimer')
+var SMSTimer = require('../../comp/utilsUi/smsTimer')
 var LoginAction = require("../../framework/action/loginAction")
 var Forget_setPassword = require('./forget_setPassword');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var NumberHelper = require('../../comp/utils/numberHelper')
-var Button = require('../../comp/utils/button')
+var Button = require('../../comp/utilsUi/button')
 var Forget_checkVerify = React.createClass({
     componentDidMount: function () {
         this.refs['smsTimer'].changeVerify()

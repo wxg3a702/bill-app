@@ -7,14 +7,16 @@ var {
     Text,
     View,
     Platform,
+    ScrollView,
     Dimensions,
     StyleSheet,
     } = React;
+var Circle = require('./circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
-var Space = require('../../comp/utils/space');
+var Space = require('../../comp/utilsUi/space');
 var DateHelper = require('../../comp/utils/dateHelper');
-var BottomButton = require('../../comp/utils/bottomButton');
+var BottomButton = require('../../comp/utilsUi/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
 var BillStates = require('./billStates');
 var BillContent = require('./billContent')
@@ -24,12 +26,29 @@ var Alert = require('../../comp/utils/alert')
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+var mock = [
+    {
+        content: '2015年02月10日贴现',
+        date: '15.12.12',
+        isNow: true
+    }, {
+        content: '银行批准贴现,请等待银行汇款',
+        date: '15.12.12'
+    }, {
+        content: '申请贴现,请等待银行受理',
+        date: '15.12.12'
+    }, {
+        content: '创建票据信息',
+        date: '15.12.12'
+    }
+]
 var BillDetail = React.createClass({
     getInitialState(){
         let item = this.props.param.item;
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',
+            dataSource: mock
         }
     },
     func(key){
@@ -194,13 +213,46 @@ var BillDetail = React.createClass({
             )
         }
     },
+    renderRow(data){
+        return (
+            <Circle now={!data.isNow?false:true} content={data.content} date={data.date}/>
+        )
+    },
+    returnFlow(){
+        let item = this.state.item;
+        if (item.role == "payee" && item.status != "NEW") {
+            return (
+                <View style={{backgroundColor:'white',paddingVertical:8,paddingHorizontal:12}}>
+                    <View style={{borderBottomColor:'#f0f0f0',borderBottomWidth:1,paddingBottom:12}}>
+                        <Text>票据状态追踪</Text>
+                    </View>
+                    <View style={{height:12}}/>
+                    <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}/>
+                </View>
+            )
+        }
+    },
+    isNeedSpace(){
+        let item = this.state.item;
+        if (item.role == "payee" && (item.status == 'REQ' || item.status == 'HAN') || item.status == 'DIS') {
+            return (
+                <Space height={6} backgroundColor='#f0f0f0' top={false}/>
+            )
+        } else {
+
+        }
+
+    },
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="票据详情">
-                {this.returnTitleTouchable()}
-                <Space height={6} backgroundColor='#f0f0f0'/>
-                {this.isNeedDetail()}
-                <View style={{flex:1}}/>
+                <ScrollView>
+                    {this.returnTitleTouchable()}
+                    <Space height={6} backgroundColor='#f0f0f0'/>
+                    {this.isNeedDetail()}
+                    {this.isNeedSpace()}
+                    {this.returnFlow()}
+                </ScrollView>
                 {this.returnBottom()}
             </NavBarView>
         )

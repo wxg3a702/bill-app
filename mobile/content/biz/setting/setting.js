@@ -2,7 +2,7 @@
 
 var React = require('react-native');
 var Item = require('../../comp/utils/item')
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utilsUi/space')
 var SecurityCenter = require('./securityCenter')
 var NavBarView = require('../../framework/system/navBarView')
 var Setting = React.createClass({

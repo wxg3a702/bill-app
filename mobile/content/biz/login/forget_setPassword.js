@@ -8,9 +8,9 @@ var {
 var LoginAction = require("../../framework/action/loginAction");
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var Button = require('../../comp/utils/button');
+var Button = require('../../comp/utilsUi/button');
 var Validation = require('../../comp/utils/validation');
-var Input = require('../../comp/utils/input');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Forget_setPassword = React.createClass({
     getInitialState: function () {

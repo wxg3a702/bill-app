@@ -10,7 +10,7 @@ var {
     } = React;
 var _ = require('lodash');
 var PickerItemIOS = PickerIOS.Item;
-var RightTopButton = require('../../comp/utils/rightTopButton')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var NavBarView = require('../../framework/system/navBarView')
 var dateFormat = require('dateformat')
 var date = dateFormat(new Date(), 'yyyy-mm-dd');

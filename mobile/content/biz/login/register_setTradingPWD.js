@@ -12,8 +12,8 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var Input = require('../../comp/utils/input');
-var Button = require('../../comp/utils/button');
+var Input = require('../../comp/utilsUi/input');
+var Button = require('../../comp/utilsUi/button');
 var LoginAction = require("../../framework/action/loginAction");
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var GotoReister = require("./gotoRegister");
