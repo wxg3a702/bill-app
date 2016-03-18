@@ -58,10 +58,10 @@ var styles = StyleSheet.create({
         width: 1, height: 45, backgroundColor: 'rgb(229,229,229)', position: 'absolute', left: 12, top: 10
     },
     content: {
-        position: 'absolute', top: 1, left: 32, width: width - Adjust.width(125), fontSize: 15, color: '#7f7f7f'
+        position: 'absolute', top: 1, left: 32, width: width - 125, fontSize: 15, color: '#7f7f7f'
     },
     date: {
-        position: 'absolute', top: 1, left: width - Adjust.width(75), fontSize: 13, color: '#7f7f7f'
+        position: 'absolute', top: 1, left: width - 90, fontSize: 13, color: '#7f7f7f'
     }
 })
 module.exports = Circle;

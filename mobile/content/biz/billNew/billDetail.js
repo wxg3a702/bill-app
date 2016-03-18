@@ -11,6 +11,7 @@ var {
     Dimensions,
     StyleSheet,
     } = React;
+var _ = require('lodash');
 var Adjust = require('../../comp/utils/adjust')
 var Circle = require('./circle')
 var BillAction = require("../../framework/action/billAction");
@@ -27,29 +28,16 @@ var Alert = require('../../comp/utils/alert')
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-var mock = [
-    {
-        content: '2015年02月10日贴现',
-        date: '15.12.12',
-        isNow: true
-    }, {
-        content: '银行批准贴现,请等待银行汇款',
-        date: '15.12.12'
-    }, {
-        content: '申请贴现,请等待银行受理',
-        date: '15.12.12'
-    }, {
-        content: '创建票据信息',
-        date: '15.12.12'
-    }
-]
 var BillDetail = React.createClass({
     getInitialState(){
         let item = this.props.param.item;
+        let flow = item.billStatusTraceBeans;
+        flow[flow.length - 1].new = true;
+        flow = _(flow).reverse().value()
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',
-            dataSource: mock
+            dataSource: flow
         }
     },
     func(key){
@@ -216,7 +204,7 @@ var BillDetail = React.createClass({
     },
     renderRow(data){
         return (
-            <Circle now={!data.isNow?false:true} content={data.content} date={data.date}/>
+            <Circle now={data.new} content={data.traceMsg} date={DateHelper.formatFlow(data.createDate)}/>
         )
     },
     returnFlow(){
