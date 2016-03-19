@@ -1,108 +1,80 @@
-var React = require('react-native');
-var {
-    AsyncStorage,
-    } = React;
+const _ = require('lodash');
+const Realm = require('realm');
+const SCHEMA_KEY = '@realm:schema';
 
-var Actions = {
-    getAppData: (cb)=> {
-        _getAppData(cb)
-    },
-    saveAppData: (data)=> {
-        _saveAppData(data)
-    },
-    clearToken: ()=>_clearToken(),
-    setItem: (k, v, c)=>_setItem(k, v, c),
-    saveUser: (p, c)=>_saveUser(p, c),
-    saveOrg: (p, c)=>_saveOrg(p, c),
-    saveAPNSToken: (p)=>_saveAPNSToken(p),
-    saveMsgDetail: (p)=>_saveMsgDetail(p),
-    saveDemoFlag: (p)=>_saveDemoFlag(p),
-    saveMainMsgBean: (p)=>_saveMainMsgBean(p)
-    //getUnReadnum:
-}
-
-var ZxBillDataSchema = {
-    name: 'ZxBillData',
+let PersisterSchema = {
+    name: SCHEMA_KEY,
+    primaryKey: 'token',
     properties: {
-        name: 'string',
-        properties: {
-            revBillBean:"string",
-            sentBillBean:"string",
-            filterBeans:"string",
-            userInfoBean:"string",
-            token:"string",
-            orgBeans:"string",
-            mainMsgBean:"string",
-            marketMsgBeans:"string",
-            systemMsgBeans:"string",
-            sentBillMsgBeans:"string",
-            demoFlag:"boolean"
-        }
+        token: {type: 'string'},
+        APNSToken: {type: 'string'},
+        revBillBean: {type: 'string'},
+        sentBillBean: {type: 'string'},
+        filterBeans: {type: 'string'},
+        userInfoBean: {type: 'string'},
+        orgBeans: {type: 'string'},
+        mainMsgBean: {type: 'string'},
+        marketMsgBeans: {type: 'string'},
+        systemMsgBeans: {type: 'string'},
+        sentBillMsgBeans: {type: 'string'},
+        demoFlag: {type: 'bool'}
     }
+};
+// Get the default Realm with support for our objects
+let _realm = new Realm({schema: [PersisterSchema]});
+let _persister = null;
+
+let PersisterFacade = {
+    getAppData: (cb) => _getAppData(cb),
+    saveAppData: (data) => _saveAppData(data),
+    clearToken: () => _clearToken(),
+    saveAPNSToken: (apnsToken, cb) => _setItem('APNSToken', apnsToken, cb),
+    setItem: (k, v, c) => _setItem(k, v, c),
+    saveUser: (user, cb) => _setItem('userInfoBean', user, cb),
+    saveOrg: (org, cb) => _setItem('orgBeans', org, cb),
+    saveMsgDetail: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
+    saveMainMsgBean: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
+    saveDemoFlag: (flag, cb) => _setItem('demoFlag', flag, cb)
+};
+
+let _clearToken = function () {
+    realm.delete(_persister);
+};
+
+let _setItem = function (key, value, cb) {
+    //let data = _realm.objects(SCHEMA_KEY)[0];
+    //realm.create(SCHEMA_KEY, _.assign(data, { key: value }), true);
+
+    _persister[key] = value;
+    realm.create(SCHEMA_KEY, _persister, true);
+    //if (cb)cb();
 };
 
 
-var _saveUser = function (user, cb) {
-    _setItem('userInfoBean', user, cb);
-}
+let _getAppData = function (cb) {
+    //let data = _realm.objects(SCHEMA_KEY)[0];
+    //if (cb)cb(data);
+    if (cb)cb(_persister);
+};
 
-var _saveOrg = function (user, cb) {
-    _setItem('orgBeans', user, cb);
-}
-
-var _saveAPNSToken = function (data, cb) {
-    _setItem('APNSToken', data, cb);
-}
-var _saveMsgDetail = function (data, cb) {
-    _setItem('mainMsgBean', data, cb);
-}
-var _saveMainMsgBean = function (data, cb) {
-    _setItem('mainMsgBean', data, cb);
-}
-var _clearToken = function () {
-    AsyncStorage.removeItem("token", function (err) {
-    })
-}
-
-var _saveDemoFlag = function (flag, cb) {
-    _setItem('demoFlag', flag, cb);
-}
-
-var _setItem = function (key, value, cb) {
-    AsyncStorage.setItem(key, JSON.stringify(value), function (err) {
-        if (cb)cb();
-
-    })
-}
-
-
-var _getAppData = function (cb) {
-    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'orgBeans'
-        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag']).then(
-        (data) => {
-            var dataJson = {};
-            data.map((item, index)=> {
-                dataJson[item[0]] = JSON.parse(item[1])
-            })
-            if (cb)cb(dataJson);
+let _saveAppData = function (data) {
+    // Create Realm objects and write to local storage
+    _realm.write(() => {
+        _persister = _realm.create(SCHEMA_KEY, {
+            token: JSON.stringify(data.token),
+            APNSToken: '',
+            revBillBean: JSON.stringify(data.revBillBean),
+            sentBillBean: JSON.stringify(data.sentBillBean),
+            filterBeans: JSON.stringify(data.filterBeans),
+            userInfoBean: JSON.stringify(data.userInfoBean),
+            orgBeans: JSON.stringify(data.orgBeans),
+            mainMsgBean: JSON.stringify(data.mainMsgBean),
+            marketMsgBeans: JSON.stringify(data.marketMsgBeans),
+            systemMsgBeans: JSON.stringify(data.systemMsgBeans),
+            sentBillMsgBeans: JSON.stringify(data.sentBillMsgBeans),
+            demoFlag: JSON.stringify(data.demoFlag)
         });
-}
+    });
+};
 
-var _saveAppData = function (data) {
-    AsyncStorage.multiSet([
-        ["revBillBean", JSON.stringify(data.revBillBean)],
-        ["sentBillBean", JSON.stringify(data.sentBillBean)],
-        ["filterBeans", JSON.stringify(data.filterBeans)],
-        ["userInfoBean", JSON.stringify(data.userInfoBean)],
-        ["token", JSON.stringify(data.token)],
-        ["orgBeans", JSON.stringify(data.orgBeans)],
-        ["mainMsgBean", JSON.stringify(data.mainMsgBean)],
-        ["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
-        ["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],
-        ["sentBillMsgBeans", JSON.stringify(data.sentBillMsgBeans)],
-        ["demoFlag", JSON.stringify(data.demoFlag)]
-    ])
-}
-
-
-module.exports = Actions;
+module.exports = PersisterFacade;
