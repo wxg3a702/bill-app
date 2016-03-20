@@ -17,6 +17,7 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
+var BottomButton = require('../../comp/utilsUi/bottomButton');
 
 var ComResult = React.createClass({
     render: function (){
@@ -31,23 +32,12 @@ var ComResult = React.createClass({
                         />
                         <Text style={{marginTop:10,fontSize:15,color:'#7f7f7f'}}>{'贴现申请发送成功!'}</Text>
                     </View>
-                    <View
-                        style={{padding:10,flexDirection: 'row',justifyContent:'center',borderStyle:'solid',backgroundColor:'transparent'}}>
-                        <View
-                            style={{flex:12,height:35,borderRadius:5,backgroundColor: '#44bcb2',paddingLeft:10,paddingRight:10}}>
-                            <TouchableHighlight activeOpacity={0.8} underlayColor='#44bcbc'
-                                                onPress={() => {this.props.navigator.popToTop()}}
-                                                style={{flex:1}}>
-                                <Text style={{paddingTop: 10,color:'#fff',textAlign:'center'}}>{'返回票据首页'}</Text>
-                            </TouchableHighlight>
-                        </View>
+                    <View>
+                        <BottomButton func={() => {this.props.navigator.popToTop()}} content={'返回票据首页'}/>
                     </View>
                 </View>
             </NavBarView>
         );
-    },
-    goToBillHome(){
-
     },
 });
 

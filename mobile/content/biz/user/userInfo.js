@@ -65,7 +65,7 @@ var UserInfo = React.createClass({
                 imageSource: e.uri
             });
             UserAction.updateUserHead(
-                { ['photoStoreId']: this.state.imageSource}
+                {['photoStoreId']: this.state.imageSource}
             )
         }.bind(this));
     },
@@ -152,7 +152,7 @@ var UserInfo = React.createClass({
     },
     logout: function () {
 
-        Alert('确定退出当前帐号?',{text:'确定', onPress:() => LoginAction.logOut()},{text:'取消',onPress:null});
+        Alert('确定退出当前帐号?', {text: '确定', onPress: () => LoginAction.logOut()}, {text: '取消', onPress: null});
     },
     button(){
         return (
@@ -165,7 +165,10 @@ var UserInfo = React.createClass({
         if (navigator) {
             navigator.push({
                 comp: nav,
-                param: {location: this.state.location}
+                param: {
+                    location: this.state.location
+                },
+                callBack: this.callBack
             });
         }
     },

@@ -66,6 +66,9 @@ module.exports = {
     },
     formatBillContent(data){
         return dateFormat(new Date(data), 'yyyy年mm月dd日')
+    },
+    formatFlow(data){
+        return dateFormat(new Date(data), 'yyyy.mm.dd')
     }
 
 
