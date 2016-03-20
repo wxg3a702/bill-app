@@ -31,7 +31,7 @@ var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utils/rightTopButton')
 var Space = require('../../comp/utils/space')
-var PhotoPic = require('NativeModules').PhotoPicModule;
+var UserPhotoPic = require('NativeModules').UserPhotoPicModule;
 var Alert = require('../../comp/utils/alert');
 
 var UserInfo = React.createClass({
@@ -127,7 +127,7 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic();
+        UserPhotoPic.showImagePic();
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {

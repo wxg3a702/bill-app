@@ -150,7 +150,7 @@ var Calculator = React.createClass({
     },
     showDate(word, key, value, type){
         if (Platform.OS == 'ios') {
-            ()=>this.toEdit(word, key, value, type, '', '')
+            this.toEdit(word, key, value, type, '', '')
         } else {
             DatePicker.showDatePickerDialog(key);
         }

@@ -13,7 +13,6 @@ var {
     View,
     Platform
     } = React;
-var Realm = require('realm');
 var Space = require('../../comp/utils/space')
 var BottomButton = require('../../comp/utils/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
@@ -27,8 +26,14 @@ var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utils/button')
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = CompStore.getNewOrg();
+        console.log(newOrg);
+        return {
+            accountName: newOrg.accountName,
+            accountNo: newOrg.accountNo,
+            reservedMobileNo: newOrg.reservedMobileNo,
+            checked: true,
+        }
     },
 
     getInitialState: function () {
@@ -46,47 +51,68 @@ var CompAccountInfo = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-       
+
+    submit(){
+        if (this.state.accountName.length == 0) {
+            Alert('账户名称不能为空')
+            return false;
+        }
+        if (this.state.accountName.length > 50) {
+            Alert('账户名称不能超过50字')
+            return false;
+        }
+        if (this.state.accountNo.length == 0) {
+            Alert('账号不能为空')
+            return false;
+        }
+        CompAction.updateNewOrgInfo(
+            {
+                accountName: this.state.accountName,
+                accountNo: this.state.accountNo,
+                reservedMobileNo: this.state.reservedMobileNo
+            }
+        )
+        Alert('提交')
+
+    },
+
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
+            this.setState({checked: true})
+        } else {
+            this.setState({checked: false})
+        }
+    },
+
+    handleChanged(key, value){
+        this.textOnchange(value, key);
     },
     render: function () {
-
-        var realm;
-        if(Platform.OS === 'ios'){
-            var dataPath = Realm.defaultPath.replace("/default.realm","")+"/dogs.realm";
-            realm = new Realm({path:dataPath,schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
-        }else{
-            realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
-        }
-        realm.write(()=>{
-            realm.create('Dog', ['Rex',9]);
-        })
-        console.log(realm.path);
-        //console.log(Realm.defaultPath);
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
-                    <Input  type='default' prompt="账户名称" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="账户名称" max={20} field="accountName" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input  type='default' prompt="账户" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input  type='default' prompt="开户预留手机号" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').length}
-                    </Text>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').toString()}
-                    </Text>
                 </View>
-                <BottomButton func={this.addComp} content="提交"/>
+                <View style={{margin:10}}>
+                    <Button func={this.submit} content="提交" checked={this.state.checked}/>
+                </View>
             </NavBarView>
         )
     }
 })
 var styles = StyleSheet.create({
     bottom: {
-        padding: 7, backgroundColor: '#f7f7f7', borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+        padding: 7,
+        backgroundColor: '#f7f7f7',
+        borderTopWidth: 1,
+        borderTopColor: '#cccccc',
+        opacity: 0.9
     },
     borderBottom: {
         borderBottomWidth: 1, borderColor: '#c8c7cc'
