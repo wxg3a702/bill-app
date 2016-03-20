@@ -13,12 +13,12 @@ var{
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var SMSTimer = require('../../comp/utils/smsTimer');
-var Button = require('../../comp/utils/button');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
+var Button = require('../../comp/utilsUi/button');
 var VerifyLoginPWDandPID = require('./verifyLoginPWDandPID');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
-var LoginAction = require('../../framework/action/loginAction');
+var BillAction = require('../../framework/action/billAction');
 var Alert = require('../../comp/utils/alert');
 var dismissKeyBoard = require('react-native-dismiss-keyboard')
 
@@ -38,7 +38,7 @@ var VerifyPhone = React.createClass({
     },
 
     componentDidMount:function(){
-        this.refs['smsTimer'].changeVerify();
+        this.refs['smsTimer'].afterLoginChangeVerify();
         this.setState({
             mobileNo:phoneNumber(this.getStateFromStores())
         });
@@ -58,7 +58,9 @@ var VerifyPhone = React.createClass({
     },
 
     next:function(){
-        if (this.state.verify.length == 0)  {}
+        if (this.state.verify.length == 0)  {
+            Alert('请输入短信验证码');
+        }
         else {
             this.thisValidateSMSCode();
         }
@@ -66,8 +68,9 @@ var VerifyPhone = React.createClass({
 
     thisValidateSMSCode: function(){
         dismissKeyBoard();
-        LoginAction.validateSMSCode(
+        BillAction.validateMobileForDiscount(
             {
+                mobileNo:this.getStateFromStores(),
                 smsCode:this.state.verify
             },
             function(){
@@ -107,12 +110,12 @@ var VerifyPhone = React.createClass({
                 </View>
 
                 <View style={{marginTop:5,height:40}}>
-                    <SMSTimer  ref="smsTimer" func={'sendSMSCodeToOldMobile'} isNeed={true} onChanged={this.handleChanged} style={styles.flex}>
+                    <SMSTimer  ref="smsTimer" func={'afterLoginSendSMSCodeToOldMobile'} isNeed={true} onChanged={this.handleChanged} style={styles.flex}>
                     </SMSTimer>
                 </View>
 
                 <View style={{marginTop:40,height:40}}>
-                    <Button func={this.toVerifyLoginPWDandPID} checked={this.state.checked} content='下一步'>
+                    <Button func={this.next} checked={this.state.checked} content='下一步'>
                     </Button>
                 </View>
 

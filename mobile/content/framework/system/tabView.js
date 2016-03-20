@@ -30,9 +30,13 @@ var TabView = React.createClass({
         if (token != null) {
             var sum = 0;
             var billSum = 0;
-            mainMsgBean.messageBeans.forEach(function (object) {
-                billSum += ((object.isRead) ? 0 : 1)
-            });
+            if(!mainMsgBean){
+
+            }else{
+                mainMsgBean.messageBeans.forEach(function (object) {
+                    billSum += ((object.isRead) ? 0 : 1)
+                });
+            }
             sum = billSum;
             var show = sum >= 99 ? "99+" : sum;
             if (Platform.OS == 'ios') {
@@ -64,9 +68,16 @@ var TabView = React.createClass({
             PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
             PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
-            AppStateIOS.addEventListener('change', this._handleAppStateChange);
-        }
-    },
+      AppStateIOS.addEventListener('change', this._handleAppStateChange);
+
+      if (Platform.OS === 'android') {
+        DeviceEventEmitter.addListener('Test', function(e: Event) {
+          console.log(e.test);
+          CommonAction.onNotification;
+        });
+      }
+    }
+  },
 
     componentWillUnmount: function () {
         if (Platform.OS === 'ios') {

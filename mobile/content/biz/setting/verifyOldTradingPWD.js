@@ -13,15 +13,16 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
-var SMSTimer = require('../../comp/utils/smsTimer');
-var Input = require('../../comp/utils/input');
-var Button = require('../../comp/utils/button');
+var SMSTimer = require('../../comp/utilsUi/smsTimer');
+var Input = require('../../comp/utilsUi/input');
+var Button = require('../../comp/utilsUi/button');
 var ResetTradingPWD = require('./resetTradingPWD');
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
 var dismissKeyBoard = require('react-native-dismiss-keyboard');
 var LoginAction = require('../../framework/action/loginAction');
+var BillAction = require('../../framework/action/billAction');
 var Alert = require('../../comp/utils/alert');
 
 var VerifyOldTradingPWD = React.createClass({
@@ -40,7 +41,7 @@ var VerifyOldTradingPWD = React.createClass({
     },
 
     componentDidMount: function () {
-        this.refs['smsTimer'].changeVerify();
+        this.refs['smsTimer'].afterLoginChangeVerify();
         this.setState({
             mobileNo:phoneNumber(this.getStateFromStores())
         });
@@ -70,7 +71,7 @@ var VerifyOldTradingPWD = React.createClass({
 
     thisValidateSMSCode: function(){
         dismissKeyBoard();
-        LoginAction.validateSMSCode(
+        BillAction.validateMobileForDiscount(
             {
                 smsCode:this.state.verify
             },
@@ -95,7 +96,9 @@ var VerifyOldTradingPWD = React.createClass({
     },
 
     next:function(){
-        if (this.state.verify.length == 0 ||this.state.oldTransactionPassword.length == 0)  {}
+        if (this.state.verify.length == 0 ||this.state.oldTransactionPassword.length == 0)  {
+            Alert('请输入验证码和交易密码')
+        }
         else {
             this.thisValidateSMSCode();
         }
@@ -121,7 +124,7 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={styles.smsTimerViewItem}>
-                        <SMSTimer ref="smsTimer" func={'sendSMSCodeToOldMobile'} isNeed={true} style={styles.flex} onChanged={this.handleChanged}>
+                        <SMSTimer ref="smsTimer" func={'afterLoginSendSMSCodeToOldMobile'} isNeed={true} style={styles.flex} onChanged={this.handleChanged}>
                         </SMSTimer>
                     </View>
 
@@ -131,7 +134,7 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={{marginTop:40}}>
-                        <Button  func={this.toResetTradingPWD} checked={this.state.checked} content='下一步' />
+                        <Button  func={this.next} checked={this.state.checked} content='下一步' />
                     </View>
                 </View>
 

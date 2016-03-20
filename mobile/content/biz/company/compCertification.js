@@ -8,12 +8,12 @@ var {
     Dimensions,
     View,
     ListView,
-    PanResponder
     } = React;
+var Adjust = require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
-var Space = require('../../comp/utils/space')
-var BottomButton = require('../../comp/utils/bottomButton')
+var Space = require('../../comp/utilsUi/space')
+var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -25,34 +25,14 @@ var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-var ret = new Array();
-var Button = require('../../comp/utils/button')
-var res = [
-    {
-        id: 1,
-        name: '',
-        state: 'UNAUDITING'
-    }, {
-        id: 2,
-        name: '',
-        state: 'AUDITING',
-    }, {
-        id: 3,
-        name: '',
-        state: 'REJECTED'
-    }, {
-        id: 4,
-        name: '上海安硕信息网络技术有限公司',
-        state: 'CERTIFIED',
-    }
-]
 var CompCertification = React.createClass({
     getStateFromStores(){
+        let ret = new Array();
         let i = 0;
-        var orgBean = CompStore.getOrgBeans()[0];
-        res.map((item, index)=> {
-            if (!item.name) {
-                item.name = '认证企业信息' + ++i
+        var orgBean = CompStore.getOrgBeans();
+        orgBean.map((item, index)=> {
+            if (item.biStatus != 'CERTIFIED') {
+                item.orgName = '认证企业信息' + ++i
 
             }
             ret.push(item)
@@ -86,7 +66,7 @@ var CompCertification = React.createClass({
         var swipeoutBtns = [
             {
                 text: '删除',
-                backgroundColor:'red',
+                backgroundColor: 'red',
                 onPress(){
 
                 }
@@ -95,25 +75,22 @@ var CompCertification = React.createClass({
         return (
             <Swipeout right={swipeoutBtns}>
                 <TouchableHighlight onPress={()=>this.toOther()}>
-
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{width:width-90}}>{data.name}</Text>
-                            <Text style={{width:50,color:certificateState[data.state].color,}}>{certificateState[data.state].desc}</Text>
+                            <Text style={{width:width-Adjust.width(90)}}>{data.orgName}</Text>
+                            <Text
+                                style={{width:Adjust.width(50),color:certificateState[data.biStatus].color}}>{certificateState[data.biStatus].desc}</Text>
                             <VIcon/>
                         </View>
                     </View>
-
                 </TouchableHighlight>
             </Swipeout>
         )
     },
     returnList(){
-        if (res.length == 0) {
+        if (this.state.bean.length == 0) {
             return (
-                <View>
-
-                </View>
+                <View/>
             )
         } else {
             return (

@@ -12,13 +12,14 @@ var {
     StyleSheet,
     TouchableOpacity
     } = React;
-var ListBottom = require('../../comp/utils/listBottom')
+var Adjust=require('../../comp/utils/adjust')
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var {width,height} = Dimensions.get('window');
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
 var NumberHelper = require('../../comp/utils/numberHelper')
 var DateHelper = require('../../comp/utils/dateHelper');
-var ToLogin = require('../../comp/utils/toLogin');
+var ToLogin = require('../../comp/utilsUi/toLogin');
 var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
 var BillDetail = require('./billDetail')
@@ -218,7 +219,7 @@ var Bill = React.createClass({
                             </View>
                             <Text
                                 style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>{data.role == 'payee' ? '开票人' : '收款人'}</Text>
-                            <Text numberOfLines={1} style={{width:width-170,color:'#7f7f7f',fontSize:15,marginTop:10}}>
+                            <Text numberOfLines={1} style={{width:width-Adjust.width(170),color:'#7f7f7f',fontSize:15,marginTop:10}}>
                                 {this.state.pick == this.state.resPick ? data.drawerName : data.payeeName}
                             </Text>
                         </View>
@@ -248,7 +249,7 @@ var Bill = React.createClass({
             if (this.state.dataSource.length == 0) {
                 return (
                     <View style={{marginTop:65,alignItems:'center',flex:1}}>
-                        <Image style={{width:350,height:200}} resizeMode="stretch"
+                        <Image style={{width:Adjust.width(350),height:200}} resizeMode="stretch"
                                source={require('../../image/bill/noBill.png')}/>
                         <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
                     </View>

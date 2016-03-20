@@ -277,7 +277,7 @@ var _analysisMessageData = function (data) {
 }
 //
 var _freshMessageData = function (data) {
-    if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
+    if (!data && !data.nodeMsgBean && !data.nodeMsgBean.length)
         return;
     else {
         data.nodeMsgBean.map((item, index)=> {

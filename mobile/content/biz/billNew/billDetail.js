@@ -11,12 +11,14 @@ var {
     Dimensions,
     StyleSheet,
     } = React;
+var _ = require('lodash');
+var Adjust = require('../../comp/utils/adjust')
 var Circle = require('./circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
-var Space = require('../../comp/utils/space');
+var Space = require('../../comp/utilsUi/space');
 var DateHelper = require('../../comp/utils/dateHelper');
-var BottomButton = require('../../comp/utils/bottomButton');
+var BottomButton = require('../../comp/utilsUi/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
 var BillStates = require('./billStates');
 var BillContent = require('./billContent')
@@ -26,29 +28,23 @@ var Alert = require('../../comp/utils/alert')
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-var mock = [
-    {
-        content: '2015年02月10日贴现',
-        date: '15.12.12',
-        isNow: true
-    }, {
-        content: '银行批准贴现,请等待银行汇款',
-        date: '15.12.12'
-    }, {
-        content: '申请贴现,请等待银行受理',
-        date: '15.12.12'
-    }, {
-        content: '创建票据信息',
-        date: '15.12.12'
-    }
-]
 var BillDetail = React.createClass({
     getInitialState(){
         let item = this.props.param.item;
+        let flow = item.billStatusTraceBeans;
+        if (!flow) {
+            flow = ''
+        } else {
+            if (!item.new) {
+                flow[flow.length - 1].new = true;
+                flow = _(flow).reverse().value();
+                item.new = true;
+            }
+        }
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',
-            dataSource: mock
+            dataSource: flow
         }
     },
     func(key){
@@ -168,15 +164,15 @@ var BillDetail = React.createClass({
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
                 <Text style={{fontSize:16,color:'#333333',flex:1}}>{desc}</Text>
-                <Text style={{fontSize:16,color:'#7f7f7f',width:235}}>{value}</Text>
+                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}>{value}</Text>
             </View>
         )
     },
     returnItemReference(desc, value){
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
-                <Text style={{fontSize:16,color:'#333333',width:width-259}}>{desc}</Text>
-                <View style={{flexDirection:'row',justifyContent:'flex-start'}}>
+                <Text style={{fontSize:16,color:'#333333',width:width-Adjust.width(259)}}>{desc}</Text>
+                <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Text style={{fontSize:16,color:'#7f7f7f'}}>{value}</Text>
                     <Text style={{fontSize:18,color:'#ff5b58'}}>(参考)</Text>
                 </View>
@@ -215,7 +211,7 @@ var BillDetail = React.createClass({
     },
     renderRow(data){
         return (
-            <Circle now={!data.isNow?false:true} content={data.content} date={data.date}/>
+            <Circle now={data.new} content={data.traceMsg} date={DateHelper.formatFlow(data.createDate)}/>
         )
     },
     returnFlow(){
@@ -260,7 +256,7 @@ var BillDetail = React.createClass({
 })
 var styles = StyleSheet.create({
     circle: {
-        width: 49, height: 18, borderRadius: 8, justifyContent: 'center', alignItems: 'center'
+        width: Adjust.width(49), height: 18, borderRadius: 8, justifyContent: 'center', alignItems: 'center'
     },
     center: {
         flexDirection: 'row', justifyContent: 'center', alignItems: 'center',

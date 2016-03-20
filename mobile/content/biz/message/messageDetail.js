@@ -10,6 +10,7 @@ var {
   Platform,
     Dimensions
     } = React;
+var Adjust=require('../../comp/utils/adjust')
 var AppStore = require('../../framework/store/appStore');
 var MessageStore = require('../../framework/store/messageStore');
 var MessageAction = require("../../framework/action/messageAction");
@@ -87,7 +88,7 @@ var MessageDetail = React.createClass({
                     <View>
                         <View style={{flexDirection:'row',justifyContent:'space-between',padding:12}}>
                             <Text numberOfLines={1}
-                                  style={{width:width-100,fontSize:16,color:'#333333'}}>{item.title}</Text>
+                                  style={{width:width-Adjust.width(100),fontSize:16,color:'#333333'}}>{item.title}</Text>
                             <Text
                                 style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(new Date(item.receiveDate))}</Text>
                         </View>

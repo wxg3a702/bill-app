@@ -11,8 +11,8 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 var Register_setInfo = require('./register_setInfo');
 var NavBarView = require('../../framework/system/navBarView')
 var NumberHelper = require('../../comp/utils/numberHelper')
-var SMSTimer = require('../../comp/utils/smsTimer')
-var Button = require('../../comp/utils/button')
+var SMSTimer = require('../../comp/utilsUi/smsTimer')
+var Button = require('../../comp/utilsUi/button')
 var Register_checkVerify = React.createClass({
     componentDidMount: function () {
         this.refs['smsTimer'].changeVerify();

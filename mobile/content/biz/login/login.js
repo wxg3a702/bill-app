@@ -15,9 +15,9 @@ var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
 var NavBarView = require('../../framework/system/navBarView');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-var VerifyCode = require('../../comp/utils/verifyCode');
-var Button = require('../../comp/utils/button');
-var Input = require('../../comp/utils/input');
+var VerifyCode = require('../../comp/utilsUi/verifyCode');
+var Button = require('../../comp/utilsUi/button');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Login = React.createClass({
     getStateFromStores() {
@@ -123,27 +123,12 @@ var Login = React.createClass({
     }
 });
 var styles = StyleSheet.create({
-    radio: {
-        width: 40, height: 40
-    },
     menu: {
         paddingTop: 24, paddingBottom: 50,
         alignItems: 'center', flexDirection: "row", justifyContent: "space-between"
     },
-    rememberMe: {
-        height: 60, width: 21, flexDirection: 'row', alignItems: 'center'
-    },
-    contact: {
-        alignItems: 'center', height: 45,
-    },
     colorPath: {
         fontSize: 15, color: '#333333'
-    },
-    leftButton: {
-        marginTop: 30, left: 20, height: 40,
-    },
-    rightButton: {
-        marginTop: 30, height: 40, right: 20,
     },
     paddingLR: {
         paddingLeft: 12, paddingRight: 12,

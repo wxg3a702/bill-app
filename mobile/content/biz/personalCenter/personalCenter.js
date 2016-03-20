@@ -22,7 +22,7 @@ var UserAction = require('../../framework/action/userAction');
 var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var Item = require('../../comp/utils/item')
-var Space = require('../../comp/utils/space')
+var Space = require('../../comp/utilsUi/space')
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
