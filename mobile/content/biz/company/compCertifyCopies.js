@@ -27,8 +27,14 @@ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = CompStore.getNewOrg();
+        return {
+            licenseCopyFileId: newOrg.licenseCopyFileId,
+            authFileId: newOrg.authFileId,
+            corpIdentityFileId: newOrg.corpIdentityFileId,
+            authIdentityFileId: newOrg.authIdentityFileId,
+            picEnough:newOrg.picEnough
+        }
     },
 
     getInitialState: function () {
@@ -46,9 +52,7 @@ var CompCertifyCopies = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-        this.props.navigator.push({comp: CompAccountInfo});
-    },
+
     next: function () {
         const { navigator } = this.props;
         if (this.state.picEnough) {
@@ -106,7 +110,7 @@ var CompCertifyCopies = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                UserAction.updateUserHead(
+                CompAction.updateNewOrgInfo(
                     {[name]: source}
                 )
             }
@@ -149,8 +153,6 @@ var CompCertifyCopies = React.createClass({
                 console.log('User tapped custom button: ', response.customButton);
             }
             else {
-                // uri (on android)
-                //const source = {uri: response.uri, isStatic: true};
                 var source = response;
                 this.setState({
                     [name]: source
@@ -161,11 +163,11 @@ var CompCertifyCopies = React.createClass({
             }
         });
     },
-    returnItem(desc, name, imgUrl){
+    returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
             if (this.state[name].length == 24) {
-                url = {uri: AppAction.getFile(this.state[name])}
+                url = {uri: userAction.getFile(this.state[name])}
             } else {
                 url = {uri: this.state[name], isStatic: true};
             }
@@ -185,7 +187,6 @@ var CompCertifyCopies = React.createClass({
                 </TouchableHighlight>
             )
         }
-
     },
 
     render: function () {
@@ -196,20 +197,12 @@ var CompCertifyCopies = React.createClass({
                     <View style={{flexDirection:"row",marginHorizontal:12}}>
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>营业执照副本</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('营业执照副本', 'licenseCopyFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('营业执照副本', 'licenseCopyFileId')}
                         </View>
 
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>法定代表人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法定代表人身份证', 'corpIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
                         </View>
                     </View>
 
@@ -217,20 +210,12 @@ var CompCertifyCopies = React.createClass({
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text
                                 style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法人授权委托证明书', 'authFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('法人授权委托证明书', 'authFileId')}
                         </View>
 
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('授权经办人身份证', 'authIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
                         </View>
                     </View>
 
@@ -240,7 +225,7 @@ var CompCertifyCopies = React.createClass({
                     </View>
 
                 </View>
-                <BottomButton func={this.addComp} content="下一步"/>
+                <BottomButton func={this.next} content="下一步"/>
             </NavBarView>
         )
     }

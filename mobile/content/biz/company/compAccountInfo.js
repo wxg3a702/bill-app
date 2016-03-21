@@ -29,6 +29,7 @@ var CompAccountInfo = React.createClass({
         var newOrg = CompStore.getNewOrg();
         console.log(newOrg);
         return {
+            newOrg:newOrg,
             accountName: newOrg.accountName,
             accountNo: newOrg.accountNo,
             reservedMobileNo: newOrg.reservedMobileNo,
@@ -51,18 +52,31 @@ var CompAccountInfo = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-       
-    },
+    submit: function () {
+        CompAction.updateNewOrgInfo(
+            {
+                accountName: this.state.accountName,
+                accountNo: this.state.accountNo,
+                reservedMobileNo: this.state.reservedMobileNo
+            }
+        );
 
-    //    var realm;
-    //    if(Platform.OS === 'ios'){
-    //        var dataPath = Realm.defaultPath.replace("/default.realm","")+"/dogs.realm";
-    //        realm = new Realm({path:dataPath,schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
-    //    }else{
-    //        realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
-    //    }
-    //},
+        CompAction.submitOrg(this.state.newOrg,
+            function ( ) {
+                Alert();
+            },
+            function () {
+                Alert();
+            })
+    },
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
+            this.setState({checked: true})
+        } else {
+            this.setState({checked: false})
+        }
+    },
 
     handleChanged(key, value){
         this.textOnchange(value, key);
@@ -77,12 +91,6 @@ var CompAccountInfo = React.createClass({
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').length}
-                    </Text>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').toString()}
-                    </Text>
                 </View>
                 <View style={{margin:10}}>
                     <Button func={this.submit} content="提交" checked={this.state.checked}/>
