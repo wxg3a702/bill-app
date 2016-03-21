@@ -13,22 +13,27 @@ var {
     View,
     Platform
     } = React;
-var Realm = require('realm');
-var Space = require('../../comp/utilsUi/space')
-var BottomButton = require('../../comp/utilsUi/bottomButton')
+var Space = require('../../comp/utils/space')
+var BottomButton = require('../../comp/utils/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
-var Input = require('../../comp/utilsUi/input');
+var Input = require('../../comp/utils/input');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utilsUi/button')
+var Button = require('../../comp/utils/button')
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = CompStore.getNewOrg();
+        console.log(newOrg);
+        return {
+            accountName: newOrg.accountName,
+            accountNo: newOrg.accountNo,
+            reservedMobileNo: newOrg.reservedMobileNo,
+            checked: true,
+        }
     },
 
     getInitialState: function () {
@@ -49,7 +54,6 @@ var CompAccountInfo = React.createClass({
     addComp(){
        
     },
-    render: function () {
 
         var realm;
         if(Platform.OS === 'ios'){
@@ -58,19 +62,20 @@ var CompAccountInfo = React.createClass({
         }else{
             realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
         }
-        realm.write(()=>{
-            realm.create('Dog', ['Rex',9]);
-        })
-        console.log(realm.path);
-        //console.log(Realm.defaultPath);
+    },
+
+    handleChanged(key, value){
+        this.textOnchange(value, key);
+    },
+    render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
-                    <Input  type='default' prompt="账户名称" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="账户名称" max={20} field="accountName" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input  type='default' prompt="账户" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input  type='default' prompt="开户预留手机号" max={20} field="userName" isPwd={false}
+                    <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
                     <Text style={styles.welcome}>
                         Count of Dogs in Realm: {realm.objects('Dog').length}
@@ -79,7 +84,9 @@ var CompAccountInfo = React.createClass({
                         Count of Dogs in Realm: {realm.objects('Dog').toString()}
                     </Text>
                 </View>
-                <BottomButton func={this.addComp} content="提交"/>
+                <View style={{margin:10}}>
+                    <Button func={this.submit} content="提交" checked={this.state.checked}/>
+                </View>
             </NavBarView>
         )
     }

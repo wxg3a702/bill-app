@@ -24,6 +24,7 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.shell.MainReactPackage;
+import com.mobile.modules.UserPhotoPicModule;
 import com.mobile.service.AppService;
 import com.mobile.utils.AppUtils;
 import com.rnfs.RNFSPackage;
@@ -39,12 +40,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import io.realm.react.RealmReactPackage;
+import com.imagepicker.ImagePickerPackage; // import package
 
 public class MainActivity  extends Activity implements DefaultHardwareBackBtnHandler {
 
-    private static final int IMAGE_REQUEST_CODE = 0x01;
-    private static final int CAMERA_REQUEST_CODE = 0x02;
+    private static final int USER_IMAGE_REQUEST_CODE = 0x01;
+    private static final int USER_CAMERA_REQUEST_CODE = 0x02;
+    private static final int CERTI_IMAGE_REQUEST_CODE = 0x03;
+    private static final int CERTI_CAMERA_REQUEST_CODE = 0x04;
     private static ReactInstanceManager mReactInstanceManager;
+    private UserPhotoPicModule userPhotoPicModule;
     private ReactRootView mReactRootView;
     private Handler handler = new Handler() {
         @Override
@@ -66,6 +71,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .addPackage(new MainReactPackage())
                 .addPackage(new ZXReactPackage())
                 .addPackage((ReactPackage)new RealmReactPackage())
+                .addPackage( new ImagePickerPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
@@ -147,13 +153,12 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode != Activity.RESULT_OK){
             return;
         }
         Uri uri =null;
         switch (requestCode) {
-            case CAMERA_REQUEST_CODE:
+            case USER_CAMERA_REQUEST_CODE:
                 if (data == null) {
                     return;
                 } else {
@@ -166,7 +171,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 }
 
                 break;
-            case IMAGE_REQUEST_CODE:
+            case USER_IMAGE_REQUEST_CODE:
                 if (data == null) {
                     return;
                 }
@@ -176,6 +181,32 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
             case Crop.REQUEST_CROP:
                 handleCrop(resultCode, data);
                 break;
+            case CERTI_IMAGE_REQUEST_CODE:
+                if (data == null) {
+                    return;
+                } else {
+                    Bundle extras = data.getExtras();
+                    if (extras != null) {
+                        Bitmap bitMap = extras.getParcelable("data");
+                        uri= saveBitMap(bitMap);
+                    }
+                    WritableMap params = Arguments.createMap();
+                    params.putString("uri", uri.toString());
+                    ReactContext reactContext = mReactInstanceManager.getCurrentReactContext();
+                    sendEvent(reactContext, "getCertiPicture", params);
+                }
+                break;
+            case CERTI_CAMERA_REQUEST_CODE:
+                if (data == null) {
+                    return;
+                }
+                uri = data.getData();
+                WritableMap params = Arguments.createMap();
+                params.putString("uri", uri.toString());
+                ReactContext reactContext = mReactInstanceManager.getCurrentReactContext();
+                sendEvent(reactContext, "getCertiPicture", params);
+                break;
+
         }
     }
 
