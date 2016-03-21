@@ -19,6 +19,7 @@ var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
+var UserAction = require("../../framework/action/userAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var Alert = require('../../comp/utils/alert');
@@ -27,8 +28,14 @@ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = CompStore.getNewOrg();
+        return {
+            licenseCopyFileId: newOrg.licenseCopyFileId,
+            authFileId: newOrg.authFileId,
+            corpIdentityFileId: newOrg.corpIdentityFileId,
+            authIdentityFileId: newOrg.authIdentityFileId,
+            picEnough:newOrg.picEnough
+        }
     },
 
     getInitialState: function () {
@@ -165,7 +172,7 @@ var CompCertifyCopies = React.createClass({
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
             if (this.state[name].length == 24) {
-                url = {uri: AppAction.getFile(this.state[name])}
+                url = {uri: userAction.getFile(this.state[name])}
             } else {
                 url = {uri: this.state[name], isStatic: true};
             }
