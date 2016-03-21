@@ -69,7 +69,9 @@ var BillDetail = React.createClass({
                         Alert("撤销成功!", ()=>this.goBack());
                     }.bind(this),
                     function () {
-                    })
+                    }
+                ), function () {
+                }
             )
         }
     },
