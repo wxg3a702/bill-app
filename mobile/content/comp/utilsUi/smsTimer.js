@@ -130,7 +130,7 @@ var SMSTimer = React.createClass({
                 <View style={{width:75,marginLeft:12}}>
                     <TouchableOpacity
                         style={[{width:75,height:47},styles.radius, styles.button,this.state.click && styles.color]}
-                        onPress={this.makeChangeVerify()}>
+                        onPress={this.makeChangeVerify}>
                         <Text style={[styles.fontColor]}>{this.state.time}</Text>
                     </TouchableOpacity>
                 </View>
