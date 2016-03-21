@@ -165,7 +165,7 @@ var _allowBillDiscount = function (data) {
 var _rejectBillDiscount = function (data) {
     _data.sentBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
-            _data.sentBillBean.contentList[index].status = "IGN";
+            _data.sentBillBean.contentList[index] = data;
         }
     });
     AppStore.emitChange();
