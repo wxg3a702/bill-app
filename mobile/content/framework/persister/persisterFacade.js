@@ -28,7 +28,7 @@ var _saveUser = function (user, cb) {
 }
 
 var _saveOrg = function (user, cb) {
-    _setItem('orgBeans', user, cb);
+    _setItem('certifiedOrgBean', user, cb);
 }
 
 var _saveAPNSToken = function (data, cb) {
@@ -58,7 +58,7 @@ var _setItem = function (key, value, cb) {
 
 
 var _getAppData = function (cb) {
-    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'orgBeans'
+    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'certifiedOrgBean'
         , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag','newOrg']).then(
         (data) => {
             var dataJson = {};
@@ -76,7 +76,7 @@ var _saveAppData = function (data) {
         ["filterBeans", JSON.stringify(data.filterBeans)],
         ["userInfoBean", JSON.stringify(data.userInfoBean)],
         ["token", JSON.stringify(data.token)],
-        ["orgBeans", JSON.stringify(data.orgBeans)],
+        ["certifiedOrgBean", JSON.stringify(data.certifiedOrgBean)],
         ["mainMsgBean", JSON.stringify(data.mainMsgBean)],
         ["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
         ["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],

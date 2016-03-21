@@ -29,9 +29,9 @@ var CompCertification = React.createClass({
     getStateFromStores(){
         let ret = new Array();
         let i = 0;
-        var orgBean = CompStore.getOrgBeans();
+        var orgBean = CompStore.getCertifiedOrgBean();
         orgBean.map((item, index)=> {
-            if (item.biStatus != 'CERTIFIED') {
+            if (item.status != 'CERTIFIED') {
                 item.orgName = '认证企业信息' + ++i
 
             }
@@ -68,7 +68,22 @@ var CompCertification = React.createClass({
                 text: '删除',
                 backgroundColor: 'red',
                 onPress(){
+                    Alert('您确定要删除该机构么',
+                        ()=> {
+                            CompAction.deleteOrg(
+                                {orgId: data.id}
+                            ),
+                                function () {
+                                    Alert("删除成功!");
+                                }.bind(this),
+                                function () {
 
+                                }
+                        },
+                        function () {
+
+                        }
+                    )
                 }
             }
         ]
@@ -79,7 +94,7 @@ var CompCertification = React.createClass({
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>{data.orgName}</Text>
                             <Text
-                                style={{width:Adjust.width(50),color:certificateState[data.biStatus].color}}>{certificateState[data.biStatus].desc}</Text>
+                                style={{width:Adjust.width(50),color:certificateState[data.status].color}}>{certificateState[data.status].desc}</Text>
                             <VIcon/>
                         </View>
                     </View>
