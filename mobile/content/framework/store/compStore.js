@@ -1,4 +1,3 @@
-var React = require('react-native');
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 
