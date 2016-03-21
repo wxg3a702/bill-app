@@ -7,7 +7,6 @@ var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
 var CompAction = {
-
     updateCompBaseInfo: (p, c, f)=> _updateCompBaseInfo(p, c, f),
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
