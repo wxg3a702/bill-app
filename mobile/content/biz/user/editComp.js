@@ -13,7 +13,7 @@ var CompAction = require("../../framework/action/compAction")
 var CompStore = require('../../framework/store/compStore')
 var NavBarView = require('../../framework/system/navBarView')
 var SearchBar = require('../../comp/utilsUi/searchBar')
-var res;
+
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
     sectionHeaderHasChanged: (s1, s2) => s1 !== s2
@@ -21,14 +21,16 @@ var ds = new ListView.DataSource({
 var EditComp = React.createClass({
     getStateFromStores(){
         var comp = CompStore.getCertifiedOrgBean()
+        let res = new Array();
         comp.map((item, index)=> {
-            if (!comp.stdOrgBean) {
+            if (!item.stdOrgBean) {
             } else {
-                res.push(item)
+                res.push(item.stdOrgBean)
             }
         })
         return {
-            dataSource: ds.cloneWithRows(!res ? '' : res)
+            dataSource: ds.cloneWithRows(!res ? '' : res),
+            res: res
         }
     },
     getInitialState: function () {
@@ -47,8 +49,8 @@ var EditComp = React.createClass({
         this.setState(this.getStateFromStores());
     },
     pick(text){
+        let res = this.state.res
         if (!res) {
-
         } else {
             var ret = new Array();
             if (!text) {
@@ -65,10 +67,14 @@ var EditComp = React.createClass({
     },
     setValue(data){
         const { navigator } = this.props;
-        this.props.callback(
-            {comp: data.orgName},
-            ()=> {
+        CompAction.updateDefaultOrgByUser(
+            {
+                orgId: data.id,
+                comp: data.orgName
+            }, function () {
                 navigator.pop()
+            },
+            function () {
             }
         )
     },

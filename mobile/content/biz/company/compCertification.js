@@ -33,7 +33,6 @@ var CompCertification = React.createClass({
         orgBean.map((item, index)=> {
             if (item.status != 'CERTIFIED') {
                 item.orgName = '认证企业信息' + ++i
-
             }
             ret.push(item)
         });
@@ -77,11 +76,9 @@ var CompCertification = React.createClass({
                                     Alert("删除成功!");
                                 }.bind(this),
                                 function () {
-
                                 }
                         },
                         function () {
-
                         }
                     )
                 }
@@ -92,9 +89,12 @@ var CompCertification = React.createClass({
                 <TouchableHighlight onPress={()=>this.toOther()}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{width:width-Adjust.width(90)}}>{data.orgName}</Text>
-                            <Text
-                                style={{width:Adjust.width(50),color:certificateState[data.status].color}}>{certificateState[data.status].desc}</Text>
+                            <Text style={{width:width-Adjust.width(90)}}>
+                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
+                            </Text>
+                            <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
+                                {certificateState[data.status].desc}
+                            </Text>
                             <VIcon/>
                         </View>
                     </View>
