@@ -22,7 +22,6 @@ var BFetch = function (url, param, callback, failure, options) {
         headers: headers,
         body: JSON.stringify(param)
     }, callback, failure, options);
-
 };
 var PFetch = function (url, param, callback, failure, options) {
 

@@ -6,8 +6,7 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.mobile.modules.DatePickerDialogModule;
-import com.mobile.modules.PhotoPicModule;
-import com.mobile.views.viewpager.*;
+import com.mobile.modules.UserPhotoPicModule;
 import com.mobile.views.viewpager.ZXViewPagerManager;
 
 import java.util.ArrayList;
@@ -22,8 +21,9 @@ public class ZXReactPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         List<NativeModule> modules = new ArrayList<>();
-        modules.add(new PhotoPicModule(reactContext));
+        modules.add(new UserPhotoPicModule(reactContext));
         modules.add(new DatePickerDialogModule(reactContext));
+        modules.add(new CertifyPhotoPicModule(reactContext));
         return modules;
     }
 
@@ -38,4 +38,5 @@ public class ZXReactPackage implements ReactPackage {
                 new ZXViewPagerManager()
         );
     }
+
 }
