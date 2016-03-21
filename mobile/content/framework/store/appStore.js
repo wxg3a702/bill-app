@@ -354,7 +354,6 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                 &&_data.newOrg.corpIdentityFileId != ''&&_data.newOrg.authIdentityFileId != ''){
                 _data.newOrg.picEnough = true;
             }
-            //_changeNewOrg();
             Persister.saveOrg(_data.newOrg);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();

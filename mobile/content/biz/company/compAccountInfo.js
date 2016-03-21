@@ -13,22 +13,23 @@ var {
     View,
     Platform
     } = React;
-var Space = require('../../comp/utils/space')
-var BottomButton = require('../../comp/utils/bottomButton')
+var Space = require('../../comp/utilsUi/space')
+var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
-var Input = require('../../comp/utils/input');
+var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utils/button')
+var Button = require('../../comp/utilsUi/button')
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
         var newOrg = CompStore.getNewOrg();
         console.log(newOrg);
         return {
+            newOrg:newOrg,
             accountName: newOrg.accountName,
             accountNo: newOrg.accountNo,
             reservedMobileNo: newOrg.reservedMobileNo,
@@ -51,16 +52,30 @@ var CompAccountInfo = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-       
+    submit: function () {
+        CompAction.updateNewOrgInfo(
+            {
+                accountName: this.state.accountName,
+                accountNo: this.state.accountNo,
+                reservedMobileNo: this.state.reservedMobileNo
+            }
+        );
+
+        CompAction.submitOrg(this.state.newOrg,
+            function ( ) {
+                Alert();
+            },
+            function () {
+                Alert();
+            })
     },
 
-        var realm;
-        if(Platform.OS === 'ios'){
-            var dataPath = Realm.defaultPath.replace("/default.realm","")+"/dogs.realm";
-            realm = new Realm({path:dataPath,schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
-        }else{
-            realm = new Realm({schema:[{name:'Dog', properties:{name: 'string',age:'int'}}]});
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
+            this.setState({checked: true})
+        } else {
+            this.setState({checked: false})
         }
     },
 
@@ -77,12 +92,6 @@ var CompAccountInfo = React.createClass({
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').length}
-                    </Text>
-                    <Text style={styles.welcome}>
-                        Count of Dogs in Realm: {realm.objects('Dog').toString()}
-                    </Text>
                 </View>
                 <View style={{margin:10}}>
                     <Button func={this.submit} content="提交" checked={this.state.checked}/>
