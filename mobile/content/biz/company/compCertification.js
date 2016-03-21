@@ -57,8 +57,13 @@ var CompCertification = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    toOther(name){
-        this.props.navigator.push({comp: name})
+    toOther(name, item){
+        this.props.navigator.push({
+            comp: name,
+            param: {
+                item: item
+            }
+        })
     },
 
     returnRow(data){
@@ -86,7 +91,7 @@ var CompCertification = React.createClass({
         ]
         return (
             <Swipeout right={swipeoutBtns}>
-                <TouchableHighlight onPress={()=>this.toOther()}>
+                <TouchableHighlight onPress={()=>this.toOther(CompCertifyCopies,data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>

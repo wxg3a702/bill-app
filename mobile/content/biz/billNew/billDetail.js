@@ -13,14 +13,14 @@ var {
     } = React;
 var _ = require('lodash');
 var Adjust = require('../../comp/utils/adjust')
-var Circle = require('./circle')
+var Circle = require('./../../comp/utilsUi/circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
 var Space = require('../../comp/utilsUi/space');
 var DateHelper = require('../../comp/utils/dateHelper');
 var BottomButton = require('../../comp/utilsUi/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
-var BillStates = require('./billStates');
+var BillStates = require('./../../constants/billStates');
 var BillContent = require('./billContent')
 var BillStore = require('../../framework/store/billStore')
 var NumberHelper = require('../../comp/utils/numberHelper')
