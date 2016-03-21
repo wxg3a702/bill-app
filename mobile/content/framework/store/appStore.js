@@ -56,7 +56,7 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
     getToken: ()=>_data.token,
 
-    getData : ()=>_data,
+    getData: ()=>_data,
 
     init: function (data) {
         info.initLoadingState = false;
@@ -83,9 +83,6 @@ var _initOrgBean = function () {
             accountNo: '',
             reservedMobileNo: '',
             licenseCopyFileId: '',
-            orgCodeCopyFileId: '',
-            taxFileId: '',
-            corpFileId: '',
             authFileId: '',
             corpIdentityFileId: '',
             authIdentityFileId: '',
@@ -116,6 +113,7 @@ var _appInit = function (data) {
             info.initLoadingState = false;
             _data = data;
             _initOrgBean();
+            initNewOrg();
             info.isLogout = false;
             AppStore.emitChange();
         })
@@ -124,6 +122,7 @@ var _appInit = function (data) {
 var _login = function (data) {
     _data = data;
     _initOrgBean();
+    initNewOrg();
     AppStore.emitChange();
     Persister.getAppData((d) => {
         data.demoFlag = d.demoFlag;
@@ -134,6 +133,21 @@ var _login = function (data) {
     });
 }
 //
+var initNewOrg = function () {
+    _data.newOrg = {
+        licenseCopyFileId: '',
+        authFileId: '',
+        corpIdentityFileId: '',
+        authIdentityFileId: '',
+        accountName: '',
+        accountNo: '',
+        reservedMobileNo: '',
+        picEnough: false,
+    }
+}
+var _changeNewOrg = function (data) {
+
+}
 var _cancleBillDiscount = function (data) {
     _data.revBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -165,7 +179,7 @@ var _allowBillDiscount = function (data) {
 var _rejectBillDiscount = function (data) {
     _data.sentBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
-            _data.sentBillBean.contentList[index].status = "IGN";
+            _data.sentBillBean.contentList[index] = data;
         }
     });
     AppStore.emitChange();
@@ -331,6 +345,17 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             _data.orgBeans[0] = _.assign(_data.orgBeans[0], action.data);
             _data.userInfoBean = _.assign(_data.userInfoBean, action.data);
             Persister.saveOrg(_data.orgBeans);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
+        case ActionTypes.UPDATE_NEWORG:
+            _data.newOrg = _.assign(_data.newOrg, action.data);
+            if (_data.newOrg.licenseCopyFileId != ''&&_data.newOrg.authFileId != ''
+                &&_data.newOrg.corpIdentityFileId != ''&&_data.newOrg.authIdentityFileId != ''){
+                _data.newOrg.picEnough = true;
+            }
+            //_changeNewOrg();
+            Persister.saveOrg(_data.newOrg);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;

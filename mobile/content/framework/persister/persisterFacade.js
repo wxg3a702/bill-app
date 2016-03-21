@@ -20,26 +20,7 @@ var Actions = {
     saveMainMsgBean: (p)=>_saveMainMsgBean(p)
     //getUnReadnum:
 }
-
-var ZxBillDataSchema = {
-    name: 'ZxBillData',
-    properties: {
-        name: 'string',
-        properties: {
-            revBillBean:"string",
-            sentBillBean:"string",
-            filterBeans:"string",
-            userInfoBean:"string",
-            token:"string",
-            orgBeans:"string",
-            mainMsgBean:"string",
-            marketMsgBeans:"string",
-            systemMsgBeans:"string",
-            sentBillMsgBeans:"string",
-            demoFlag:"boolean"
-        }
-    }
-};
+//?
 
 
 var _saveUser = function (user, cb) {
@@ -78,7 +59,7 @@ var _setItem = function (key, value, cb) {
 
 var _getAppData = function (cb) {
     AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'orgBeans'
-        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag']).then(
+        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag','newOrg']).then(
         (data) => {
             var dataJson = {};
             data.map((item, index)=> {
