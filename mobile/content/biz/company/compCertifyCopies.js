@@ -13,6 +13,8 @@ var {
     Dimensions,
     Platform
     } = React;
+var Adjust = require('../../comp/utils/adjust')
+var UserAction = require('../../framework/action/userAction')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
 var VIcon = require('../../comp/icon/vIcon')
@@ -21,8 +23,11 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
+var DateHelper = require('../../comp/utils/dateHelper')
 var Button = require('../../comp/utilsUi/button')
+var Space = require('../../comp/utilsUi/space')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CompCertifyCopies = React.createClass({
@@ -33,7 +38,8 @@ var CompCertifyCopies = React.createClass({
             authFileId: newOrg.authFileId,
             corpIdentityFileId: newOrg.corpIdentityFileId,
             authIdentityFileId: newOrg.authIdentityFileId,
-            picEnough:newOrg.picEnough
+            picEnough: newOrg.picEnough,
+            data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item
         }
     },
 
@@ -65,6 +71,9 @@ var CompCertifyCopies = React.createClass({
         } else {
             Alert("请完整认证资料副本")
         }
+    },
+    back: function () {
+        this.props.navigator.pop();
     },
     selectPhoto(desc, name){
         if (Platform.OS === 'ios') {
@@ -167,7 +176,7 @@ var CompCertifyCopies = React.createClass({
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
             if (this.state[name].length == 24) {
-                url = {uri: userAction.getFile(this.state[name])}
+                url = {uri: UserAction.getFile(this.state[name])}
             } else {
                 url = {uri: this.state[name], isStatic: true};
             }
@@ -188,28 +197,83 @@ var CompCertifyCopies = React.createClass({
             )
         }
     },
-
+    returnAccount(){
+        let data = this.state.data
+        if (data.status == 'CERTIFIED' || data.status == 'AUDITING')
+            return (
+                <View>
+                    <Text style={{paddingTop:32,height:55,fontSize:15}}>关联账户信息</Text>
+                    <View
+                        style={{flexDirection:'row',height:95,paddingLeft:Adjust.width(20),backgroundColor:'white',borderRadius:5,alignItems:'center',borderWidth:1,borderColor:'#c8c8c8'}}>
+                        <Image style={{width:30,height:30,borderRadius:15,backgroundColor:'red'}}/>
+                        <View style={{marginLeft:Adjust.width(20),flexDirection:'row',alignItems:'center'}}>
+                            <Text style={{fontSize:18,color:'#333333'}}>账号：</Text>
+                            <Text style={{fontSize:15,color:'#7f7f7f'}}>
+                                {NumberHelper.formatNum(data.accountNo, 0, 6)}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            )
+    },
+    returnWarn(){
+        let status = this.state.data.status
+        return (
+            <View style={{marginTop:18, marginLeft:12}}>
+                { (()=> {
+                    if (status == 'REJECTED') {
+                        return (
+                            <Text style={{fontSize: 15, color: certificateState[status].colorA,paddingBottom:6}}>未通过，请点击修改错误材料</Text>
+                        )
+                    }
+                })()}
+                <View style={{flexDirection:"row"}}>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
+                        {certificateState[status].alter}
+                    </Text>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
+                        如遇问题,请
+                    </Text>
+                    <Text style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
+                        联系客服
+                    </Text>
+                </View>
+            </View>
+        )
+    },
+    returnTitle(){
+        let status = this.state.data.status;
+        if (status == 'AUDITING') {
+            return (
+                <View>
+                    <Space/>
+                    <View style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
+                        <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
+                        <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
+                    </View>
+                </View>
+            )
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
-                <View style={{flex:1,marginTop:32}}>
-
-                    <View style={{flexDirection:"row",marginHorizontal:12}}>
+                {this.returnTitle()}
+                <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
+                    <View style={{flexDirection:"row"}}>
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>营业执照副本</Text>
                             {this.returnItem('营业执照副本', 'licenseCopyFileId')}
                         </View>
-
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>法定代表人身份证</Text>
                             {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
                         </View>
                     </View>
 
-                    <View style={{flexDirection:"row",marginTop:10,marginHorizontal:12}}>
+                    <View style={{flexDirection:"row",marginTop:10}}>
                         <View style={{flex:1,flexDirection:"column"}}>
-                            <Text
-                                style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                            <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
                             {this.returnItem('法人授权委托证明书', 'authFileId')}
                         </View>
 
@@ -218,14 +282,11 @@ var CompCertifyCopies = React.createClass({
                             {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
                         </View>
                     </View>
-
-                    <View style={{ marginTop:18, marginLeft:12,flexDirection:"row"}}>
-                        <Text style={styles.communicate}>如遇问题,请</Text>
-                        <Text style={[styles.communicate,{textDecorationLine:"underline"}]}>联系客服</Text>
-                    </View>
-
+                    {this.returnAccount()}
+                    {this.returnWarn()}
                 </View>
-                <BottomButton func={this.next} content="下一步"/>
+                <BottomButton func={this[certificateState[this.state.data.status].button]}
+                              content={certificateState[this.state.data.status].content}/>
             </NavBarView>
         )
     }
@@ -262,8 +323,7 @@ var styles = StyleSheet.create({
         color: "#333333"
     },
     communicate: {
-        fontSize: 15,
-        color: "#ff5b58",
+        fontSize: 15, color: "#ff5b58",
     }
 
 })

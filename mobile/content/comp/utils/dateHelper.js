@@ -69,6 +69,9 @@ module.exports = {
     },
     formatFlow(data){
         return dateFormat(new Date(data), 'yyyy.mm.dd')
+    },
+    returnDate(){
+        return 'RZ ' + dateFormat(new Date(), 'yyyy mmdd HHMM')
     }
 
 
