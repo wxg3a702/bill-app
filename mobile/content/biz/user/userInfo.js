@@ -37,7 +37,6 @@ var Alert = require('../../comp/utils/alert');
 var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
-        var orgBean = CompStore.getOrgBeans()[0];
         return {
             imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
@@ -50,7 +49,7 @@ var UserInfo = React.createClass({
             email: Validation.isNull(user.email) ? '未设置' : user.email,
             jobTitle: Validation.isNull(user.jobTitle) ? '未设置' : user.jobTitle,
             location: Validation.isNull(user.location) ? '未设置' : user.location,
-            comp: (orgBean.biStatus == 'CERTIFIED' && orgBean.cmStatus == 'CERTIFIED' && orgBean.raStatus == 'CERTIFIED') ? orgBean.orgName : '未设置',
+            comp: Validation.isNull(user.comp) ? '未设置' : user.comp,
             photoStoreId: user.photoStoreId
         };
     },
@@ -159,7 +158,10 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-        Alert('确定退出当前帐号?', {text: '确定', onPress: () => LoginAction.logOut()}, {text: '取消', onPress: null});
+        Alert(
+            '确定退出当前帐号?',
+            () => LoginAction.logOut(),
+            function(){})
     },
     button(){
         return (
@@ -172,10 +174,7 @@ var UserInfo = React.createClass({
         if (navigator) {
             navigator.push({
                 comp: nav,
-                param: {
-                    location: this.state.location
-                },
-                callBack: this.callBack
+                param: {location: this.state.location},
             });
         }
     },

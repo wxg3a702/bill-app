@@ -6,7 +6,7 @@ var {
     Dimensions,
     Text
     }=React
-var Adjust=require('../../comp/utils/adjust')
+var Adjust=require('../utils/adjust')
 var {width,height} = Dimensions.get('window');
 var Circle = React.createClass({
     getDefaultProps(){

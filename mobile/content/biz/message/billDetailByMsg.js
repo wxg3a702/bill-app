@@ -9,7 +9,7 @@ var {
   ListView,
   ScrollView
   } = React;
-var Circle = require('../billNew/circle')
+var Circle = require('../../comp/utilsUi/circle')
 var _ = require('lodash');
 var cssVar = require('cssVar');
 var VIcon = require('../../comp/icon/vIcon')

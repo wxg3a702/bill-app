@@ -60,7 +60,6 @@ var CompAccountInfo = React.createClass({
                 Alert("认证失败");
             })
     },
-
     textOnchange: function (text, type) {
         this.setState({[type]: text})
         if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
