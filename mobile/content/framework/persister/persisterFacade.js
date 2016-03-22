@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Realm = require('realm');
-const SCHEMA_KEY = '@realm:schema';
+const SCHEMA_KEY = 'persister';
 
 let PersisterSchema = {
     name: SCHEMA_KEY,
@@ -34,27 +34,58 @@ let PersisterFacade = {
     saveOrg: (org, cb) => _setItem('orgBeans', org, cb),
     saveMsgDetail: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
     saveMainMsgBean: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
-    saveDemoFlag: (flag, cb) => _setItem('demoFlag', flag, cb)
+    saveDemoFlag: (flag, cb) => _setDemoFlag(flag, cb),
 };
 
 let _clearToken = function () {
-    realm.delete(_persister);
+    _realm.write(() => {
+        // Delete multiple books by passing in a `Results`, `List`,
+        // or JavaScript `Array`
+        let data = _realm.objects(SCHEMA_KEY);
+        _realm.delete(data); // Deletes all books
+    });
 };
+//_clearToken();
 
 let _setItem = function (key, value, cb) {
     //let data = _realm.objects(SCHEMA_KEY)[0];
-    //realm.create(SCHEMA_KEY, _.assign(data, { key: value }), true);
+    //_realm.create(SCHEMA_KEY, _.assign(data, { key: value }), true);
 
-    _persister[key] = value;
-    realm.create(SCHEMA_KEY, _persister, true);
-    //if (cb)cb();
+    _persister[key] = JSON.stringify(value);
+    _realm.create(SCHEMA_KEY, _persister, true);
+    if (cb)cb();
+};
+
+let _setDemoFlag = function (value, cb) {
+    _persister['demoFlag'] = Boolean(value);
+    _realm.create(SCHEMA_KEY, _persister, true);
+    if (cb)cb();
 };
 
 
 let _getAppData = function (cb) {
-    //let data = _realm.objects(SCHEMA_KEY)[0];
-    //if (cb)cb(data);
-    if (cb)cb(_persister);
+    let data = _realm.objects(SCHEMA_KEY);
+    if (data.length > 0 && cb) {
+        _persister = data[0];
+        cb({
+            token: JSON.parse(_persister.token),
+            APNSToken: JSON.parse(_persister.APNSToken),
+            revBillBean: JSON.parse(_persister.revBillBean),
+            sentBillBean: JSON.parse(_persister.sentBillBean),
+            filterBeans: JSON.parse(_persister.filterBeans),
+            userInfoBean: JSON.parse(_persister.userInfoBean),
+            orgBeans: JSON.parse(_persister.orgBeans),
+            mainMsgBean: JSON.parse(_persister.mainMsgBean),
+            marketMsgBeans: JSON.parse(_persister.marketMsgBeans),
+            systemMsgBeans: JSON.parse(_persister.systemMsgBeans),
+            sentBillMsgBeans: JSON.parse(_persister.sentBillMsgBeans),
+            demoFlag: _persister.demoFlag
+        });
+    } else {
+        cb({});
+    }
+
+    //if (cb)cb(_persister);
 };
 
 let _saveAppData = function (data) {
@@ -62,7 +93,7 @@ let _saveAppData = function (data) {
     _realm.write(() => {
         _persister = _realm.create(SCHEMA_KEY, {
             token: JSON.stringify(data.token),
-            APNSToken: '',
+            APNSToken: JSON.stringify(''),
             revBillBean: JSON.stringify(data.revBillBean),
             sentBillBean: JSON.stringify(data.sentBillBean),
             filterBeans: JSON.stringify(data.filterBeans),
@@ -72,7 +103,7 @@ let _saveAppData = function (data) {
             marketMsgBeans: JSON.stringify(data.marketMsgBeans),
             systemMsgBeans: JSON.stringify(data.systemMsgBeans),
             sentBillMsgBeans: JSON.stringify(data.sentBillMsgBeans),
-            demoFlag: JSON.stringify(data.demoFlag)
+            demoFlag: Boolean(data.demoFlag)
         });
     });
 };
