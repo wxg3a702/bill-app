@@ -73,7 +73,6 @@ var UserInfo = React.createClass({
                 }
             )
         }.bind(this));*/
-
     },
 
     componentWillUnmount: function () {

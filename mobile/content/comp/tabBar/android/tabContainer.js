@@ -11,7 +11,7 @@ var {
   PropTypes,
   InteractionManager,
   } = React;
-var ViewPagerAndroid = require('./ZXViewPager');
+
 
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
@@ -110,6 +110,7 @@ var ScrollableTabView = React.createClass({
         </ScrollView>
       );
     } else {
+      var ViewPagerAndroid = require('./ZXViewPager');
       return (
         <ViewPagerAndroid
           style={styles.scrollableContentAndroid}

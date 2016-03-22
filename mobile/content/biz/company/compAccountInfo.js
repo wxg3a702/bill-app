@@ -52,13 +52,7 @@ var CompAccountInfo = React.createClass({
                 reservedMobileNo: this.state.reservedMobileNo
             }
         );
-        CompAction.submitOrg(this.state.newOrg,
-            function ( ) {
-                Alert("认证成功");
-            },
-            function () {
-                Alert("认证失败");
-            })
+        CompAction.submitOrg(this.state.newOrg, ()=> Alert("认证成功"), ()=>Alert("认证失败"))
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})

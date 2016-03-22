@@ -131,7 +131,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                         beginCrop(uri);
                     }else{
                         response.putString("uri",uri.toString());
-                        mCallback.invoke(uri);
+                        mCallback.invoke(response);
                     }
                 }
 
@@ -145,7 +145,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                     beginCrop(uri);
                 }else{
                     response.putString("uri",uri.toString());
-                    mCallback.invoke(uri);
+                    mCallback.invoke(response);
                 }
                 break;
             case Crop.REQUEST_CROP:
@@ -181,7 +181,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
             Log.d("Crop", Crop.getOutput(result) + "00");
             Uri uri = Crop.getOutput(result);
             response.putString("uri",uri.toString());
-            mCallback.invoke(uri);
+            mCallback.invoke(response);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(getCurrentActivity(), "裁剪出错", Toast.LENGTH_SHORT).show();
         }
