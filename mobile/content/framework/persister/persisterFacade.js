@@ -12,7 +12,7 @@ let PersisterSchema = {
         sentBillBean: {type: 'string'},
         filterBeans: {type: 'string'},
         userInfoBean: {type: 'string'},
-        orgBeans: {type: 'string'},
+        certifiedOrgBean: {type: 'string'},
         mainMsgBean: {type: 'string'},
         marketMsgBeans: {type: 'string'},
         systemMsgBeans: {type: 'string'},
@@ -31,7 +31,7 @@ let PersisterFacade = {
     saveAPNSToken: (apnsToken, cb) => _setItem('APNSToken', apnsToken, cb),
     setItem: (k, v, c) => _setItem(k, v, c),
     saveUser: (user, cb) => _setItem('userInfoBean', user, cb),
-    saveOrg: (org, cb) => _setItem('orgBeans', org, cb),
+    saveOrg: (org, cb) => _setItem('certifiedOrgBean', org, cb),
     saveMsgDetail: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
     saveMainMsgBean: (mainMsgBean, cb) => _setItem('mainMsgBean', mainMsgBean, cb),
     saveDemoFlag: (flag, cb) => _setDemoFlag(flag, cb),
@@ -48,12 +48,11 @@ let _clearToken = function () {
 //_clearToken();
 
 let _setItem = function (key, value, cb) {
-    //let data = _realm.objects(SCHEMA_KEY)[0];
-    //_realm.create(SCHEMA_KEY, _.assign(data, { key: value }), true);
-
-    _persister[key] = JSON.stringify(value);
-    _realm.create(SCHEMA_KEY, _persister, true);
-    if (cb)cb();
+    _realm.write(() => {
+        _persister[key] = JSON.stringify(value);
+        _realm.create(SCHEMA_KEY, _persister, true);
+        if (cb)cb();
+    });
 };
 
 let _setDemoFlag = function (value, cb) {
@@ -74,7 +73,7 @@ let _getAppData = function (cb) {
             sentBillBean: JSON.parse(_persister.sentBillBean),
             filterBeans: JSON.parse(_persister.filterBeans),
             userInfoBean: JSON.parse(_persister.userInfoBean),
-            orgBeans: JSON.parse(_persister.orgBeans),
+            certifiedOrgBean: JSON.parse(_persister.certifiedOrgBean),
             mainMsgBean: JSON.parse(_persister.mainMsgBean),
             marketMsgBeans: JSON.parse(_persister.marketMsgBeans),
             systemMsgBeans: JSON.parse(_persister.systemMsgBeans),
@@ -98,7 +97,8 @@ let _saveAppData = function (data) {
             sentBillBean: JSON.stringify(data.sentBillBean),
             filterBeans: JSON.stringify(data.filterBeans),
             userInfoBean: JSON.stringify(data.userInfoBean),
-            orgBeans: JSON.stringify(data.orgBeans),
+            certifiedOrgBean: JSON.stringify(data.certifiedOrgBean),
+            newOrg: JSON.stringify(data.newOrg),
             mainMsgBean: JSON.stringify(data.mainMsgBean),
             marketMsgBeans: JSON.stringify(data.marketMsgBeans),
             systemMsgBeans: JSON.stringify(data.systemMsgBeans),

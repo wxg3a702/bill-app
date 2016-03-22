@@ -22,7 +22,6 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
-import com.mobile.MainActivity;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -38,7 +37,8 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     private static final int USER_CAMERA_REQUEST_CODE = 0x02;
     private Callback mCallback ;
     private boolean crop;
-    private WritableMap response = Arguments.createMap();;
+    private String fileName;
+    private WritableMap response;
     public UserPhotoPicModule(ReactApplicationContext reactContext) {
         super(reactContext);
         reactContext.addActivityEventListener(this);
@@ -50,8 +50,9 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     }
 
     @ReactMethod
-    public void showImagePic(boolean needCrop , final Callback callback) {
+    public void showImagePic(boolean needCrop ,String name, final Callback callback) {
         crop = needCrop;
+        fileName = name;
         Activity currentActivity = getCurrentActivity();
         String[] items = {"拍照上传", "本地上传"};
         new AlertDialog.Builder(currentActivity)
@@ -130,6 +131,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                     if (crop){
                         beginCrop(uri);
                     }else{
+                        response = Arguments.createMap();
                         response.putString("uri",uri.toString());
                         mCallback.invoke(response);
                     }
@@ -144,6 +146,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                 if (crop){
                     beginCrop(uri);
                 }else{
+                    response = Arguments.createMap();
                     response.putString("uri",uri.toString());
                     mCallback.invoke(response);
                 }
@@ -180,6 +183,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
         if (resultCode == Activity.RESULT_OK) {
             Log.d("Crop", Crop.getOutput(result) + "00");
             Uri uri = Crop.getOutput(result);
+            response = Arguments.createMap();
             response.putString("uri",uri.toString());
             mCallback.invoke(response);
         } else if (resultCode == Crop.RESULT_ERROR) {
@@ -193,7 +197,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
         if (!tmpDir.exists()) {
             tmpDir.mkdir();
         }
-        File image = new File(tmpDir.getAbsolutePath() + "/" + "avater.png");
+        File image = new File(tmpDir.getAbsolutePath() + "/" + fileName +".png");
         try {
             FileOutputStream fos = new FileOutputStream(image);
             bm.compress(Bitmap.CompressFormat.PNG, 85, fos);
