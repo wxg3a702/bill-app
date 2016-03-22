@@ -58,7 +58,7 @@ var UserInfo = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
-        DeviceEventEmitter.addListener('getPicture', function (e:Event) {
+       /* DeviceEventEmitter.addListener('getPicture', function (e:Event) {
             // handle event.
             this.setState({
                 imageSource: e.uri
@@ -72,7 +72,8 @@ var UserInfo = React.createClass({
                     Alert("上传失败");
                 }
             )
-        }.bind(this));
+        }.bind(this));*/
+
     },
 
     componentWillUnmount: function () {
@@ -134,7 +135,21 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic();
+        PhotoPic.showImagePic(true,(response)=>{
+            console.log('Response = ', response);
+            this.setState({
+                imageSource: response.uri
+            });
+            UserAction.updateUserHead(
+                {['photoStoreId']: this.state.imageSource},
+                function () {
+                    Alert("上传成功");
+                },
+                function () {
+                    Alert("上传失败");
+                }
+            )
+        });
     },
 
     toEdit: function (title, name, value, type, maxLength, valid) {
