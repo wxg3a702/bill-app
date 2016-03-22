@@ -1,6 +1,3 @@
-/**
- * Created by vison on 16/3/14.
- */
 'use strict';
 
 var React = require('react-native');
@@ -10,14 +7,15 @@ var {
     Text,
     Image,
     View,
+    ScrollView,
     Dimensions,
     Platform
     } = React;
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
 var UserAction = require('../../framework/action/userAction')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
@@ -247,7 +245,8 @@ var CompCertifyCopies = React.createClass({
             return (
                 <View>
                     <Space/>
-                    <View style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
+                    <View
+                        style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
                         <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
                         <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
                     </View>
@@ -258,35 +257,39 @@ var CompCertifyCopies = React.createClass({
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
-                {this.returnTitle()}
-                <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
-                    <View style={{flexDirection:"row"}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>营业执照副本</Text>
-                            {this.returnItem('营业执照副本', 'licenseCopyFileId')}
-                        </View>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>法定代表人身份证</Text>
-                            {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
-                        </View>
-                    </View>
-
-                    <View style={{flexDirection:"row",marginTop:10}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                            {this.returnItem('法人授权委托证明书', 'authFileId')}
+                <ScrollView>
+                    {this.returnTitle()}
+                    <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
+                        <View style={{flexDirection:"row"}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>营业执照副本</Text>
+                                {this.returnItem('营业执照副本', 'licenseCopyFileId')}
+                            </View>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>法定代表人身份证</Text>
+                                {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
+                            </View>
                         </View>
 
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                            {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                        <View style={{flexDirection:"row",marginTop:10}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                                {this.returnItem('法人授权委托证明书', 'authFileId')}
+                            </View>
+
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
+                                {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                            </View>
                         </View>
+                        {this.returnAccount()}
+                        {this.returnWarn()}
+                        <ListBottom/>
                     </View>
-                    {this.returnAccount()}
-                    {this.returnWarn()}
-                </View>
+                </ScrollView>
                 <BottomButton func={this[certificateState[this.state.data.status].button]}
                               content={certificateState[this.state.data.status].content}/>
+
             </NavBarView>
         )
     }
