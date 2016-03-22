@@ -59,7 +59,7 @@ var _setItem = function (key, value, cb) {
 
 var _getAppData = function (cb) {
     AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'certifiedOrgBean'
-        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag','newOrg']).then(
+        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag', 'newOrg']).then(
         (data) => {
             var dataJson = {};
             data.map((item, index)=> {
@@ -76,7 +76,7 @@ var _saveAppData = function (data) {
         ["filterBeans", JSON.stringify(data.filterBeans)],
         ["userInfoBean", JSON.stringify(data.userInfoBean)],
         ["token", JSON.stringify(data.token)],
-        ["certifiedOrgBean", JSON.stringify(data.certifiedOrgBean)],
+        ["certifiedOrgBean", JSON.stringify(!data.certifiedOrgBean ? '' : data.certifiedOrgBean)],
         ["mainMsgBean", JSON.stringify(data.mainMsgBean)],
         ["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
         ["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],
