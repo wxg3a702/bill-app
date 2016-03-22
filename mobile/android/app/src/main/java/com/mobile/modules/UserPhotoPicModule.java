@@ -21,6 +21,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.mobile.MainActivity;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -165,11 +166,10 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
         if (resultCode == Activity.RESULT_OK) {
             Log.d("Crop", Crop.getOutput(result) + "00");
             Uri uri = Crop.getOutput(result);
-/*
             WritableMap params = Arguments.createMap();
             params.putString("uri", uri.toString());
-            ReactContext reactContext = mReactInstanceManager.getCurrentReactContext();
-            sendEvent(reactContext, "getPicture", params);*/
+            ReactContext reactContext = MainActivity.getContext();
+            sendEvent(reactContext, "getPicture", params);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(getCurrentActivity(), "裁剪出错", Toast.LENGTH_SHORT).show();
         }

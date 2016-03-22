@@ -15,14 +15,12 @@ var {
     } = React;
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utilsUi/button')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CompCertifyCopies = React.createClass({
