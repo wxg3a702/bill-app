@@ -23,7 +23,6 @@ public class ZXReactPackage implements ReactPackage {
         List<NativeModule> modules = new ArrayList<>();
         modules.add(new UserPhotoPicModule(reactContext));
         modules.add(new DatePickerDialogModule(reactContext));
-        modules.add(new CertifyPhotoPicModule(reactContext));
         return modules;
     }
 

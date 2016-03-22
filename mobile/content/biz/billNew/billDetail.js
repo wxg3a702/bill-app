@@ -13,39 +13,57 @@ var {
     } = React;
 var _ = require('lodash');
 var Adjust = require('../../comp/utils/adjust')
-var Circle = require('./circle')
+var Circle = require('./../../comp/utilsUi/circle')
 var BillAction = require("../../framework/action/billAction");
 var {width,height} = Dimensions.get('window');
 var Space = require('../../comp/utilsUi/space');
 var DateHelper = require('../../comp/utils/dateHelper');
 var BottomButton = require('../../comp/utilsUi/bottomButton');
 var NavBarView = require('../../framework/system/navBarView');
-var BillStates = require('./billStates');
+var BillStates = require('./../../constants/billStates');
 var BillContent = require('./billContent')
+var BillStore = require('../../framework/store/billStore')
 var NumberHelper = require('../../comp/utils/numberHelper')
 var ApplyDis = require('../bill/applyDiscount')
 var Alert = require('../../comp/utils/alert')
+var AppStore = require('../../framework/store/appStore');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var BillDetail = React.createClass({
-    getInitialState(){
-        let item = this.props.param.item;
+    getStateFromStores(){
+        let id = this.props.param.item.billId
+        let item = BillStore.getBill(id)
+        //let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
-        if (!flow) {
-            flow = ''
-        } else {
-            if (!item.new) {
-                flow[flow.length - 1].new = true;
-                flow = _(flow).reverse().value();
-                item.new = true;
-            }
-        }
+        flow[0].new = true
+        //if (!flow) {
+        //    flow = ''
+        //} else {
+        //    if (!item.new) {
+        //        flow[flow.length - 1].new = true;
+        //        flow = _(flow).reverse().value();
+        //        item.new = true;
+        //    }
+        //}
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',
             dataSource: flow
         }
+    },
+    getInitialState: function () {
+        return this.getStateFromStores();
+    },
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
+    },
+
+    componentWillUnmount: function () {
+        AppStore.removeChangeListener(this._onChange);
+    },
+    _onChange: function () {
+        this.setState(this.getStateFromStores());
     },
     func(key){
         const {navigator}=this.props
@@ -69,7 +87,9 @@ var BillDetail = React.createClass({
                         Alert("撤销成功!", ()=>this.goBack());
                     }.bind(this),
                     function () {
-                    })
+                    }
+                ), function () {
+                }
             )
         }
     },

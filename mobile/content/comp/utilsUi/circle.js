@@ -6,7 +6,7 @@ var {
     Dimensions,
     Text
     }=React
-var Adjust=require('../../comp/utils/adjust')
+var Adjust = require('../utils/adjust')
 var {width,height} = Dimensions.get('window');
 var Circle = React.createClass({
     getDefaultProps(){
@@ -24,9 +24,7 @@ var Circle = React.createClass({
                     <View style={[{borderColor:'rgb(219,219,219)'},styles.circle1]}/>
                     <View style={[{backgroundColor:'rgb(208,208,208)'},styles.circle2]}/>
                     <View style={[{backgroundColor:'rgb(172,172,172)'},styles.circle3]}/>
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={styles.content}>{this.props.content}</Text>
-                    </View>
+                    <Text style={styles.content}>{this.props.content}</Text>
                     <Text style={styles.date}>{this.props.date}</Text>
                 </View>
             )

@@ -64,36 +64,6 @@ var AppStore = assign({}, EventEmitter.prototype, {
     },
 });
 
-var _initOrgBean = function () {
-    if (_data.orgBeans == null || typeof (_data.orgBeans) == 'undefined' || typeof(_data.orgBeans[0]) == 'undefined') {
-        var defaultAdd = '../../image/user/defaultAdd.png';
-        var orgBean = ({
-            orgCode: '',
-            orgName: '',
-            email: '',
-            address: '',
-            orgType: '',
-            bizLicenseRegNo: '',
-            bizLicenseRegLoc: '',
-            foundationDate: '',
-            businessTerm: '',
-            businessScope: '',
-            registeredCapital: '',
-            accountName: '',
-            accountNo: '',
-            reservedMobileNo: '',
-            licenseCopyFileId: '',
-            authFileId: '',
-            corpIdentityFileId: '',
-            authIdentityFileId: '',
-            biStatus: 'UNAUDITING',
-            cmStatus: '',
-            raStatus: '',
-        })
-        _data.orgBeans = [orgBean]
-    }
-};
-//
 var _handleConnectivityChange = function (isConnected) {
     info.netWorkState = isConnected;
 }
@@ -112,7 +82,6 @@ var _appInit = function (data) {
         function (data) {
             info.initLoadingState = false;
             _data = data;
-            _initOrgBean();
             initNewOrg();
             info.isLogout = false;
             AppStore.emitChange();
@@ -121,7 +90,6 @@ var _appInit = function (data) {
 //
 var _login = function (data) {
     _data = data;
-    _initOrgBean();
     initNewOrg();
     AppStore.emitChange();
     Persister.getAppData((d) => {
@@ -179,7 +147,7 @@ var _allowBillDiscount = function (data) {
 var _rejectBillDiscount = function (data) {
     _data.sentBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
-            _data.sentBillBean.contentList[index].status = "IGN";
+            _data.sentBillBean.contentList[index] = data;
         }
     });
     AppStore.emitChange();
@@ -354,7 +322,6 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                 &&_data.newOrg.corpIdentityFileId != ''&&_data.newOrg.authIdentityFileId != ''){
                 _data.newOrg.picEnough = true;
             }
-            //_changeNewOrg();
             Persister.saveOrg(_data.newOrg);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();

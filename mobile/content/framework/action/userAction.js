@@ -1,5 +1,5 @@
 var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
-var async = require('async')
+var async = require('async');
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
 var ActionTypes = Command.ActionTypes;

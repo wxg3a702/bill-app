@@ -29,11 +29,10 @@ var CompCertification = React.createClass({
     getStateFromStores(){
         let ret = new Array();
         let i = 0;
-        var orgBean = CompStore.getOrgBeans();
+        var orgBean = CompStore.getCertifiedOrgBean();
         orgBean.map((item, index)=> {
-            if (item.biStatus != 'CERTIFIED') {
+            if (item.status != 'CERTIFIED') {
                 item.orgName = '认证企业信息' + ++i
-
             }
             ret.push(item)
         });
@@ -58,8 +57,13 @@ var CompCertification = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    toOther(name){
-        this.props.navigator.push({comp: name})
+    toOther(name, item){
+        this.props.navigator.push({
+            comp: name,
+            param: {
+                item: item
+            }
+        })
     },
 
     returnRow(data){
@@ -68,18 +72,34 @@ var CompCertification = React.createClass({
                 text: '删除',
                 backgroundColor: 'red',
                 onPress(){
-
+                    Alert('您确定要删除该机构么',
+                        ()=> {
+                            CompAction.deleteOrg(
+                                {orgId: data.id}
+                            ),
+                                function () {
+                                    Alert("删除成功!");
+                                }.bind(this),
+                                function () {
+                                }
+                        },
+                        function () {
+                        }
+                    )
                 }
             }
         ]
         return (
             <Swipeout right={swipeoutBtns}>
-                <TouchableHighlight onPress={()=>this.toOther()}>
+                <TouchableHighlight onPress={()=>this.toOther(CompCertifyCopies,data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{width:width-Adjust.width(90)}}>{data.orgName}</Text>
-                            <Text
-                                style={{width:Adjust.width(50),color:certificateState[data.biStatus].color}}>{certificateState[data.biStatus].desc}</Text>
+                            <Text style={{width:width-Adjust.width(90)}}>
+                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
+                            </Text>
+                            <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
+                                {certificateState[data.status].desc}
+                            </Text>
                             <VIcon/>
                         </View>
                     </View>
