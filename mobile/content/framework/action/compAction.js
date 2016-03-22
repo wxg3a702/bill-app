@@ -7,11 +7,23 @@ var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
 var CompAction = {
-
     updateCompBaseInfo: (p, c, f)=> _updateCompBaseInfo(p, c, f),
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
-    getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f)
+    getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f),
+    deleteOrg: (p, c, f)=>PFetch(api + '/Organization/deleteOrg', p, c, f),
+    updateDefaultOrgByUser: (p, c, f)=>_updateDefaultOrgByUser(p, c, f)
+}
+var _updateDefaultOrgByUser = function (p, c, f) {
+    PFetch(api + '/Organization/updateDefaultOrgByUser',
+        {orgId: p.orgId}, function (msg) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.UPDATE_USERINFO,
+                data: {comp: p.comp}
+            })
+            c(msg);
+        }, f
+    )
 }
 var _updateNewOrgInfo = function (p, c, f) {
     AppDispatcher.dispatch({
@@ -39,6 +51,7 @@ var _submitOrg = function (p, c, f) {
             if (err) {
                 f();
             } else {
+                //CompAction.updateNewOrgInfo({licenseCopyFileId: res[0]['licenseCopyFileId'].fileId});
                 BFetch(api + "/Organization/updateOrg", p,
                     function (res) {
                         c()

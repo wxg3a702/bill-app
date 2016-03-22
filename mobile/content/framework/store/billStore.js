@@ -1,4 +1,3 @@
-var React = require('react-native');
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var AppStore = require('./appStore')
@@ -9,7 +8,27 @@ var BillStore = assign({}, EventEmitter.prototype, {
     getSentBill: ()=>AppStore.getData().sentBillBean,
 
     getRevBill: ()=>AppStore.getData().revBillBean,
-
+    getBill: (id)=> {
+        let bill = AppStore.getData();
+        let res;
+        if (!bill.revBillBean) {
+        } else {
+            bill.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == id) {
+                    res=item
+                }
+            })
+        }
+        if (!bill.sentBillBean) {
+        } else {
+            bill.sentBillBean.map((item, index)=> {
+                if (item.billId == id) {
+                    res=item
+                }
+            })
+        }
+        return res;
+    },
     getBillSentViewItems(status){
         if (status == "" || status === null || status === undefined)
             return AppStore.getData().sentBillBean.contentList

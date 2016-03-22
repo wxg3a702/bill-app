@@ -31,13 +31,12 @@ var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var Space = require('../../comp/utilsUi/space')
-var PhotoPic = require('NativeModules').PhotoPicModule;
+var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var Alert = require('../../comp/utils/alert');
 
 var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
-        var orgBean = CompStore.getOrgBeans()[0];
         return {
             imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
@@ -50,7 +49,7 @@ var UserInfo = React.createClass({
             email: Validation.isNull(user.email) ? '未设置' : user.email,
             jobTitle: Validation.isNull(user.jobTitle) ? '未设置' : user.jobTitle,
             location: Validation.isNull(user.location) ? '未设置' : user.location,
-            comp: (orgBean.biStatus == 'CERTIFIED' && orgBean.cmStatus == 'CERTIFIED' && orgBean.raStatus == 'CERTIFIED') ? orgBean.orgName : '未设置',
+            comp: Validation.isNull(user.comp) ? '未设置' : user.comp,
             photoStoreId: user.photoStoreId
         };
     },
@@ -65,7 +64,13 @@ var UserInfo = React.createClass({
                 imageSource: e.uri
             });
             UserAction.updateUserHead(
-                { ['photoStoreId']: this.state.imageSource}
+                {['photoStoreId']: this.state.imageSource},
+                function () {
+                    Alert("上传成功");
+                },
+                function () {
+                    Alert("上传失败");
+                }
             )
         }.bind(this));
     },
@@ -92,6 +97,8 @@ var UserInfo = React.createClass({
             videoQuality: 'high', // 'low', 'medium', or 'high'
             maxWidth: 100, // photos only
             maxHeight: 100, // photos only
+            aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
+            aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
             quality: 1, // photos only
             allowsEditing: true, // Built in iOS functionality to resize/reposition the image
             noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
@@ -151,8 +158,10 @@ var UserInfo = React.createClass({
         }
     },
     logout: function () {
-
-        Alert('确定退出当前帐号?',{text:'确定', onPress:() => LoginAction.logOut()},{text:'取消',onPress:null});
+        Alert(
+            '确定退出当前帐号?',
+            () => LoginAction.logOut(),
+            function(){})
     },
     button(){
         return (
@@ -165,7 +174,7 @@ var UserInfo = React.createClass({
         if (navigator) {
             navigator.push({
                 comp: nav,
-                param: {location: this.state.location}
+                param: {location: this.state.location},
             });
         }
     },
@@ -173,10 +182,8 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 24) {
+            if (this.state.photoStoreId.length == 58) {
                 url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            } else {
-                url = {uri: this.state.photoStoreId, isStatic: true};
             }
         }
         return url;

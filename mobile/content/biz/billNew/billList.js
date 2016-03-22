@@ -24,7 +24,7 @@ var Login = require('../login/login')
 var BillStore = require('../../framework/store/billStore');
 var BillDetail = require('./billDetail')
 var VIcon = require('../../comp/icon/vIcon')
-var BillStates = require('./billStates')
+var BillStates = require('./../../constants/billStates')
 var Validation = require('../../comp/utils/validation')
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,

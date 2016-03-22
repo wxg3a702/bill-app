@@ -14,10 +14,13 @@ var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var NavBarView = require('../../framework/system/navBarView')
 var dateFormat = require('dateformat')
 var date = dateFormat(new Date(), 'yyyy-mm-dd');
-var year = Array(200).fill({}).map((obj, index)=>obj = {
-    name: 1949 + index + "年",
-    value: 1949 + index
-})
+var year = Array(200).fill({}).map(
+    (obj, index)=>
+        obj = {
+            name: 1949 + index + "年",
+            value: 1949 + index
+        }
+)
 var month = Array(12).fill({}).map((obj, index)=>obj = {name: 1 + index + "月", value: 1 + index})
 var day = Array(31).fill({}).map((obj, index)=>obj = {name: 1 + index + "日", value: 1 + index})
 var dismissKeyboard = require('react-native-dismiss-keyboard');
