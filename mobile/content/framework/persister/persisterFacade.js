@@ -14,6 +14,7 @@ var Actions = {
     setItem: (k, v, c)=>_setItem(k, v, c),
     saveUser: (p, c)=>_saveUser(p, c),
     saveOrg: (p, c)=>_saveOrg(p, c),
+    saveNewOrg: (p, c)=>_saveNewOrg(p, c),
     saveAPNSToken: (p)=>_saveAPNSToken(p),
     saveMsgDetail: (p)=>_saveMsgDetail(p),
     saveDemoFlag: (p)=>_saveDemoFlag(p),
@@ -25,6 +26,10 @@ var Actions = {
 
 var _saveUser = function (user, cb) {
     _setItem('userInfoBean', user, cb);
+}
+
+var _saveNewOrg = function (user, cb) {
+    _setItem('newOrg', user, cb);
 }
 
 var _saveOrg = function (user, cb) {
@@ -81,7 +86,8 @@ var _saveAppData = function (data) {
         ["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
         ["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],
         ["sentBillMsgBeans", JSON.stringify(data.sentBillMsgBeans)],
-        ["demoFlag", JSON.stringify(data.demoFlag)]
+        ["demoFlag", JSON.stringify(data.demoFlag)],
+        ["newOrg", JSON.stringify(!data.newOrg ? '' : data.newOrg)]
     ])
 }
 
