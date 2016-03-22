@@ -6,24 +6,16 @@
 var React = require('react-native');
 var {
     StyleSheet,
-    TouchableHighlight,
-    CameraRoll,
-    Text,
-    Image,
     View,
-    Platform
     } = React;
-var Space = require('../../comp/utilsUi/space')
-var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
-var CompAction = require("../../framework/action/compAction")
-var NavBarView = require('../../framework/system/navBarView')
+var CompAction = require("../../framework/action/compAction");
+var NavBarView = require('../../framework/system/navBarView');
 var certificateState = require('../../constants/certificateState');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utilsUi/button')
+var Button = require('../../comp/utilsUi/button');
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
         var newOrg = CompStore.getNewOrg();
@@ -60,13 +52,12 @@ var CompAccountInfo = React.createClass({
                 reservedMobileNo: this.state.reservedMobileNo
             }
         );
-
         CompAction.submitOrg(this.state.newOrg,
             function ( ) {
-                Alert();
+                Alert("认证成功");
             },
             function () {
-                Alert();
+                Alert("认证失败");
             })
     },
     textOnchange: function (text, type) {

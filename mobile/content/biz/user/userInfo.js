@@ -31,7 +31,7 @@ var window = Dimensions.get('window');
 var Item = require('../../comp/utils/item');
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var Space = require('../../comp/utilsUi/space')
-var PhotoPic = require('NativeModules').PhotoPicModule;
+var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var Alert = require('../../comp/utils/alert');
 
 var UserInfo = React.createClass({
@@ -64,7 +64,13 @@ var UserInfo = React.createClass({
                 imageSource: e.uri
             });
             UserAction.updateUserHead(
-                {['photoStoreId']: this.state.imageSource}
+                {['photoStoreId']: this.state.imageSource},
+                function () {
+                    Alert("上传成功");
+                },
+                function () {
+                    Alert("上传失败");
+                }
             )
         }.bind(this));
     },
@@ -91,6 +97,8 @@ var UserInfo = React.createClass({
             videoQuality: 'high', // 'low', 'medium', or 'high'
             maxWidth: 100, // photos only
             maxHeight: 100, // photos only
+            aspectX: 1, // aspectX:aspectY, the cropping image's ratio of width to height
+            aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
             quality: 1, // photos only
             allowsEditing: true, // Built in iOS functionality to resize/reposition the image
             noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
@@ -174,10 +182,8 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 24) {
+            if (this.state.photoStoreId.length == 58) {
                 url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            } else {
-                url = {uri: this.state.photoStoreId, isStatic: true};
             }
         }
         return url;

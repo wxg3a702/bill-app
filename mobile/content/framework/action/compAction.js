@@ -51,6 +51,7 @@ var _submitOrg = function (p, c, f) {
             if (err) {
                 f();
             } else {
+                //CompAction.updateNewOrgInfo({licenseCopyFileId: res[0]['licenseCopyFileId'].fileId});
                 BFetch(api + "/Organization/updateOrg", p,
                     function (res) {
                         c()
