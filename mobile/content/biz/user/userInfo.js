@@ -178,9 +178,7 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 58) {
-                url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            }
+            url = {uri: UserAction.getFile(this.state.photoStoreId)}
         }
         return url;
     },

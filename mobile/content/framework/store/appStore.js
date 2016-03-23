@@ -308,6 +308,18 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             info.requestHandle = action.handle;
             AppStore.emitChange('rpc');
             break;
+        case ActionTypes.DELETE_ORGBEANS:
+            let con = new Array();
+            _data.certifiedOrgBean.map((item, index)=> {
+                if (action.data.orgId != item.id) {
+                    con.push(item)
+                }
+            })
+            _data.certifiedOrgBean = con
+            Persister.saveOrg(_data.certifiedOrgBean);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
         case ActionTypes.UPDATE_ORGBEANS:
             _data.newOrg = _.assign(_data.newOrg, action.data);
             if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''

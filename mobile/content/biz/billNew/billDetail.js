@@ -36,7 +36,11 @@ var BillDetail = React.createClass({
         let item = BillStore.getBill(id)
         //let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
-        flow[0].new = true
+        if (!flow) {
+            flow = ''
+        } else {
+            flow[0].new = true
+        }
         //if (!flow) {
         //    flow = ''
         //} else {
