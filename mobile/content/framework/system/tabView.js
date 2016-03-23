@@ -38,7 +38,7 @@ var TabView = React.createClass({
         mainMsgBean.messageBeans.forEach(function (object) {
           billSum += ((object.isRead) ? 0 : 1)
         });
-        //othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketMsgBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
+        othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketMsgBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
       }
       sum = billSum;
       var show = sum >= 99 ? "99+" : sum;
@@ -46,7 +46,7 @@ var TabView = React.createClass({
         PushNotificationIOS.setApplicationIconBadgeNumber(sum);
       }
       return {
-        //othMsgNum: othMsgNum,
+        othMsgNum: othMsgNum,
         billSum: show,
         token: token
       }

@@ -1,7 +1,7 @@
 var React = require('react-native');
 var {
-    AsyncStorage,
-    } = React;
+  AsyncStorage,
+  } = React;
 var Notification = require('../../constants/notification');
 var MsgContent = Notification.MsgContent;
 var Actions = {
@@ -23,26 +23,40 @@ var Actions = {
     setItem: (k, v, c)=>_setItem(k, v, c),
     saveUser: (p, c)=>_saveUser(p, c),
     saveOrg: (p, c)=>_saveOrg(p, c),
-    saveNewOrg: (p, c)=>_saveNewOrg(p, c),
     saveAPNSToken: (p)=>_saveAPNSToken(p),
     saveMsgDetail: (p)=>_saveMsgDetail(p),
     saveDemoFlag: (p)=>_saveDemoFlag(p),
     saveMainMsgBean: (p)=>_saveMainMsgBean(p)
     //getUnReadnum:
 }
-//?
+
+var ZxBillDataSchema = {
+    name: 'ZxBillData',
+    properties: {
+        name: 'string',
+        properties: {
+            revBillBean:"string",
+            sentBillBean:"string",
+            filterBeans:"string",
+            userInfoBean:"string",
+            token:"string",
+            orgBeans:"string",
+            mainMsgBean:"string",
+            marketMsgBeans:"string",
+            systemMsgBeans:"string",
+            sentBillMsgBeans:"string",
+            demoFlag:"boolean"
+        }
+    }
+};
 
 
 var _saveUser = function (user, cb) {
     _setItem('userInfoBean', user, cb);
 }
 
-var _saveNewOrg = function (user, cb) {
-    _setItem('newOrg', user, cb);
-}
-
 var _saveOrg = function (user, cb) {
-    _setItem('certifiedOrgBean', user, cb);
+    _setItem('orgBeans', user, cb);
 }
 
 var _saveAPNSToken = function (data, cb) {
@@ -72,15 +86,15 @@ var _setItem = function (key, value, cb) {
 
 
 var _getAppData = function (cb) {
-    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'certifiedOrgBean'
-        , 'demoFlag', 'newOrg']).then(
-        (data) => {
-            var dataJson = {};
-            data.map((item, index)=> {
-                dataJson[item[0]] = JSON.parse(item[1])
-            })
-            if (cb)cb(dataJson);
-        });
+    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'orgBeans'
+        , 'mainMsgBean', 'demoFlag']).then(
+      (data) => {
+          var dataJson = {};
+          data.map((item, index)=> {
+              dataJson[item[0]] = JSON.parse(item[1])
+          })
+          if (cb)cb(dataJson);
+      });
 }
 
 var _saveAppData = function (data) {
@@ -90,10 +104,12 @@ var _saveAppData = function (data) {
         ["filterBeans", JSON.stringify(data.filterBeans)],
         ["userInfoBean", JSON.stringify(data.userInfoBean)],
         ["token", JSON.stringify(data.token)],
-        ["orgBeans", JSON.stringify(data.orgBeans)]
-        ["certifiedOrgBean", JSON.stringify(!data.certifiedOrgBean ? '' : data.certifiedOrgBean)],
-        ["demoFlag", JSON.stringify(data.demoFlag)],
-        ["newOrg", JSON.stringify(!data.newOrg ? '' : data.newOrg)]
+        ["orgBeans", JSON.stringify(data.orgBeans)],
+        ["mainMsgBean", JSON.stringify(data.mainMsgBean)],
+        //["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
+        //["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],
+        //["sentBillMsgBeans", JSON.stringify(data.sentBillMsgBeans)],
+        ["demoFlag", JSON.stringify(data.demoFlag)]
     ])
 }
 var _getMsgData = function (cb) {
