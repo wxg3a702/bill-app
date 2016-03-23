@@ -58,21 +58,6 @@ var UserInfo = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
-       /* DeviceEventEmitter.addListener('getPicture', function (e:Event) {
-            // handle event.
-            this.setState({
-                imageSource: e.uri
-            });
-            UserAction.updateUserHead(
-                {['photoStoreId']: this.state.imageSource},
-                function () {
-                    Alert("上传成功");
-                },
-                function () {
-                    Alert("上传失败");
-                }
-            )
-        }.bind(this));*/
     },
 
     componentWillUnmount: function () {
@@ -134,19 +119,15 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(true,name,(response)=>{
+        PhotoPic.showImagePic(true, (response)=> {
             console.log('Response = ', response);
             this.setState({
                 imageSource: response.uri
             });
             UserAction.updateUserHead(
                 {['photoStoreId']: this.state.imageSource},
-                function () {
-                    Alert("上传成功");
-                },
-                function () {
-                    Alert("上传失败");
-                }
+                ()=>Alert("上传成功"),
+                ()=> Alert("上传失败")
             )
         });
     },
@@ -175,7 +156,8 @@ var UserInfo = React.createClass({
         Alert(
             '确定退出当前帐号?',
             () => LoginAction.logOut(),
-            function(){})
+            function () {
+            })
     },
     button(){
         return (

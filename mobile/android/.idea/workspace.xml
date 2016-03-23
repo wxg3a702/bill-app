@@ -5,273 +5,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99312884-e117-4b18-8130-f75404e64d8b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/._build.gradle" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/._src" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/generated/source/buildConfig/androidTest/debug/com/soundcloud/android/crop/test/BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/generated/source/buildConfig/debug/com/soundcloud/android/crop/BuildConfig.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/generated/source/r/androidTest/debug/com/soundcloud/android/crop/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/generated/source/r/androidTest/debug/com/soundcloud/android/crop/test/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/generated/source/r/debug/com/soundcloud/android/crop/R.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/R.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/aapt/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/classes.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-hdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-hdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-hdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-mdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-mdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-mdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-v21/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-xhdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-xhdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-xhdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable-xhdpi/crop__tile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/drawable/crop__texture.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/layout/crop__activity_crop.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/layout/crop__layout_done_cancel.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-ar/values-ar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-ca/values-ca.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-de/values-de.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-es/values-es.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-fr/values-fr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-in/values-in.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-it/values-it.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-ja/values-ja.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-ko/values-ko.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-land/values-land.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-large/values-large.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-pt/values-pt.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-ru/values-ru.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-sv/values-sv.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-tr/values-tr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-v21/values-v21.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-zh-rCN/values-zh-rCN.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values-zh-rTW/values-zh-rTW.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/debug/res/values/values.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/BuildConfig.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/Crop$Extra.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/Crop.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$3.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$4$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$4.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$5.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$6.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$Cropper$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity$Cropper.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropImageView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropUtil$BackgroundJob$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropUtil$BackgroundJob.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/CropUtil.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/HighlightView$HandleMode.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/HighlightView$ModifyMode.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/HighlightView.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/ImageViewTouchBase$1.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/ImageViewTouchBase$2.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/ImageViewTouchBase$Recycler.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/ImageViewTouchBase.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/Log.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/MonitoredActivity$LifeCycleAdapter.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/MonitoredActivity$LifeCycleListener.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/MonitoredActivity.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$attr.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$color.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$dimen.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$drawable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$id.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$layout.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$string.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$style.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R$styleable.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/R.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/classes/debug/com/soundcloud/android/crop/RotateBitmap.class" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/aidl/androidTest/debug/dependency.store" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/aidl/debug/dependency.store" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeAssets/androidTest/debug/merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeAssets/debug/merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeResources/androidTest/debug/merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeResources/debug/merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/packageResources/debug/merger.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/manifests/androidTest/debug/AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/manifests/tmp/manifestMerger5500337420830565251.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-hdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-hdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-hdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-mdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-mdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-mdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-v21/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-xhdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-xhdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-xhdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable-xhdpi/crop__tile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/drawable/crop__texture.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/layout/crop__activity_crop.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/layout/crop__layout_done_cancel.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-ar/values-ar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-ca/values-ca.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-de/values-de.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-es/values-es.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-fr/values-fr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-in/values-in.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-it/values-it.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-ja/values-ja.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-ko/values-ko.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-land/values-land.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-large/values-large.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-pt/values-pt.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-ru/values-ru.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-sv/values-sv.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-tr/values-tr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-v21/values-v21.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-zh-rCN/values-zh-rCN.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values-zh-rTW/values-zh-rTW.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/androidTest/debug/values/values.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-hdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-hdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-hdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-mdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-mdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-mdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-v21/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-xhdpi/crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-xhdpi/crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-xhdpi/crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable-xhdpi/crop__tile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable/crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/drawable/crop__texture.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/layout/crop__activity_crop.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/layout/crop__layout_done_cancel.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-ar/values-ar.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-ca/values-ca.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-de/values-de.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-es/values-es.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-fr/values-fr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-in/values-in.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-it/values-it.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-ja/values-ja.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-ko/values-ko.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-land/values-land.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-large/values-large.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-pt/values-pt.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-ru/values-ru.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-sv/values-sv.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-tr/values-tr.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-v21/values-v21.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-zh-rCN/values-zh-rCN.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values-zh-rTW/values-zh-rTW.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/res/debug/values/values.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/resources/resources-debug-androidTest.ap_" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/intermediates/symbols/androidTest/debug/R.txt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/outputs/aar/lib-debug.aar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/build/tmp/packageDebugJar/MANIFEST.MF" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/._androidTest" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/._main" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/._java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/._com" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/com/._soundcloud" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/._android" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/._crop" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/._BaseTestCase.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/androidTest/java/com/soundcloud/android/crop/._CropBuilderTest.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/._AndroidManifest.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/._java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/._res" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/._com" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/._soundcloud" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/._android" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/._crop" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._Crop.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropImageActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropImageView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._CropUtil.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._HighlightView.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._ImageViewTouchBase.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._Log.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._MonitoredActivity.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/java/com/soundcloud/android/crop/._RotateBitmap.java" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._drawable" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._drawable-hdpi" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._drawable-mdpi" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._drawable-v21" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._drawable-xhdpi" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._layout" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-ar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-ca" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-de" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-es" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-fr" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-in" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-it" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-ja" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-ko" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-land" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-large" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-pt" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-ru" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-sv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-tr" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-v21" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-zh-rCN" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/._values-zh-rTW" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-hdpi/._crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-mdpi/._crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-v21/._crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__divider.9.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__ic_cancel.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__ic_done.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable-xhdpi/._crop__tile.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable/._crop__selectable_background.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/drawable/._crop__texture.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/layout/._crop__activity_crop.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/layout/._crop__layout_done_cancel.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-ar/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-ca/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-de/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-es/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-fr/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-in/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-it/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-ja/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-ko/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-land/._dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-large/._dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-pt/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-ru/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-sv/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-tr/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-v21/._colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-zh-rCN/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values-zh-rTW/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values/._attrs.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values/._colors.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values/._dimens.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values/._strings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/src/main/res/values/._styles.xml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/build/intermediates/bundles/release/classes.jar" afterPath="$PROJECT_DIR$/lib/build/intermediates/bundles/release/classes.jar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/build/outputs/aar/lib-release.aar" afterPath="$PROJECT_DIR$/lib/build/outputs/aar/lib-release.aar" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/build/tmp/packageReleaseJar/MANIFEST.MF" afterPath="$PROJECT_DIR$/lib/build/tmp/packageReleaseJar/MANIFEST.MF" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mobile/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/mobile/modules/UserPhotoPicModule.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/mobile/modules/UserPhotoPicModule.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/company/compCertifyCopies.js" afterPath="$PROJECT_DIR$/../content/biz/company/compCertifyCopies.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/vison.xcuserdatad/UserInterfaceState.xcuserstate" afterPath="$PROJECT_DIR$/../ios/mobile.xcodeproj/project.xcworkspace/xcuserdata/vison.xcuserdatad/UserInterfaceState.xcuserstate" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../ios/mobile/Base.lproj/LaunchScreen.xib" afterPath="$PROJECT_DIR$/../ios/mobile/Base.lproj/LaunchScreen.xib" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/store/appStore.js" afterPath="$PROJECT_DIR$/../content/framework/store/appStore.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/constants/certificateState.js" afterPath="$PROJECT_DIR$/../content/constants/certificateState.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/constants/command.js" afterPath="$PROJECT_DIR$/../content/constants/command.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/company/compAccountInfo.js" afterPath="$PROJECT_DIR$/../content/biz/company/compAccountInfo.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/action/compAction.js" afterPath="$PROJECT_DIR$/../content/framework/action/compAction.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/company/compCertification.js" afterPath="$PROJECT_DIR$/../content/biz/company/compCertification.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/network/host.js" afterPath="$PROJECT_DIR$/../content/framework/network/host.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../index.ios.js" afterPath="$PROJECT_DIR$/../index.ios.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/lib.iml" afterPath="$PROJECT_DIR$/lib/lib.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeResources/release/merger.xml" afterPath="$PROJECT_DIR$/lib/build/intermediates/incremental/mergeResources/release/merger.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/message/messageList.js" afterPath="$PROJECT_DIR$/../content/biz/message/messageList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/persister/persisterFacade.js" afterPath="$PROJECT_DIR$/../content/framework/persister/persisterFacade.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/framework/action/userAction.js" afterPath="$PROJECT_DIR$/../content/framework/action/userAction.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../content/biz/user/userInfo.js" afterPath="$PROJECT_DIR$/../content/biz/user/userInfo.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -314,11 +62,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserPhotoPicModule.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserPhotoPicModule.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mobile/modules/UserPhotoPicModule.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.418251">
-              <caret line="199" column="71" selection-start-line="199" selection-start-column="63" selection-end-line="199" selection-end-column="71" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="182" column="47" selection-start-line="182" selection-start-column="47" selection-end-line="182" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -331,7 +79,12 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="297" column="21" selection-start-line="297" selection-start-column="21" selection-end-line="297" selection-end-column="21" />
-              <folding />
+              <folding>
+                <element signature="e#0#31295#0" expanded="false" />
+                <element signature="imports" expanded="false" />
+                <element signature="e#17302#17303#0" expanded="false" />
+                <element signature="e#17368#17369#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -346,10 +99,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
+      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
+            <state vertical-scroll-proportion="0.51520914">
               <caret line="121" column="14" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
               <folding />
             </state>
@@ -396,7 +149,6 @@
                 <element signature="e#50131#50132#0" expanded="false" />
                 <element signature="e#50459#50460#0" expanded="false" />
                 <element signature="e#50504#50505#0" expanded="false" />
-                <element signature="e#52166#52175#0" expanded="false" />
                 <element signature="e#54171#54172#0" expanded="false" />
                 <element signature="e#54213#54214#0" expanded="false" />
                 <element signature="e#54333#54334#0" expanded="false" />
@@ -5245,8 +4997,8 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="325" />
-    <option name="y" value="81" />
+    <option name="x" value="39" />
+    <option name="y" value="66" />
     <option name="width" value="1501" />
     <option name="height" value="947" />
   </component>
@@ -5289,28 +5041,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="android" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -5383,6 +5113,28 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="android" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -5579,8 +5331,8 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="325" y="81" width="1501" height="947" extended-state="0" />
-    <editor active="false" />
+    <frame x="39" y="66" width="1501" height="947" extended-state="1" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32918552" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3273165" sideWeight="0.48821798" order="7" side_tool="false" content_ui="tabs" />
@@ -5598,7 +5350,7 @@
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3287841" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22275531" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22275531" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2496318" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -5739,7 +5491,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="45" column="25" selection-start-line="45" selection-start-column="25" selection-end-line="45" selection-end-column="25" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -6034,11 +5785,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="221" column="24" selection-start-line="221" selection-start-column="16" selection-end-line="221" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2499#2500#0" expanded="false" />
-            <element signature="e#2536#2537#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -6046,7 +5792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="172" column="0" selection-start-line="172" selection-start-column="0" selection-end-line="172" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -6089,7 +5834,6 @@
             <element signature="e#50131#50132#0" expanded="false" />
             <element signature="e#50459#50460#0" expanded="false" />
             <element signature="e#50504#50505#0" expanded="false" />
-            <element signature="e#52166#52175#0" expanded="false" />
             <element signature="e#54171#54172#0" expanded="false" />
             <element signature="e#54213#54214#0" expanded="false" />
             <element signature="e#54333#54334#0" expanded="false" />
@@ -6106,19 +5850,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="121" column="14" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/Cellar/android-sdk/24.4.1_1/sources/android-23/android/os/MessageQueue.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="297" column="21" selection-start-line="297" selection-start-column="21" selection-end-line="297" selection-end-column="21" />
-          <folding />
+          <folding>
+            <element signature="e#0#31295#0" expanded="false" />
+            <element signature="imports" expanded="false" />
+            <element signature="e#17302#17303#0" expanded="false" />
+            <element signature="e#17368#17369#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -6142,11 +5883,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/mobile/modules/UserPhotoPicModule.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.418251">
-          <caret line="199" column="71" selection-start-line="199" selection-start-column="63" selection-end-line="199" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="182" column="47" selection-start-line="182" selection-start-column="47" selection-end-line="182" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51520914">
+          <caret line="121" column="14" selection-start-line="121" selection-start-column="14" selection-end-line="121" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
