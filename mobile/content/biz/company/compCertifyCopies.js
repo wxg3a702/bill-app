@@ -126,7 +126,7 @@ var CompCertifyCopies = React.createClass({
     },
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(false,(response)=>{
+        PhotoPic.showImagePic(false,name,(response)=>{
             console.log('Response = ', response);
             var source = response.uri;
             this.setState({

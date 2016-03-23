@@ -38,7 +38,7 @@ var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
         return {
-            imageSource: '',
+            imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
             newMobileNo: Validation.isNull(user.newMobileNo) ? '未设置' : user.newMobileNo,
