@@ -31,7 +31,7 @@ var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var newOrg = CompStore.getNewOrg();
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
         return {
             licenseCopyFileId: newOrg.licenseCopyFileId,
             authFileId: newOrg.authFileId,
@@ -126,7 +126,7 @@ var CompCertifyCopies = React.createClass({
     },
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(false,name,(response)=>{
+        PhotoPic.showImagePic(false, name, (response)=> {
             console.log('Response = ', response);
             var source = response.uri;
             this.setState({
@@ -140,24 +140,25 @@ var CompCertifyCopies = React.createClass({
     returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
-            if (this.state[name].length == 24) {
-                url = {uri: UserAction.getFile(this.state[name])}
-            } else {
-                url = {uri: this.state[name], isStatic: true};
-            }
-            return (
-                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-                                    activeOpacity={0.6} underlayColor="#ebf1f2">
-                    <Image style={[styles.image,styles.radius]}
-                           resizeMode="cover" source={url}/>
-                </TouchableHighlight>
-            )
+           // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
+            if (this.state[name].indexOf("@userId") > -1) {
+             url = {uri: UserAction.getFile(this.state[name])}
+             } else {
+             url = {uri: this.state[name], isStatic: true};
+             }
+             return (
+             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+             activeOpacity={0.6} underlayColor="#ebf1f2">
+             <Image style={[styles.image,styles.radius]}
+             resizeMode="cover" source={url}/>
+             </TouchableHighlight>
+             )
         } else {
             return (
                 <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
                                     activeOpacity={0.6} underlayColor="#ebf1f2">
                     <Image style={[styles.image,styles.radius]}
-                           resizeMode="cover" source={require('../../image/user/head.png')}/>
+                           resizeMode="cover" source={require('../../image/company/licence_copy.png')}/>
                 </TouchableHighlight>
             )
         }

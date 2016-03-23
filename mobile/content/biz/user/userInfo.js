@@ -119,7 +119,7 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(true, (response)=> {
+        PhotoPic.showImagePic(true, name, (response)=> {
             console.log('Response = ', response);
             this.setState({
                 imageSource: response.uri
@@ -178,9 +178,7 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 58) {
                 url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            }
         }
         return url;
     },
