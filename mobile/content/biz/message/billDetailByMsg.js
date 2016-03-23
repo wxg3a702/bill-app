@@ -18,6 +18,7 @@ var NavBarView = require('../../framework/system/navBarView');
 var Detail = require('../bill/billDetail');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
+var DateHelper = require('../../comp/utils/dateHelper');
 var mock = [
   {
     content: '2015年02月10日贴现',
@@ -66,9 +67,13 @@ var BillDetailByMsg = React.createClass({
   },
 
   getInitialState: function () {
+    let item = this.props.param.record;
+    let flow = item.billStatusTraceBeans;
+    flow[flow.length - 1].new = true;
+    flow = _(flow).reverse().value()
     return {
       loaded: false,
-      dataSource: mock
+      dataSource: flow
     };
   },
 
@@ -157,7 +162,7 @@ var BillDetailByMsg = React.createClass({
   },
   renderRow(data){
     return (
-      <Circle now={!data.isNow?false:true} content={data.content} date={data.date}/>
+      <Circle now={!data.isNow?false:true} content={data.traceMsg} date={DateHelper.formatFlow(data.createDate)}/>
     )
   },
   onAction(){
