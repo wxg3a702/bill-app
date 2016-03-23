@@ -8,9 +8,8 @@ var {
     Dimensions,
     View,
     ListView,
-    PanResponder
     } = React;
-var Adjust=require('../../comp/utils/adjust')
+var Adjust = require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
 var Space = require('../../comp/utilsUi/space')
@@ -26,35 +25,14 @@ var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
-var ret = new Array();
-var Button = require('../../comp/utilsUi/button')
-var res = [
-    {
-        id: 1,
-        name: '',
-        state: 'UNAUDITING'
-    }, {
-        id: 2,
-        name: '',
-        state: 'AUDITING',
-    }, {
-        id: 3,
-        name: '',
-        state: 'REJECTED'
-    }, {
-        id: 4,
-        name: '上海安硕信息网络技术有限公司',
-        state: 'CERTIFIED',
-    }
-]
 var CompCertification = React.createClass({
     getStateFromStores(){
+        let ret = new Array();
         let i = 0;
-        var orgBean = CompStore.getOrgBeans()[0];
-        res.map((item, index)=> {
-            if (!item.name) {
-                item.name = '认证企业信息' + ++i
-
+        var orgBean = CompStore.getCertifiedOrgBean();
+        orgBean.map((item, index)=> {
+            if (item.status != 'CERTIFIED') {
+                item.orgName = '认证企业信息' + ++i
             }
             ret.push(item)
         });
@@ -79,42 +57,60 @@ var CompCertification = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    toOther(name){
-        this.props.navigator.push({comp: name})
+    toOther(name, item){
+        this.props.navigator.push({
+            comp: name,
+            param: {
+                item: item
+            }
+        })
     },
 
     returnRow(data){
         var swipeoutBtns = [
             {
                 text: '删除',
-                backgroundColor:'red',
+                backgroundColor: 'red',
                 onPress(){
-
+                    Alert('您确定要删除该机构么',
+                        ()=> {
+                            CompAction.deleteOrg(
+                                {orgId: data.id}
+                            ),
+                                function () {
+                                    Alert("删除成功!");
+                                }.bind(this),
+                                function () {
+                                }
+                        },
+                        function () {
+                        }
+                    )
                 }
             }
         ]
         return (
             <Swipeout right={swipeoutBtns}>
-                <TouchableHighlight onPress={()=>this.toOther()}>
-
+                <TouchableHighlight onPress={()=>this.toOther(CompCertifyCopies,data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
-                            <Text style={{width:width-Adjust.width(90)}}>{data.name}</Text>
-                            <Text style={{width:Adjust.width(50),color:certificateState[data.state].color,}}>{certificateState[data.state].desc}</Text>
+                            <Text style={{width:width-Adjust.width(90)}}>
+                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
+                            </Text>
+                            <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
+                                {certificateState[data.status].desc}
+                            </Text>
                             <VIcon/>
                         </View>
                     </View>
-
                 </TouchableHighlight>
             </Swipeout>
         )
     },
     returnList(){
-        if (res.length == 0) {
+        if (this.state.bean.length == 0) {
             return (
-                <View>
-
-                </View>
+                <View/>
             )
         } else {
             return (

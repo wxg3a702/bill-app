@@ -4,35 +4,33 @@ var {
     View,
     ListView,
     Text,
-    ScrollView
+    ScrollView,
+    TouchableHighlight,
+    StyleSheet
     } = React;
 var AppStore = require('../../framework/store/appStore');
 var CompAction = require("../../framework/action/compAction")
+var CompStore = require('../../framework/store/compStore')
 var NavBarView = require('../../framework/system/navBarView')
-var SearchBar = require('react-native-search-bar')
+var SearchBar = require('../../comp/utilsUi/searchBar')
+
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
     sectionHeaderHasChanged: (s1, s2) => s1 !== s2
 });
-var res = [
-    {
-        id: 1,
-        name: '美国安硕信息网络技术有限公司',
-        state: 'CERTIFIED',
-    }, {
-        id: 2,
-        name: '上海安硕信息网络技术有限公司',
-        state: 'CERTIFIED',
-    }, {
-        id: 3,
-        name: '美国安硕信息网络技术有限公司',
-        state: 'CERTIFIED',
-    }
-]
 var EditComp = React.createClass({
     getStateFromStores(){
+        var comp = CompStore.getCertifiedOrgBean()
+        let res = new Array();
+        comp.map((item, index)=> {
+            if (!item.stdOrgBean) {
+            } else {
+                res.push(item.stdOrgBean)
+            }
+        })
         return {
-            dataSource: ds.cloneWithRows(res)
+            dataSource: ds.cloneWithRows(!res ? '' : res),
+            res: res
         }
     },
     getInitialState: function () {
@@ -51,40 +49,56 @@ var EditComp = React.createClass({
         this.setState(this.getStateFromStores());
     },
     pick(text){
-        var ret = new Array();
-        if (!text) {
-            ret = res
+        let res = this.state.res
+        if (!res) {
         } else {
-            res.map((item, index)=> {
-                if (item.name.indexOf(text) > -1) {
-                    ret.push(item)
-                }
-            })
+            var ret = new Array();
+            if (!text) {
+                ret = res
+            } else {
+                res.map((item, index)=> {
+                    if (item.orgName.indexOf(text) > -1) {
+                        ret.push(item)
+                    }
+                })
+            }
+            this.setState({dataSource: ds.cloneWithRows(ret)})
         }
-        this.setState({dataSource: ds.cloneWithRows(ret)})
+    },
+    setValue(data){
+        const { navigator } = this.props;
+        CompAction.updateDefaultOrgByUser(
+            {
+                orgId: data.id,
+                comp: data.orgName
+            }, function () {
+                navigator.pop()
+            },
+            function () {
+            }
+        )
     },
     returnItem(data){
         return (
-            <View style={{justifyContent:'center',height:50,paddingVertical:10,paddingLeft:10,backgroundColor:'white'}}>
-                <Text style={{fontSize:18}}>{data.name}</Text>
-            </View>
-        )
-    },
-    renderSectionHeader: function (sectionData, sectionID) {
-        return (
-            <View style={{flexDirection:'row',height:40,alignItems:'center',paddingLeft:10}}>
-                <Text>{sectionID}</Text>
-            </View>
+            <TouchableHighlight onPress={()=>this.setValue(data)} underlayColor='#7f7f7f'>
+                <View style={styles.content}>
+                    <Text style={{fontSize:18}}>{data.orgName}</Text>
+                </View>
+            </TouchableHighlight>
         )
     },
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="公司">
-                <SearchBar ref='searchBar' placeholder='Search' onChangeText={(text)=>this.pick(text)}/>
-                <ListView dataSource={this.state.dataSource} renderRow={this.returnItem}
-                          renderSectionHeader={this.renderSectionHeader}/>
+                <SearchBar onChange={this.pick}/>
+                <ListView dataSource={this.state.dataSource} renderRow={this.returnItem}/>
             </NavBarView>
         )
+    }
+})
+var styles = StyleSheet.create({
+    content: {
+        justifyContent: 'center', height: 50, paddingVertical: 10, paddingLeft: 10, backgroundColor: 'white'
     }
 })
 module.exports = EditComp;

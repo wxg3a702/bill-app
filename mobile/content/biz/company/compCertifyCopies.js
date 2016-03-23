@@ -7,34 +7,36 @@ var React = require('react-native');
 var {
     StyleSheet,
     TouchableHighlight,
-    CameraRoll,
     Text,
     Image,
     View,
     Dimensions,
     Platform
     } = React;
-var Adjust = require('../../comp/utils/adjust')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var Alert = require('../../comp/utils/alert');
-var Button = require('../../comp/utilsUi/button')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
-var PhotoPic = require('NativeModules').PhotoPicModule;
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = CompStore.getNewOrg();
+        return {
+            licenseCopyFileId: newOrg.licenseCopyFileId,
+            authFileId: newOrg.authFileId,
+            corpIdentityFileId: newOrg.corpIdentityFileId,
+            authIdentityFileId: newOrg.authIdentityFileId,
+            picEnough:newOrg.picEnough
+        }
     },
 
     getInitialState: function () {
-        return this.getStateFromStores();
+        return this.getStateFromStores()
     },
 
     componentDidMount() {
@@ -48,8 +50,19 @@ var CompCertifyCopies = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-        this.props.navigator.push({comp: CompAccountInfo});
+
+    next: function () {
+        const { navigator } = this.props;
+        if (this.state.picEnough) {
+            const { navigator } = this.props;
+            if (navigator) {
+                navigator.push({
+                    comp: CompAccountInfo,
+                })
+            }
+        } else {
+            Alert("请完整认证资料副本")
+        }
     },
     selectPhoto(desc, name){
         if (Platform.OS === 'ios') {
@@ -95,7 +108,7 @@ var CompCertifyCopies = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                UserAction.updateUserHead(
+                CompAction.updateNewOrgInfo(
                     {[name]: source}
                 )
             }
@@ -103,7 +116,75 @@ var CompCertifyCopies = React.createClass({
     },
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic();
+        //PhotoPic.showImagePic();
+        var options = {
+            cancelButtonTitle: '取消',
+            takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
+            chooseFromLibraryButtonTitle: '图库', // specify null or empty string to remove this button
+            cameraType: 'back', // 'front' or 'back'
+            mediaType: 'photo', // 'photo' or 'video'
+            videoQuality: 'high', // 'low', 'medium', or 'high'
+            durationLimit: 10, // video recording max time in seconds
+            maxWidth: 100, // photos only
+            maxHeight: 100, // photos only
+            aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
+            aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
+            angle: 0, // photos only
+            allowsEditing: false, // Built in functionality to resize/reposition the image
+            noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
+            storageOptions: { // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
+                skipBackup: true, // image will NOT be backed up to icloud
+                path: 'images' // will save image at /Documents/images rather than the root
+            }
+        };
+
+        ImagePickerManager.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            }
+            else if (response.error) {
+                console.log('ImagePickerManager Error: ', response.error);
+            }
+            else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            }
+            else {
+                var source = response;
+                this.setState({
+                    [name]: source
+                });
+                CompAction.updateNewOrgInfo(
+                    {[name]: source}
+                )
+            }
+        });
+    },
+    returnItem(desc, name){
+        var url = require('../../image/user/head.png');
+        if (!_.isEmpty(this.state[name])) {
+            if (this.state[name].length == 24) {
+                url = {uri: userAction.getFile(this.state[name])}
+            } else {
+                url = {uri: this.state[name], isStatic: true};
+            }
+            return (
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                    activeOpacity={0.6} underlayColor="#ebf1f2">
+                    <Image style={[styles.image,styles.radius]}
+                           resizeMode="cover" source={url}/>
+                </TouchableHighlight>
+            )
+        } else {
+            return (
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                    activeOpacity={0.6} underlayColor="#ebf1f2">
+                    <Image style={[styles.image,styles.radius]}
+                           resizeMode="cover" source={require('../../image/user/head.png')}/>
+                </TouchableHighlight>
+            )
+        }
     },
 
     render: function () {
@@ -114,20 +195,12 @@ var CompCertifyCopies = React.createClass({
                     <View style={{flexDirection:"row",marginHorizontal:12}}>
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>营业执照副本</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('营业执照副本', 'licenseCopyFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('营业执照副本', 'licenseCopyFileId')}
                         </View>
 
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={styles.copyName}>法定代表人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法定代表人身份证', 'corpIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
                         </View>
                     </View>
 
@@ -135,20 +208,12 @@ var CompCertifyCopies = React.createClass({
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text
                                 style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法人授权委托证明书', 'authFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('法人授权委托证明书', 'authFileId')}
                         </View>
 
                         <View style={{flex:1,flexDirection:"column"}}>
                             <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('授权经办人身份证', 'authIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                            {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
                         </View>
                     </View>
 
@@ -158,7 +223,7 @@ var CompCertifyCopies = React.createClass({
                     </View>
 
                 </View>
-                <BottomButton func={this.addComp} content="下一步"/>
+                <BottomButton func={this.next} content="下一步"/>
             </NavBarView>
         )
     }
@@ -185,7 +250,7 @@ var styles = StyleSheet.create({
     },
     image: {
         height: 113,
-        width: Dimensions.get("window").width / 2 - Adjust.width(20),
+        width: Dimensions.get("window").width / 2 - 20,
         backgroundColor: "#f0f0f0",
         marginTop: 5
     },

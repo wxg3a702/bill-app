@@ -20,26 +20,7 @@ var Actions = {
     saveMainMsgBean: (p)=>_saveMainMsgBean(p)
     //getUnReadnum:
 }
-
-var ZxBillDataSchema = {
-    name: 'ZxBillData',
-    properties: {
-        name: 'string',
-        properties: {
-            revBillBean:"string",
-            sentBillBean:"string",
-            filterBeans:"string",
-            userInfoBean:"string",
-            token:"string",
-            orgBeans:"string",
-            mainMsgBean:"string",
-            marketMsgBeans:"string",
-            systemMsgBeans:"string",
-            sentBillMsgBeans:"string",
-            demoFlag:"boolean"
-        }
-    }
-};
+//?
 
 
 var _saveUser = function (user, cb) {
@@ -47,7 +28,7 @@ var _saveUser = function (user, cb) {
 }
 
 var _saveOrg = function (user, cb) {
-    _setItem('orgBeans', user, cb);
+    _setItem('certifiedOrgBean', user, cb);
 }
 
 var _saveAPNSToken = function (data, cb) {
@@ -77,8 +58,8 @@ var _setItem = function (key, value, cb) {
 
 
 var _getAppData = function (cb) {
-    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'orgBeans'
-        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag']).then(
+    AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'certifiedOrgBean'
+        , 'mainMsgBean', 'marketMsgBeans', 'systemMsgBeans', 'sentBillMsgBeans', 'demoFlag','newOrg']).then(
         (data) => {
             var dataJson = {};
             data.map((item, index)=> {
@@ -95,7 +76,7 @@ var _saveAppData = function (data) {
         ["filterBeans", JSON.stringify(data.filterBeans)],
         ["userInfoBean", JSON.stringify(data.userInfoBean)],
         ["token", JSON.stringify(data.token)],
-        ["orgBeans", JSON.stringify(data.orgBeans)],
+        ["certifiedOrgBean", JSON.stringify(data.certifiedOrgBean)],
         ["mainMsgBean", JSON.stringify(data.mainMsgBean)],
         ["marketMsgBeans", JSON.stringify(data.marketMsgBeans)],
         ["systemMsgBeans", JSON.stringify(data.systemMsgBeans)],
