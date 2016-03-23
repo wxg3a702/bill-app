@@ -82,7 +82,6 @@ var _appInit = function (data) {
         function (data) {
             info.initLoadingState = false;
             _data = data;
-            initNewOrg();
             info.isLogout = false;
             AppStore.emitChange();
         })
@@ -109,7 +108,7 @@ var initNewOrg = function () {
         authIdentityFileId: '',
         accountName: '',
         accountNo: '',
-        reservedMobileNo: '',
+        openBank: '',
         picEnough: false,
     }
 }
@@ -309,20 +308,37 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             info.requestHandle = action.handle;
             AppStore.emitChange('rpc');
             break;
-        case ActionTypes.UPDATE_COMPBASEINFO:
-            _data.orgBeans[0] = _.assign(_data.orgBeans[0], action.data);
-            _data.userInfoBean = _.assign(_data.userInfoBean, action.data);
-            Persister.saveOrg(_data.orgBeans);
+        case ActionTypes.DELETE_ORGBEANS:
+            let con = new Array();
+            _data.certifiedOrgBean.map((item, index)=> {
+                if (action.data.orgId != item.id) {
+                    con.push(item)
+                }
+            })
+            _data.certifiedOrgBean = con
+            Persister.saveOrg(_data.certifiedOrgBean);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
+        case ActionTypes.UPDATE_ORGBEANS:
+            _data.newOrg = _.assign(_data.newOrg, action.data);
+            if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''
+                && _data.newOrg.corpIdentityFileId != '' && _data.newOrg.authIdentityFileId != '') {
+                _data.newOrg.picEnough = true;
+                _data.newOrg.status = 'UNAUDITING';
+            }
+            _data.certifiedOrgBean.push(_data.newOrg)
+            Persister.saveOrg(_data.certifiedOrgBean);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
         case ActionTypes.UPDATE_NEWORG:
             _data.newOrg = _.assign(_data.newOrg, action.data);
-            if (_data.newOrg.licenseCopyFileId != ''&&_data.newOrg.authFileId != ''
-                &&_data.newOrg.corpIdentityFileId != ''&&_data.newOrg.authIdentityFileId != ''){
+            if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''
+                && _data.newOrg.corpIdentityFileId != '' && _data.newOrg.authIdentityFileId != '') {
                 _data.newOrg.picEnough = true;
             }
-            Persister.saveOrg(_data.newOrg);
+            Persister.saveNewOrg(_data.newOrg);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;

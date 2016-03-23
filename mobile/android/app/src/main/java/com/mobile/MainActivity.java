@@ -25,7 +25,6 @@ import com.mobile.utils.AppUtils;
 import com.mobile.packages.ZXReactPackage;
 
 import io.realm.react.RealmReactPackage;
-import com.imagepicker.ImagePickerPackage; // import package
 
 public class MainActivity  extends Activity implements DefaultHardwareBackBtnHandler {
 
@@ -51,7 +50,6 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .addPackage(new MainReactPackage())
                 .addPackage(new ZXReactPackage())
                 .addPackage((ReactPackage)new RealmReactPackage())
-                .addPackage((ReactPackage) new ImagePickerPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();

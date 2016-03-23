@@ -38,9 +38,9 @@ var _updateUserHead = function (p, c, f) {
                 f();
             } else {
                 UserActions.updateUser(
-                    {photoStoreId: res[0]['photoStoreId'].fileId},
+                    {photoStoreId: res[0].photoStoreId.fileId},
                     function(data){
-                        console.log(err);
+                        console.log(data);
                     },
                     function(err){
                         console.log(err);
