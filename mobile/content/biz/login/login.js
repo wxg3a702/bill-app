@@ -11,6 +11,7 @@ var {
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var LoginAction = require("../../framework/action/loginAction");
+var CommonAction = require("../../framework/action/commonAction");
 var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
 var NavBarView = require('../../framework/system/navBarView');
@@ -65,12 +66,14 @@ var Login = React.createClass({
                 },
                 function () {
                     this.props.navigator.pop();
+                    CommonAction.onNotification();
                 }.bind(this),
                 function (msg) {
                     Alert(msg.msgContent);
                     this.refs['verifyCode'].changeVerify()
                 }.bind(this)
             )
+
         }
     },
     toOther: function (name) {
