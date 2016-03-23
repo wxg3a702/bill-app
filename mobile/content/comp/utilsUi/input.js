@@ -10,6 +10,9 @@ var {
     } = React;
 var Adjust=require('../../comp/utils/adjust')
 var Input = React.createClass({
+    getDefaultProps(){
+
+    },
     textOnchange: function (text, type) {
         this.props.onChanged(type, text)
     },
