@@ -97,7 +97,8 @@ var Message = React.createClass({
                 </NavBarView>
             )
         } else {
-            if (_.isEmpty(this.state.data)) {
+            if (!this.state.data ||(_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+                && (_.isEmpty(this.state.data[3][0])))) {
                 return (
                     <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
                                 contentBackgroundColor='#f0f0f0'>
@@ -211,7 +212,7 @@ var Message = React.createClass({
                         <View style={{height:68, flex:1,flexDirection:'column',justifyContent:'space-between'}}>
                             <View style={{flex: 1,flexDirection:'row',justifyContent:'space-between', marginTop: 12}}>
                                 <Text numberOfLines={1}
-                                      style={{width:width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
+                                      style={{width:    width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
                                 <Text
                                     style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(item.receiveDate)}</Text>
                             </View>

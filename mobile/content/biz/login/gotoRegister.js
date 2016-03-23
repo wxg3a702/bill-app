@@ -8,7 +8,7 @@ var {
     Image,
     Dimensions
     } = React;
-//var compBaseInfo=require('./compBaseInfo');
+var CompCertifyCopies = require('../company/compCertifyCopies');
 var window = Dimensions.get('window');
 var GotoRegister = React.createClass({
     render(){
@@ -19,15 +19,15 @@ var GotoRegister = React.createClass({
                 <View style={{flex:1,justifyContent:'flex-end',alignItems:'center'}}>
                     <TouchableOpacity
                         onPress={()=>{
-                            this.props.navigator.push({comp:compBaseInfo,param:{fromRegister:true}}
+                            this.props.navigator.push({comp:CompCertifyCopies,param:{fromRegister:true,item:''}}
                         )}}
                         style={{marginBottom:40, borderColor:'white',borderWidth:1,paddingHorizontal:25,paddingVertical:10,borderRadius:5}}>
-                        <Text style={{color:"white", fontSize:25}} >去企业认证</Text>
+                        <Text style={{color:"white", fontSize:25}}>去企业认证</Text>
                     </TouchableOpacity>
                     <TouchableOpacity
                         onPress={()=>{this.props.navigator.resetTo({comp: 'tabView'})}}
                         style={{marginBottom:40}}>
-                        <Text style={{color:"white", fontSize:15}} >下次再说></Text>
+                        <Text style={{color:"white", fontSize:15}}>下次再说></Text>
                     </TouchableOpacity>
                 </View>
             </Image>

@@ -8,7 +8,7 @@ var {
     }=React
 var Adjust=require('../../comp/utils/adjust')
 var NavBarView = require('../../framework/system/navBarView');
-var BillStates = require('./billStates');
+var BillStates = require('./../../constants/billStates');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });

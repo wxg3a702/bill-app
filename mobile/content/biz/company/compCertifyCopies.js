@@ -1,40 +1,49 @@
-/**
- * Created by vison on 16/3/14.
- */
 'use strict';
 
 var React = require('react-native');
 var {
     StyleSheet,
     TouchableHighlight,
-    CameraRoll,
     Text,
     Image,
     View,
+    ScrollView,
     Dimensions,
     Platform
     } = React;
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
+var UserAction = require('../../framework/action/userAction')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
+var DateHelper = require('../../comp/utils/dateHelper')
 var Button = require('../../comp/utilsUi/button')
+var Space = require('../../comp/utilsUi/space')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
-var PhotoPic = require('NativeModules').PhotoPicModule;
+var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var orgBean = CompStore.getOrgBeans()[0];
-        return orgBean
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
+        return {
+            licenseCopyFileId: newOrg.licenseCopyFileId,
+            authFileId: newOrg.authFileId,
+            corpIdentityFileId: newOrg.corpIdentityFileId,
+            authIdentityFileId: newOrg.authIdentityFileId,
+            picEnough: newOrg.picEnough,
+            data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item
+        }
     },
 
     getInitialState: function () {
-        return this.getStateFromStores();
+        return this.getStateFromStores()
     },
 
     componentDidMount() {
@@ -48,8 +57,22 @@ var CompCertifyCopies = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    addComp(){
-        this.props.navigator.push({comp: CompAccountInfo});
+
+    next: function () {
+        const { navigator } = this.props;
+        if (this.state.picEnough) {
+            const { navigator } = this.props;
+            if (navigator) {
+                navigator.push({
+                    comp: CompAccountInfo,
+                })
+            }
+        } else {
+            Alert("请完整认证资料副本")
+        }
+    },
+    back: function () {
+        this.props.navigator.pop();
     },
     selectPhoto(desc, name){
         if (Platform.OS === 'ios') {
@@ -95,7 +118,7 @@ var CompCertifyCopies = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                UserAction.updateUserHead(
+                CompAction.updateNewOrgInfo(
                     {[name]: source}
                 )
             }
@@ -103,62 +126,138 @@ var CompCertifyCopies = React.createClass({
     },
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic();
+        PhotoPic.showImagePic(false, name, (response)=> {
+            console.log('Response = ', response);
+            var source = response.uri;
+            this.setState({
+                [name]: source
+            });
+            CompAction.updateNewOrgInfo(
+                {[name]: source}
+            )
+        });
     },
-
+    returnItem(desc, name){
+        var url = require('../../image/user/head.png');
+        if (!_.isEmpty(this.state[name])) {
+           // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
+            if (this.state[name].indexOf("@userId") > -1) {
+             url = {uri: UserAction.getFile(this.state[name])}
+             } else {
+             url = {uri: this.state[name], isStatic: true};
+             }
+             return (
+             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+             activeOpacity={0.6} underlayColor="#ebf1f2">
+             <Image style={[styles.image,styles.radius]}
+             resizeMode="cover" source={url}/>
+             </TouchableHighlight>
+             )
+        } else {
+            return (
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                    activeOpacity={0.6} underlayColor="#ebf1f2">
+                    <Image style={[styles.image,styles.radius]}
+                           resizeMode="cover" source={require('../../image/company/licence_copy.png')}/>
+                </TouchableHighlight>
+            )
+        }
+    },
+    returnAccount(){
+        let data = this.state.data
+        if (data.status == 'CERTIFIED' || data.status == 'AUDITING')
+            return (
+                <View>
+                    <Text style={{paddingTop:32,height:55,fontSize:15}}>关联账户信息</Text>
+                    <View
+                        style={{flexDirection:'row',height:95,paddingLeft:Adjust.width(20),backgroundColor:'white',borderRadius:5,alignItems:'center',borderWidth:1,borderColor:'#c8c8c8'}}>
+                        <Image style={{width:30,height:30,borderRadius:15,backgroundColor:'red'}}/>
+                        <View style={{marginLeft:Adjust.width(20),flexDirection:'row',alignItems:'center'}}>
+                            <Text style={{fontSize:18,color:'#333333'}}>账号：</Text>
+                            <Text style={{fontSize:15,color:'#7f7f7f'}}>
+                                {NumberHelper.formatNum(data.accountNo, 0, 6)}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            )
+    },
+    returnWarn(){
+        let status = this.state.data.status
+        return (
+            <View style={{marginTop:18, marginLeft:12}}>
+                { (()=> {
+                    if (status == 'REJECTED') {
+                        return (
+                            <Text style={{fontSize: 15, color: certificateState[status].colorA,paddingBottom:6}}>未通过，请点击修改错误材料</Text>
+                        )
+                    }
+                })()}
+                <View style={{flexDirection:"row"}}>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
+                        {certificateState[status].alter}
+                    </Text>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
+                        如遇问题,请
+                    </Text>
+                    <Text style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
+                        联系客服
+                    </Text>
+                </View>
+            </View>
+        )
+    },
+    returnTitle(){
+        let status = this.state.data.status;
+        if (status == 'AUDITING') {
+            return (
+                <View>
+                    <Space/>
+                    <View
+                        style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
+                        <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
+                        <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
+                    </View>
+                </View>
+            )
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
-                <View style={{flex:1,marginTop:32}}>
-
-                    <View style={{flexDirection:"row",marginHorizontal:12}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>营业执照副本</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('营业执照副本', 'licenseCopyFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                <ScrollView>
+                    {this.returnTitle()}
+                    <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
+                        <View style={{flexDirection:"row"}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>营业执照副本</Text>
+                                {this.returnItem('营业执照副本', 'licenseCopyFileId')}
+                            </View>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>法定代表人身份证</Text>
+                                {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
+                            </View>
                         </View>
 
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>法定代表人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法定代表人身份证', 'corpIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
+                        <View style={{flexDirection:"row",marginTop:10}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                                {this.returnItem('法人授权委托证明书', 'authFileId')}
+                            </View>
+
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
+                                {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                            </View>
                         </View>
+                        {this.returnAccount()}
+                        {this.returnWarn()}
+                        <ListBottom/>
                     </View>
+                </ScrollView>
+                <BottomButton func={this[certificateState[this.state.data.status].button]}
+                              content={certificateState[this.state.data.status].content}/>
 
-                    <View style={{flexDirection:"row",marginTop:10,marginHorizontal:12}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text
-                                style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('法人授权委托证明书', 'authFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
-                        </View>
-
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                            <TouchableHighlight onPress={()=>{this.selectPhoto('授权经办人身份证', 'authIdentityFileId')}}
-                                                activeOpacity={0.6} underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]}
-                                       resizeMode="cover" source={require('../../image/user/head.png')}/>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-
-                    <View style={{ marginTop:18, marginLeft:12,flexDirection:"row"}}>
-                        <Text style={styles.communicate}>如遇问题,请</Text>
-                        <Text style={[styles.communicate,{textDecorationLine:"underline"}]}>联系客服</Text>
-                    </View>
-
-                </View>
-                <BottomButton func={this.addComp} content="下一步"/>
             </NavBarView>
         )
     }
@@ -185,7 +284,7 @@ var styles = StyleSheet.create({
     },
     image: {
         height: 113,
-        width: Dimensions.get("window").width / 2 - Adjust.width(20),
+        width: Dimensions.get("window").width / 2 - 20,
         backgroundColor: "#f0f0f0",
         marginTop: 5
     },
@@ -195,8 +294,7 @@ var styles = StyleSheet.create({
         color: "#333333"
     },
     communicate: {
-        fontSize: 15,
-        color: "#ff5b58",
+        fontSize: 15, color: "#ff5b58",
     }
 
 })

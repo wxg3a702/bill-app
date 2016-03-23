@@ -64,14 +64,11 @@ var Login = React.createClass({
                     deviceModel: this.state.deviceModel,
                     captcha: this.state.verify
                 },
-                function () {
-                    this.props.navigator.pop();
-                    CommonAction.onNotification();
-                }.bind(this),
-                function (msg) {
+                () => this.props.navigator.pop(),
+                (msg)=> {
                     Alert(msg.msgContent);
                     this.refs['verifyCode'].changeVerify()
-                }.bind(this)
+                }
             )
 
         }

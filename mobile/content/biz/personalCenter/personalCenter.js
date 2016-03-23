@@ -74,11 +74,7 @@ var PersonalCenter = React.createClass({
     returnImg(){
         var url;
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 24) {
-                url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            } else {
-                url = {uri: this.state.photoStoreId, isStatic: true};
-            }
+            url = {uri: UserAction.getFile(this.state.photoStoreId)}
         } else {
             url = require('../../image/user/head.png')
         }
