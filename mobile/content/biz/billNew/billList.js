@@ -10,7 +10,8 @@ var {
     Dimensions,
     Image,
     StyleSheet,
-    TouchableOpacity
+    TouchableOpacity,
+    InteractionManager
     } = React;
 var Adjust=require('../../comp/utils/adjust')
 var ListBottom = require('../../comp/utilsUi/listBottom')
@@ -29,6 +30,9 @@ var Validation = require('../../comp/utils/validation')
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+
+var GiftedListView = require('../../comp/listView/GiftedListView');
+const PAGE_SIZE = 5;
 var Bill = React.createClass({
     getDataSouce(bean, key1, key2, key3){
         if (!bean) {
@@ -103,7 +107,8 @@ var Bill = React.createClass({
             pickStatus: 'rev',
             status: '全部',
             dataSource: this.state.resPick[0].dataSource
-        })
+        });
+        this.refs.BillList._refresh();
     },
     changeSend(){
         this.setState({
@@ -113,7 +118,8 @@ var Bill = React.createClass({
             pickStatus: 'sent',
             status: '全部',
             dataSource: this.state.sentPick[0].dataSource
-        })
+        });
+        this.refs.BillList._refresh();
     },
     changePick(){
         this.setState({
@@ -246,22 +252,123 @@ var Bill = React.createClass({
                 <ToLogin func={()=>this.toOther(Login)} mar={true}/>
             )
         } else {
-            if (this.state.dataSource.length == 0) {
-                return (
-                    <View style={{marginTop:65,alignItems:'center',flex:1}}>
-                        <Image style={{width:Adjust.width(350),height:200}} resizeMode="stretch"
-                               source={require('../../image/bill/noBill.png')}/>
-                        <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
-                    </View>
-                );
-            } else {
-                return (
-                    <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}
-                              automaticallyAdjustContentInsets={false} style={{paddingHorizontal:5}}/>
-                )
-            }
+            //if (this.state.dataSource.length == 0) {
+            //    return (
+            //        <View style={{marginTop:65,alignItems:'center',flex:1}}>
+            //            <Image style={{width:Adjust.width(350),height:200}} resizeMode="stretch"
+            //                   source={require('../../image/bill/noBill.png')}/>
+            //            <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
+            //        </View>
+            //    );
+            //} else {
+            //    return (
+            //        <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}
+            //                  automaticallyAdjustContentInsets={false} style={{paddingHorizontal:5}}/>
+            //    )
+            //}
+
+            return (
+              <GiftedListView
+                ref="BillList"
+                rowView={this._renderRowView}
+                onFetch={this._onFetch}
+                emptyView={this._emptyView}
+                firstLoader={true} // display a loader for the first fetching
+                pagination={true} // enable infinite scrolling using touch to load more
+                refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+                withSections={false} // enable sections
+                //customStyles={{
+                //    refreshableView: {
+                //      //backgroundColor: '#eee',
+                //    },
+                //  }}
+              />
+            );
+
         }
     },
+    _emptyView() {
+        return (
+          <View style={{marginTop:65,alignItems:'center',flex:1}}>
+              <Image style={{width:Adjust.width(350),height:200}} resizeMode="stretch"
+                     source={require('../../image/bill/noBill.png')}/>
+              <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
+          </View>
+        );
+    },
+
+    /**
+     * Will be called when refreshing
+     * Should be replaced by your own logic
+     * @param {number} page Requested page to fetch
+     * @param {function} callback Should pass the rows
+     * @param {object} options Inform if first load
+     */
+    _onFetch(page = 1, callback, options) {
+        InteractionManager.runAfterInteractions(() => {
+            this._fetchData(page - 1, callback, options);
+        });
+    },
+
+    _fetchData: function (page, callback, options) {
+        var rows = [];
+        var end = (page + 1) * PAGE_SIZE;
+        var length = this.state.dataSource.length;
+        if (length <= end) {
+            rows = this.state.dataSource.slice(page * PAGE_SIZE);
+            callback(rows, {
+                allLoaded: true // the end of the list is reached
+            });
+        } else {
+            rows = this.state.dataSource.slice(page * PAGE_SIZE, end);
+            callback(rows);
+        }
+    },
+
+    /**
+     * Render a row
+     * @param {object} rowData Row data
+     */
+    _renderRowView(rowData) {
+        return (
+            <TouchableHighlight onPress={() => this.toOther(BillDetail,rowData)} activeOpacity={0.8}
+                              underlayColor='#ebf1f2'>
+              <View style={[{backgroundColor:this.state.contentColor},styles.content]}>
+                  <View
+                    style={{flexDirection:'row',justifyContent:'space-between',paddingTop:5,height:Platform.OS === 'ios'?136:146}}>
+                      <View style={[{height:131}]}>
+                          <Text style={{fontSize:11,color:'#7f7f7f',marginTop:12}}>票面金额</Text>
+                          <View style={{flexDirection:'row',alignItems:'center',marginTop:10}}>
+                              <Text style={{fontSize:28,color:'#44bcb2'}}>
+                                  {NumberHelper.number2(rowData.amount)}
+                              </Text>
+                              <Text style={{fontSize:15,color:'#7f7f7f',marginTop:8}}>万元</Text>
+                          </View>
+                          <Text
+                            style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>{rowData.role == 'payee' ? '开票人' : '收款人'}</Text>
+                          <Text numberOfLines={1} style={{width:width-Adjust.width(170),color:'#7f7f7f',fontSize:15,marginTop:10}}>
+                              {this.state.pick == this.state.resPick ? rowData.drawerName : rowData.payeeName}
+                          </Text>
+                      </View>
+                      <Image source={BillStates[this.state.pickStatus][rowData.status].pic}
+                             style={{width:31,height:116}}/>
+                  </View>
+                  <View style={[styles.contentBottom,styles.topColor]}>
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                          <Image style={{width:13,height:13,marginRight:2}}
+                                 source={require('../../image/bill/desc.png')}/>
+                          {this.returnInfo(rowData.role, rowData.status, rowData.discountDate, rowData.discountDueDate)}
+                      </View>
+                      <Text style={{color:'#333333',fontSize:15}}>
+                          {'~' + DateHelper.formatBillList(rowData.dueDate) + ' 到期'}
+                      </Text>
+                  </View>
+              </View>
+            </TouchableHighlight>
+        );
+
+    },
+
     returnView(){
         if (!this.state.opacity) {
             return (
