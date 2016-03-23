@@ -21,7 +21,7 @@ var BillStore = assign({}, EventEmitter.prototype, {
         }
         if (!bill.sentBillBean) {
         } else {
-            bill.sentBillBean.map((item, index)=> {
+            bill.sentBillBean.contentList.map((item, index)=> {
                 if (item.billId == id) {
                     res=item
                 }

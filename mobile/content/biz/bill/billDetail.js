@@ -20,7 +20,7 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
 var Alert = require('../../comp/utils/alert');
-var ApplyDiscount = require('./applyDiscount');
+var ApplyDiscount = require('./../billNew/applyDiscount');
 var styles = StyleSheet.create({
 
     container: {

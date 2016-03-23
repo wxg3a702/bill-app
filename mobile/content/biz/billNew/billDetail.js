@@ -24,7 +24,7 @@ var BillStates = require('./../../constants/billStates');
 var BillContent = require('./billContent')
 var BillStore = require('../../framework/store/billStore')
 var NumberHelper = require('../../comp/utils/numberHelper')
-var ApplyDis = require('../bill/applyDiscount')
+var ApplyDis = require('./applyDiscount')
 var Alert = require('../../comp/utils/alert')
 var AppStore = require('../../framework/store/appStore');
 var ds = new ListView.DataSource({
@@ -36,7 +36,12 @@ var BillDetail = React.createClass({
         let item = BillStore.getBill(id)
         //let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
-        flow[0].new = true
+
+        if(!flow){
+            flow=''
+        }else{
+            flow[0].new = true
+        }
         //if (!flow) {
         //    flow = ''
         //} else {
