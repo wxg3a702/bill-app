@@ -53,7 +53,7 @@ var Main = React.createClass({
                 )
             } else {
                 Promise.resolve().then(function (resolve) {
-                    this.refs.navigator.resetTo({comp: TabView})
+                    this.refs.navigator.resetTo({comp: 'tabView'})
                 }.bind(this)).catch(function (e) {
                     Alert("系统异常")
                 })

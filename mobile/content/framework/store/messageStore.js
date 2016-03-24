@@ -4,34 +4,35 @@ var EventEmitter = require('events').EventEmitter;
 var Persister = require('../persister/persisterFacade');
 var MsgCategory = require('../../constants/notification').MsgCategory;
 var AppStore = require('./appStore')
+var MsgContent = require('../../constants/notification').MsgContent;
 var MessageStore = assign({}, EventEmitter.prototype, {
     getMessage(){
-        var mainMsgBean = AppStore.getData().mainMsgBean;
+        var mainMsgBean = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG];
         if (!mainMsgBean) {
             return []
         } else {
             return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
         }
     },
-    getMainMsgBean: ()=>AppStore.getData().mainMsgBean,
+    getMainMsgBean: ()=>AppStore.getMainMsgBean().mainMsgBean,
 
     updateUnReadNum(category){
         switch (category) {
             case MsgCategory.BILL_SENT:
-                AppStore.getData().mainMsgBean.billSentBean.unReadNum = 0;
+                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].billSentBean.unReadNum = 0;
                 break;
             case MsgCategory.MARKET_NEWS:
-                AppStore.getData().mainMsgBean.marketNewsBean.unReadNum = 0;
+                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].marketNewsBean.unReadNum = 0;
                 break;
             case MsgCategory.SYSTEM_NOTICE:
-                AppStore.getData().mainMsgBean.systemNoticeBean.unReadNum = 0;
+                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].systemNoticeBean.unReadNum = 0;
                 break;
         }
         AppStore.emitChange();
     },
 
     setMsgReaded(id){
-        var RevBillMsgs = AppStore.getData().mainMsgBean.messageBeans;
+        var RevBillMsgs = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans;
       for(let item of RevBillMsgs) {
         if (item.id == id) {
           item.isRead = true;
@@ -43,11 +44,11 @@ var MessageStore = assign({}, EventEmitter.prototype, {
 
     getResult(name){
         if (name == MsgCategory.BILL_SENT) {
-            return AppStore.getData().sentBillMsgBeans
+            return AppStore.getMainMsgBean()[MsgContent.SENT_MSG]
         } else if (name == MsgCategory.MARKET_NEWS) {
-            return AppStore.getData().marketMsgBeans
+            return AppStore.getMainMsgBean()[MsgContent.MARKET_MSG]
         } else {
-            return AppStore.getData().systemMsgBeans
+            return AppStore.getMainMsgBean()[MsgContent.SYSTEM_MSG]
         }
     },
     updateMessage: function (billId) {
@@ -56,13 +57,13 @@ var MessageStore = assign({}, EventEmitter.prototype, {
         //    return item.billId == billId
         //});
         let f = false;
-        AppStore.getData().mainMsgBean.messageBeans.map((item, index)=> {
-            if (item.billId == billId && !AppStore.getData().mainMsgBean.messageBeans[index]["isRead"]) {
-                AppStore.getData().mainMsgBean.messageBeans[index]["isRead"] = true;
+        AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans.map((item, index)=> {
+            if (item.billId == billId && !AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans[index]["isRead"]) {
+                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans[index]["isRead"] = true;
                 f = true;
             }
         });
-        Persister.saveMainMsgBean(AppStore.getData().mainMsgBean);
+        Persister.saveMainMsgBean(AppStore.getMainMsgBean()[MsgContent.MAIN_MSG]);
         if (f) {
             AppStore.emitChange();
         }
