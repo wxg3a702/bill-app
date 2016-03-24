@@ -142,7 +142,7 @@ var CompCertifyCopies = React.createClass({
         if (!_.isEmpty(this.state[name])) {
            // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
             if (this.state[name].indexOf("@userId") > -1) {
-             url = {uri: UserAction.getFile(this.state[name])}
+             url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
              } else {
              url = {uri: this.state[name], isStatic: true};
              }

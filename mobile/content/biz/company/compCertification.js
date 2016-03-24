@@ -112,7 +112,9 @@ var CompCertification = React.createClass({
     returnList(){
         if (this.state.bean.length == 0) {
             return (
-                <View/>
+                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
+                    <Image style={{marginTop:10}} source={require("../../image/company/no_company.png")}/>
+                </View>
             )
         } else {
             return (
