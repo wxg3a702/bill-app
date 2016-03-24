@@ -199,6 +199,16 @@ var _createBillDiscount = function (data) {
             _data.revBillBean.contentList[index].status = "REQ";
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.revBillBean.contentList[index].status = "REQ";
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
     AppStore.emitChange();
 }
 

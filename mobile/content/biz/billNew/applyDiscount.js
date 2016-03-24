@@ -36,7 +36,7 @@ var ApplyDis = React.createClass({
         this.setState(responseData);
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
 
-        if (acceptanceBankBeans == null) {
+        if (acceptanceBankBeans == null || acceptanceBankBeans == "") {
             this.setState({
                 discountBankName: '请选择贴现银行',
                 description:'',
