@@ -120,7 +120,7 @@ var Bill = React.createClass({
             })
             )
             .then(
-                this.refs.BillList._refresh()
+                !this.state.token ? '' : this.refs.BillList._refresh()
             )
     },
     changeSend(){
@@ -134,7 +134,7 @@ var Bill = React.createClass({
                 dataSource: this.state.sentPick[0].dataSource
             })
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     changePick(){
@@ -162,7 +162,7 @@ var Bill = React.createClass({
         ).then(
             this.hidePick()
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     returnPick(data){
