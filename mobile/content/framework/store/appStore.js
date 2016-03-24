@@ -162,6 +162,16 @@ var _cancleBillDiscount = function (data) {
             _data.revBillBean.contentList[index].status = "NEW";
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.revBillBean.contentList[index].status = "NEW";
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
     AppStore.emitChange();
 }
 //
@@ -171,6 +181,16 @@ var _giveupBillDiscount = function (data) {
             _data.revBillBean.contentList[index].status = "IGN";
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.revBillBean.contentList[index].status = "IGN";
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
     AppStore.emitChange();
 }
 //
@@ -181,6 +201,17 @@ var _allowBillDiscount = function (data) {
             //_data.revBillBean.contentList[index].status = "DIS";
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.revBillBean.contentList[index] = data;
+                    //_data.revBillBean.contentList[index].status = "DIS";
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
     AppStore.emitChange();
 }
 //
@@ -190,6 +221,17 @@ var _rejectBillDiscount = function (data) {
             _data.sentBillBean.contentList[index] = data;
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.sentBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.sentBillBean.contentList[index] = data;
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
+
     AppStore.emitChange();
 }
 
