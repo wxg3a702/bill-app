@@ -118,7 +118,7 @@ var BillDetailByMsg = React.createClass({
   },
   toDetail(bill){
     this.props.navigator.push({
-      param: {title: '详情', record: bill},
+      param: {item: bill},
       comp: Detail
     });
   },
