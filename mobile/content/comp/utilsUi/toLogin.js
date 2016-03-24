@@ -16,14 +16,15 @@ var {
 var {width,height} = Dimensions.get('window');
 var ToLogin = React.createClass({
     getDefaultProps(){
-      return{
-          mar:false
-      }
+        return {
+            mar: false
+        }
     },
     render(){
         return (
-            <TouchableHighlight onPress={this.props.func}>
-                <View style={[styles.content,{marginTop:this.props.mar?height-196:height-164}]}>
+            <TouchableHighlight style={[styles.content,{marginTop:this.props.mar?height-196:height-164}]}
+                                onPress={this.props.func} underlayColor="#cccccc">
+                <View style={{ flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center', height: 50,padding: 8,}}>
                     <Text style={{fontSize:18}}>你还没有登陆</Text>
                     <Text style={{fontSize:18}}>点击去登陆</Text>
                 </View>
@@ -33,13 +34,8 @@ var ToLogin = React.createClass({
 })
 var styles = StyleSheet.create({
     content: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         width: width,
-        padding: 8,
-        height: 50,
-        backgroundColor: 'white',
-        alignItems: 'center',
+        backgroundColor: 'white'
     }
 })
 module.exports = ToLogin

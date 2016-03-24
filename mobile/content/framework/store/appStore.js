@@ -10,7 +10,9 @@ var info = {
     isLogout: false,
     isForce_Logout: false
 }
+var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
 var _data = {};
+var _mainMsgBean = {};
 var _ = require('lodash');
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
@@ -20,6 +22,7 @@ var AppConstants = require('../../constants/command');
 var ActionTypes = AppConstants.ActionTypes;
 var Notification = require('../../constants/notification');
 var MsgTypes = Notification.MsgTypes;
+var MsgContent = Notification.MsgContent;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
 
@@ -58,6 +61,10 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
     getData: ()=>_data,
 
+    getMainMsgBean: () => _mainMsgBean,
+
+    getUserName: () => _data.userInfoBean.userName,
+
     init: function (data) {
         info.initLoadingState = false;
         _data = data;
@@ -82,7 +89,12 @@ var _appInit = function (data) {
         function (data) {
             info.initLoadingState = false;
             _data = data;
-            initNewOrg();
+            Notification.setMsgContent(_data.userInfoBean.userName)
+            Persister.getMsgData(
+                (data) => {
+                    _mainMsgBean = data;
+                }
+            )
             info.isLogout = false;
             AppStore.emitChange();
         })
@@ -90,8 +102,36 @@ var _appInit = function (data) {
 //
 var _login = function (data) {
     _data = data;
+    Notification.setMsgContent(_data.userInfoBean.userName)
     initNewOrg();
-    AppStore.emitChange();
+    Persister.getMsgData(
+        function (mainMsgData) {
+            if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
+                //TODO: 构建基本的mainMsgBean对象
+                var emptyData = {
+                    'mainMsgBean': {
+                        'pageIndex': 1,
+                        'billSentBean': null,
+                        'messageBeans': [],
+                        'marketNewsBean': null,
+                        'systemNoticeBean': null,
+                        'billRevUnreadNum': 0
+                    },
+                    'sentBillMsgBeans': [],
+                    'marketMsgBeans': [],
+                    'systemMsgBeans': []
+                };
+                console.log('kong');
+                Persister.saveMsgData(emptyData);
+                _mainMsgBean = emptyData;
+            } else {
+                console.log('NoKong');
+                _mainMsgBean = mainMsgData;
+            }
+        }
+    )
+    AppStore.emitChange()
+    //_getPushMsg("/api/MessageSearch/getPushMsg");
     Persister.getAppData((d) => {
         data.demoFlag = d.demoFlag;
         if (!d.demoFlag) {
@@ -109,13 +149,11 @@ var initNewOrg = function () {
         authIdentityFileId: '',
         accountName: '',
         accountNo: '',
-        reservedMobileNo: '',
+        openBank: '',
         picEnough: false,
     }
 }
-var _changeNewOrg = function (data) {
 
-}
 var _cancleBillDiscount = function (data) {
     _data.revBillBean.contentList.map((item, index)=> {
         if (item.billId == data.billId) {
@@ -159,6 +197,16 @@ var _createBillDiscount = function (data) {
             _data.revBillBean.contentList[index].status = "REQ";
         }
     });
+    Persister.getAppData(
+        function (dataList) {
+            dataList.revBillBean.contentList.map((item, index)=> {
+                if (item.billId == data.billId) {
+                    dataList.revBillBean.contentList[index].status = "REQ";
+                }
+            });
+            Persister.saveAppData(dataList);
+        }
+    )
     AppStore.emitChange();
 }
 
@@ -171,7 +219,7 @@ var _getMsgBody = function (msg) {
 }
 
 var _pushMsg = function (data, key) {
-    _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
+    _.isEmpty(_mainMsgBean[key]) ? _mainMsgBean[key] = new Array(data) : _mainMsgBean[key] = [data].concat(_mainMsgBean[key]);
 }
 //
 var _getBillBody = function (msg) {
@@ -180,10 +228,10 @@ var _getBillBody = function (msg) {
 
 var _updateMainMsgBeanByNotify = function (arrayKeyName, beanKeyName, data) {
     _pushMsg(data, arrayKeyName);
-    _.isEmpty(_data.mainMsgBean) ? _data.mainMsgBean = new Object() : "";
-    let unReadNum = _.isEmpty(_data.mainMsgBean[beanKeyName]) ? 0 : _data.mainMsgBean[beanKeyName].unReadNum;
+    _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]) ? _mainMsgBean[MsgContent.MAIN_MSG] = new Object() : "";
+    let unReadNum = _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG][beanKeyName]) ? 0 : _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName].unReadNum;
     data.unReadNum = ++unReadNum;
-    _data.mainMsgBean[beanKeyName] = data;
+    _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName] = data;
 }
 
 var _addBillPackByNotify = function (keyName, data) {
@@ -226,14 +274,14 @@ var _analysisMessageData = function (data) {
         case MsgTypes.REV_NEW_BILL://区分
         {
             //messageBeans
-            _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+            _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
             _addBillPackByNotify('revBillBean', _getBillBody(data));
         }
             break;
         case MsgTypes.APPROVE_DISCOUNT:
         {
             //messageBeans
-            _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+            _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
             //批准贴现
             _allowBillDiscount(_getBillBody(data));
         }
@@ -245,7 +293,7 @@ var _analysisMessageData = function (data) {
 }
 //
 var _freshMessageData = function (data) {
-    if (!data && !data.nodeMsgBean && !data.nodeMsgBean.length)
+    if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
         return;
     else {
         data.nodeMsgBean.map((item, index)=> {
@@ -255,8 +303,18 @@ var _freshMessageData = function (data) {
     }
 }
 
-var _getPushMsg = function (data) {
+var _getPushMsg = function (url) {
     //将取到的增量数据存到本地
+    BFetch(url, {}, function (data) {
+        AppDispatcher.dispatch({
+            type: ActionTypes.PUSH_NOTIFICATION,
+            data: data
+        });
+    }, null, {custLoading: true});
+}
+
+var _savePushMsg = function (data) {
+    _freshMessageData(data)
 }
 
 var _force_logout = function () {
@@ -309,20 +367,39 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             info.requestHandle = action.handle;
             AppStore.emitChange('rpc');
             break;
-        case ActionTypes.UPDATE_COMPBASEINFO:
-            _data.orgBeans[0] = _.assign(_data.orgBeans[0], action.data);
-            _data.userInfoBean = _.assign(_data.userInfoBean, action.data);
-            Persister.saveOrg(_data.orgBeans);
+        case ActionTypes.DELETE_ORGBEANS:
+            let con = new Array();
+            _data.certifiedOrgBean.map((item, index)=> {
+                if (action.data.orgId != item.id) {
+                    con.push(item)
+                }
+            })
+            _data.certifiedOrgBean = con
+            Persister.saveOrg(_data.certifiedOrgBean);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
+        case ActionTypes.UPDATE_ORGBEANS:
+            _data.newOrg = _.assign(_data.newOrg, action.data);
+            if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''
+                && _data.newOrg.corpIdentityFileId != '' && _data.newOrg.authIdentityFileId != '') {
+                _data.newOrg.picEnough = true;
+                _data.newOrg.status = 'UNAUDITING';
+            }
+            _data.certifiedOrgBean.push(_data.newOrg)
+            initNewOrg();
+            Persister.saveNewOrg(_data.newOrg);
+            Persister.saveOrg(_data.certifiedOrgBean);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
         case ActionTypes.UPDATE_NEWORG:
             _data.newOrg = _.assign(_data.newOrg, action.data);
-            if (_data.newOrg.licenseCopyFileId != ''&&_data.newOrg.authFileId != ''
-                &&_data.newOrg.corpIdentityFileId != ''&&_data.newOrg.authIdentityFileId != ''){
+            if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''
+                && _data.newOrg.corpIdentityFileId != '' && _data.newOrg.authIdentityFileId != '') {
                 _data.newOrg.picEnough = true;
             }
-            Persister.saveOrg(_data.newOrg);
+            Persister.saveNewOrg(_data.newOrg);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;

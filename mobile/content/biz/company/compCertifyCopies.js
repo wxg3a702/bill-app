@@ -1,6 +1,3 @@
-/**
- * Created by vison on 16/3/14.
- */
 'use strict';
 
 var React = require('react-native');
@@ -10,14 +7,15 @@ var {
     Text,
     Image,
     View,
+    ScrollView,
     Dimensions,
     Platform
     } = React;
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
 var UserAction = require('../../framework/action/userAction')
 var CompAccountInfo = require('./compAccountInfo')
 var BottomButton = require('../../comp/utilsUi/bottomButton')
-var VIcon = require('../../comp/icon/vIcon')
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
@@ -25,14 +23,11 @@ var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
-var DateHelper = require('../../comp/utils/dateHelper')
-var Button = require('../../comp/utilsUi/button')
-var Space = require('../../comp/utilsUi/space')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
-var ImagePickerManager = require('NativeModules').ImagePickerManager;
+var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var newOrg = CompStore.getNewOrg();
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
         return {
             licenseCopyFileId: newOrg.licenseCopyFileId,
             authFileId: newOrg.authFileId,
@@ -66,6 +61,9 @@ var CompCertifyCopies = React.createClass({
             if (navigator) {
                 navigator.push({
                     comp: CompAccountInfo,
+                    param: {
+                        item: this.props.param.item
+                    }
                 })
             }
         } else {
@@ -127,55 +125,21 @@ var CompCertifyCopies = React.createClass({
     },
     selectAndroid(desc, name){
         console.log(desc + name);
-        //PhotoPic.showImagePic();
-        var options = {
-            cancelButtonTitle: '取消',
-            takePhotoButtonTitle: '拍照', // specify null or empty string to remove this button
-            chooseFromLibraryButtonTitle: '图库', // specify null or empty string to remove this button
-            cameraType: 'back', // 'front' or 'back'
-            mediaType: 'photo', // 'photo' or 'video'
-            videoQuality: 'high', // 'low', 'medium', or 'high'
-            durationLimit: 10, // video recording max time in seconds
-            maxWidth: 100, // photos only
-            maxHeight: 100, // photos only
-            aspectX: 2, // aspectX:aspectY, the cropping image's ratio of width to height
-            aspectY: 1, // aspectX:aspectY, the cropping image's ratio of width to height
-            angle: 0, // photos only
-            allowsEditing: false, // Built in functionality to resize/reposition the image
-            noData: false, // photos only - disables the base64 `data` field from being generated (greatly improves performance on large photos)
-            storageOptions: { // if this key is provided, the image will get saved in the documents/pictures directory (rather than a temporary directory)
-                skipBackup: true, // image will NOT be backed up to icloud
-                path: 'images' // will save image at /Documents/images rather than the root
-            }
-        };
-
-        ImagePickerManager.showImagePicker(options, (response) => {
+        PhotoPic.showImagePic(false, name, (response)=> {
             console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('User cancelled image picker');
-            }
-            else if (response.error) {
-                console.log('ImagePickerManager Error: ', response.error);
-            }
-            else if (response.customButton) {
-                console.log('User tapped custom button: ', response.customButton);
-            }
-            else {
-                var source = response;
-                this.setState({
-                    [name]: source
-                });
-                CompAction.updateNewOrgInfo(
-                    {[name]: source}
-                )
-            }
+            var source = response.uri;
+            this.setState({
+                [name]: source
+            });
+            CompAction.updateNewOrgInfo(
+                {[name]: source}
+            )
         });
     },
     returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
-            if (this.state[name].length == 24) {
+            if (this.state[name].indexOf("@userId") > -1) {
                 url = {uri: UserAction.getFile(this.state[name])}
             } else {
                 url = {uri: this.state[name], isStatic: true};
@@ -192,13 +156,13 @@ var CompCertifyCopies = React.createClass({
                 <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
                                     activeOpacity={0.6} underlayColor="#ebf1f2">
                     <Image style={[styles.image,styles.radius]}
-                           resizeMode="cover" source={require('../../image/user/head.png')}/>
+                           resizeMode="cover" source={require('../../image/company/licence_copy.png')}/>
                 </TouchableHighlight>
             )
         }
     },
     returnAccount(){
-        let data = this.state.data
+        let data = this.state.data;
         if (data.status == 'CERTIFIED' || data.status == 'AUDITING')
             return (
                 <View>
@@ -217,7 +181,7 @@ var CompCertifyCopies = React.createClass({
             )
     },
     returnWarn(){
-        let status = this.state.data.status
+        let status = this.state.data.status;
         return (
             <View style={{marginTop:18, marginLeft:12}}>
                 { (()=> {
@@ -241,59 +205,50 @@ var CompCertifyCopies = React.createClass({
             </View>
         )
     },
-    returnTitle(){
-        let status = this.state.data.status;
-        if (status == 'AUDITING') {
-            return (
-                <View>
-                    <Space/>
-                    <View style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
-                        <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
-                        <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
-                    </View>
-                </View>
-            )
-        }
-    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
-                {this.returnTitle()}
-                <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
-                    <View style={{flexDirection:"row"}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>营业执照副本</Text>
-                            {this.returnItem('营业执照副本', 'licenseCopyFileId')}
-                        </View>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={styles.copyName}>法定代表人身份证</Text>
-                            {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
-                        </View>
-                    </View>
-
-                    <View style={{flexDirection:"row",marginTop:10}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                            {this.returnItem('法人授权委托证明书', 'authFileId')}
+                <ScrollView>
+                    <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
+                        <View style={{flexDirection:"row"}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>营业执照副本</Text>
+                                {this.returnItem('营业执照副本', 'licenseCopyFileId')}
+                            </View>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={styles.copyName}>法定代表人身份证</Text>
+                                {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
+                            </View>
                         </View>
 
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                            {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                        <View style={{flexDirection:"row",marginTop:10}}>
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                                {this.returnItem('法人授权委托证明书', 'authFileId')}
+                            </View>
+
+                            <View style={{flex:1,flexDirection:"column"}}>
+                                <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
+                                {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                            </View>
                         </View>
+                        {this.returnAccount()}
+                        {this.returnWarn()}
+                        <ListBottom/>
                     </View>
-                    {this.returnAccount()}
-                    {this.returnWarn()}
-                </View>
+                </ScrollView>
                 <BottomButton func={this[certificateState[this.state.data.status].button]}
                               content={certificateState[this.state.data.status].content}/>
+
             </NavBarView>
         )
     }
-})
+});
 var styles = StyleSheet.create({
     bottom: {
-        padding: 7, backgroundColor: '#f7f7f7', borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+        padding: 7,
+        backgroundColor: '#f7f7f7',
+        borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
     },
     borderBottom: {
         borderBottomWidth: 1, borderColor: '#c8c7cc'
@@ -326,5 +281,5 @@ var styles = StyleSheet.create({
         fontSize: 15, color: "#ff5b58",
     }
 
-})
+});
 module.exports = CompCertifyCopies;

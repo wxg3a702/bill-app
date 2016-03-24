@@ -22,7 +22,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
 var ToLogin = require('../../comp/utilsUi/toLogin');
 var MessageDetail = require('./messageDetail')
-var Detail = require('../bill/billDetail');
+var Detail = require('../billNew/billDetail');
 var BillDetailByMsg = require('./billDetailByMsg');
 var MsgCategory = require('../../constants/notification').MsgCategory;
 var DateHelper = require("../../comp/utils/dateHelper");
@@ -79,12 +79,12 @@ var Message = React.createClass({
         }
 
         MessageStore.updateUnReadNum(name);
-        MessageAction.setOtherMsgRead({category: name}, function (data) {
+        /*MessageAction.setOtherMsgRead({category: name}, function (data) {
             //更新未读标记
 
         }, function (data) {
             Alert('已读标记设置失败!');
-        });
+        });*/
     },
     toLogin(){
         this.props.navigator.push({comp: Login})
@@ -97,7 +97,8 @@ var Message = React.createClass({
                 </NavBarView>
             )
         } else {
-            if (_.isEmpty(this.state.data)) {
+            if (!this.state.data ||(_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+                && (_.isEmpty(this.state.data[3][0])))) {
                 return (
                     <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
                                 contentBackgroundColor='#f0f0f0'>
@@ -211,7 +212,7 @@ var Message = React.createClass({
                         <View style={{height:68, flex:1,flexDirection:'column',justifyContent:'space-between'}}>
                             <View style={{flex: 1,flexDirection:'row',justifyContent:'space-between', marginTop: 12}}>
                                 <Text numberOfLines={1}
-                                      style={{width:    width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
+                                      style={{width:width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
                                 <Text
                                     style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(item.receiveDate)}</Text>
                             </View>

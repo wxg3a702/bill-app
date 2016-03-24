@@ -7,12 +7,24 @@ var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
 var CompAction = {
-    updateCompBaseInfo: (p, c, f)=> _updateCompBaseInfo(p, c, f),
+    updateOrgBeans: (p, c, f)=> _updateOrgBeans(p, c, f),
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
     getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f),
-    deleteOrg: (p, c, f)=>PFetch(api + '/Organization/deleteOrg', p, c, f),
+    deleteOrg: (p, c, f)=>_deleteOrg(p, c, f),
     updateDefaultOrgByUser: (p, c, f)=>_updateDefaultOrgByUser(p, c, f)
+}
+var _deleteOrg = function (p, c, f) {
+    PFetch(api + '/Organization/deleteOrg', p,
+        function (msg) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.DELETE_ORGBEANS,
+                data: p
+            })
+            c(msg);
+        },
+        f
+    )
 }
 var _updateDefaultOrgByUser = function (p, c, f) {
     PFetch(api + '/Organization/updateDefaultOrgByUser',
@@ -32,10 +44,16 @@ var _updateNewOrgInfo = function (p, c, f) {
         successHandle: c
     });
 }
-
-var _updateCompBaseInfo = function (p, c) {
+var subNewOrg = function (p, c, f) {
     AppDispatcher.dispatch({
-        type: ActionTypes.UPDATE_COMPBASEINFO,
+        type: ActionTypes.UPDATE_NEWORG,
+        data: p,
+        successHandle: c
+    });
+}
+var _updateOrgBeans = function (p, c) {
+    AppDispatcher.dispatch({
+        type: ActionTypes.UPDATE_ORGBEANS,
         data: p,
         successHandle: c
     });
@@ -51,15 +69,22 @@ var _submitOrg = function (p, c, f) {
             if (err) {
                 f();
             } else {
-                //CompAction.updateNewOrgInfo({licenseCopyFileId: res[0]['licenseCopyFileId'].fileId});
-                BFetch(api + "/Organization/updateOrg", p,
-                    function (res) {
-                        c()
+                BFetch(api + "/Organization/updateOrg",
+                    {
+                        licenseCopyFileId: res[0].licenseCopyFileId.fileId,
+                        corpIdentityFileId: res[1].corpIdentityFileId.fileId,
+                        authFileId: res[2].authFileId.fileId,
+                        authIdentityFileId: res[3].authIdentityFileId.fileId,
+                        accountName: p.accountName,
+                        accountNo: p.accountNo,
+                        openBank: p.openBank
+                    },
+                    function (data) {
+                        c(data)
                     },
                     function (err) {
-                        f()
-                    },
-                    {custLoading: true}
+                        _updateOrgBeans(p, f)
+                    }, {custLoading: true}
                 )
             }
         })

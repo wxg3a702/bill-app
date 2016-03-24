@@ -74,9 +74,7 @@ var PersonalCenter = React.createClass({
     returnImg(){
         var url;
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 58) {
-                url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            }
+            url = {uri: UserAction.getFile(this.state.photoStoreId)}
         } else {
             url = require('../../image/user/head.png')
         }
@@ -115,15 +113,15 @@ var PersonalCenter = React.createClass({
                         </View>
                     </TouchableHighlight>
                     <Space/>
-                    <Item func={()=>this.toOther(Setting)} desc="设置"
+                    <Item func={()=>this.toPage(()=>this.toOther(Setting))} desc="设置"
                           imgPath={require('../../image/personalCenter/securityCenter.png')}/>
-                    <Item func={()=>this.toOther(CompCertification)} desc="企业认证"
+                    <Item func={()=>this.toPage(()=>this.toOther(CompCertification))} desc="企业认证"
                           imgPath={require('../../image/personalCenter/compCertificate.png')}/>
                     <Item func={()=>this.toOther(ToolHome)} desc="工具"
                           imgPath={require('../../image/personalCenter/tool.png')}/>
                     <Item func={()=>this.toOther(HelpCenter)} desc="帮助中心"
                           imgPath={require('../../image/personalCenter/helpCenter.png')}/>
-                    <Item func={()=>this.toOther(Advice)} desc="意见反馈"
+                    <Item func={()=>this.toPage(()=>this.toOther(Advice))} desc="意见反馈"
                           imgPath={require('../../image/personalCenter/advice.png')}/>
                     <Item func={()=>this.toOther(AboutUs)} desc="关于我们"
                           imgPath={require('../../image/personalCenter/aboutUs.png')}/>

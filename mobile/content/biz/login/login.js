@@ -11,6 +11,7 @@ var {
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var LoginAction = require("../../framework/action/loginAction");
+var CommonAction = require("../../framework/action/commonAction");
 var Register_checkPhone = require('./register_checkPhone');
 var Forget_checkPhone = require('./forget_checkPhone');
 var NavBarView = require('../../framework/system/navBarView');
@@ -69,6 +70,7 @@ var Login = React.createClass({
                     this.refs['verifyCode'].changeVerify()
                 }
             )
+
         }
     },
     toOther: function (name) {

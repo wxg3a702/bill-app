@@ -2,10 +2,11 @@ var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var AppStore = require('./appStore')
 var BillStore = assign({}, EventEmitter.prototype, {
-    getDemoFlag: function () {
-        return _data.demoFlag;
-    },
+    getDemoFlag: ()=>AppStore.getData().demoFlag,
     getSentBill: ()=>AppStore.getData().sentBillBean,
+
+    getAcceptanceBankBeans: ()=>
+        AppStore.getData().acceptanceBankBeans,
 
     getRevBill: ()=>AppStore.getData().revBillBean,
     getBill: (id)=> {
@@ -15,7 +16,7 @@ var BillStore = assign({}, EventEmitter.prototype, {
         } else {
             bill.revBillBean.contentList.map((item, index)=> {
                 if (item.billId == id) {
-                    res=item
+                    res = item
                 }
             })
         }
@@ -23,7 +24,7 @@ var BillStore = assign({}, EventEmitter.prototype, {
         } else {
             bill.sentBillBean.map((item, index)=> {
                 if (item.billId == id) {
-                    res=item
+                    res = item
                 }
             })
         }

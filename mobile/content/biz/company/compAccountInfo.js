@@ -1,6 +1,3 @@
-/**
- * Created by vison on 16/3/14.
- */
 'use strict';
 
 var React = require('react-native');
@@ -13,18 +10,18 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction");
 var NavBarView = require('../../framework/system/navBarView');
 var certificateState = require('../../constants/certificateState');
+var CertifySuccess = require('./certifySuccess');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
-        var newOrg = CompStore.getNewOrg();
-        console.log(newOrg);
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
         return {
-            newOrg:newOrg,
+            newOrg: newOrg,
             accountName: newOrg.accountName,
             accountNo: newOrg.accountNo,
-            reservedMobileNo: newOrg.reservedMobileNo,
+            openBank: newOrg.openBank,
             checked: true,
         }
     },
@@ -49,20 +46,18 @@ var CompAccountInfo = React.createClass({
             {
                 accountName: this.state.accountName,
                 accountNo: this.state.accountNo,
-                reservedMobileNo: this.state.reservedMobileNo
+                openBank: this.state.openBank
             }
-        );
-        CompAction.submitOrg(this.state.newOrg,
-            function ( ) {
-                Alert("认证成功");
-            },
-            function () {
-                Alert("认证失败");
-            })
+        ),
+            CompAction.submitOrg(
+                this.state.newOrg,
+                ()=>this.props.navigator.push({comp: CertifySuccess}),
+                ()=>Alert("认证失败")
+            )
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
-        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
+        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.openBank.length == 0) {
             this.setState({checked: true})
         } else {
             this.setState({checked: false})
@@ -77,10 +72,13 @@ var CompAccountInfo = React.createClass({
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
                     <Input type='default' prompt="账户名称" max={20} field="accountName" isPwd={false}
+                           defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
+                           defaultValue={this.state.accountNo}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
+                    <Input type='default' prompt="开户行" max={20} field="openBank" isPwd={false}
+                           defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
                 </View>
                 <View style={{margin:10}}>

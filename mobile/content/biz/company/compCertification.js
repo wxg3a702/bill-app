@@ -8,6 +8,7 @@ var {
     Dimensions,
     View,
     ListView,
+    Image
     } = React;
 var Adjust = require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
@@ -20,6 +21,7 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var _ = require('lodash')
 var Swipeout = require('react-native-swipeout')
 var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
@@ -31,6 +33,9 @@ var CompCertification = React.createClass({
         let i = 0;
         var orgBean = CompStore.getCertifiedOrgBean();
         orgBean.map((item, index)=> {
+            if (!item.status) {
+                item.status = 'AUDITING'
+            }
             if (item.status != 'CERTIFIED') {
                 item.orgName = '认证企业信息' + ++i
             }
@@ -57,9 +62,9 @@ var CompCertification = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    toOther(name, item){
+    toOther(item){
         this.props.navigator.push({
-            comp: name,
+            comp: CompCertifyCopies,
             param: {
                 item: item
             }
@@ -75,13 +80,11 @@ var CompCertification = React.createClass({
                     Alert('您确定要删除该机构么',
                         ()=> {
                             CompAction.deleteOrg(
-                                {orgId: data.id}
-                            ),
-                                function () {
-                                    Alert("删除成功!");
-                                }.bind(this),
-                                function () {
+                                {orgId: data.id},
+                                ()=>Alert("删除成功!"),
+                                ()=> {
                                 }
+                            )
                         },
                         function () {
                         }
@@ -91,7 +94,7 @@ var CompCertification = React.createClass({
         ]
         return (
             <Swipeout right={swipeoutBtns}>
-                <TouchableHighlight onPress={()=>this.toOther(CompCertifyCopies,data)}>
+                <TouchableHighlight onPress={()=>this.toOther(data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>
@@ -110,7 +113,10 @@ var CompCertification = React.createClass({
     returnList(){
         if (this.state.bean.length == 0) {
             return (
-                <View/>
+                <View style={{flex:1,alignItems:'center'}}>
+                    <Image style={{marginTop:100}} source={require("../../image/company/no_company.png")}/>
+                    <Text style={{marginTop:20,color:"#CCCCCC"}}>点击下方按钮进行"企业认证"哦</Text>
+                </View>
             )
         } else {
             return (
@@ -118,14 +124,19 @@ var CompCertification = React.createClass({
             )
         }
     },
+    returnTitle(){
+        if (!_.isEmpty(this.state.bean)) {
+            return <Space backgroundColor="#f0f0f0"/>
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="企业认证">
-                <Space backgroundColor="#f0f0f0"/>
+                {this.returnTitle()}
                 <View style={{flex: 1}}>
                     {this.returnList()}
                 </View>
-                <BottomButton func={()=>this.toOther(CompCertifyCopies)} content="新增企业信息"/>
+                <BottomButton func={()=>this.toOther('')} content="新增企业信息"/>
             </NavBarView>
         )
     }
