@@ -38,7 +38,7 @@ var UserInfo = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
         return {
-            imageSource: '',
+            imageSource: {},
             userName: Validation.isNull(user.userName) ? '未设置' : user.userName,
             mobileNo: Validation.isNull(user.mobileNo) ? '' : user.mobileNo,
             newMobileNo: Validation.isNull(user.newMobileNo) ? '未设置' : user.newMobileNo,
@@ -178,9 +178,7 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            if (this.state.photoStoreId.length == 58) {
-                url = {uri: UserAction.getFile(this.state.photoStoreId)}
-            }
+            url = {uri: UserAction.getFile(this.state.photoStoreId)}
         }
         return url;
     },

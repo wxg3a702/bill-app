@@ -79,12 +79,12 @@ var Message = React.createClass({
         }
 
         MessageStore.updateUnReadNum(name);
-        MessageAction.setOtherMsgRead({category: name}, function (data) {
+        /*MessageAction.setOtherMsgRead({category: name}, function (data) {
             //更新未读标记
 
         }, function (data) {
             Alert('已读标记设置失败!');
-        });
+        });*/
     },
     toLogin(){
         this.props.navigator.push({comp: Login})

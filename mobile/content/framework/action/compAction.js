@@ -11,8 +11,20 @@ var CompAction = {
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
     getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f),
-    deleteOrg: (p, c, f)=>PFetch(api + '/Organization/deleteOrg', p, c, f),
+    deleteOrg: (p, c, f)=>_deleteOrg(p, c, f),
     updateDefaultOrgByUser: (p, c, f)=>_updateDefaultOrgByUser(p, c, f)
+}
+var _deleteOrg = function (p, c, f) {
+    PFetch(api + '/Organization/deleteOrg', p,
+        function (msg) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.DELETE_ORGBEANS,
+                data: p
+            })
+            c(msg);
+        },
+        f
+    )
 }
 var _updateDefaultOrgByUser = function (p, c, f) {
     PFetch(api + '/Organization/updateDefaultOrgByUser',

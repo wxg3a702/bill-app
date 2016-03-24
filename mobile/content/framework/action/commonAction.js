@@ -4,6 +4,7 @@ var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
 var ActionTypes = Command.ActionTypes;
 var _ = require('lodash');
+var AppStore = require('../store/appStore');
 var pub = "/pub";
 var api = "/api"
 var CommonActions = {
@@ -28,6 +29,7 @@ var _notificationRegister = function (token) {
 }
 
 var _onNotification = function (notification) {
+    console.log('Basic  ' + AppStore.getToken());
     BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
         AppDispatcher.dispatch({
             type: ActionTypes.PUSH_NOTIFICATION,

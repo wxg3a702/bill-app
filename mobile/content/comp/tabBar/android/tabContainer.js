@@ -12,7 +12,6 @@ var {
   InteractionManager,
   } = React;
 
-
 var deviceWidth = Dimensions.get('window').width;
 var deviceHeight = Dimensions.get('window').height;
 

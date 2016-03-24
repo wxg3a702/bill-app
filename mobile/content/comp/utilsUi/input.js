@@ -8,30 +8,14 @@ var {
     Image,
     Dimensions
     } = React;
+var InputIcon=require('../../constants/inputIcon')
 var Adjust=require('../../comp/utils/adjust')
 var Input = React.createClass({
+    getDefaultProps(){
+
+    },
     textOnchange: function (text, type) {
         this.props.onChanged(type, text)
-    },
-    icon(){
-        var icon;
-        switch (this.props.icon) {
-            case 'phone':
-                icon = require('../../image/utils/phone.png');
-                break;
-            case 'password':
-                icon = require('../../image/utils/password.png');
-                break;
-            case 'user':
-                icon = require('../../image/utils/picCode.png');
-                break;
-            case 'trading_PWD':
-                icon = require('../../image/user/trading_PWD.png');
-                break;
-            case 'personId':
-                icon = require('../../image/user/personId.png');
-        }
-        return icon;
     },
     render(){
         var {height, width} = Dimensions.get('window');
@@ -39,7 +23,7 @@ var Input = React.createClass({
             return (
                 <View style={[styles.view,styles.radius]}>
                     <Image style={{height:16,width:16,marginLeft:9}}
-                           source={this.icon()}/>
+                           source={InputIcon[this.props.icon].icon}/>
                     <TextInput style={[styles.input,{width:width-Adjust.width(80)}]} underlineColorAndroid="transparent"
                                onChangeText={(text) => this.textOnchange(text,this.props.field)}
                                maxLength={this.props.max}

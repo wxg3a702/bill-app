@@ -6,8 +6,10 @@ var BillStore = assign({}, EventEmitter.prototype, {
         return _data.demoFlag;
     },
     getSentBill: ()=>AppStore.getData().sentBillBean,
+
     getAcceptanceBankBeans: ()=>
         AppStore.getData().acceptanceBankBeans,
+
     getRevBill: ()=>AppStore.getData().revBillBean,
     getBill: (id)=> {
         let bill = AppStore.getData();
@@ -16,15 +18,15 @@ var BillStore = assign({}, EventEmitter.prototype, {
         } else {
             bill.revBillBean.contentList.map((item, index)=> {
                 if (item.billId == id) {
-                    res=item
+                    res = item
                 }
             })
         }
         if (!bill.sentBillBean) {
         } else {
-            bill.sentBillBean.contentList.map((item, index)=> {
+            bill.sentBillBean.map((item, index)=> {
                 if (item.billId == id) {
-                    res=item
+                    res = item
                 }
             })
         }

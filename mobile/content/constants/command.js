@@ -21,6 +21,7 @@ module.exports = {
         UPDATE_USERINFO: null,
         UPDATE_NEWORG: null,
         UPDATE_ORGBEANS: null,
+        DELETE_ORGBEANS: null,
     })
 
 };

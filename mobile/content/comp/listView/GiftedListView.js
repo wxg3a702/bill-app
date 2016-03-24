@@ -8,17 +8,16 @@ var {
   TouchableHighlight,
   View,
   Text,
-  PullToRefreshViewAndroid
+  PullToRefreshViewAndroid,
+  InteractionManager,
+  Image,
+  Dimensions
   } = React;
 
-var
-  STATUS_NONE = 0,
-  STATUS_INFINITE_IDLE = 4,
-  STATUS_WILL_INFINITE = 5,
-  STATUS_INFINITING = 6,
-  STATUS_INFINITE_LOADED_ALL = 7;
-var DEFAULT_PULL_DISTANCE = 60;
-var DEFAULT_HF_HEIGHT = 50;
+var deviceWidth = Dimensions.get('window').width;
+var deviceHeight = Dimensions.get('window').height;
+
+
 // small helper function which merged two objects into one
 function MergeRecursive(obj1, obj2) {
   for (var p in obj2) {
@@ -41,8 +40,6 @@ var GiftedListView = React.createClass({
 
   getDefaultProps() {
     return {
-      footerHeight: DEFAULT_HF_HEIGHT,
-      pullDistance: DEFAULT_PULL_DISTANCE,
       customStyles: {},
       initialListSize: 10,
       firstLoader: true,
@@ -55,7 +52,7 @@ var GiftedListView = React.createClass({
       withSections: false,
       onFetch(page, callback, options) { callback([]); },
 
-      paginationFetchingView: null,
+      paginationFetchigView: null,
       paginationAllLoadedView: null,
       paginationWaitingView: null,
       refreshableFetchingView: null,
@@ -67,12 +64,15 @@ var GiftedListView = React.createClass({
         colors: ['#000000'],
         progressBackgroundColor: '#c8c7cc',
       },
+
+      refreshText: '下拉刷新',
+      loadingText: '更多...',
+      allLoadedText: '全部加载完成',
+
     };
   },
 
   propTypes: {
-    pullDistance : React.PropTypes.number,
-    footerHeight : React.PropTypes.number,
     customStyles: React.PropTypes.object,
     initialListSize: React.PropTypes.number,
     firstLoader: React.PropTypes.bool,
@@ -85,7 +85,7 @@ var GiftedListView = React.createClass({
     withSections: React.PropTypes.bool,
     onFetch: React.PropTypes.func,
 
-    paginationFetchingView: React.PropTypes.func,
+    paginationFetchigView: React.PropTypes.func,
     paginationAllLoadedView: React.PropTypes.func,
     paginationWaitingView: React.PropTypes.func,
     refreshableFetchingView: React.PropTypes.func,
@@ -94,6 +94,10 @@ var GiftedListView = React.createClass({
     emptyView: React.PropTypes.func,
     renderSeparator: React.PropTypes.func,
     PullToRefreshViewAndroidProps: React.PropTypes.object,
+
+    refreshText: React.PropTypes.string,
+    loadingText: React.PropTypes.string,
+    allLoadedText: React.PropTypes.string,
   },
 
   _setY(y) { this._y = y; },
@@ -104,28 +108,41 @@ var GiftedListView = React.createClass({
   _getRows() { return this._rows; },
 
 
-  paginationFetchingView() {
-    if (this.props.paginationFetchingView) {
-      return this.props.paginationFetchingView();
+  paginationFetchigView() {
+    if (this.props.paginationFetchigView) {
+      return this.props.paginationFetchigView();
     }
 
+    // do not show spinner during first load
+    //if (this.state.paginationStatus === 'firstLoad' && this.props.firstLoader === true) {
+    //  return <View></View>
+    //} else {
     return (
       <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
         <GiftedSpinner />
       </View>
     );
+    //}
+
   },
   paginationAllLoadedView() {
     if (this.props.paginationAllLoadedView) {
       return this.props.paginationAllLoadedView();
     }
 
+    //return (
+    //  <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
+    //    <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
+    //      {this.props.allLoadedText}
+    //    </Text>
+    //  </View>
+    //);
+    if (this._getRows().length === 0) {
+      return this.emptyView(this._onRefresh);
+    }
+
     return (
-      <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
-        <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
-          ~
-        </Text>
-      </View>
+      <View></View>
     );
   },
   paginationWaitingView(paginateCallback) {
@@ -140,7 +157,7 @@ var GiftedListView = React.createClass({
         style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}
       >
         <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
-          Load more
+          {this.props.loadingText}
         </Text>
       </TouchableHighlight>
     );
@@ -158,6 +175,15 @@ var GiftedListView = React.createClass({
     return (
       <View>
         <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
+          <Text
+            style={{
+              color: 'grey',
+              fontSize: 14,
+              marginVertical: 3
+            }}
+          >
+            {this.props.refreshText}
+          </Text>
           <GiftedSpinner />
         </View>
         {this.headerView()}
@@ -217,6 +243,27 @@ var GiftedListView = React.createClass({
         </TouchableHighlight>
       </View>
     );
+    //return (
+    //  <View
+    //    style={{
+    //      alignItems: 'center',
+    //      justifyContent: 'flex-start'
+    //    }}
+    //  >
+    //    <Image
+    //      style={{
+    //          //marginTop: 100,
+    //          //marginBottom: 50,
+    //          //height: deviceHeight * 0.5,
+    //          width: deviceWidth,
+    //          resizeMode: 'contain',
+    //          marginTop: deviceHeight * 0.1,
+    //          //borderWidth: 2
+    //        }}
+    //      source={require('../../img/empty.png')}
+    //    />
+    //  </View>
+    //);
   },
   renderSeparator() {
     if (this.props.renderSeparator) {
@@ -249,7 +296,6 @@ var GiftedListView = React.createClass({
         dataSource: ds.cloneWithRowsAndSections(this._getRows()),
         refreshStatus: 'waiting',
         isRefreshing: false,
-        status: STATUS_NONE,
         paginationStatus: 'firstLoad',
       };
     } else {
@@ -260,7 +306,6 @@ var GiftedListView = React.createClass({
         dataSource: ds.cloneWithRows(this._getRows()),
         refreshStatus: 'waiting',
         isRefreshing: false,
-        status: STATUS_NONE,
         paginationStatus: 'firstLoad',
       };
     }
@@ -268,7 +313,10 @@ var GiftedListView = React.createClass({
 
   componentDidMount() {
     this._scrollResponder = this.refs.listview.getScrollResponder();
-    this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+
+    InteractionManager.runAfterInteractions(() => {
+      this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+    });
   },
 
   setNativeProps(props) {
@@ -281,6 +329,7 @@ var GiftedListView = React.createClass({
 
   _onRefresh(options = {}) {
     if (this.isMounted()) {
+      //this._scrollResponder.scrollTo(0);
       this._scrollResponder.scrollTo({y: 0});
       this.setState({
         refreshStatus: 'fetching',
@@ -297,6 +346,7 @@ var GiftedListView = React.createClass({
       if (this.props.refreshable === true && Platform.OS !== 'android') {
         // @issue
         // if a scrolling is already in progress, this scroll will not be executed
+        //this._scrollResponder.scrollTo(this.props.refreshableViewHeight);
         this._scrollResponder.scrollTo({y: this.props.refreshableViewHeight});
       }
     }
@@ -305,7 +355,6 @@ var GiftedListView = React.createClass({
   _onPaginate() {
     this.setState({
       paginationStatus: 'fetching',
-      status: STATUS_NONE
     });
     this.props.onFetch(this._getPage() + 1, this._postPaginate, {});
   },
@@ -355,15 +404,6 @@ var GiftedListView = React.createClass({
           this._onRefresh();
         }
       }
-      var status = this.state.status;
-      if (status === STATUS_INFINITE_IDLE) {
-        this.setState({status:STATUS_NONE});
-      } else if (status === STATUS_WILL_INFINITE) {
-        this.setState({status:STATUS_INFINITING});
-        this._onPaginate();
-      } else if (status === STATUS_INFINITE_LOADED_ALL) {
-        this.setState({status:STATUS_NONE});
-      }
     }
   },
 
@@ -379,20 +419,6 @@ var GiftedListView = React.createClass({
             refreshStatus: 'willRefresh',
             isRefreshing: false,
           });
-        }
-      }
-      var nativeEvent = e.nativeEvent;
-      var status = this.state.status;
-      if (status===STATUS_INFINITE_IDLE || status===STATUS_WILL_INFINITE) {
-        var y = nativeEvent.contentInset.top + nativeEvent.contentOffset.y + nativeEvent.layoutMeasurement.height
-          -nativeEvent.contentSize.height-this.initialInfiniteOffset;
-        if (this.footerIsRender) {
-          y += this.props.footerHeight;
-        }
-        if (status!==STATUS_WILL_INFINITE && y>this.props.pullDistance) {
-          this.setState({status:STATUS_WILL_INFINITE});
-        } else if (status===STATUS_WILL_INFINITE && y<=this.props.pullDistance) {
-          this.setState({status:STATUS_INFINITE_IDLE});
         }
       }
     }
@@ -413,7 +439,7 @@ var GiftedListView = React.createClass({
 
   _renderPaginationView() {
     if ((this.state.paginationStatus === 'fetching' && this.props.pagination === true) || (this.state.paginationStatus === 'firstLoad' && this.props.firstLoader === true)) {
-      return this.paginationFetchingView();
+      return this.paginationFetchigView();
     } else if (this.state.paginationStatus === 'waiting' && this.props.pagination === true && (this.props.withSections === true || this._getRows().length > 0)) {
       return this.paginationWaitingView(this._onPaginate);
     } else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
@@ -423,23 +449,6 @@ var GiftedListView = React.createClass({
     } else {
       return null;
     }
-
-    var status = this.state.status;
-    this.footerIsRender = true;
-    if (status === STATUS_INFINITE_IDLE) {
-      return this.paginationWaitingView(this._onPaginate);
-    }
-    if (status === STATUS_WILL_INFINITE) {
-      return this.paginationWaitingView(this._onPaginate);
-    }
-    if (status === STATUS_INFINITING) {
-      return this.paginationFetchingView();
-    }
-    if (status === STATUS_INFINITE_LOADED_ALL) {
-      return this.paginationAllLoadedView();
-    }
-    this.footerIsRender = false;
-    return null;
   },
 
   _calculateContentInset() {
@@ -458,21 +467,12 @@ var GiftedListView = React.createClass({
     }
   },
 
-
-  handleResponderGrant(event) {
-    var nativeEvent = event.nativeEvent;
-    if (!nativeEvent.contentInset || this.state.status!==STATUS_NONE) {
-      return;
-    }
-    var y0 = nativeEvent.contentInset.top + nativeEvent.contentOffset.y +
-      nativeEvent.layoutMeasurement.height-nativeEvent.contentSize.height;
-    if (y0 > 0 ) {
-      if (!(this.state.paginationStatus === 'allLoaded' && this.props.pagination === true)) {
-        this.initialInfiniteOffset = (y0>0?y0:0);
-        this.setState({status:STATUS_INFINITE_IDLE});
-      } else {
-        this.setState({status:STATUS_INFINITE_LOADED_ALL});
-      }
+  _endReachedRender: function () {
+    if (this.state.paginationStatus != 'allLoaded') {
+      this.setState({
+        paginationStatus: 'fetching',
+      });
+      this.props.onFetch(this._getPage() + 1, this._postPaginate, {});
     }
   },
 
@@ -487,7 +487,7 @@ var GiftedListView = React.createClass({
         renderHeader={this.props.refreshable === true && Platform.OS !== 'android' ? this._renderRefreshView : this.headerView}
         renderFooter={this._renderPaginationView}
 
-        onScroll={this.props.refreshable === true ? this._onScroll : null}
+        onScroll={this.props.refreshable === true && Platform.OS !== 'android' ? this._onScroll : null}
         onResponderRelease={this.props.refreshable === true && Platform.OS !== 'android' ? this._onResponderRelease : null}
 
         scrollEventThrottle={200}
@@ -499,10 +499,12 @@ var GiftedListView = React.createClass({
         scrollEnabled={true}
         canCancelContentTouches={true}
 
+        onEndReached={this._endReachedRender}
+        onEndReachedThreshold={100}
+
         renderSeparator={this.renderSeparator}
 
         {...this.props}
-        onResponderGrant={this.handleResponderGrant}
 
         style={[this.props.style, style]}
       />
