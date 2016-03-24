@@ -40,9 +40,9 @@ var Message = React.createClass({
         if (token == null) {
             return {token: token}
         } else {
-            var messageBean = MessageStore.getMessage()
+            var messageBean = MessageStore.getMsgData()
             return {
-                dataSource: ds.cloneWithRows(messageBean),
+                dataSource: messageBean,
                 data: messageBean,
                 token: token
             }
