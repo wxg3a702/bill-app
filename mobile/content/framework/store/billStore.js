@@ -6,7 +6,8 @@ var BillStore = assign({}, EventEmitter.prototype, {
         return _data.demoFlag;
     },
     getSentBill: ()=>AppStore.getData().sentBillBean,
-
+    getAcceptanceBankBeans: ()=>
+        AppStore.getData().acceptanceBankBeans,
     getRevBill: ()=>AppStore.getData().revBillBean,
     getBill: (id)=> {
         let bill = AppStore.getData();

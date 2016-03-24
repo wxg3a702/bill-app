@@ -81,6 +81,7 @@ var BillList = React.createClass({
     },
     getInitialState: function () {
         return this.getStateFromStores();
+
     },
     componentDidMount() {
         if(!AppStore.getToken()){

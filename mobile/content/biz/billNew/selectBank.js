@@ -21,36 +21,20 @@ var {
     } = React;
 
 var NavBarView = require('../../framework/system/navBarView');
+var BillStore = require('../../framework/store/billStore');
 
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 
-var Model = [
-    {
-        id: '1',
-        bankName: '汉口银行',
-        disRate: 9.99,
-        isDefault :false
-    },
-    {
-        id: '2',
-        bankName: '湖北省农村信用社',
-        disRate: 99.99,
-        isDefault :false
-    },
-    {
-        id: '3',
-        bankName: '湖北银行',
-        disRate: 0.99,
-        isDefault :false
-    },
-]
-
 var SelextBank = React.createClass({
     getInitialState: function () {
+        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        if (acceptanceBankBeans == null){
+            acceptanceBankBeans = '';
+        }
         return {
-            dataSource: ds.cloneWithRows(Model),
+            dataSource: ds.cloneWithRows(acceptanceBankBeans),
         };
     },
     render: function () {
@@ -69,9 +53,6 @@ var SelextBank = React.createClass({
     },
     _renderSearchBar(){
         return (
-            //<SearchBar placeholder='Search'
-            //           textFieldBackgroundColor='white'>
-            //</SearchBar>
             <View style={{height:40,backgroundColor:'#7f7f7f'}}>
                 <View
                     style={{height:30,backgroundColor:'#fff',marginTop:5,marginLeft:10,marginRight:10,borderRadius:4}}>
@@ -86,14 +67,19 @@ var SelextBank = React.createClass({
     },
     textChange(text){
         var ret = new Array();
-        if (!text) {
-            ret = Model
-        } else {
-            Model.map((item, index)=> {
-                if (item.bankName.indexOf(text) >= 0) {
-                    ret.push(item)
-                }
-            })
+        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        if (acceptanceBankBeans == null){
+
+        }else {
+            if (!text) {
+                ret = acceptanceBankBeans
+            } else {
+                acceptanceBankBeans.map((item, index)=> {
+                    if (item.bankName.indexOf(text) >= 0) {
+                        ret.push(item)
+                    }
+                })
+            }
         }
         this.setState({dataSource: ds.cloneWithRows(ret)})
     },
@@ -108,7 +94,7 @@ var SelextBank = React.createClass({
                 <View
                     style={{height:50,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomColor:'#e0e0e0',borderBottomWidth:1}}>
                     <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{item.bankName}</Text>
-                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.disRate+'‰'}</Text>
+                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.discountRate+'‰'}</Text>
                 </View>
             </TouchableOpacity>
         );
