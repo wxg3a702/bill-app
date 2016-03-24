@@ -13,6 +13,7 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction");
 var NavBarView = require('../../framework/system/navBarView');
 var certificateState = require('../../constants/certificateState');
+var CertifySuccess = require('./certifySuccess');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
@@ -54,7 +55,14 @@ var CompAccountInfo = React.createClass({
         );
         CompAction.submitOrg(
             this.state.newOrg,
-            ()=>Alert("认证成功"),
+            ()=>{
+                this.props.navigator.push({
+                    comp: CertifySuccess,
+                    param: {
+                        item: item
+                    }
+                })
+            },
             (msg)=>Alert("认证失败")
         )
     },

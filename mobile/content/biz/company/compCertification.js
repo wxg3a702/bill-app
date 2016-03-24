@@ -8,6 +8,7 @@ var {
     Dimensions,
     View,
     ListView,
+    Image
     } = React;
 var Adjust = require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
@@ -112,8 +113,9 @@ var CompCertification = React.createClass({
     returnList(){
         if (this.state.bean.length == 0) {
             return (
-                <View style={{flex:1,alignItems:'center',justifyContent:'center'}}>
-                    <Image style={{marginTop:10}} source={require("../../image/company/no_company.png")}/>
+                <View style={{flex:1,alignItems:'center'}}>
+                    <Image  style={{marginTop:100}} source={require("../../image/company/no_company.png")}/>
+                    <Text style={{marginTop:20,color:"#CCCCCC"}}>点击下方按钮进行"企业认证"哦</Text>
                 </View>
             )
         } else {
