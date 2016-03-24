@@ -13,6 +13,7 @@ var {
     TouchableOpacity,
     InteractionManager
     } = React;
+var Demo = require('./demo')
 var Adjust = require('../../comp/utils/adjust')
 var ListBottom = require('../../comp/utilsUi/listBottom')
 var {width,height} = Dimensions.get('window');
@@ -22,7 +23,9 @@ var NumberHelper = require('../../comp/utils/numberHelper')
 var DateHelper = require('../../comp/utils/dateHelper');
 var ToLogin = require('../../comp/utilsUi/toLogin');
 var Login = require('../login/login')
+var UserStore = require('../../framework/store/userStore');
 var BillStore = require('../../framework/store/billStore');
+var BillAction = require('../../framework/action/billAction');
 var BillDetail = require('./billDetail')
 var VIcon = require('../../comp/icon/vIcon')
 var BillStates = require('./../../constants/billStates')
@@ -91,6 +94,11 @@ var Bill = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        var obj = BillStore.getDemoFlag();
+        if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
+            this.props.navigator.push({comp: Demo});
+            BillAction.setDemoFlag();
+        }
     },
 
     componentWillUnmount: function () {
