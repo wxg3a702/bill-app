@@ -1,52 +1,18 @@
 const _ = require('lodash');
 const Realm = require('realm');
-const SCHEMA_DEVICE = 'device';
-const SCHEMA_TOKEN = 'token';
-const SCHEMA_VALUE = 'value';
-const SCHEMA_FLAG = 'flag';
+const {
+  DeviceSchema,
+  SCHEMA_DEVICE,
+  ValueSchema,
+  FlagSchema,
+  TokenSchema,
+  SCHEMA_TOKEN
+  } = require('./schemas');
 
 const DEVICE_ID = '-device-id-';
-let DeviceSchema = {
-    name: SCHEMA_DEVICE,
-    primaryKey: 'device',
-    properties: {
-        device: {type: 'string'},
-        APNSToken: {type: 'string', optional: true}
-    }
-};
-
-let ValueSchema = {
-    name: SCHEMA_VALUE,
-    primaryKey: 'key',
-    properties: {
-        key: {type: 'string'},
-        value: {type: 'string'}
-    }
-};
-
-let FlagSchema = {
-    name: SCHEMA_FLAG,
-    primaryKey: 'key',
-    properties: {
-        key: {type: 'string'},
-        flag: {type: 'bool'}
-    }
-};
-
-let TokenSchema = {
-    name: SCHEMA_TOKEN,
-    primaryKey: 'token',
-    properties: {
-        token: {type: 'string'},
-        APNSToken: {type: 'string', optional: true},
-        values: {type: 'list', objectType: SCHEMA_VALUE},
-        flags: {type: 'list',  objectType: SCHEMA_FLAG}
-    }
-};
 
 
 // Get the default Realm with support for our objects
-//let _realm = new Realm({schema: [DeviceSchema, ValueSchema, FlagSchema, TokenSchema]});
 let _realm = new Realm({schema: [DeviceSchema, ValueSchema, FlagSchema, TokenSchema]});
 let _token = '';
 
@@ -58,11 +24,11 @@ let _clearToken = function () {
         _realm.delete(_persister); // Deletes all books
     });
 };
-_clearToken();
+//_clearToken();
 
 let _setValue = function (key, value, cb) {
     _realm.write(() => {
-        _realm.create(TokenSchema, {
+        _realm.create(SCHEMA_TOKEN, {
             token: _token,
             values: [{
                 key: key,
@@ -75,7 +41,7 @@ let _setValue = function (key, value, cb) {
 
 let _setFlag = function (key, flag, cb) {
     _realm.write(() => {
-        _realm.create(TokenSchema, {
+        _realm.create(SCHEMA_TOKEN, {
             token: _token,
             flags: [{
                 key: key,
@@ -88,8 +54,8 @@ let _setFlag = function (key, flag, cb) {
 
 
 let _getAppData = function (cb) {
-    let tokenData = _realm.objects(SCHEMA_TOKEN);
     let deviceData = _realm.objects(SCHEMA_DEVICE);
+    let tokenData = _realm.objects(SCHEMA_TOKEN);
     let _appObject = {};
 
     if (deviceData.length > 0) {
@@ -101,16 +67,17 @@ let _getAppData = function (cb) {
 
     if (tokenData.length > 0) {
         let _persisterToken = tokenData[0];
+        _token = _persisterToken.token;
         let _values = _persisterToken.values;
 
-        _values.map((item, index) => {
+        _(_values).forEach((item) => {
             _appObject[item.key] = JSON.parse(item.value);
         });
 
         let _flags = _persisterToken.flags.filtered('key == "demoFlag"');
         _.assign(_appObject, {
             token: _persisterToken.token,
-            demoFlag: _flags[0]
+            demoFlag: _flags[0].flag
         });
     }
 
@@ -118,11 +85,12 @@ let _getAppData = function (cb) {
 };
 
 let _saveAPNToken = function (_apnToken, cb) {
+    console.log('apnToken => ' + _apnToken);
     _realm.write(() => {
-        _realm.create(DeviceSchema, {
+        _realm.create(SCHEMA_DEVICE, {
             device: DEVICE_ID,
             APNSToken: _apnToken
-        });
+        }, true);
         if (cb) cb();
     })
 };
@@ -131,9 +99,8 @@ let _saveAppData = function (data) {
     // Create Realm objects and write to local storage
     _token = data.token;
     _realm.write(() => {
-        _realm.create(TokenSchema, {
+        _realm.create(SCHEMA_TOKEN, {
             token: data.token,
-            //APNSToken: '',
             values: [{
                 key: 'revBillBean',
                 value: JSON.stringify(data.revBillBean)
@@ -169,7 +136,7 @@ let _saveAppData = function (data) {
                 key: 'demoFlag',
                 flag: Boolean(data.demoFlag)
             }]
-        });
+        }, true);
     });
 };
 

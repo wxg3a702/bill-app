@@ -54,30 +54,30 @@ var TabView = React.createClass({
     },
 
     componentDidMount() {
-        AppStore.addChangeListener(this._onChange);
-        if (Platform.OS === 'ios') {
-            if (!AppStore.getAPNSToken()) {
-                PushNotificationIOS.requestPermissions();
-            }
+      AppStore.addChangeListener(this._onChange);
+      if (Platform.OS === 'ios') {
+        if (!AppStore.getAPNSToken()) {
+          PushNotificationIOS.requestPermissions();
+        }
 
-            PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-            PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-            AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+        PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+        PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
+        AppStateIOS.removeEventListener('change', this._handleAppStateChange);
 
 
-            PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
-            PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
+        PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
+        PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
-      AppStateIOS.addEventListener('change', this._handleAppStateChange);
+        AppStateIOS.addEventListener('change', this._handleAppStateChange);
 
-      if (Platform.OS === 'android') {
-        DeviceEventEmitter.addListener('Test', function(e: Event) {
-          console.log(e.test);
-          CommonAction.onNotification;
-        });
+        if (Platform.OS === 'android') {
+          DeviceEventEmitter.addListener('Test', function (e:Event) {
+            console.log(e.test);
+            CommonAction.onNotification;
+          });
+        }
       }
-    }
-  },
+    },
 
     componentWillUnmount: function () {
         if (Platform.OS === 'ios') {
