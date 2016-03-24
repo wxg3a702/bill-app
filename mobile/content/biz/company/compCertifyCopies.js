@@ -23,11 +23,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
-var DateHelper = require('../../comp/utils/dateHelper')
-var Button = require('../../comp/utilsUi/button')
-var Space = require('../../comp/utilsUi/space')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
-var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
@@ -140,19 +136,19 @@ var CompCertifyCopies = React.createClass({
     returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
-           // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
+            // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
             if (this.state[name].indexOf("@userId") > -1) {
-             url = {uri: UserAction.getFile(this.state[name])}
-             } else {
-             url = {uri: this.state[name], isStatic: true};
-             }
-             return (
-             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-             activeOpacity={0.6} underlayColor="#ebf1f2">
-             <Image style={[styles.image,styles.radius]}
-             resizeMode="cover" source={url}/>
-             </TouchableHighlight>
-             )
+                url = {uri: UserAction.getFile(this.state[name])}
+            } else {
+                url = {uri: this.state[name], isStatic: true};
+            }
+            return (
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                    activeOpacity={0.6} underlayColor="#ebf1f2">
+                    <Image style={[styles.image,styles.radius]}
+                           resizeMode="cover" source={url}/>
+                </TouchableHighlight>
+            )
         } else {
             return (
                 <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
