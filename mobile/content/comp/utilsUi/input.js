@@ -26,7 +26,7 @@ var Input = React.createClass({
                            source={InputIcon[this.props.icon].icon}/>
                     <TextInput style={[styles.input,{width:width-Adjust.width(80)}]} underlineColorAndroid="transparent"
                                onChangeText={(text) => this.textOnchange(text,this.props.field)}
-                               maxLength={this.props.max}
+                               maxLength={this.props.max} defaultValue={this.props.defaultValue}
                                placeholder={this.props.prompt} secureTextEntry={this.props.isPwd} autoCorrect={false}
                                autoCapitalize="none" placeholderTextColor="#7f7f7f" clearButtonMode="while-editing"
                                keyboardType={this.props.isPhone?'numeric':'ascii-capable'}/>

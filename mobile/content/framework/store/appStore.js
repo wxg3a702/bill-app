@@ -1,14 +1,14 @@
 var React = require('react-native');
 var {
-  NetInfo
-  } = React;
+    NetInfo
+    } = React;
 var info = {
-  initLoadingState: true,
-  CHANGE_EVENT: 'change',
-  netWorkState: false,
-  requestHandle: null,
-  isLogout: false,
-  isForce_Logout: false
+    initLoadingState: true,
+    CHANGE_EVENT: 'change',
+    netWorkState: false,
+    requestHandle: null,
+    isLogout: false,
+    isForce_Logout: false
 }
 var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
 var _data = {};
@@ -28,117 +28,117 @@ var requestLoadingState = RequestState.IDEL;
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
-  addChangeListener: function (callback, event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.on(event, callback);
-  },
+    addChangeListener: function (callback, event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.on(event, callback);
+    },
 
-  removeChangeListener: function (callback, event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.removeListener(event, callback);
-  },
+    removeChangeListener: function (callback, event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.removeListener(event, callback);
+    },
 
-  emitChange: function (event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.emit(event);
-  },
+    emitChange: function (event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.emit(event);
+    },
 
-  getNetWorkState: ()=> info.netWorkState,
+    getNetWorkState: ()=> info.netWorkState,
 
-  getInitLoadingState: ()=>info.initLoadingState,
+    getInitLoadingState: ()=>info.initLoadingState,
 
-  requestLoadingState: ()=>requestLoadingState,
+    requestLoadingState: ()=>requestLoadingState,
 
-  requestHandle: ()=>info.requestHandle,
+    requestHandle: ()=>info.requestHandle,
 
-  isLogout: ()=>info.isLogout,
+    isLogout: ()=>info.isLogout,
 
-  isForceLogout: ()=>info.isForce_Logout,
+    isForceLogout: ()=>info.isForce_Logout,
 
-  getAPNSToken: ()=>_data.APNSToken,
+    getAPNSToken: ()=>_data.APNSToken,
 
-  getToken: ()=>_data.token,
+    getToken: ()=>_data.token,
 
-  getData: ()=>_data,
+    getData: ()=>_data,
 
-  getMainMsgBean: () => _mainMsgBean,
+    getMainMsgBean: () => _mainMsgBean,
 
-  getUserName: () => _data.userInfoBean.userName,
+    getUserName: () => _data.userInfoBean.userName,
 
-  init: function (data) {
-    info.initLoadingState = false;
-    _data = data;
-  },
+    init: function (data) {
+        info.initLoadingState = false;
+        _data = data;
+    },
 });
 
 var _handleConnectivityChange = function (isConnected) {
-  info.netWorkState = isConnected;
+    info.netWorkState = isConnected;
 }
 //
 var _appInit = function (data) {
-  NetInfo.isConnected.addEventListener(
-    'change',
-    _handleConnectivityChange
-  );
-  NetInfo.isConnected.fetch().done(
-    (isConnected) => {
-      info.netWorkState = isConnected;
-    }
-  );
-  Persister.getAppData(
-    function (data) {
-      info.initLoadingState = false;
-      _data = data;
-      Notification.setMsgContent(_data.userInfoBean.userName)
-      Persister.getMsgData(
-        (data) => {
-          _mainMsgBean = data;
+    NetInfo.isConnected.addEventListener(
+        'change',
+        _handleConnectivityChange
+    );
+    NetInfo.isConnected.fetch().done(
+        (isConnected) => {
+            info.netWorkState = isConnected;
         }
-      )
-      info.isLogout = false;
-      AppStore.emitChange();
-    })
+    );
+    Persister.getAppData(
+        function (data) {
+            info.initLoadingState = false;
+            _data = data;
+            Notification.setMsgContent(_data.userInfoBean.userName)
+            Persister.getMsgData(
+                (data) => {
+                    _mainMsgBean = data;
+                }
+            )
+            info.isLogout = false;
+            AppStore.emitChange();
+        })
 }
 //
 var _login = function (data) {
-  _data = data;
-  Notification.setMsgContent(_data.userInfoBean.userName)
-  initNewOrg();
-  Persister.getMsgData(
-    function (mainMsgData) {
-      if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
-        //TODO: 构建基本的mainMsgBean对象
-        var emptyData = {
-          'mainMsgBean': {
-            'pageIndex': 1,
-            'billSentBean': null,
-            'messageBeans': [],
-            'marketNewsBean': null,
-            'systemNoticeBean': null,
-            'billRevUnreadNum': 0
-          },
-          'sentBillMsgBeans': [],
-          'marketMsgBeans': [],
-          'systemMsgBeans': []
-        };
-        console.log('kong');
-        Persister.saveMsgData(emptyData);
-        _mainMsgBean = emptyData;
-      } else {
-        console.log('NoKong');
-        _mainMsgBean = mainMsgData;
-      }
-    }
-  )
-  AppStore.emitChange()
-  //_getPushMsg("/api/MessageSearch/getPushMsg");
-  Persister.getAppData((d) => {
-    data.demoFlag = d.demoFlag;
-    if (!d.demoFlag) {
-      data.demoFlag = {flag: false};
-    }
-    Persister.saveAppData(data);
-  });
+    _data = data;
+    Notification.setMsgContent(_data.userInfoBean.userName)
+    initNewOrg();
+    Persister.getMsgData(
+        function (mainMsgData) {
+            if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
+                //TODO: 构建基本的mainMsgBean对象
+                var emptyData = {
+                    'mainMsgBean': {
+                        'pageIndex': 1,
+                        'billSentBean': null,
+                        'messageBeans': [],
+                        'marketNewsBean': null,
+                        'systemNoticeBean': null,
+                        'billRevUnreadNum': 0
+                    },
+                    'sentBillMsgBeans': [],
+                    'marketMsgBeans': [],
+                    'systemMsgBeans': []
+                };
+                console.log('kong');
+                Persister.saveMsgData(emptyData);
+                _mainMsgBean = emptyData;
+            } else {
+                console.log('NoKong');
+                _mainMsgBean = mainMsgData;
+            }
+        }
+    )
+    AppStore.emitChange()
+    //_getPushMsg("/api/MessageSearch/getPushMsg");
+    Persister.getAppData((d) => {
+        data.demoFlag = d.demoFlag;
+        if (!d.demoFlag) {
+            data.demoFlag = {flag: false};
+        }
+        Persister.saveAppData(data);
+    });
 }
 //
 var initNewOrg = function () {
@@ -153,35 +153,33 @@ var initNewOrg = function () {
         picEnough: false,
     }
 }
-var _changeNewOrg = function (data) {
 
-}
 var _cancleBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index].status = "NEW";
-    }
-  });
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index].status = "NEW";
+        }
+    });
+    AppStore.emitChange();
 }
 //
 var _giveupBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index].status = "IGN";
-    }
-  });
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index].status = "IGN";
+        }
+    });
+    AppStore.emitChange();
 }
 //
 var _allowBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index] = data;
-      //_data.revBillBean.contentList[index].status = "DIS";
-    }
-  });
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index] = data;
+            //_data.revBillBean.contentList[index].status = "DIS";
+        }
+    });
+    AppStore.emitChange();
 }
 //
 var _rejectBillDiscount = function (data) {
@@ -221,109 +219,109 @@ var _getMsgBody = function (msg) {
 }
 
 var _pushMsg = function (data, key) {
-  _.isEmpty(_mainMsgBean[key]) ? _mainMsgBean[key] = new Array(data) : _mainMsgBean[key] = [data].concat(_mainMsgBean[key]);
+    _.isEmpty(_mainMsgBean[key]) ? _mainMsgBean[key] = new Array(data) : _mainMsgBean[key] = [data].concat(_mainMsgBean[key]);
 }
 //
 var _getBillBody = function (msg) {
-  return msg.billBody;
+    return msg.billBody;
 }
 
 var _updateMainMsgBeanByNotify = function (arrayKeyName, beanKeyName, data) {
-  _pushMsg(data, arrayKeyName);
-  _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]) ? _mainMsgBean[MsgContent.MAIN_MSG] = new Object() : "";
-  let unReadNum = _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG][beanKeyName]) ? 0 : _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName].unReadNum;
-  data.unReadNum = ++unReadNum;
-  _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName] = data;
+    _pushMsg(data, arrayKeyName);
+    _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]) ? _mainMsgBean[MsgContent.MAIN_MSG] = new Object() : "";
+    let unReadNum = _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG][beanKeyName]) ? 0 : _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName].unReadNum;
+    data.unReadNum = ++unReadNum;
+    _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName] = data;
 }
 
 var _addBillPackByNotify = function (keyName, data) {
-  if (_.isEmpty(_data[keyName]) || _.isEmpty(_data[keyName].contentList)) {
-    _data[keyName] = {contentList: new Array()};
-  }
-  _data[keyName].contentList = [data].concat(_data[keyName].contentList);
+    if (_.isEmpty(_data[keyName]) || _.isEmpty(_data[keyName].contentList)) {
+        _data[keyName] = {contentList: new Array()};
+    }
+    _data[keyName].contentList = [data].concat(_data[keyName].contentList);
 }
 
 var _analysisMessageData = function (data) {
-  //数据插入到对应的bean中 并替换main里的
-  let d = _getMsgBody(data);
-  switch (_getMsgType(data)) {
-    case MsgTypes.BILL_DRAW:
-    {
-      //billPack
-      _addBillPackByNotify('sentBillBean', _getBillBody(data));
-      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
-    }
-      break;
-    case MsgTypes.OPP_IGNORED:
-    {
-      //对方放弃贴现
-      _rejectBillDiscount(_getBillBody(data));
-      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
-    }
-      break;//
-    case MsgTypes.MARKET_NEWS:
-    {
-      _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
-    }
-      break;
-    case MsgTypes.ORG_AUTH_FAIL:
-    case MsgTypes.ORG_AUTH_OK:
-    {
+    //数据插入到对应的bean中 并替换main里的
+    let d = _getMsgBody(data);
+    switch (_getMsgType(data)) {
+        case MsgTypes.BILL_DRAW:
+        {
+            //billPack
+            _addBillPackByNotify('sentBillBean', _getBillBody(data));
+            _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
+        }
+            break;
+        case MsgTypes.OPP_IGNORED:
+        {
+            //对方放弃贴现
+            _rejectBillDiscount(_getBillBody(data));
+            _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
+        }
+            break;//
+        case MsgTypes.MARKET_NEWS:
+        {
+            _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
+        }
+            break;
+        case MsgTypes.ORG_AUTH_FAIL:
+        case MsgTypes.ORG_AUTH_OK:
+        {
 
-      _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+            _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+        }
+            break;//
+        case MsgTypes.REV_NEW_BILL://区分
+        {
+            //messageBeans
+            _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
+            _addBillPackByNotify('revBillBean', _getBillBody(data));
+        }
+            break;
+        case MsgTypes.APPROVE_DISCOUNT:
+        {
+            //messageBeans
+            _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
+            //批准贴现
+            _allowBillDiscount(_getBillBody(data));
+        }
+            break;//
+        case MsgTypes.LOGIN_OUT:
+            _force_logout();
+            break;
     }
-      break;//
-    case MsgTypes.REV_NEW_BILL://区分
-    {
-      //messageBeans
-      _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
-      _addBillPackByNotify('revBillBean', _getBillBody(data));
-    }
-      break;
-    case MsgTypes.APPROVE_DISCOUNT:
-    {
-      //messageBeans
-      _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
-      //批准贴现
-      _allowBillDiscount(_getBillBody(data));
-    }
-      break;//
-    case MsgTypes.LOGIN_OUT:
-      _force_logout();
-      break;
-  }
 }
 //
 var _freshMessageData = function (data) {
-  if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
-    return;
-  else {
-    data.nodeMsgBean.map((item, index)=> {
-      _analysisMessageData(item);
-    });
-    AppStore.emitChange();
-  }
+    if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
+        return;
+    else {
+        data.nodeMsgBean.map((item, index)=> {
+            _analysisMessageData(item);
+        });
+        AppStore.emitChange();
+    }
 }
 
 var _getPushMsg = function (url) {
-  //将取到的增量数据存到本地
-  BFetch(url, {}, function (data) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.PUSH_NOTIFICATION,
-      data: data
-    });
-  }, null, {custLoading: true});
+    //将取到的增量数据存到本地
+    BFetch(url, {}, function (data) {
+        AppDispatcher.dispatch({
+            type: ActionTypes.PUSH_NOTIFICATION,
+            data: data
+        });
+    }, null, {custLoading: true});
 }
 
 var _savePushMsg = function (data) {
-  _freshMessageData(data)
+    _freshMessageData(data)
 }
 
 var _force_logout = function () {
-  _data.token = null;
-  Persister.clearToken();
-  info.isLogout = true;
-  info.isForce_Logout = true;
+    _data.token = null;
+    Persister.clearToken();
+    info.isLogout = true;
+    info.isForce_Logout = true;
 }
 
 AppStore.dispatchToken = AppDispatcher.register(function (action) {
@@ -389,6 +387,8 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                 _data.newOrg.status = 'UNAUDITING';
             }
             _data.certifiedOrgBean.push(_data.newOrg)
+            initNewOrg();
+            Persister.saveNewOrg(_data.newOrg);
             Persister.saveOrg(_data.certifiedOrgBean);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
