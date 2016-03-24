@@ -20,6 +20,7 @@ var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction")
 var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
+var _=require('lodash')
 var Swipeout = require('react-native-swipeout')
 var Alert = require('../../comp/utils/alert');
 var ds = new ListView.DataSource({
@@ -118,10 +119,15 @@ var CompCertification = React.createClass({
             )
         }
     },
+    returnTitle(){
+        if (!_.isEmpty(this.state.bean)) {
+            return <Space backgroundColor="#f0f0f0"/>
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="企业认证">
-                <Space backgroundColor="#f0f0f0"/>
+                {this.returnTitle()}
                 <View style={{flex: 1}}>
                     {this.returnList()}
                 </View>

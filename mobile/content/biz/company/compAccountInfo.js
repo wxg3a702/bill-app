@@ -21,10 +21,10 @@ var CompAccountInfo = React.createClass({
         var newOrg = CompStore.getNewOrg();
         console.log(newOrg);
         return {
-            newOrg:newOrg,
+            newOrg: newOrg,
             accountName: newOrg.accountName,
             accountNo: newOrg.accountNo,
-            reservedMobileNo: newOrg.reservedMobileNo,
+            openBank: newOrg.openBank,
             checked: true,
         }
     },
@@ -49,20 +49,18 @@ var CompAccountInfo = React.createClass({
             {
                 accountName: this.state.accountName,
                 accountNo: this.state.accountNo,
-                reservedMobileNo: this.state.reservedMobileNo
+                openBank: this.state.openBank
             }
         );
-        CompAction.submitOrg(this.state.newOrg,
-            function ( ) {
-                Alert("认证成功");
-            },
-            function () {
-                Alert("认证失败");
-            })
+        CompAction.submitOrg(
+            this.state.newOrg,
+            ()=>Alert("认证成功"),
+            (msg)=>Alert("认证失败")
+        )
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
-        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.reservedMobileNo.length == 0) {
+        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.openBank.length == 0) {
             this.setState({checked: true})
         } else {
             this.setState({checked: false})
@@ -80,7 +78,7 @@ var CompAccountInfo = React.createClass({
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input type='default' prompt="开户预留手机号" max={20} field="reservedMobileNo" isPwd={false}
+                    <Input type='default' prompt="开户行" max={20} field="openBank" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>
                 </View>
                 <View style={{margin:10}}>

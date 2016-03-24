@@ -73,6 +73,7 @@ var VerifyOldTradingPWD = React.createClass({
         dismissKeyBoard();
         BillAction.validateMobileForDiscount(
             {
+                mobileNo:this.getStateFromStores(),
                 smsCode:this.state.verify
             },
             ()=>this.thisValideateOldTradingPWD().bind(this),

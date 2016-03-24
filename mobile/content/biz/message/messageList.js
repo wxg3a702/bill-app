@@ -97,7 +97,8 @@ var Message = React.createClass({
                 </NavBarView>
             )
         } else {
-            if (_.isEmpty(this.state.data)) {
+            if (!this.state.data ||(_.isEmpty(this.state.data[0].category) && _.isEmpty(this.state.data[1].category) && _.isEmpty(this.state.data[2].category)
+                && (_.isEmpty(this.state.data[3][0])))) {
                 return (
                     <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
                                 contentBackgroundColor='#f0f0f0'>
