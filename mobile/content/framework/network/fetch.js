@@ -16,12 +16,13 @@ var BFetch = function (url, param, callback, failure, options) {
         'Content-Type': 'application/json',
         'Authorization': 'Basic  ' + AppStore.getToken()
     };
-
+    console.log(headers.Authorization);
     rawFetch(host + url, {
         method: 'POST',
         headers: headers,
         body: JSON.stringify(param)
     }, callback, failure, options);
+
 };
 var PFetch = function (url, param, callback, failure, options) {
 

@@ -23,11 +23,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var certificateState = require('../../constants/certificateState');
 var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
-var DateHelper = require('../../comp/utils/dateHelper')
-var Button = require('../../comp/utilsUi/button')
-var Space = require('../../comp/utilsUi/space')
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
-var ImagePickerManager = require('NativeModules').ImagePickerManager;
 var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
@@ -65,6 +61,9 @@ var CompCertifyCopies = React.createClass({
             if (navigator) {
                 navigator.push({
                     comp: CompAccountInfo,
+                    param: {
+                        item: this.props.param.item
+                    }
                 })
             }
         } else {
@@ -140,19 +139,18 @@ var CompCertifyCopies = React.createClass({
     returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
-           // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
             if (this.state[name].indexOf("@userId") > -1) {
-             url = {uri: UserAction.getFile(this.state[name])}
-             } else {
-             url = {uri: this.state[name], isStatic: true};
-             }
-             return (
-             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-             activeOpacity={0.6} underlayColor="#ebf1f2">
-             <Image style={[styles.image,styles.radius]}
-             resizeMode="cover" source={url}/>
-             </TouchableHighlight>
-             )
+                url = {uri: UserAction.getFile(this.state[name])}
+            } else {
+                url = {uri: this.state[name], isStatic: true};
+            }
+            return (
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                    activeOpacity={0.6} underlayColor="#ebf1f2">
+                    <Image style={[styles.image,styles.radius]}
+                           resizeMode="cover" source={url}/>
+                </TouchableHighlight>
+            )
         } else {
             return (
                 <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
@@ -164,7 +162,7 @@ var CompCertifyCopies = React.createClass({
         }
     },
     returnAccount(){
-        let data = this.state.data
+        let data = this.state.data;
         if (data.status == 'CERTIFIED' || data.status == 'AUDITING')
             return (
                 <View>
@@ -183,7 +181,7 @@ var CompCertifyCopies = React.createClass({
             )
     },
     returnWarn(){
-        let status = this.state.data.status
+        let status = this.state.data.status;
         return (
             <View style={{marginTop:18, marginLeft:12}}>
                 { (()=> {
@@ -207,26 +205,10 @@ var CompCertifyCopies = React.createClass({
             </View>
         )
     },
-    returnTitle(){
-        let status = this.state.data.status;
-        if (status == 'AUDITING') {
-            return (
-                <View>
-                    <Space/>
-                    <View
-                        style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
-                        <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
-                        <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
-                    </View>
-                </View>
-            )
-        }
-    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
                 <ScrollView>
-                    {this.returnTitle()}
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
                         <View style={{flexDirection:"row"}}>
                             <View style={{flex:1,flexDirection:"column"}}>
@@ -261,10 +243,12 @@ var CompCertifyCopies = React.createClass({
             </NavBarView>
         )
     }
-})
+});
 var styles = StyleSheet.create({
     bottom: {
-        padding: 7, backgroundColor: '#f7f7f7', borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+        padding: 7,
+        backgroundColor: '#f7f7f7',
+        borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
     },
     borderBottom: {
         borderBottomWidth: 1, borderColor: '#c8c7cc'
@@ -297,5 +281,5 @@ var styles = StyleSheet.create({
         fontSize: 15, color: "#ff5b58",
     }
 
-})
+});
 module.exports = CompCertifyCopies;

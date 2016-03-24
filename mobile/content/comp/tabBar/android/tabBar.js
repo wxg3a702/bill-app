@@ -64,6 +64,19 @@ var styles = StyleSheet.create({
     borderColor: '#ffffff',
     backgroundColor: '#ff0000',
   },
+  badgeWithNumberPlus: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    top: 4,
+    right: 24,
+    position: 'absolute',
+    width: 18,
+    height: 24,
+    borderRadius: 9,
+    borderWidth: 1,
+    borderColor: '#ffffff',
+    backgroundColor: '#ff0000',
+  },
   badgeText: {
     alignSelf: 'center',
     fontSize: 11,
@@ -90,7 +103,7 @@ var AndroidTabBar = React.createClass({
 
   initBadge(tab) {
     if (tab.badgeNum) {
-      let _badgeStyle = (typeof tab.badgeNum == 'number') ? styles.badgeWithNumber : styles.badgeNoNumber;
+      let _badgeStyle = (typeof tab.badgeNum == 'number') ? (tab.badgeNum <= 99 ? styles.badgeWithNumber : styles.badgeWithNumberPlus) : styles.badgeNoNumber;
       return (
         <View style={_badgeStyle}>
           <Text style={styles.badgeText}>{tab.badgeNum}</Text>
@@ -180,7 +193,6 @@ var AndroidTabBar = React.createClass({
         <View style={styles.tabs}>
           {this.props.tabs.map((tab, i) => this.renderTabOption(tab, i))}
         </View>
-
       </View>
     );
   },

@@ -7,6 +7,7 @@ var {
     View,
     ListView,
     StyleSheet,
+  InteractionManager,
   Platform,
     Dimensions
     } = React;
@@ -17,10 +18,12 @@ var MessageAction = require("../../framework/action/messageAction");
 var _ = require('lodash');
 var NavBarView = require('../../framework/system/navBarView');
 var MessageGroupType = require('../../constants/messageGroupType');
-var Detail = require('../bill/billDetail');
+var Detail = require('../billNew/billDetail');
 var DateHelper = require("../../comp/utils/dateHelper");
 var Alert = require('../../comp/utils/alert');
-var VIcon = require('../../comp/icon/vIcon')
+var VIcon = require('../../comp/icon/vIcon');
+var GiftedListView = require('../../comp/listView/GiftedListView');
+var PAGE_SIZE = 5;
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -28,7 +31,7 @@ var MessageDetail = React.createClass({
     getStateFromStores() {
         var results = MessageStore.getResult(this.props.param.name);
         return {
-            dataSource: ds.cloneWithRows(results),
+            dataSource: results,
             renderList: this.renderLists,
             result: results
         }
@@ -50,18 +53,76 @@ var MessageDetail = React.createClass({
     },
     fetchData: function () {
         this.setState({
-            dataSource: ds.cloneWithRows(this.state.result)
+            dataSource: this.state.result
         });
     },
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title={this.props.param.title}
                         contentBackgroundColor='#f0f0f0'>
-                <ListView dataSource={this.state.dataSource} renderRow={this.state.renderList}
-                          automaticallyAdjustContentInsets={false}/>
-
+                <GiftedListView
+                  ref="MsgList"
+                  rowView={this.renderLists}
+                  onFetch={this._onFetch}
+                  emptyView={this._emptyView}
+                  firstLoader={true} // display a loader for the first fetching
+                  pagination={true} // enable infinite scrolling using touch to load more
+                  refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+                  withSections={false} // enable sections
+                  //customStyles={{
+                  //    refreshableView: {
+                  //      //backgroundColor: '#eee',
+                  //    },
+                  //  }}
+                />
             </NavBarView>
         )
+    },
+
+    _emptyView() {
+        return (
+          <View style={{marginTop:65,alignItems:'center',flex:1}}>
+              <Image style={{width:Adjust.width(350),height:200}} resizeMode="stretch"
+                     source={require('../../image/bill/noBill.png')}/>
+              <Text style={{marginTop:20,fontSize:16,color:'#7f7f7f'}}>暂时没有票据信息</Text>
+          </View>
+        );
+    },
+
+    _onFetch(page = 1, callback, options) {
+        InteractionManager.runAfterInteractions(() => {
+            this._fetchData(page - 1, callback, options);
+        });
+    },
+
+    _fetchData: function (page, callback, options) {
+        //let sDataSource = this.state.dataSource._dataBlob.s1;
+        setTimeout(() => {
+            var rows = [];
+            var end = (page + 1) * PAGE_SIZE;
+            var length = this.state.dataSource.length;
+            if (length <= end) {
+                rows = this.state.dataSource.slice(page * PAGE_SIZE);
+                callback(rows, {
+                    allLoaded: true // the end of the list is reached
+                });
+            } else {
+                rows = this.state.dataSource.slice(page * PAGE_SIZE, end);
+                callback(rows);
+            }
+        }, 1000); // simulating network fetching
+        //var rows = [];
+        //var end = (page + 1) * PAGE_SIZE;
+        //var length = this.state.dataSource.length;
+        //if (length <= end) {
+        //  rows = this.state.dataSource.slice(page * PAGE_SIZE);
+        //  callback(rows, {
+        //    allLoaded: true // the end of the list is reached
+        //  });
+        //} else {
+        //  rows = this.state.dataSource.slice(page * PAGE_SIZE, end);
+        //  callback(rows);
+        //}
     },
 
     toOther(item){

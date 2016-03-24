@@ -1,5 +1,5 @@
 
-
+var AppStore = require('../framework/store/appStore');
 module.exports = {
 
     MsgTypes: {
@@ -20,6 +20,17 @@ module.exports = {
         BILL_REV:'BILL_REV'
 
 
+    },
+    MsgContent: {
+        MAIN_MSG: AppStore.getUserName + 'mainMsgBean',
+        SENT_MSG: AppStore.getUserName + 'sentBillMsgBeans',
+        MARKET_MSG: AppStore.getUserName + 'marketMsgBeans',
+        SYSTEM_MSG: AppStore.getUserName + 'systemMsgBeans',
+    },
+    setMsgContent (userName) {
+        this.MsgContent.MAIN_MSG = userName + 'mainMsgBean';
+        this.MsgContent.SENT_MSG = userName + 'sentBillMsgBeans';
+        this.MsgContent.MARKET_MSG = userName + 'marketMsgBeans';
+        this.MsgContent.SYSTEM_MSG = userName + 'systemMsgBeans';
     }
-
 };

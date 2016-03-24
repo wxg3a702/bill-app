@@ -40,7 +40,7 @@ let TokenSchema = {
   }
 };
 
-module .exports = {
+module.exports = {
   DeviceSchema: DeviceSchema,
   SCHEMA_DEVICE: SCHEMA_DEVICE,
   ValueSchema: ValueSchema,
@@ -48,5 +48,5 @@ module .exports = {
   FlagSchema: FlagSchema,
   SCHEMA_FLAG: SCHEMA_FLAG,
   TokenSchema: TokenSchema,
-  SCHEMA_TOKEN: SCHEMA_TOKEN,
+  SCHEMA_TOKEN: SCHEMA_TOKEN
 };
