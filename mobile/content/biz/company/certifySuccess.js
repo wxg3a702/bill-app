@@ -4,35 +4,27 @@ var React = require('react-native');
 var {
     StyleSheet,
     View,
-    ListView,
-    Image
+    Image,
+    Text
     } = React;
 
 var BottomButton = require('../../comp/utilsUi/bottomButton')
 var NavBarView = require('../../framework/system/navBarView')
-var PersonalCenter = require('../personalCenter/personalCenter');
-
 var CertifySuccess = React.createClass({
-
-    toOther(name, item){
-        this.props.navigator.push({
-            comp: name,
-            param: {
-                item: item
-            }
-        })
+    toPersonalCenter(){
+        var routes = this.props.navigator.getCurrentRoutes();
+        this.props.navigator.popToRoute(routes[routes.length - 5]);
     },
 
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="认证提交成功">
-                <View style={{flex: 1}}>
-                    <View style={{flex:1,alignItems:'center'}}>
-                        <Image  style={{marginTop:100}} source={require("../../image/company/apply_success.png")}/>
-                        <Text style={{marginTop:20,color:"#CCCCCC"}}>资料提交成功,请耐心等待认证结果</Text>
-                    </View>
+                <View style={{flex:1,alignItems:'center'}}>
+                    <Image style={{marginTop:100,width:300,height:300}}
+                           source={require("../../image/company/apply_success.png")}/>
+                    <Text style={{marginTop:20,color:"#CCCCCC"}}>资料提交成功,请耐心等待认证结果</Text>
                 </View>
-                <BottomButton func={()=>this.toOther(PersonalCenter)} content="返回个人中心"/>
+                <BottomButton func={this.toPersonalCenter} content="返回个人中心"/>
             </NavBarView>
         )
     }

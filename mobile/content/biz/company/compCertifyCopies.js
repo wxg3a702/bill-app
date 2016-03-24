@@ -61,6 +61,9 @@ var CompCertifyCopies = React.createClass({
             if (navigator) {
                 navigator.push({
                     comp: CompAccountInfo,
+                    param: {
+                        item: this.props.param.item
+                    }
                 })
             }
         } else {
@@ -136,7 +139,6 @@ var CompCertifyCopies = React.createClass({
     returnItem(desc, name){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
-            // url = {uri: UserAction.getFile(this.state[name]), isStatic: true}
             if (this.state[name].indexOf("@userId") > -1) {
                 url = {uri: UserAction.getFile(this.state[name])}
             } else {
@@ -160,7 +162,7 @@ var CompCertifyCopies = React.createClass({
         }
     },
     returnAccount(){
-        let data = this.state.data
+        let data = this.state.data;
         if (data.status == 'CERTIFIED' || data.status == 'AUDITING')
             return (
                 <View>
@@ -179,7 +181,7 @@ var CompCertifyCopies = React.createClass({
             )
     },
     returnWarn(){
-        let status = this.state.data.status
+        let status = this.state.data.status;
         return (
             <View style={{marginTop:18, marginLeft:12}}>
                 { (()=> {
@@ -241,10 +243,12 @@ var CompCertifyCopies = React.createClass({
             </NavBarView>
         )
     }
-})
+});
 var styles = StyleSheet.create({
     bottom: {
-        padding: 7, backgroundColor: '#f7f7f7', borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+        padding: 7,
+        backgroundColor: '#f7f7f7',
+        borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
     },
     borderBottom: {
         borderBottomWidth: 1, borderColor: '#c8c7cc'
@@ -277,5 +281,5 @@ var styles = StyleSheet.create({
         fontSize: 15, color: "#ff5b58",
     }
 
-})
+});
 module.exports = CompCertifyCopies;
