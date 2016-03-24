@@ -23,7 +23,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var VIcon = require('../../comp/icon/vIcon')
 var ToLogin = require('../../comp/utilsUi/toLogin');
 var MessageDetail = require('./messageDetail')
-var Detail = require('../bill/billDetail');
+var Detail = require('../billNew/billDetail');
 var BillDetailByMsg = require('./billDetailByMsg');
 var MsgCategory = require('../../constants/notification').MsgCategory;
 var DateHelper = require("../../comp/utils/dateHelper");
@@ -35,23 +35,22 @@ var ds = new ListView.DataSource({
 var count = 0;
 const PAGE_SIZE = 5;
 var Message = React.createClass({
-  getStateFromStores() {
-    var token = AppStore.getToken()
-    if (token == null) {
-      return {token: token}
-    } else {
-      var messageBeans = MessageStore.getMsgData()
-      return {
-        dataSource: messageBeans,
-        data: messageBeans,
-        token: token,
-        firstItem: true
-      }
-    }
-  },
-  componentDidMount() {
-    AppStore.addChangeListener(this._onChange);
-  },
+    getStateFromStores() {
+        var token = AppStore.getToken()
+        if (token == null) {
+            return {token: token}
+        } else {
+            var messageBean = MessageStore.getMessage()
+            return {
+                dataSource: ds.cloneWithRows(messageBean),
+                data: messageBean,
+                token: token
+            }
+        }
+    },
+    componentDidMount() {
+        AppStore.addChangeListener(this._onChange);
+    },
 
   componentWillUnmount: function () {
     AppStore.removeChangeListener(this._onChange);

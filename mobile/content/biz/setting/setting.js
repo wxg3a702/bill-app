@@ -4,6 +4,7 @@ var React = require('react-native');
 var Item = require('../../comp/utils/item')
 var Space = require('../../comp/utilsUi/space')
 var SecurityCenter = require('./securityCenter')
+var Notice = require('./notice')
 var NavBarView = require('../../framework/system/navBarView')
 var Setting = React.createClass({
     toOther(name){
@@ -18,7 +19,7 @@ var Setting = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator} title="设置">
                 <Space/>
-                <Item func={()=>this.toOther(Setting)} desc="消息通知设置"
+                <Item func={()=>this.toOther(Notice)} desc="消息通知设置"
                       imgPath={require('../../image/user/editPhone.png')}/>
 
                 <Item func={()=>this.toOther(SecurityCenter)} desc="安全设置"

@@ -44,6 +44,7 @@ public class DatePickerDialogModule extends ReactContextBaseJavaModule {
                         params.putString("date", dateTime);
                         params.putString("name", name);
                         ReactContext reactContext = getReactApplicationContext();
+                        //ReactContext reactContext = new ReactContext(getCurrentActivity());
                         sendEvent(reactContext, "getDate", params);
                     }
                 }
