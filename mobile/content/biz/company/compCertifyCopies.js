@@ -207,26 +207,10 @@ var CompCertifyCopies = React.createClass({
             </View>
         )
     },
-    returnTitle(){
-        let status = this.state.data.status;
-        if (status == 'AUDITING') {
-            return (
-                <View>
-                    <Space/>
-                    <View
-                        style={{height:50,paddingHorizontal:20,alignItems:'center',flexDirection:'row',backgroundColor:'white',borderBottomWidth:1,borderBottomColor:'#cccccc'}}>
-                        <Text style={{fontSize:18,color:'#333333'}}>事务号：</Text>
-                        <Text style={{fontSize:15,color:'#7f7f7f'}}>{DateHelper.returnDate()}</Text>
-                    </View>
-                </View>
-            )
-        }
-    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
                 <ScrollView>
-                    {this.returnTitle()}
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
                         <View style={{flexDirection:"row"}}>
                             <View style={{flex:1,flexDirection:"column"}}>
