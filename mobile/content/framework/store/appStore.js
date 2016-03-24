@@ -25,7 +25,7 @@ var MsgTypes = Notification.MsgTypes;
 var MsgContent = Notification.MsgContent;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
-
+var CommonAction = require('../action/commonAction');
 var AppStore = assign({}, EventEmitter.prototype, {
 
   addChangeListener: function (callback, event) {
@@ -122,7 +122,7 @@ var _appInit = function (data) {
     function (data) {
       info.initLoadingState = false;
       _data = data;
-      Notification.setMsgContent(_data.userInfoBean.userName)
+      Notification.setMsgContent(_data.userInfoBean.userName);
       Persister.getMsgData(
         (data) => {
           _mainMsgBean = data;
@@ -136,24 +136,26 @@ var _appInit = function (data) {
 //
 var _login = function (data) {
   _data = data;
-  Notification.setMsgContent(_data.userInfoBean.userName)
+  Notification.setMsgContent(_data.userInfoBean.userName);
+  //Notification.setMsgContent('');
   _initOrgBean();
   Persister.getMsgData(
     function (mainMsgData) {
       if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
+        //if(true){
         //TODO: 构建基本的mainMsgBean对象
         var emptyData = {
-          'mainMsgBean': {
-            'pageIndex': 1,
-            'billSentBean': {'category': ''},
+          [MsgContent.MAIN_MSG]: {
+            'pageIndex': 0,
+            'billSentBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
             'messageBeans': [],
-            'marketNewsBean': {},
-            'systemNoticeBean': {},
+            'marketNewsBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
+            'systemNoticeBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
             'billRevUnreadNum': 0
           },
-          'sentBillMsgBeans': [],
-          'marketMsgBeans': [],
-          'systemMsgBeans': []
+          [MsgContent.SENT_MSG]: [],
+          [MsgContent.MARKET_MSG]: [],
+          [MsgContent.SYSTEM_MSG]: []
         };
         console.log('kong');
         Persister.saveMsgData(emptyData);
@@ -236,6 +238,13 @@ var _getMsgBody = function (msg) {
 
 var _pushMsg = function (data, key) {
   _.isEmpty(_mainMsgBean[key]) ? _mainMsgBean[key] = new Array(data) : _mainMsgBean[key] = [data].concat(_mainMsgBean[key]);
+  Persister.getMsgData(
+    (dataList) => {
+      dataList[key] = dataList[key].concat(data);
+      Persister.saveMsgData(dataList);
+      AppStore.emitChange();
+    }
+  )
 }
 //
 var _getBillBody = function (msg) {
@@ -248,6 +257,13 @@ var _updateMainMsgBeanByNotify = function (arrayKeyName, beanKeyName, data) {
   let unReadNum = _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG][beanKeyName]) ? 0 : _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName].unReadNum;
   data.unReadNum = ++unReadNum;
   _mainMsgBean[MsgContent.MAIN_MSG][beanKeyName] = data;
+  Persister.getMsgData(
+    (dataList) => {
+      dataList[MsgContent.MAIN_MSG][beanKeyName] = data;
+      Persister.saveMsgData(dataList);
+      AppStore.emitChange();
+    }
+  )
 }
 
 var _addBillPackByNotify = function (keyName, data) {
@@ -255,6 +271,16 @@ var _addBillPackByNotify = function (keyName, data) {
     _data[keyName] = {contentList: new Array()};
   }
   _data[keyName].contentList = [data].concat(_data[keyName].contentList);
+  Persister.getAppData(
+    (dataList) => {
+      if (_.isEmpty(dataList[keyName]) || _.isEmpty(dataList[keyName].contentList)) {
+        dataList[keyName] = {contentList: new Array()};
+      }
+      dataList[keyName].contentList = [data].concat(dataList[keyName].contentList);
+      Persister.saveMsgData(dataList);
+      AppStore.emitChange();
+    }
+  )
 }
 
 var _analysisMessageData = function (data) {
@@ -265,32 +291,39 @@ var _analysisMessageData = function (data) {
     {
       //billPack
       _addBillPackByNotify('sentBillBean', _getBillBody(data));
-      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
+      _updateMainMsgBeanByNotify(MsgContent.SENT_MSG, 'billSentBean', d);
     }
       break;
     case MsgTypes.OPP_IGNORED:
     {
       //对方放弃贴现
       _rejectBillDiscount(_getBillBody(data));
-      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
+      _updateMainMsgBeanByNotify(MsgContent.SENT_MSG, 'billSentBean', d);
     }
       break;//
     case MsgTypes.MARKET_NEWS:
     {
-      _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
+      _updateMainMsgBeanByNotify(MsgContent.MARKET_MSG, 'marketNewsBean', d);
     }
       break;
     case MsgTypes.ORG_AUTH_FAIL:
     case MsgTypes.ORG_AUTH_OK:
     {
 
-      _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+      _updateMainMsgBeanByNotify(MsgContent.SYSTEM_MSG, 'systemNoticeBean', d);
     }
       break;//
     case MsgTypes.REV_NEW_BILL://区分
     {
       //messageBeans
       _.isEmpty(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']) ? _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = new Array(d) : _mainMsgBean[MsgContent.MAIN_MSG]['messageBeans'] = [d].concat(_mainMsgBean[MsgContent.MAIN_MSG]['messageBeans']);
+      Persister.getMsgData(
+        (dataList) => {
+          dataList[MsgContent.MAIN_MSG]['messageBeans'] = dataList[MsgContent.MAIN_MSG]['messageBeans'].concat(d);
+          Persister.saveMsgData(dataList);
+          AppStore.emitChange();
+        }
+      )
       _addBillPackByNotify('revBillBean', _getBillBody(data));
     }
       break;
