@@ -29,7 +29,8 @@ var CertifySuccess = React.createClass({
                 <View style={{flex: 1}}>
                     <View style={{flex:1,alignItems:'center'}}>
                         <Image  style={{marginTop:100}} source={require("../../image/company/apply_success.png")}/>
-                        <Text style={{marginTop:20,color:"#CCCCCC"}}>资料提交成功,请耐心等待认证结果</Text>
+                        <Text style={{marginTop:20,color:"#CCCCCC"}}>
+                            资料提交成功,请耐心等待认证结果</Text>
                     </View>
                 </View>
                 <BottomButton func={()=>this.toOther(PersonalCenter)} content="返回个人中心"/>
