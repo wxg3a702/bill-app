@@ -478,6 +478,10 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
+        case ActionTypes.CLEAR_NEWORG:
+            initNewOrg();
+            Persister.saveNewOrg(_data.newOrg);
+            break;
         case ActionTypes.SAVE_APNS_TOKEN:
             _data.APNSToken = action.token;
             Persister.saveAPNSToken(action.token);
