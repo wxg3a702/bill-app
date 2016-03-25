@@ -51,7 +51,10 @@ var CompAccountInfo = React.createClass({
         ),
             CompAction.submitOrg(
                 this.state.newOrg,
-                ()=>this.props.navigator.push({comp: CertifySuccess}),
+                ()=> {
+                    this.props.navigator.push({comp: CertifySuccess});
+                    CompAction.clearNewOrg();
+                },
                 ()=>Alert("认证失败")
             )
     },
