@@ -178,8 +178,8 @@ var UserInfo = React.createClass({
     returnImg(){
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            //url = {uri: UserAction.getFile(this.state.photoStoreId), isStatic: true}
-            url = {uri: 'http://192.168.64.205:8484/zxbilldev/api/File/downLoad/photoStoreId@userId[4]6be0ca39-ff64-4fe2-a6c9-47a703302499?token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJVc2VySWQtNCIsImlhdCI6MTQ1ODcwMjMzOCwic3ViIjoid2Vpc2VuIiwiaXNzIjoiVXNlcklkLTQifQ.CqsKpdfWvats2-0afDeccnqX2rAP8cB5OAL4NhXOvtY', isStatic: true}
+            url = {uri: UserAction.getFile(this.state.photoStoreId), isStatic: true}
+            //url = {uri: 'http://192.168.64.205:8484/zxbilldev/api/File/downLoad/photoStoreId@userId[4]6be0ca39-ff64-4fe2-a6c9-47a703302499?token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJVc2VySWQtNCIsImlhdCI6MTQ1ODcwMjMzOCwic3ViIjoid2Vpc2VuIiwiaXNzIjoiVXNlcklkLTQifQ.CqsKpdfWvats2-0afDeccnqX2rAP8cB5OAL4NhXOvtY', isStatic: true}
             //url = {uri: 'http://img.smzy.com/down/UploadPic/2014-3/201432115472914116.jpg'}
         }
         return url;

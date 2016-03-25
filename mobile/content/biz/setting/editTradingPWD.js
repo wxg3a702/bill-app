@@ -51,12 +51,7 @@ var EditTradingPWD = React.createClass({
                         </View>
                     </TouchableHighlight>
 
-                    <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toVerifyPhone} style={[styles.rowFlexDirection,styles.touchableItem]}>
-                        <View style={[styles.flex,styles.rowFlexDirection,styles.cellItem]}>
-                            <Text  style={{fontSize:16}}>我忘记了交易密码</Text>
-                            <VIcon></VIcon>
-                        </View>
-                    </TouchableHighlight>
+
 
                 </View>
 

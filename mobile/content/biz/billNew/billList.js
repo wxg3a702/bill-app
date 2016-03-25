@@ -36,6 +36,7 @@ var ds = new ListView.DataSource({
 
 var GiftedListView = require('../../comp/listView/GiftedListView');
 const PAGE_SIZE = 5;
+
 var Bill = React.createClass({
     getDataSouce(bean, key1, key2, key3){
         if (!bean) {
@@ -119,7 +120,7 @@ var Bill = React.createClass({
             })
             )
             .then(
-                this.refs.BillList._refresh()
+                !this.state.token ? '' : this.refs.BillList._refresh()
             )
     },
     changeSend(){
@@ -133,7 +134,7 @@ var Bill = React.createClass({
                 dataSource: this.state.sentPick[0].dataSource
             })
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     changePick(){
@@ -161,7 +162,7 @@ var Bill = React.createClass({
         ).then(
             this.hidePick()
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     returnPick(data){
