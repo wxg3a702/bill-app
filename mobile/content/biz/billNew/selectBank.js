@@ -68,7 +68,7 @@ var SelextBank = React.createClass({
     textChange(text){
         var ret = new Array();
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        if (acceptanceBankBeans == null){
+        if (acceptanceBankBeans == null || acceptanceBankBeans == ""){
 
         }else {
             if (!text) {
