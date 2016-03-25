@@ -2,9 +2,7 @@ var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var AppStore = require('./appStore')
 var BillStore = assign({}, EventEmitter.prototype, {
-    getDemoFlag: function () {
-        return _data.demoFlag;
-    },
+    getDemoFlag: ()=>AppStore.getData().demoFlag,
     getSentBill: ()=>AppStore.getData().sentBillBean,
 
     getAcceptanceBankBeans: ()=>

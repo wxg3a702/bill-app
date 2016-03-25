@@ -76,7 +76,7 @@ var VerifyOldTradingPWD = React.createClass({
                 mobileNo:this.getStateFromStores(),
                 smsCode:this.state.verify
             },
-            ()=>this.thisValideateOldTradingPWD().bind(this),
+            ()=>this.thisValideateOldTradingPWD(),
             function(msg){
                 Alert(msg.msgContent);
             }

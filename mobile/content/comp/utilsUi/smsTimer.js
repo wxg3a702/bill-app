@@ -13,7 +13,6 @@ var {
 var LoginAction = require("../../framework/action/loginAction");
 var BillAction = require('../../framework/action/billAction');
 var TimerMixin = require('react-timer-mixin');
-
 var SMSTimer = React.createClass({
     mixins: [TimerMixin],
     getInitialState: function () {
@@ -32,6 +31,29 @@ var SMSTimer = React.createClass({
     changeVerify: function () {
         if (this.state.time == "重新获取" || this.props.isNeed) {
             LoginAction[this.props.func](
+                '',
+                function () {
+                    this.setState({
+                        startTime: new Date().getTime(),
+                        deadline: 60,
+                        click: false,
+                        tim: this.setInterval(this.updateText, 1000)
+                    })
+                }.bind(this)
+            )
+        } else if (this.state.time == "60秒") {
+            this.setState({
+                startTime: new Date().getTime(),
+                deadline: 60,
+                tim: this.setInterval(this.updateText, 1000)
+            })
+        }
+
+    },
+
+    afterLoginChangeVerify:function(){
+        if (this.state.time == "重新获取" || this.props.isNeed) {
+           BillAction.sendSMSCodeForDiscount(
                 {
                     mobileNo: this.props.parameter
                 },
@@ -54,25 +76,11 @@ var SMSTimer = React.createClass({
 
     },
 
-    afterLoginChangeVerify:function(){
-        if (this.state.time == "重新获取" || this.props.isNeed) {
-            BillAction.sendSMSCodeForDiscount(
-                '',
-                function () {
-                    this.setState({
-                        startTime: new Date().getTime(),
-                        deadline: 60,
-                        click: false,
-                        tim: this.setInterval(this.updateText, 1000)
-                    })
-                }.bind(this),''
-            )
-        } else if (this.state.time == "60秒") {
-            this.setState({
-                startTime: new Date().getTime(),
-                deadline: 60,
-                tim: this.setInterval(this.updateText, 1000)
-            })
+    selectVerifyFunction:function(){
+        if(this.props.func === 'afterLoginSendSMSCodeToOldMobile'){
+            this.afterLoginChangeVerify();
+        }else {
+            this.changeVerify();
         }
     },
 
@@ -106,15 +114,6 @@ var SMSTimer = React.createClass({
         this.setState({[type]: text})
         this.props.onChanged(type, this.state.verify)
     },
-
-    makeChangeVerify:function(){
-        if (this.props.func == 'afterLoginSendSMSCodeToOldMobile') {
-            return this.afterLoginChangeVerify();
-        }else{
-            return this.changeVerify();
-        }
-    },
-
     render() {
         var {height, width} = Dimensions.get('window');
         return (
@@ -130,7 +129,7 @@ var SMSTimer = React.createClass({
                 <View style={{width:75,marginLeft:12}}>
                     <TouchableOpacity
                         style={[{width:75,height:47},styles.radius, styles.button,this.state.click && styles.color]}
-                        onPress={this.makeChangeVerify}>
+                        onPress={this.selectVerifyFunction}>
                         <Text style={[styles.fontColor]}>{this.state.time}</Text>
                     </TouchableOpacity>
                 </View>

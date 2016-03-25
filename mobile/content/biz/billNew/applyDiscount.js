@@ -25,6 +25,7 @@ var dateFormat = require('dateformat');
 var window = Dimensions.get('window');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 
+var BillStore = require('../../framework/store/billStore');
 var BillAction = require('../../framework/action/billAction');
 
 var ApplyDis = React.createClass({
@@ -33,6 +34,28 @@ var ApplyDis = React.createClass({
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
+        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+
+        if (acceptanceBankBeans == null || acceptanceBankBeans == "") {
+            this.setState({
+                discountBankName: '请选择贴现银行',
+                description:'',
+                discountRate:0
+            });
+        } else {
+            let res;
+            acceptanceBankBeans.map((item, index)=> {
+                if (item.description == '利率最低') {
+                    res = item
+                }
+            })
+
+            this.setState({
+                discountBankName: res.bankName,
+                description:res.description,
+                discountRate:res.discountRate
+            });
+        }
     },
     //componentDidMount(){
     //
@@ -42,8 +65,8 @@ var ApplyDis = React.createClass({
     //},
     callBack(item){
         this.setState({
-            discountRate:item.disRate/1000,
-            discountBankName:item.bankName
+            discountRate: item.disRate / 1000,
+            discountBankName: item.bankName
         })
     },
     render: function () {
@@ -85,7 +108,8 @@ var ApplyDis = React.createClass({
                     <Text style={{fontSize:15,color:'#fff',flexDirection: 'row'}}>{'参考贴现金额'}</Text>
                 </View>
                 <View style={{flexDirection: 'row',alignItems:'flex-end'}}>
-                    <Text style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00")}</Text>
+                    <Text
+                        style={{fontSize:42,color:'#f6b63e'}}>{numeral(this.calDis(this.state.amount, this.state.discountRate, this.state.dueDate) / 10000).format("0,0.00")}</Text>
                     <Text style={{fontSize:15,color:'#fff',marginBottom:10}}>{' 万元'}</Text>
                 </View>
             </View>
@@ -114,7 +138,7 @@ var ApplyDis = React.createClass({
                                 style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20}}
                                 numberOfLines={1}>{this.state.discountBankName}</Text>
 
-                            <Text style={{color:'#ff5b58',fontSize:18}}>{'(费率最低)'}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:18}}>{this.state.description}</Text>
 
                         </View>
                         <VIcon/>
@@ -139,7 +163,7 @@ var ApplyDis = React.createClass({
                     <Text style={{paddingBottom:10,fontSize:17,flex:4,color:'#4e4e4e'}}>{'起  息  日：' }</Text>
                     <View style={{flex:6,flexDirection:'row'}}>
                         <Text
-                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat((new Date((new Date/1000+86400*2)*1000)), 'yyyy年mm月dd日')}</Text>
+                            style={{paddingBottom:10,fontSize:17,color:'#7f7f7f'}}>{dateFormat((new Date((new Date / 1000 + 86400 * 2) * 1000)), 'yyyy年mm月dd日')}</Text>
                         <Text style={{color:'#ff5b58',fontSize:17}}>{'(参考)'}</Text>
                     </View>
                 </View>
@@ -156,36 +180,35 @@ var ApplyDis = React.createClass({
     renderDisaTips(){
         return (
             <View style={{flexDirection: 'column',borderStyle:'solid',backgroundColor:'#f0f0f0',marginTop:6}}>
-                <Text style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
+                <Text
+                    style={{fontSize:15,color:'#7f7f7f',marginTop:20,marginLeft:12,marginRight:12}}>{'您的具体贴现金额与银行批准申请的时间和当天利率有关,以上计算仅供参考\n如有疑问,欢迎联系客服'}</Text>
 
             </View>
         );
     },
     renderApplyBtn(){
-        return(
+        return (
             <View>
                 <BottomButton func={() => this.goToConDiscount(this.state)} content={'发送申请'}/>
             </View>
 
         );
     },
-    goToSelectBank:function (){
+    goToSelectBank: function () {
         this.props.navigator.push({
             param: {title: '选择贴现行'},
             comp: SelectBank,
             callBack: this.callBack
         });
     },
-    goToConDiscount:function (item:Object){
+    goToConDiscount: function (item:Object) {
         this.props.navigator.push({
-            param: {title: '确认贴现',billBean:item},
+            param: {title: '确认贴现', billBean: item},
             comp: ConDiscount
         });
     },
 });
 
-var styles = StyleSheet.create({
-
-});
+var styles = StyleSheet.create({});
 
 module.exports = ApplyDis;

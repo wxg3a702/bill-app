@@ -64,7 +64,9 @@ var Login = React.createClass({
                     deviceModel: this.state.deviceModel,
                     captcha: this.state.verify
                 },
-                () => this.props.navigator.pop(),
+                () => {
+                    CommonAction.freshNotification();
+                    this.props.navigator.pop()},
                 (msg)=> {
                     Alert(msg.msgContent);
                     this.refs['verifyCode'].changeVerify()

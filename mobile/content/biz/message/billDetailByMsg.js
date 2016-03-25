@@ -15,7 +15,7 @@ var cssVar = require('cssVar');
 var VIcon = require('../../comp/icon/vIcon')
 var JumpLoading = require('../../comp/utils/jumpLoading');
 var NavBarView = require('../../framework/system/navBarView');
-var Detail = require('../bill/billDetail');
+var Detail = require('../billNew/billDetail');
 var numeral = require('numeral');
 var dateFormat = require('dateformat');
 var DateHelper = require('../../comp/utils/dateHelper');
@@ -118,7 +118,7 @@ var BillDetailByMsg = React.createClass({
   },
   toDetail(bill){
     this.props.navigator.push({
-      param: {title: '详情', record: bill},
+      param: {item: bill},
       comp: Detail
     });
   },

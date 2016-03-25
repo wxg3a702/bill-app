@@ -1,7 +1,7 @@
 var React = require('react-native');
 var {
-    AsyncStorage,
-    } = React;
+  AsyncStorage,
+  } = React;
 var Notification = require('../../constants/notification');
 var MsgContent = Notification.MsgContent;
 var Actions = {
@@ -112,10 +112,10 @@ var _getMsgData = function (cb) {
 
 var _saveMsgData = function (data) {
     AsyncStorage.multiSet([
-        [MsgContent.MAIN_MSG, JSON.stringify(data.mainMsgBean)],
-        [MsgContent.SENT_MSG, JSON.stringify(data.sentBillMsgBeans)],
-        [MsgContent.MARKET_MSG, JSON.stringify(data.marketMsgBeans)],
-        [MsgContent.SYSTEM_MSG, JSON.stringify(data.systemMsgBeans)]
+        [MsgContent.MAIN_MSG, JSON.stringify(data[MsgContent.MAIN_MSG])],
+        [MsgContent.SENT_MSG, JSON.stringify(data[MsgContent.SENT_MSG])],
+        [MsgContent.MARKET_MSG, JSON.stringify(data[MsgContent.MARKET_MSG])],
+        [MsgContent.SYSTEM_MSG, JSON.stringify(data[MsgContent.SYSTEM_MSG])]
     ])
 }
 

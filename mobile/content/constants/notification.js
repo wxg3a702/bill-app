@@ -23,14 +23,14 @@ module.exports = {
     },
     MsgContent: {
         MAIN_MSG: AppStore.getUserName + 'mainMsgBean',
-        SENT_MSG: AppStore.getUserName + 'sentMsgBean',
-        MARKET_MSG: AppStore.getUserName + 'marketMsgBean',
-        SYSTEM_MSG: AppStore.getUserName + 'systemMsgBean',
+        SENT_MSG: AppStore.getUserName + 'sentBillMsgBeans',
+        MARKET_MSG: AppStore.getUserName + 'marketMsgBeans',
+        SYSTEM_MSG: AppStore.getUserName + 'systemMsgBeans',
     },
     setMsgContent (userName) {
         this.MsgContent.MAIN_MSG = userName + 'mainMsgBean';
-        this.MsgContent.SENT_MSG = userName + 'sentMsgBean';
-        this.MsgContent.MARKET_MSG = userName + 'marketMsgBean';
-        this.MsgContent.SYSTEM_MSG = userName + 'systemMsgBean';
+        this.MsgContent.SENT_MSG = userName + 'sentBillMsgBeans';
+        this.MsgContent.MARKET_MSG = userName + 'marketMsgBeans';
+        this.MsgContent.SYSTEM_MSG = userName + 'systemMsgBeans';
     }
 };

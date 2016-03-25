@@ -32,7 +32,7 @@ var ConDiscount = React.createClass({
             smsCode: '',
             transPwd: '',
             trading_PWD:'',
-            mobileNo: UserStore.getUserInfoBean().mobileNo
+            mobileNo: UserStore.getUserInfoBean().mobileNo,
         };
     },
     componentWillMount(){

@@ -1,6 +1,3 @@
-/**
- * Created by vison on 16/3/14.
- */
 'use strict';
 
 var React = require('react-native');
@@ -19,8 +16,7 @@ var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
-        var newOrg = CompStore.getNewOrg();
-        console.log(newOrg);
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
         return {
             newOrg: newOrg,
             accountName: newOrg.accountName,
@@ -52,19 +48,12 @@ var CompAccountInfo = React.createClass({
                 accountNo: this.state.accountNo,
                 openBank: this.state.openBank
             }
-        );
-        CompAction.submitOrg(
-            this.state.newOrg,
-            ()=>{
-                this.props.navigator.push({
-                    comp: CertifySuccess,
-                    param: {
-                        item: item
-                    }
-                })
-            },
-            (msg)=>Alert("认证失败")
-        )
+        ),
+            CompAction.submitOrg(
+                this.state.newOrg,
+                ()=>this.props.navigator.push({comp: CertifySuccess}),
+                ()=>Alert("认证失败")
+            )
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
@@ -83,10 +72,13 @@ var CompAccountInfo = React.createClass({
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
                     <Input type='default' prompt="账户名称" max={20} field="accountName" isPwd={false}
+                           defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
+                           defaultValue={this.state.accountNo}
                            onChanged={this.handleChanged} icon="user"/>
                     <Input type='default' prompt="开户行" max={20} field="openBank" isPwd={false}
+                           defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
                 </View>
                 <View style={{margin:10}}>

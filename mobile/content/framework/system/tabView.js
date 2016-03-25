@@ -10,7 +10,6 @@ var {
   TabBarIOS
   } = React;
 var Home = require('../../biz/home/home')
-var BillList = require("../../biz/bill/billList")
 var Bill = require('../../biz/billNew/billList')
 var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/personalCenter/personalCenter")
@@ -38,15 +37,18 @@ var TabView = React.createClass({
         mainMsgBean.messageBeans.forEach(function (object) {
           billSum += ((object.isRead) ? 0 : 1)
         });
-        //othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketMsgBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
+        othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketNewsBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
       }
       sum = billSum;
-      var show = sum >= 99 ? "99+" : sum;
+      var show;
       if (Platform.OS == 'ios') {
         PushNotificationIOS.setApplicationIconBadgeNumber(sum);
+        show = sum >= 99 ? "99+" : sum;
+      } else {
+        show = sum;
       }
       return {
-        //othMsgNum: othMsgNum,
+        othMsgNum: othMsgNum,
         billSum: show,
         token: token
       }
@@ -132,15 +134,6 @@ var TabView = React.createClass({
             selectedIcon={require('../../image/tab/bill_selected.png')}
             selected={this.state.selectedTab === 'bills'}
             onPress={() => {this.setState({selectedTab: 'bills'})}}>
-            <BillList navigator={this.props.navigator}/>
-          </TabBarIOS.Item>
-
-          <TabBarIOS.Item
-            title="票据重构"
-            icon={require('../../image/tab/bill.png')}
-            selectedIcon={require('../../image/tab/bill_selected.png')}
-            selected={this.state.selectedTab === 'bill'}
-            onPress={() => {this.setState({selectedTab: 'bill'})}}>
             <Bill navigator={this.props.navigator}/>
           </TabBarIOS.Item>
 
@@ -176,16 +169,9 @@ var TabView = React.createClass({
                 selectedIcon={require('../../image/tab/home_selected.png')}>
           </Home>
 
-          <BillList navigator={this.props.navigator}
-                    tabLabel="clipboard"
-                    tabDesc="票据"
-                    icon={require('../../image/tab/bill.png')}
-                    selectedIcon={require('../../image/tab/bill_selected.png')}>
-          </BillList>
-
           <Bill navigator={this.props.navigator}
                 tabLabel="clipboard"
-                tabDesc="票据重构"
+                tabDesc="票据"
                 icon={require('../../image/tab/bill.png')}
                 selectedIcon={require('../../image/tab/bill_selected.png')}>
           </Bill>

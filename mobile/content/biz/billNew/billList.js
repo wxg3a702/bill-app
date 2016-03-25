@@ -13,6 +13,7 @@ var {
     TouchableOpacity,
     InteractionManager
     } = React;
+var Demo = require('./demo')
 var Adjust = require('../../comp/utils/adjust')
 var ListBottom = require('../../comp/utilsUi/listBottom')
 var {width,height} = Dimensions.get('window');
@@ -22,7 +23,9 @@ var NumberHelper = require('../../comp/utils/numberHelper')
 var DateHelper = require('../../comp/utils/dateHelper');
 var ToLogin = require('../../comp/utilsUi/toLogin');
 var Login = require('../login/login')
+var UserStore = require('../../framework/store/userStore');
 var BillStore = require('../../framework/store/billStore');
+var BillAction = require('../../framework/action/billAction');
 var BillDetail = require('./billDetail')
 var VIcon = require('../../comp/icon/vIcon')
 var BillStates = require('./../../constants/billStates')
@@ -33,6 +36,7 @@ var ds = new ListView.DataSource({
 
 var GiftedListView = require('../../comp/listView/GiftedListView');
 const PAGE_SIZE = 5;
+
 var Bill = React.createClass({
     getDataSouce(bean, key1, key2, key3){
         if (!bean) {
@@ -91,6 +95,11 @@ var Bill = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        var obj = BillStore.getDemoFlag();
+        if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.db != undefined && this.state.db.length > 0)) {
+            this.props.navigator.push({comp: Demo});
+            BillAction.setDemoFlag();
+        }
     },
 
     componentWillUnmount: function () {
@@ -111,7 +120,7 @@ var Bill = React.createClass({
             })
             )
             .then(
-                this.refs.BillList._refresh()
+                !this.state.token ? '' : this.refs.BillList._refresh()
             )
     },
     changeSend(){
@@ -125,7 +134,7 @@ var Bill = React.createClass({
                 dataSource: this.state.sentPick[0].dataSource
             })
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     changePick(){
@@ -153,7 +162,7 @@ var Bill = React.createClass({
         ).then(
             this.hidePick()
         ).then(
-            this.refs.BillList._refresh()
+            !this.state.token ? '' : this.refs.BillList._refresh()
         )
     },
     returnPick(data){
