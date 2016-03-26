@@ -9,8 +9,8 @@ var api = "/api"
 var CompAction = {
     updateOrgBeans: (p, c, f)=> _updateOrgBeans(p, c, f),
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
+    updateExist: (p, c, f)=>_updateExist(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
-    getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f),
     deleteOrg: (p, c, f)=>_deleteOrg(p, c, f),
     updateDefaultOrgByUser: (p, c, f)=>_updateDefaultOrgByUser(p, c, f)
 }
@@ -37,14 +37,14 @@ var _updateDefaultOrgByUser = function (p, c, f) {
         }, f
     )
 }
-var _updateNewOrgInfo = function (p, c, f) {
+var _updateExist = function (p, c, f) {
     AppDispatcher.dispatch({
-        type: ActionTypes.UPDATE_NEWORG,
+        type: ActionTypes.UPDATE_EXISTORG,
         data: p,
         successHandle: c
     });
 }
-var subNewOrg = function (p, c, f) {
+var _updateNewOrgInfo = function (p, c, f) {
     AppDispatcher.dispatch({
         type: ActionTypes.UPDATE_NEWORG,
         data: p,

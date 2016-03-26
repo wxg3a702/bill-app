@@ -16,13 +16,19 @@ var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
+        let check
         var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
+        if (!newOrg.accountName || !newOrg.accountNo || !newOrg.openBank) {
+            check = true
+        } else {
+            check = false
+        }
         return {
             newOrg: newOrg,
             accountName: newOrg.accountName,
             accountNo: newOrg.accountNo,
             openBank: newOrg.openBank,
-            checked: true,
+            checked: check,
         }
     },
 
@@ -42,18 +48,16 @@ var CompAccountInfo = React.createClass({
         this.setState(this.getStateFromStores());
     },
     submit: function () {
-        CompAction.updateNewOrgInfo(
-            {
-                accountName: this.state.accountName,
-                accountNo: this.state.accountNo,
-                openBank: this.state.openBank
-            }
-        ),
-            CompAction.submitOrg(
-                this.state.newOrg,
-                ()=>this.props.navigator.push({comp: CertifySuccess}),
-                ()=>Alert("认证失败")
-            )
+        let newOrg = this.state.newOrg;
+        newOrg.accountName = this.state.accountName;
+        newOrg.accountNo = this.state.accountNo;
+        newOrg.openBank = this.state.openBank
+        this.setState({newOrg: newOrg})
+        CompAction.submitOrg(
+            this.state.newOrg,
+            ()=>this.props.navigator.push({comp: CertifySuccess}),
+            ()=>Alert("认证失败")
+        )
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})

@@ -34,7 +34,9 @@ var CompCertifyCopies = React.createClass({
             corpIdentityFileId: newOrg.corpIdentityFileId,
             authIdentityFileId: newOrg.authIdentityFileId,
             picEnough: newOrg.picEnough,
-            data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item
+            data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item,
+            status: newOrg.status,
+            newOrg: newOrg
         }
     },
 
@@ -117,9 +119,18 @@ var CompCertifyCopies = React.createClass({
                 this.setState({
                     [name]: source
                 });
-                CompAction.updateNewOrgInfo(
-                    {[name]: source}
-                )
+                if (!this.props.param.item) {
+                    CompAction.updateNewOrgInfo(
+                        {[name]: source}
+                    )
+                } else {
+                    CompAction.updateExist(
+                        {
+                            [name]: source,
+                            index: this.state.newOrg.index
+                        }
+                    )
+                }
             }
         });
     },
@@ -131,12 +142,22 @@ var CompCertifyCopies = React.createClass({
             this.setState({
                 [name]: source
             });
-            CompAction.updateNewOrgInfo(
-                {[name]: source}
-            )
+            if (!this.props.param.item) {
+                CompAction.updateNewOrgInfo(
+                    {[name]: source}
+                )
+            } else {
+                CompAction.updateExist(
+                    {
+                        [name]: source,
+                        index: this.state.newOrg.index
+                    }
+                )
+            }
         });
     },
     returnItem(desc, name){
+        let data = this.state.data;
         var url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state[name])) {
             if (this.state[name].indexOf("@userId") > -1) {
@@ -144,13 +165,54 @@ var CompCertifyCopies = React.createClass({
             } else {
                 url = {uri: this.state[name], isStatic: true};
             }
-            return (
-                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-                                    activeOpacity={0.6} underlayColor="#ebf1f2">
-                    <Image style={[styles.image,styles.radius]}
-                           resizeMode="cover" source={url}/>
-                </TouchableHighlight>
-            )
+            if (data.status == 'AUDITING') {
+                return (
+                    <View>
+                        <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
+                            <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
+                        </Image>
+                    </View>
+                )
+            } else {
+                let certResultBeans = this.state.newOrg.certResultBeans
+                if (!certResultBeans) {
+                    return (
+                        <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                            activeOpacity={0.6} underlayColor="#ebf1f2">
+                            <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
+                        </TouchableHighlight>
+                    )
+                } else {
+                    let flag, value, key;
+                    for (key in certResultBeans) {
+                        if (_.camelCase(certResultBeans[key].columnName) == name) {
+                            flag = true;
+                            value = certResultBeans[key].resultValue;
+                            break;
+                        } else {
+                            flag = false;
+                        }
+                    }
+                    if (flag) {
+                        return (
+                            <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                                activeOpacity={0.6} underlayColor="#ebf1f2">
+                                <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover"
+                                       source={url}>
+                                    <Text style={{fontSize:11,color:'white'}}>{value}</Text>
+                                </Image>
+                            </TouchableHighlight>
+                        )
+                    } else {
+                        return (
+                            <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
+                                                underlayColor="#ebf1f2">
+                                <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
+                            </TouchableHighlight>
+                        )
+                    }
+                }
+            }
         } else {
             return (
                 <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
@@ -205,33 +267,48 @@ var CompCertifyCopies = React.createClass({
             </View>
         )
     },
+    returnImg(){
+        let status = this.state.data.status;
+        if (status != 'CERTIFIED') {
+            return (
+                <View>
+                    <View style={{flexDirection:"row"}}>
+                        <View style={{flex:1,flexDirection:"column"}}>
+                            <Text style={styles.copyName}>营业执照副本</Text>
+                            {this.returnItem('营业执照副本', 'licenseCopyFileId')}
+                        </View>
+                        <View style={{flex:1,flexDirection:"column"}}>
+                            <Text style={styles.copyName}>法定代表人身份证</Text>
+                            {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
+                        </View>
+                    </View>
+                    <View style={{flexDirection:"row",marginTop:10}}>
+                        <View style={{flex:1,flexDirection:"column"}}>
+                            <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                            {this.returnItem('法人授权委托证明书', 'authFileId')}
+                        </View>
+                        <View style={{flex:1,flexDirection:"column"}}>
+                            <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
+                            {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
+                        </View>
+                    </View>
+                </View>
+            )
+        } else {
+            return (
+                <View>
+
+
+                </View>
+            )
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
                 <ScrollView>
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
-                        <View style={{flexDirection:"row"}}>
-                            <View style={{flex:1,flexDirection:"column"}}>
-                                <Text style={styles.copyName}>营业执照副本</Text>
-                                {this.returnItem('营业执照副本', 'licenseCopyFileId')}
-                            </View>
-                            <View style={{flex:1,flexDirection:"column"}}>
-                                <Text style={styles.copyName}>法定代表人身份证</Text>
-                                {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
-                            </View>
-                        </View>
-
-                        <View style={{flexDirection:"row",marginTop:10}}>
-                            <View style={{flex:1,flexDirection:"column"}}>
-                                <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
-                                {this.returnItem('法人授权委托证明书', 'authFileId')}
-                            </View>
-
-                            <View style={{flex:1,flexDirection:"column"}}>
-                                <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
-                                {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
-                            </View>
-                        </View>
+                        {this.returnImg()}
                         {this.returnAccount()}
                         {this.returnWarn()}
                         <ListBottom/>
@@ -268,7 +345,7 @@ var styles = StyleSheet.create({
     },
     image: {
         height: 113,
-        width: Dimensions.get("window").width / 2 - 20,
+        width: Dimensions.get("window").width / 2 - 18,
         backgroundColor: "#f0f0f0",
         marginTop: 5
     },
@@ -279,7 +356,9 @@ var styles = StyleSheet.create({
     },
     communicate: {
         fontSize: 15, color: "#ff5b58",
+    },
+    error: {
+        justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000', opacity: 0.5
     }
-
 });
 module.exports = CompCertifyCopies;

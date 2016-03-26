@@ -34,11 +34,13 @@ var CompCertification = React.createClass({
         var orgBean = CompStore.getCertifiedOrgBean();
         orgBean.map((item, index)=> {
             if (!item.status) {
-                item.status = 'AUDITING'
+                item.status = 'AUDITING';
             }
             if (item.status != 'CERTIFIED') {
-                item.orgName = '认证企业信息' + ++i
+                item.orgName = '认证企业信息' + ++i;
+
             }
+            item.index = index
             ret.push(item)
         });
         return {
@@ -66,7 +68,7 @@ var CompCertification = React.createClass({
         this.props.navigator.push({
             comp: CompCertifyCopies,
             param: {
-                item: item
+                item: item,
             }
         })
     },
