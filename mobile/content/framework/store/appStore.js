@@ -102,58 +102,46 @@ var _appInit = function (data) {
 }
 //
 var _login = function (data) {
-    _data = data;
-    Notification.setMsgContent(_data.userInfoBean.userName);
-    initNewOrg();
-    Persister.getMsgData(
-        function (mainMsgData) {
-            if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
-                //if(true){
-                //TODO: 构建基本的mainMsgBean对象
-                var emptyData = {
-                    [MsgContent.MAIN_MSG]: {
-                        'pageIndex': 0,
-                        'billSentBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
-                        'messageBeans': [],
-                        'marketNewsBean': {
-                            'category': '',
-                            'content': '',
-                            'receiveDate': '',
-                            'title': '',
-                            'unReadNum': 0
-                        },
-                        'systemNoticeBean': {
-                            'category': '',
-                            'content': '',
-                            'receiveDate': '',
-                            'title': '',
-                            'unReadNum': 0
-                        },
-                        'billRevUnreadNum': 0
-                    },
-                    [MsgContent.SENT_MSG]: [],
-                    [MsgContent.MARKET_MSG]: [],
-                    [MsgContent.SYSTEM_MSG]: []
-                };
-                console.log('kong');
-                Persister.saveMsgData(emptyData);
-                _mainMsgBean = emptyData;
-            } else {
-                console.log('NoKong');
-                _mainMsgBean = mainMsgData;
-            }
-            AppStore.emitChange()
-        }
-    )
-    //_getPushMsg("/api/MessageSearch/getPushMsg");
-    Persister.getAppData((d) => {
-        data.demoFlag = d.demoFlag;
-        if (!d.demoFlag) {
-            data.demoFlag = {flag: false};
-        }
-        Persister.saveAppData(data);
-        AppStore.emitChange();
-    });
+  _data = data;
+  Notification.setMsgContent(_data.userInfoBean.userName);
+  initNewOrg();
+  Persister.getMsgData(
+    function (mainMsgData) {
+      if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
+        //if(true){
+        //TODO: 构建基本的mainMsgBean对象
+        var emptyData = {
+          [MsgContent.MAIN_MSG]: {
+            'pageIndex': 0,
+            'billSentBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
+            'messageBeans': [],
+            'marketNewsBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
+            'systemNoticeBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
+            'billRevUnreadNum': 0
+          },
+          [MsgContent.SENT_MSG]: [],
+          [MsgContent.MARKET_MSG]: [],
+          [MsgContent.SYSTEM_MSG]: []
+        };
+        console.log('kong');
+        Persister.saveMsgData(emptyData);
+        _mainMsgBean = emptyData;
+      } else {
+        console.log('NoKong');
+        _mainMsgBean = mainMsgData;
+      }
+      AppStore.emitChange()
+    }
+  )
+  //_getPushMsg("/api/MessageSearch/getPushMsg");
+  Persister.getAppData((d) => {
+    data.demoFlag = d.demoFlag;
+    if (!d.demoFlag) {
+      data.demoFlag = {flag: false};
+    }
+    Persister.saveAppData(data);
+    AppStore.emitChange();
+  });
 }
 //
 var initNewOrg = function () {
@@ -525,6 +513,10 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             Persister.saveOrg(_data.certifiedOrgBean);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
+            break;
+        case ActionTypes.CLEAR_NEWORG:
+            initNewOrg();
+            Persister.saveNewOrg(_data.newOrg);
             break;
         case ActionTypes.SAVE_APNS_TOKEN:
             _data.APNSToken = action.token;
