@@ -40,7 +40,6 @@ var CompCertification = React.createClass({
                 item.orgName = '认证企业信息' + ++i;
 
             }
-            item.index = index
             ret.push(item)
         });
         return {

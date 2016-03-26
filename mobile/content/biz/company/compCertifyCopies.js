@@ -127,7 +127,7 @@ var CompCertifyCopies = React.createClass({
                     CompAction.updateExist(
                         {
                             [name]: source,
-                            index: this.state.newOrg.index
+                            id: this.state.newOrg.id
                         }
                     )
                 }
@@ -150,7 +150,7 @@ var CompCertifyCopies = React.createClass({
                 CompAction.updateExist(
                     {
                         [name]: source,
-                        index: this.state.newOrg.index
+                        id: this.state.newOrg.id
                     }
                 )
             }
