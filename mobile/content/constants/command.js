@@ -10,7 +10,6 @@ module.exports = {
         FORCE_LOGOUT: null,
         REQUEST_START: null,
         REQUEST_END: null,
-
         CANCLE_BILL_DISCOUNT: null,
         CREATE_BILL_DISCOUNT: null,
         GIVEUP_BILL_DISCOUNT: null,
@@ -22,8 +21,8 @@ module.exports = {
         UPDATE_NEWORG: null,
         UPDATE_ORGBEANS: null,
         DELETE_ORGBEANS: null,
-        UPDATE_EXISTORG: null
-        CLEAR_NEWORG:null,
+        UPDATE_EXISTORG: null,
+        CLEAR_NEWORG: null,
     })
 
 };

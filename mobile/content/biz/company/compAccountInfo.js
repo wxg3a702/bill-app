@@ -53,6 +53,12 @@ var CompAccountInfo = React.createClass({
         newOrg.accountNo = this.state.accountNo;
         newOrg.openBank = this.state.openBank
         this.setState({newOrg: newOrg})
+        if (!this.props.param) {
+        } else {
+            CompAction.deleteOrg(
+                {orgId: this.props.param.item.id}
+            )
+        }
         CompAction.submitOrg(
             this.state.newOrg,
             ()=>this.props.navigator.push({comp: CertifySuccess}),
