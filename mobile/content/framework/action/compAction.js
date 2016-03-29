@@ -1,4 +1,4 @@
-var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
+var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var async = require('async')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
@@ -53,7 +53,7 @@ var _updateNewOrgInfo = function (p, c, f) {
         successHandle: c
     });
 }
-var _clearNewOrg = function(){
+var _clearNewOrg = function () {
     AppDispatcher.dispatch({
         type: ActionTypes.CLEAR_NEWORG
     });
@@ -88,9 +88,12 @@ var _submitOrg = function (p, c, f) {
                         openBank: p.openBank
                     },
                     function (data) {
-                        c(data)
+                        // p.id = data
+                        p.status = 'AUDITING'
+                        _updateOrgBeans(p, c(data));
                     },
                     function (err) {
+                        p.status = 'UNAUDITING'
                         _updateOrgBeans(p, f)
                     }, {custLoading: true}
                 )

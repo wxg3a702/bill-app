@@ -9,7 +9,7 @@ var {
     View,
     ListView,
     Image
-    } = React;
+} = React;
 var Adjust = require('../../comp/utils/adjust')
 var CompCertifyCopies = require('./compCertifyCopies');
 var {height, width} = Dimensions.get('window');
@@ -78,18 +78,22 @@ var CompCertification = React.createClass({
                 text: '删除',
                 backgroundColor: 'red',
                 onPress(){
-                    Alert('您确定要删除该机构么',
-                        ()=> {
-                            CompAction.deleteOrg(
-                                {orgId: data.id},
-                                ()=>Alert("删除成功!"),
-                                ()=> {
-                                }
-                            )
-                        },
-                        function () {
-                        }
-                    )
+                    if (data.status == 'AUDITING') {
+                        Alert('认证中的企业不能删除')
+                    } else {
+                        Alert('您确定要删除该机构么',
+                            ()=> {
+                                CompAction.deleteOrg(
+                                    {orgId: data.id},
+                                    ()=>Alert("删除成功!"),
+                                    ()=> {
+                                    }
+                                )
+                            },
+                            function () {
+                            }
+                        )
+                    }
                 }
             }
         ]

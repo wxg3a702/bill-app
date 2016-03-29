@@ -488,7 +488,6 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             if (_data.newOrg.licenseCopyFileId != '' && _data.newOrg.authFileId != ''
                 && _data.newOrg.corpIdentityFileId != '' && _data.newOrg.authIdentityFileId != '') {
                 _data.newOrg.picEnough = true;
-                _data.newOrg.status = 'UNAUDITING';
             }
             if (!_data.newOrg.transactionNumber) {
                 _data.newOrg.transactionNumber = DateHelper.returnDate()
