@@ -22,7 +22,7 @@ module.exports = {
         UPDATE_NEWORG: null,
         UPDATE_ORGBEANS: null,
         DELETE_ORGBEANS: null,
-        UPDATE_EXISTORG: null
+        UPDATE_EXISTORG: null,
         CLEAR_NEWORG:null,
     })
 

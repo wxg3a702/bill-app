@@ -296,9 +296,29 @@ var CompCertifyCopies = React.createClass({
             )
         } else {
             return (
-                <View>
-
-
+                <View style={{marginTop:32}}>
+                    <Text style={{marginLeft:14,fontSize:15,color:"#333333"}}>营业执照信息</Text>
+                    <View style={{height:150,marginTop:11,marginHorizontal:14,borderRadius:10,borderWidth:1,borderColor:"#CCCCCC"}}>
+                        <View style={[styles.licenseItem,styles.borderBottom]}>
+                            <Text style={{fontSize:18,color:"#333333"}}>注册号</Text>
+                            <Text style={{fontSize:15,color:"#7F7F7F"}}>  </Text>
+                        </View>
+                        <View style={[styles.licenseItem,styles.borderBottom]}>
+                            <Text style={{fontSize:18,color:"#333333"}}>名称</Text>
+                            <Text style={{fontSize:15,color:"#7F7F7F"}}></Text>
+                        </View>
+                        <View style={styles.licenseItem}>
+                            <Text style={{fontSize:18,color:"#333333"}}>法定代表人</Text>
+                            <Text style={{fontSize:15,color:"#7F7F7F"}}>  </Text>
+                        </View>
+                    </View>
+                    <Text style={{marginLeft:14,marginTop:30,fontSize:15,color:"#333333"}}>关联账户信息</Text>
+                    <View style={styles.accountInfo}>
+                        <Image style={{marginLeft:12,height:40,width:40}}
+                               source={require('../../image/user/head.png')}/>
+                        <Text style={{marginHorizontal:12,fontSize:18,color:"#333333"}}>账号</Text>
+                        <Text style={{marginHorizontal:12,fontSize:15,color:"#7f7f7f"}}>  </Text>
+                    </View>
                 </View>
             )
         }
@@ -325,10 +345,13 @@ var styles = StyleSheet.create({
     bottom: {
         padding: 7,
         backgroundColor: '#f7f7f7',
-        borderTopWidth: 1, borderTopColor: '#cccccc', opacity: 0.9
+        borderTopWidth: 1,
+        borderTopColor: '#cccccc',
+        opacity: 0.9
     },
     borderBottom: {
-        borderBottomWidth: 1, borderColor: '#c8c7cc'
+        borderBottomWidth: 1,
+        borderColor: '#c8c7cc'
     },
     radius: {
         borderRadius: 10,
@@ -358,7 +381,27 @@ var styles = StyleSheet.create({
         fontSize: 15, color: "#ff5b58",
     },
     error: {
-        justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000', opacity: 0.5
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000000',
+        opacity: 0.5
+    },
+    licenseItem:{
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-between",
+        height:50,
+        marginHorizontal:12
+    },
+    accountInfo:{
+        flexDirection:"row",
+        alignItems:"center",
+        height:80,
+        marginTop:11,
+        marginHorizontal:14,
+        borderRadius:10,
+        borderWidth:1,
+        borderColor:"#CCCCCC"
     }
 });
 module.exports = CompCertifyCopies;
