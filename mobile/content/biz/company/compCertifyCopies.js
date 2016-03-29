@@ -9,7 +9,8 @@ var {
     View,
     ScrollView,
     Dimensions,
-    Platform
+    Platform,
+    ActionSheetIOS
     } = React;
 var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
@@ -25,6 +26,7 @@ var NumberHelper = require('../../comp/utils/numberHelper')
 var Alert = require('../../comp/utils/alert');
 var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var PhotoPic = require('NativeModules').UserPhotoPicModule;
+var Communications = require('../personalCenter/communication');
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
         var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
@@ -36,7 +38,8 @@ var CompCertifyCopies = React.createClass({
             picEnough: newOrg.picEnough,
             data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item,
             status: newOrg.status,
-            newOrg: newOrg
+            newOrg: newOrg,
+            phone: '021-35885888-2627',
         }
     },
 
@@ -75,6 +78,22 @@ var CompCertifyCopies = React.createClass({
     back: function () {
         this.props.navigator.pop();
     },
+    callPhone: function () {
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: [
+                '拨打电话',
+                '取消'
+            ],
+            cancelButtonIndex: 1,
+            destructiveButtonIndex: 0,
+        }, function (index) {
+            if (index == 0) {
+                Communications.phonecall(this.state.phone, false);
+            }
+        })
+
+    },
+
     selectPhoto(desc, name){
         if (Platform.OS === 'ios') {
             this.selectIOS(desc, name)
@@ -251,9 +270,13 @@ var CompCertifyCopies = React.createClass({
                     <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
                         如遇问题,请
                     </Text>
-                    <Text style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
-                        联系客服
-                    </Text>
+                    <TouchableHighlight onPress={()=>{this.callPhone()}}
+                                        activeOpacity={0.6} underlayColor="#ebf1f2">
+                        <Text
+                            style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
+                            联系客服
+                        </Text>
+                    </TouchableHighlight>
                 </View>
             </View>
         )
@@ -287,28 +310,27 @@ var CompCertifyCopies = React.createClass({
             )
         } else {
             return (
-                <View style={{marginTop:32}}>
-                    <Text style={{marginLeft:14,fontSize:15,color:"#333333"}}>营业执照信息</Text>
-                    <View style={{height:150,marginTop:11,marginHorizontal:14,borderRadius:10,borderWidth:1,borderColor:"#CCCCCC"}}>
+                <View>
+                    <Text style={{fontSize:15,color:"#333333"}}>营业执照信息</Text>
+                    <View style={styles.licenseInfo}>
                         <View style={[styles.licenseItem,styles.borderBottom]}>
                             <Text style={{fontSize:18,color:"#333333"}}>注册号</Text>
-                            <Text style={{fontSize:15,color:"#7F7F7F"}}>  </Text>
+                            <Text
+                                style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>
+                                {this.state.data.stdOrgBean.bizLicenseRegNo}
+                            </Text>
                         </View>
                         <View style={[styles.licenseItem,styles.borderBottom]}>
                             <Text style={{fontSize:18,color:"#333333"}}>名称</Text>
-                            <Text style={{fontSize:15,color:"#7F7F7F"}}></Text>
+                            <Text
+                                style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>
+                                {this.state.data.stdOrgBean.orgName}
+                            </Text>
                         </View>
                         <View style={styles.licenseItem}>
                             <Text style={{fontSize:18,color:"#333333"}}>法定代表人</Text>
-                            <Text style={{fontSize:15,color:"#7F7F7F"}}>  </Text>
+                            <Text style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>{}</Text>
                         </View>
-                    </View>
-                    <Text style={{marginLeft:14,marginTop:30,fontSize:15,color:"#333333"}}>关联账户信息</Text>
-                    <View style={styles.accountInfo}>
-                        <Image style={{marginLeft:12,height:40,width:40}}
-                               source={require('../../image/user/head.png')}/>
-                        <Text style={{marginHorizontal:12,fontSize:18,color:"#333333"}}>账号</Text>
-                        <Text style={{marginHorizontal:12,fontSize:15,color:"#7f7f7f"}}>  </Text>
                     </View>
                 </View>
             )
@@ -377,22 +399,20 @@ var styles = StyleSheet.create({
         backgroundColor: '#000000',
         opacity: 0.5
     },
-    licenseItem:{
-        flexDirection:"row",
-        alignItems:"center",
-        justifyContent:"space-between",
-        height:50,
-        marginHorizontal:12
+    licenseItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        height: 50,
+        marginHorizontal: 12
     },
-    accountInfo:{
-        flexDirection:"row",
-        alignItems:"center",
-        height:80,
-        marginTop:11,
-        marginHorizontal:14,
-        borderRadius:10,
-        borderWidth:1,
-        borderColor:"#CCCCCC"
+    licenseInfo: {
+        height: 150,
+        marginTop: 11,
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: "#C8C8C8",
+        backgroundColor: 'white'
     }
 });
 module.exports = CompCertifyCopies;
