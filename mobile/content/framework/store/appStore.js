@@ -291,6 +291,16 @@ var _getMsgBody = function (msg) {
     return msg.msgBody;
 }
 
+var _changeCompStatus = function (data) {
+    _data.certifiedOrgBean.map((item, index)=> {
+        if (item.id == data.id) {
+            _data.certifiedOrgBean[index] = data
+        }
+    })
+    Persister.saveOrg(_data.certifiedOrgBean)
+    AppStore.emitChange();
+}
+
 var _pushMsg = function (data, key) {
     _.isEmpty(_mainMsgBean[key]) ? _mainMsgBean[key] = new Array(data) : _mainMsgBean[key] = [data].concat(_mainMsgBean[key]);
     Persister.getMsgData(
@@ -342,6 +352,11 @@ var _analysisMessageData = function (data) {
     //数据插入到对应的bean中 并替换main里的
     let d = _getMsgBody(data);
     switch (_getMsgType(data)) {
+        case MsgTypes.COMP_CERTIFICATION:
+        {
+            //compCertification
+            _changeCompStatus(data.comp)
+        }
         case MsgTypes.BILL_DRAW:
         {
             //billPack

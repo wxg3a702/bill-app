@@ -11,7 +11,8 @@ module.exports = {
         ORG_AUTH_FAIL: 'ORG_AUTH_FAIL',
         ORG_AUTH_OK: 'ORG_AUTH_OK',
         SYSTEM_NOTICE: 'SYSTEM_NOTICE',
-        LOGIN_OUT: 'LOGIN_OUT'
+        LOGIN_OUT: 'LOGIN_OUT',
+        COMP_CERTIFICATION:'COMP_CERTIFICATION'
     },
     MsgCategory:{
         BILL_SENT:'BILL_SENT',
