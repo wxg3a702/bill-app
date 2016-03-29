@@ -21,7 +21,7 @@ var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
-// var DatePicker = require('NativeModules').DatePickerDialogModule;
+var DatePicker = require('NativeModules').DatePickerDialogModule;
 var Calculator = React.createClass({
     getInitialState: function () {
         return {
@@ -150,11 +150,11 @@ var Calculator = React.createClass({
         )
     },
     showDate(word, key, value, type){
-        // if (Platform.OS == 'ios') {
+         if (Platform.OS == 'ios') {
             this.toEdit(word, key, value, type, '', '')
-        // } else {
-        //     DatePicker.showDatePickerDialog(key);
-        // }
+         } else {
+             DatePicker.showDatePickerDialog(key);
+         }
     },
     returnDate(key, desc, holder, value, type, word){
         var color;
