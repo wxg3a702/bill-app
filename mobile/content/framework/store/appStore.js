@@ -102,46 +102,73 @@ var _appInit = function (data) {
 }
 //
 var _login = function (data) {
-  _data = data;
-  Notification.setMsgContent(_data.userInfoBean.userName);
-  initNewOrg();
-  Persister.getMsgData(
-    function (mainMsgData) {
-      if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
-        //if(true){
-        //TODO: 构建基本的mainMsgBean对象
-        var emptyData = {
-          [MsgContent.MAIN_MSG]: {
-            'pageIndex': 0,
-            'billSentBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
-            'messageBeans': [],
-            'marketNewsBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
-            'systemNoticeBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
-            'billRevUnreadNum': 0
-          },
-          [MsgContent.SENT_MSG]: [],
-          [MsgContent.MARKET_MSG]: [],
-          [MsgContent.SYSTEM_MSG]: []
-        };
-        console.log('kong');
-        Persister.saveMsgData(emptyData);
-        _mainMsgBean = emptyData;
-      } else {
-        console.log('NoKong');
-        _mainMsgBean = mainMsgData;
-      }
-      AppStore.emitChange()
-    }
-  )
-  //_getPushMsg("/api/MessageSearch/getPushMsg");
-  Persister.getAppData((d) => {
-    data.demoFlag = d.demoFlag;
-    if (!d.demoFlag) {
-      data.demoFlag = {flag: false};
-    }
-    Persister.saveAppData(data);
-    AppStore.emitChange();
-  });
+    _data = data;
+    Notification.setMsgContent(_data.userInfoBean.userName);
+    initNewOrg();
+    Persister.getMsgData(
+        function (mainMsgData) {
+            if (!mainMsgData[MsgContent.MAIN_MSG] && !mainMsgData[MsgContent.SENT_MSG] && !mainMsgData[MsgContent.MARKET_MSG] && !mainMsgData[MsgContent.SYSTEM_MSG]) {
+                //if(true){
+                //TODO: 构建基本的mainMsgBean对象
+                var emptyData = {
+                    [MsgContent.MAIN_MSG]: {
+                        'pageIndex': 0,
+                        'billSentBean': {'category': '', 'content': '', 'receiveDate': '', 'title': '', 'unReadNum': 0},
+                        'messageBeans': [],
+                        'marketNewsBean': {
+                            'category': '',
+                            'content': '',
+                            'receiveDate': '',
+                            'title': '',
+                            'unReadNum': 0
+                        },
+                        'systemNoticeBean': {
+                            'category': '',
+                            'content': '',
+                            'receiveDate': '',
+                            'title': '',
+                            'unReadNum': 0
+                        },
+                        'billRevUnreadNum': 0
+                    },
+                    [MsgContent.SENT_MSG]: [],
+                    [MsgContent.MARKET_MSG]: [],
+                    [MsgContent.SYSTEM_MSG]: []
+                };
+                console.log('kong');
+                Persister.saveMsgData(emptyData);
+                _mainMsgBean = emptyData;
+            } else {
+                console.log('NoKong');
+                _mainMsgBean = mainMsgData;
+            }
+            AppStore.emitChange()
+        }
+    )
+    //_getPushMsg("/api/MessageSearch/getPushMsg");
+    Persister.getAppData(
+        (d) => {
+            data.demoFlag = d.demoFlag;
+            if (!d.demoFlag) {
+                data.demoFlag = {flag: false};
+            }
+            data.certResultBeans = !data.certifiedOrgBean ? '' : orgToJson(data.certResultBeans)
+            Persister.saveAppData(data);
+            AppStore.emitChange();
+        });
+}
+var orgToJson = function (data) {
+    var json = {};
+    data.map((item)=> {
+        if (!item.certResultBeans) {
+        } else {
+            item.certResultBeans.map((items)=> {
+                json[_.camelCase(items.columnName)] = items
+            })
+            item.certResultBeans = json
+        }
+    })
+    return data;
 }
 //
 var initNewOrg = function () {
@@ -493,21 +520,8 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                     if (key == action.data.id) {
                         key = _.keys(action.data)[1];
                     }
-                    let result = []
-                    item.certResultBeans.map((items, index)=> {
-                        if (_.camelCase(items.columnName) == key) {
-                            items = {
-                                columnName: null,
-                                resultCode: null,
-                                resultDesc: null,
-                                resultValue: null
-                            };
-                        }
-                        result.push(items)
-                    })
-                    item.certResultBeans = result
+                    delete(item[key])
                 }
-                orgBean.push(item)
             })
             _data.certifiedOrgBean = orgBean;
             Persister.saveOrg(_data.certifiedOrgBean);

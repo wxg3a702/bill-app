@@ -58,7 +58,7 @@ var CompCertifyCopies = React.createClass({
 
     next: function () {
         const { navigator } = this.props;
-        if (this.state.picEnough) {
+        if (this.props.param.item || this.state.picEnough) {
             const { navigator } = this.props;
             if (navigator) {
                 navigator.push({
@@ -183,16 +183,7 @@ var CompCertifyCopies = React.createClass({
                         </TouchableHighlight>
                     )
                 } else {
-                    let flag, value, key;
-                    for (key in certResultBeans) {
-                        if (_.camelCase(certResultBeans[key].columnName) == name) {
-                            flag = true;
-                            value = certResultBeans[key].resultValue;
-                            break;
-                        } else {
-                            flag = false;
-                        }
-                    }
+                    let flag = !certResultBeans[name] ? false : true
                     if (flag) {
                         return (
                             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}

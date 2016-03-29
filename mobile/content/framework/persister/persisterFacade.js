@@ -1,7 +1,7 @@
 var React = require('react-native');
 var {
-  AsyncStorage,
-  } = React;
+    AsyncStorage,
+    } = React;
 var Notification = require('../../constants/notification');
 var MsgContent = Notification.MsgContent;
 var Actions = {
@@ -73,7 +73,7 @@ var _setItem = function (key, value, cb) {
 
 var _getAppData = function (cb) {
     AsyncStorage.multiGet(['token', 'APNSToken', 'revBillBean', 'sentBillBean', 'filterBeans', 'userInfoBean', 'certifiedOrgBean'
-        , 'demoFlag', 'newOrg','acceptanceBankBeans']).then(
+        , 'demoFlag', 'newOrg', 'acceptanceBankBeans']).then(
         (data) => {
             var dataJson = {};
             data.map((item, index)=> {
@@ -90,7 +90,7 @@ var _saveAppData = function (data) {
         ["filterBeans", JSON.stringify(data.filterBeans)],
         ["userInfoBean", JSON.stringify(data.userInfoBean)],
         ["token", JSON.stringify(data.token)],
-        ["certifiedOrgBean", JSON.stringify(!data.certifiedOrgBean ? '' : data.certifiedOrgBean)],
+        ["certifiedOrgBean", JSON.stringify(data.certifiedOrgBean)],
         ["demoFlag", JSON.stringify(data.demoFlag)],
         ["newOrg", JSON.stringify(!data.newOrg ? '' : data.newOrg)],
         ["acceptanceBankBeans", JSON.stringify(!data.acceptanceBankBeans ? '' : data.acceptanceBankBeans)]
@@ -98,14 +98,14 @@ var _saveAppData = function (data) {
 }
 var _getMsgData = function (cb) {
     //获得本地的数据
-    AsyncStorage.multiGet([MsgContent.MAIN_MSG, MsgContent.SENT_MSG,MsgContent.MARKET_MSG,MsgContent.SYSTEM_MSG]).then(
-      (data) => {
-          var dataJson = {};
-          data.map((item, index)=> {
-              dataJson[item[0]] = JSON.parse(item[1])
-          })
-          if (cb)cb(dataJson);
-      }
+    AsyncStorage.multiGet([MsgContent.MAIN_MSG, MsgContent.SENT_MSG, MsgContent.MARKET_MSG, MsgContent.SYSTEM_MSG]).then(
+        (data) => {
+            var dataJson = {};
+            data.map((item, index)=> {
+                dataJson[item[0]] = JSON.parse(item[1])
+            })
+            if (cb)cb(dataJson);
+        }
     );
 
 }
