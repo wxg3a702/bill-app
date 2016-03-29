@@ -1,7 +1,7 @@
 var React = require('react-native');
 var {
     NetInfo
-    } = React;
+} = React;
 var info = {
     initLoadingState: true,
     CHANGE_EVENT: 'change',
@@ -11,7 +11,7 @@ var info = {
     isForce_Logout: false
 }
 var DateHelper = require('../../comp/utils/dateHelper');
-var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
+var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var _data = {};
 var _mainMsgBean = {};
 var _ = require('lodash');
@@ -152,7 +152,8 @@ var _login = function (data) {
             if (!d.demoFlag) {
                 data.demoFlag = {flag: false};
             }
-            data.certResultBeans = !data.certifiedOrgBean ? '' : orgToJson(data.certResultBeans)
+
+            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveAppData(data);
             AppStore.emitChange();
         });

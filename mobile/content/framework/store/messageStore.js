@@ -34,51 +34,54 @@ var MessageStore = assign({}, EventEmitter.prototype, {
                 break;
         }
         Persister.getMsgData(
-          (dataList) => {
-              dataList[MsgContent.MAIN_MSG][categoryBean].unReadNum = 0;
-              Persister.saveMsgData(dataList);
-              AppStore.emitChange();
-          }
+            (dataList) => {
+                dataList[MsgContent.MAIN_MSG][categoryBean].unReadNum = 0;
+                Persister.saveMsgData(dataList);
+                AppStore.emitChange();
+            }
         )
         AppStore.emitChange();
     },
 
     getMsgData () {
         var mainMsgBean = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG];
-        var messageBeans = mainMsgBean.messageBeans;
-        if (!_.isEmpty(mainMsgBean.systemNoticeBean.category)) {
-            messageBeans = [mainMsgBean.systemNoticeBean].concat(messageBeans)
-        }
-        if (!_.isEmpty(mainMsgBean.marketNewsBean.category)) {
-            messageBeans = [mainMsgBean.marketNewsBean].concat(messageBeans)
-        }
-        if (!_.isEmpty(mainMsgBean.billSentBean.category)) {
-            messageBeans = [mainMsgBean.billSentBean].concat(messageBeans)
-        }
+        if (!mainMsgBean) {
 
+        } else {
+            var messageBeans = mainMsgBean.messageBeans;
+            if (!_.isEmpty(mainMsgBean.systemNoticeBean.category)) {
+                messageBeans = [mainMsgBean.systemNoticeBean].concat(messageBeans)
+            }
+            if (!_.isEmpty(mainMsgBean.marketNewsBean.category)) {
+                messageBeans = [mainMsgBean.marketNewsBean].concat(messageBeans)
+            }
+            if (!_.isEmpty(mainMsgBean.billSentBean.category)) {
+                messageBeans = [mainMsgBean.billSentBean].concat(messageBeans)
+            }
+        }
         return messageBeans;
     },
 
     setMsgReaded(id){
         var RevBillMsgs = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans;
-        for(let item of RevBillMsgs) {
+        for (let item of RevBillMsgs) {
             if (item.id == id) {
-              item.isRead = true;
-              AppStore.emitChange();
-              return;
+                item.isRead = true;
+                AppStore.emitChange();
+                return;
             }
         }
         Persister.getMsgData(
-          (dataList) => {
-              for (let item of dataList[MsgContent.MAIN_MSG].messageBeans){
-                  if (item.id == id) {
-                      item.isRead = true;
-                      return;
-                  }
-              }
-              Persister.saveMsgData(dataList);
-              AppStore.emitChange();
-          }
+            (dataList) => {
+                for (let item of dataList[MsgContent.MAIN_MSG].messageBeans) {
+                    if (item.id == id) {
+                        item.isRead = true;
+                        return;
+                    }
+                }
+                Persister.saveMsgData(dataList);
+                AppStore.emitChange();
+            }
         )
     },
 

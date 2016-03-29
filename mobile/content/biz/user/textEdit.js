@@ -6,23 +6,13 @@ var {
     View,
     TextInput,
     Text,
-    PickerIOS,
-    } = React;
+    Picker,
+} = React;
 var _ = require('lodash');
-var PickerItemIOS = PickerIOS.Item;
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var NavBarView = require('../../framework/system/navBarView')
 var dateFormat = require('dateformat')
 var date = dateFormat(new Date(), 'yyyy-mm-dd');
-var year = Array(200).fill({}).map(
-    (obj, index)=>
-        obj = {
-            name: 1949 + index + "年",
-            value: 1949 + index
-        }
-)
-var month = Array(12).fill({}).map((obj, index)=>obj = {name: 1 + index + "月", value: 1 + index})
-var day = Array(31).fill({}).map((obj, index)=>obj = {name: 1 + index + "日", value: 1 + index})
 var dismissKeyboard = require('react-native-dismiss-keyboard');
 var TextEdit = React.createClass({
     getInitialState: function () {
@@ -35,17 +25,52 @@ var TextEdit = React.createClass({
         } else {
             type = 'ascii-capable'
         }
+        let year = this.props.param.type == "date" ? (this.props.param.value == '' ? Number(date.split("-")[0]) : Number(this.props.param.value.split("-")[0])) : '';
+        let month = this.props.param.type == "date" ? (this.props.param.value == '' ? Number(date.split("-")[1]) : Number(this.props.param.value.split("-")[1])) : '';
         return {
             oldValue: (value == null || value == '') ? '' : this.props.param.value.toString(),
-            year: this.props.param.type == "date" ? (this.props.param.value == '' ? Number(date.split("-")[0]) : Number(this.props.param.value.split("-")[0])) : '',
-            month: this.props.param.type == "date" ? (this.props.param.value == '' ? Number(date.split("-")[1]) : Number(this.props.param.value.split("-")[1])) : '',
+            year: year,
+            month: month,
             day: this.props.param.type == "date" ? (this.props.param.value == '' ? Number(date.split("-")[2]) : Number(this.props.param.value.split("-")[2])) : '',
             newValue: this.props.param.value,
             type: type,
             tele: this.props.param.type == "telephone" ? (_.isEmpty(this.props.param.value) ? '' : this.props.param.value.split('-')[0] ) : '',
             phone: this.props.param.type == "telephone" ? (_.isEmpty(this.props.param.value) ? '' : this.props.param.value.split('-')[1]) : '',
-
+            yearList: Array(200).fill({}).map((obj, index)=>obj = {name: 1949 + index + "年", value: 1949 + index}),
+            monthList: Array(12).fill({}).map((obj, index)=>obj = {name: 1 + index + "月", value: 1 + index}),
+            dayList: Array(this.calDay(year, month)).fill({}).map((obj, index)=>obj = {
+                name: 1 + index + "日",
+                value: 1 + index
+            })
         }
+    },
+    calDay(year, month){
+        if (!this.state) {
+        } else {
+            year = this.state.year;
+            month = this.state.month;
+        }
+        let a = 0
+        if (_.indexOf([1, 3, 5, 7, 8, 10, 12], month) > -1) {
+            a = 31
+        } else if (_.indexOf([4, 6, 9, 11], month) > -1) {
+            a = 30;
+        } else if (month == 2) {
+            if (!(year % 4)) {
+                a = 29
+            } else {
+                a = 28
+            }
+        }
+        return a
+    },
+    setDayList(year, month){
+        this.setState({
+            dayList: Array(this.calDay(year, month)).fill({}).map((obj, index)=>obj = {
+                name: 1 + index + "日",
+                value: 1 + index
+            })
+        })
     },
     button(){
         return (
@@ -74,7 +99,7 @@ var TextEdit = React.createClass({
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
 
         } else {
-            const { navigator } = this.props;
+            const {navigator} = this.props;
             this.props.callback(
                 {[this.props.param.name]: this.state.newValue},
                 ()=> {
@@ -91,46 +116,46 @@ var TextEdit = React.createClass({
                             actionButton={this.button()}>
                     <View style={{flexDirection:'row'}}>
                         <View style={{flex:1}}>
-                            <PickerIOS
+                            <Picker mode="dropdown"
                                 selectedValue={this.state.year}
-                                onValueChange={(year) => this.setState({year, modelIndex: 0})}>
-                                {year.map((obj, index) => (
-                                        <PickerItemIOS
+                                onValueChange={(year)=>this.setState({year, modelIndex: 0, a: this.setDayList(this.state.year, this.state.month)})}>
+                                {this.state.yearList.map((obj, index) => (
+                                        <Picker.Item
                                             key={obj.value}
                                             value={obj.value}
                                             label={obj.name.toString()}
                                         />
                                     )
                                 )}
-                            </PickerIOS>
+                            </Picker>
                         </View>
                         <View style={{flex:1}}>
-                            <PickerIOS
+                            <Picker
                                 selectedValue={this.state.month}
-                                onValueChange={(month) => this.setState({month, modelIndex: 0})}>
-                                {month.map((obj, index) => (
-                                        <PickerItemIOS
+                                onValueChange={(month) => this.setState({month, modelIndex: 0,a:this.setDayList(this.state.year,this.state.month)})}>
+                                {this.state.monthList.map((obj, index) => (
+                                        <Picker.Item
                                             key={obj.value}
                                             value={obj.value}
                                             label={obj.name.toString()}
                                         />
                                     )
                                 )}
-                            </PickerIOS>
+                            </Picker>
                         </View>
                         <View style={{flex:1}}>
-                            <PickerIOS
+                            <Picker
                                 selectedValue={this.state.day}
-                                onValueChange={(day) => this.setState({day, modelIndex: 0})}>
-                                {day.map((obj, index) => (
-                                        <PickerItemIOS
+                                onValueChange={(day) => this.setState({day, modelIndex: 0,a:this.setDayList(this.state.year,this.state.month)})}>
+                                {this.state.dayList.map((obj, index) => (
+                                        <Picker.Item
                                             key={obj.value}
                                             value={obj.value}
                                             label={obj.name.toString()}
                                         />
                                     )
                                 )}
-                            </PickerIOS>
+                            </Picker>
                         </View>
                     </View>
                 </NavBarView>

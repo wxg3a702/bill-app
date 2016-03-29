@@ -4,7 +4,7 @@ var React = require('react-native');
 var {
     StyleSheet,
     View,
-    } = React;
+} = React;
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
 var CompAction = require("../../framework/action/compAction");
@@ -54,7 +54,6 @@ var CompAccountInfo = React.createClass({
         newOrg.openBank = this.state.openBank
         this.setState({newOrg: newOrg})
         if (!this.props.param) {
-        } else {
             CompAction.deleteOrg(
                 {orgId: this.props.param.item.id}
             )
