@@ -90,7 +90,7 @@ var _appInit = function (data) {
         function (data) {
             info.initLoadingState = false;
             _data = data;
-            Notification.setMsgContent(_data.userInfoBean.userName)
+            Notification.setMsgContent(!_data.userInfoBean ? '' : data.userInfoBean.userName)
             Persister.getMsgData(
                 (data) => {
                     _mainMsgBean = data;
