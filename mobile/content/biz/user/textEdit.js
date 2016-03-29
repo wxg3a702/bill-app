@@ -108,6 +108,15 @@ var TextEdit = React.createClass({
             );
         }
     },
+    changeTime(itemValue, type){
+        Promise.resolve(
+            this.setState({[type]: itemValue})
+            )
+            .then(
+                this.setDayList(this.state.year, this.state.month)
+            )
+
+    },
     render: function () {
         if (this.props.param.type == "date") {
             return (
@@ -117,8 +126,8 @@ var TextEdit = React.createClass({
                     <View style={{flexDirection:'row'}}>
                         <View style={{flex:1}}>
                             <Picker mode="dropdown"
-                                selectedValue={this.state.year}
-                                onValueChange={(year)=>this.setState({year, modelIndex: 0, a: this.setDayList(this.state.year, this.state.month)})}>
+                                    selectedValue={this.state.year}
+                                    onValueChange={(itemValue)=>this.changeTime(itemValue,'year')}>
                                 {this.state.yearList.map((obj, index) => (
                                         <Picker.Item
                                             key={obj.value}
@@ -132,7 +141,7 @@ var TextEdit = React.createClass({
                         <View style={{flex:1}}>
                             <Picker
                                 selectedValue={this.state.month}
-                                onValueChange={(month) => this.setState({month, modelIndex: 0,a:this.setDayList(this.state.year,this.state.month)})}>
+                                onValueChange={(itemValue)=>this.changeTime(itemValue,'month')}>
                                 {this.state.monthList.map((obj, index) => (
                                         <Picker.Item
                                             key={obj.value}
@@ -146,7 +155,7 @@ var TextEdit = React.createClass({
                         <View style={{flex:1}}>
                             <Picker
                                 selectedValue={this.state.day}
-                                onValueChange={(day) => this.setState({day, modelIndex: 0,a:this.setDayList(this.state.year,this.state.month)})}>
+                                onValueChange={(itemValue)=>this.changeTime(itemValue,'day')}>
                                 {this.state.dayList.map((obj, index) => (
                                         <Picker.Item
                                             key={obj.value}

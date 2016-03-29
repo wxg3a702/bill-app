@@ -11,7 +11,7 @@ var {
     Dimensions,
     Platform,
     ActionSheetIOS
-    } = React;
+} = React;
 var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
 var UserAction = require('../../framework/action/userAction')
@@ -40,6 +40,10 @@ var CompCertifyCopies = React.createClass({
             status: newOrg.status,
             newOrg: newOrg,
             phone: '021-35885888-2627',
+            licenseCopyFileIdClick: false,
+            corpIdentityFileIdClick: false,
+            authFileIdClick: false,
+            authIdentityFileIdClick: false
         }
     },
 
@@ -60,9 +64,9 @@ var CompCertifyCopies = React.createClass({
     },
 
     next: function () {
-        const { navigator } = this.props;
+        const {navigator} = this.props;
         if (this.props.param.item || this.state.picEnough) {
-            const { navigator } = this.props;
+            const {navigator} = this.props;
             if (navigator) {
                 navigator.push({
                     comp: CompAccountInfo,
@@ -79,6 +83,7 @@ var CompCertifyCopies = React.createClass({
         this.props.navigator.pop();
     },
     callPhone: function () {
+        let phone = this.state.phone;
         ActionSheetIOS.showActionSheetWithOptions({
             options: [
                 '拨打电话',
@@ -88,7 +93,7 @@ var CompCertifyCopies = React.createClass({
             destructiveButtonIndex: 0,
         }, function (index) {
             if (index == 0) {
-                Communications.phonecall(this.state.phone, false);
+                Communications.phonecall(phone, false);
             }
         })
 
@@ -177,7 +182,7 @@ var CompCertifyCopies = React.createClass({
     },
     returnItem(desc, name){
         let data = this.state.data;
-        var url = require('../../image/user/head.png');
+        let url;
         if (!_.isEmpty(this.state[name])) {
             if (this.state[name].indexOf("@userId") > -1) {
                 url = {uri: UserAction.getFile(this.state[name])}
@@ -225,10 +230,14 @@ var CompCertifyCopies = React.createClass({
             }
         } else {
             return (
-                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-                                    activeOpacity={0.6} underlayColor="#ebf1f2">
-                    <Image style={[styles.image,styles.radius]}
-                           resizeMode="cover" source={require('../../image/company/licence_copy.png')}/>
+                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
+                                    underlayColor="#ebf1f2" onShowUnderlay={()=>{this.setState({[name+'Click']:true})}}
+                                    onHideUnderlay={()=>{this.setState({[name+'Click']:false})}}>
+                    <View style={[styles.image,styles.radius,{alignItems:'center'}]}>
+                        <Image style={{width:44,height:44,borderRadius:22,marginTop:24}} resizeMode="cover"
+                               source={this.state[name+'Click']?certificateState[name].urlClick:certificateState[name].url}/>
+                        <Text style={{fontSize:11,color:'#cccccc',marginTop:14}}>点击添加</Text>
+                    </View>
                 </TouchableHighlight>
             )
         }
@@ -287,22 +296,22 @@ var CompCertifyCopies = React.createClass({
             return (
                 <View>
                     <View style={{flexDirection:"row"}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
+                        <View style={{flex:1}}>
                             <Text style={styles.copyName}>营业执照副本</Text>
                             {this.returnItem('营业执照副本', 'licenseCopyFileId')}
                         </View>
-                        <View style={{flex:1,flexDirection:"column"}}>
+                        <View style={{flex:1,marginLeft:12}}>
                             <Text style={styles.copyName}>法定代表人身份证</Text>
                             {this.returnItem('法定代表人身份证', 'corpIdentityFileId')}
                         </View>
                     </View>
-                    <View style={{flexDirection:"row",marginTop:10}}>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46,marginRight:5}]}>法人授权委托证明书(需盖公章)</Text>
+                    <View style={{flexDirection:"row",marginTop:32}}>
+                        <View style={{flex:1}}>
+                            <Text style={[styles.copyName,{height:50,lineHeight:23}]}>法人授权委托证明书(需盖公章)</Text>
                             {this.returnItem('法人授权委托证明书', 'authFileId')}
                         </View>
-                        <View style={{flex:1,flexDirection:"column"}}>
-                            <Text style={[styles.copyName,{height:46}]}>授权经办人身份证</Text>
+                        <View style={{flex:1,marginLeft:12}}>
+                            <Text style={[styles.copyName,{height:50,lineHeight:23}]}>授权经办人身份证</Text>
                             {this.returnItem('授权经办人身份证', 'authIdentityFileId')}
                         </View>
                     </View>
@@ -329,7 +338,8 @@ var CompCertifyCopies = React.createClass({
                         </View>
                         <View style={styles.licenseItem}>
                             <Text style={{fontSize:18,color:"#333333"}}>法定代表人</Text>
-                            <Text style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>{}</Text>
+                            <Text
+                                style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>{}</Text>
                         </View>
                     </View>
                 </View>
@@ -382,13 +392,13 @@ var styles = StyleSheet.create({
     image: {
         height: 113,
         width: Dimensions.get("window").width / 2 - 18,
-        backgroundColor: "#f0f0f0",
-        marginTop: 5
+        backgroundColor: "white",
+        marginTop: 5,
     },
     copyName: {
         alignItems: "center",
         fontSize: 15,
-        color: "#333333"
+        color: "#333333",
     },
     communicate: {
         fontSize: 15, color: "#ff5b58",

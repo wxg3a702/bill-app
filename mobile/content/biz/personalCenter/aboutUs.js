@@ -22,6 +22,7 @@ var AboutUs = React.createClass({
         }
     },
     send(){
+        let phone=this.state.phone;
         ActionSheetIOS.showActionSheetWithOptions({
             options: [
                 '拨打电话',
@@ -31,7 +32,7 @@ var AboutUs = React.createClass({
             destructiveButtonIndex: 0,
         }, function (index) {
             if (index == 0) {
-                Communications.phonecall(this.state.phone, false);
+                Communications.phonecall(phone, false);
             }
         })
     },

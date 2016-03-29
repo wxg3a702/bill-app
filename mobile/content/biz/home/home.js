@@ -12,7 +12,7 @@ var {
     Platform,
     Animated
     }=React
-var Adjust = require('../../comp/utils/adjust')
+var Adjust=require('../../comp/utils/adjust')
 var ReturnNum = require('./returnNum')
 var NoRisk = require('../personalCenter/noRisk')
 var Swiper = require('../../comp/utils/swiper')
@@ -154,7 +154,6 @@ var Home = React.createClass({
             </NavBarView>
         )
     }
-
 })
 var styles = StyleSheet.create({
     tool: {
