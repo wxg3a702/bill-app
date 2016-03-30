@@ -15,11 +15,11 @@ var {height, width} = Dimensions.get('window');
 var Swiper = require('../../comp/utils/swiper')
 var PAGES = [
     require('../../image/bill/teach1.png'),
-    require('../../image/home/teach2.png'),
-    require('../../image/home/teach3.png'),
-    require('../../image/home/teach4.png'),
-    require('../../image/home/teach5.png'),
-    require('../../image/home/teach6.png')
+    require('../../image/bill/teach2.png'),
+    require('../../image/bill/teach3.png'),
+    require('../../image/bill/teach4.png'),
+    require('../../image/bill/teach5.png'),
+    require('../../image/bill/teach6.png')
 ];
 var Demo = React.createClass({
 
