@@ -65,6 +65,13 @@ var _updateOrgBeans = function (p, c) {
         successHandle: c
     });
 }
+var _updateUnAuditing = function (p, c) {
+    AppDispatcher.dispatch({
+        type: ActionTypes.UPDATE_UNAUDITING,
+        data: p,
+        successHandle: c
+    });
+}
 var _submitOrg = function (p, c, f) {
     async.series([
             uploadFileHandle(p, 'licenseCopyFileId'),
@@ -87,12 +94,16 @@ var _submitOrg = function (p, c, f) {
                         openBank: p.openBank
                     },
                     function (data) {
-
                         if (!data) {
-                            // p.id = data
+                            p.id = data.id
                         }
-                        p.status = 'AUDITING'
-                        _updateOrgBeans(p, c(data));
+                        if (p.status == 'UNAUDITING') {
+                            p.status = 'AUDITING'
+                            _updateUnAuditing(p, c(data))
+                        } else {
+                            p.status = 'AUDITING'
+                            _updateOrgBeans(p, c(data));
+                        }
                     },
                     function (err) {
                         p.status = 'UNAUDITING'
@@ -103,25 +114,25 @@ var _submitOrg = function (p, c, f) {
         })
 }
 var uploadFileHandle = function (params, fileFieldName) {
-        return function (callback) {
-            if (params[fileFieldName].indexOf("@userId") > -1){
-                var data = {fileId:params[fileFieldName]}
-                callback(null, {[fileFieldName]: data});
-            }else {
-                UFetch(api + '/File/uploadFile',
-                    {
-                        uri: params[fileFieldName],
-                        type: 'image/jpeg',
-                        name: fileFieldName,
-                    },
-                    function (data) {
-                        callback(null, {[fileFieldName]: data});
-                    },
-                    function (err) {
-                        callback(err, fileFieldName);
-                    });
-            }
+    return function (callback) {
+        if (params[fileFieldName].indexOf("@userId") > -1) {
+            var data = {fileId: params[fileFieldName]}
+            callback(null, {[fileFieldName]: data});
+        } else {
+            UFetch(api + '/File/uploadFile',
+                {
+                    uri: params[fileFieldName],
+                    type: 'image/jpeg',
+                    name: fileFieldName,
+                },
+                function (data) {
+                    callback(null, {[fileFieldName]: data});
+                },
+                function (err) {
+                    callback(err, fileFieldName);
+                });
         }
+    }
 
 
 }
