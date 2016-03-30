@@ -9,13 +9,10 @@ var {
     Dimensions,
     Image,
     TouchableHighlight,
-    Platform,
-    Animated
-    }=React
-var Adjust=require('../../comp/utils/adjust')
+}=React
+var Adjust = require('../../comp/utils/adjust')
 var ReturnNum = require('./returnNum')
 var NoRisk = require('../personalCenter/noRisk')
-var Swiper = require('../../comp/utils/swiper')
 var Calculator = require('../personalCenter/calculator');
 var NavBarView = require('../../framework/system/navBarView');
 var {height, width} = Dimensions.get('window');
@@ -65,7 +62,7 @@ var Home = React.createClass({
         //alert(this.state.number)
     },
     toOther(name, desc){
-        const { navigator } = this.props;
+        const {navigator} = this.props;
         if (navigator) {
             navigator.push({
                 comp: name,

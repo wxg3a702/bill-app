@@ -152,7 +152,7 @@ var _login = function (data) {
             if (!d.demoFlag) {
                 data.demoFlag = {flag: false};
             }
-
+            // data.demoFlag = {flag: false};
             data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveAppData(data);
             AppStore.emitChange();
@@ -530,6 +530,14 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             _data.certifiedOrgBean.map((item, index)=> {
                 if (item.id == action.data.id) {
                     item = _.assign(item, action.data)
+                    let key = _.keys(action.data)[0];
+                    if (key == action.data.id) {
+                        key = _.keys(action.data)[1];
+                    }
+                    if (!item.cercertResultBeans) {
+                    }else{
+                        delete(item.cercertResultBeans[key])
+                    }
                 }
             })
             Persister.saveOrg(_data.certifiedOrgBean);
