@@ -70,7 +70,7 @@ var _submitOrg = function (p, c, f) {
             uploadFileHandle(p, 'licenseCopyFileId'),
             uploadFileHandle(p, 'corpIdentityFileId'),
             uploadFileHandle(p, 'authFileId'),
-            uploadFileHandle(p, 'authIdentityFileId'),
+            uploadFileHandle(p, 'authIdentityFileId')
         ],
         function (err, res) {
             if (err) {
@@ -103,20 +103,27 @@ var _submitOrg = function (p, c, f) {
         })
 }
 var uploadFileHandle = function (params, fileFieldName) {
-    return function (callback) {
-        UFetch(api + '/File/uploadFile',
-            {
-                uri: params[fileFieldName],
-                type: 'image/jpeg',
-                name: fileFieldName,
-            },
-            function (data) {
+        return function (callback) {
+            if (params[fileFieldName].indexOf("@userId") > -1){
+                var data = {fileId:params[fileFieldName]}
                 callback(null, {[fileFieldName]: data});
-            },
-            function (err) {
-                callback(err, fileFieldName);
-            });
-    }
+            }else {
+                UFetch(api + '/File/uploadFile',
+                    {
+                        uri: params[fileFieldName],
+                        type: 'image/jpeg',
+                        name: fileFieldName,
+                    },
+                    function (data) {
+                        callback(null, {[fileFieldName]: data});
+                    },
+                    function (err) {
+                        callback(err, fileFieldName);
+                    });
+            }
+        }
+
+
 }
 
 module.exports = CompAction
