@@ -10,13 +10,11 @@ var {
     Dimensions,
     ScrollView,
     Platform,
-    IntentAndroid,
     NativeModules
-    } = React;
+} = React;
 
 var NavBarView = require('../../framework/system/navBarView')
 var UserStore = require('../../framework/store/userStore');
-var CompStore = require('../../framework/store/compStore');
 var AppStore = require('../../framework/store/appStore');
 var UserAction = require("../../framework/action/userAction")
 var LoginAction = require("../../framework/action/loginAction")
@@ -119,7 +117,7 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(true, name ,(response)=> {
+        PhotoPic.showImagePic(true, name, (response)=> {
             console.log('Response = ', response);
             this.setState({
                 imageSource: response.uri
@@ -136,7 +134,7 @@ var UserInfo = React.createClass({
         if (value == '未设置') {
             value = ''
         }
-        const { navigator } = this.props;
+        const {navigator} = this.props;
         if (navigator) {
             navigator.push({
                 comp: TextEdit,
@@ -166,7 +164,7 @@ var UserInfo = React.createClass({
         )
     },
     toOther(nav){
-        const { navigator } = this.props;
+        const {navigator} = this.props;
         if (navigator) {
             navigator.push({
                 comp: nav,
@@ -176,13 +174,15 @@ var UserInfo = React.createClass({
     },
 
     returnImg(){
-        var url = require('../../image/user/head.png');
+        let url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            url = {uri: UserAction.getFile(this.state.photoStoreId), isStatic: true}
-            //url = {uri: 'http://192.168.64.205:8484/zxbilldev/api/File/downLoad/photoStoreId@userId[4]6be0ca39-ff64-4fe2-a6c9-47a703302499?token=eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJVc2VySWQtNCIsImlhdCI6MTQ1ODcwMjMzOCwic3ViIjoid2Vpc2VuIiwiaXNzIjoiVXNlcklkLTQifQ.CqsKpdfWvats2-0afDeccnqX2rAP8cB5OAL4NhXOvtY', isStatic: true}
-            //url = {uri: 'http://img.smzy.com/down/UploadPic/2014-3/201432115472914116.jpg'}
+            Promise.resolve(url = UserAction.getFile(this.state.photoStoreId))
+                .then(url = {uri: url, isStatic: true})
+            return url
+        } else {
+            return url
         }
-        return url;
+
     },
 
     selectPhoto(){
@@ -193,14 +193,14 @@ var UserInfo = React.createClass({
         }
     },
 
-    loadSuccess: function(){
-       console.log("onSuccess");
+    loadSuccess: function () {
+        console.log("onSuccess");
     },
-    onLoadEnd: function(){
-       console.log("onLoadEnd");
+    onLoadEnd: function () {
+        console.log("onLoadEnd");
     },
-    onLoadStart: function(){
-       console.log("onLoadStart");
+    onLoadStart: function () {
+        console.log("onLoadStart");
     },
 
     render: function () {
@@ -211,8 +211,8 @@ var UserInfo = React.createClass({
                         <TouchableHighlight onPress={this.selectPhoto}
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={styles.img}
-                                   resizeMode="cover" source={this.returnImg()} onLoad = {this.loadSuccess}
-                                   onLoadEnd = {this.onLoadEnd} onLoadStart = {this.onLoadStart}/>
+                                   resizeMode="cover" source={this.returnImg()} onLoad={this.loadSuccess}
+                                   onLoadEnd={this.onLoadEnd} onLoadStart={this.onLoadStart}/>
                         </TouchableHighlight>
                         <Text style={styles.name}>{this.state.userName}</Text>
                     </View>
