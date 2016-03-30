@@ -52,6 +52,7 @@ var Login = React.createClass({
         this.setState(this.getStateFromStores());
     },
     login: function () {
+        var a = Date.now();
         if (this.state.userName.length == 0 || this.state.password.length == 0 || this.state.verify.length == 0) {
 
         } else {
@@ -65,7 +66,7 @@ var Login = React.createClass({
                     captcha: this.state.verify
                 },
                 () => {
-                    CommonAction.freshNotification();
+                    //CommonAction.freshNotification();
                     this.props.navigator.pop()},
                 (msg)=> {
                     Alert(msg.msgContent);

@@ -104,6 +104,10 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }
     }
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
@@ -129,4 +133,5 @@ dependencies {
     compile 'com.github.nkzawa:socket.io-client:0.3.0'
     compile project(':realm')
     compile project(':lib')
+    compile files('libs/fastjson-1.2.8.jar')
 }

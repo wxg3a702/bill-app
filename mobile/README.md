@@ -13,3 +13,5 @@ change line 20 from
 to
     def adb = android.getAdbExe().toString()
     commandLine adb, 'forward', 'tcp:8082', 'tcp:8082'
+    
+## Realm debug problem on iphone, 0.10.0 maybe not solved this issue, please use simulator. 

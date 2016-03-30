@@ -19,9 +19,9 @@ public class UpdateData {
                 .emit(eventName, params);
     }
 
-    public void getData(ReactContext reactContext) {
+    public void getData(ReactContext reactContext, String key) {
         WritableMap params = Arguments.createMap();
         params.putString("test", "This is Test!");
-        sendEvent(reactContext, "Test", params);
+        sendEvent(reactContext, key, params);
     }
 }
