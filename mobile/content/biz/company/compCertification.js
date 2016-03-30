@@ -131,7 +131,7 @@ var CompCertification = React.createClass({
     },
     returnTitle(){
         if (!_.isEmpty(this.state.bean)) {
-            return <Space backgroundColor="#f0f0f0"/>
+            return <Space backgroundColor="#f0f0f0" top={false}/>
         }
     },
     render: function () {

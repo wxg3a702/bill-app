@@ -4,6 +4,9 @@ var React = require('react-native');
 var {
     StyleSheet,
     View,
+    ActionSheetIOS,
+    Text,
+    TouchableHighlight
 } = React;
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -14,6 +17,7 @@ var CertifySuccess = require('./certifySuccess');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
+var Communications = require('../personalCenter/communication');
 var CompAccountInfo = React.createClass({
     getStateFromStores(){
         let check
@@ -47,6 +51,22 @@ var CompAccountInfo = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
+    callPhone: function () {
+        let phone = this.state.phone;
+        ActionSheetIOS.showActionSheetWithOptions({
+            options: [
+                '拨打电话',
+                '取消'
+            ],
+            cancelButtonIndex: 1,
+            destructiveButtonIndex: 0,
+        }, function (index) {
+            if (index == 0) {
+                Communications.phonecall(phone, false);
+            }
+        })
+
+    },
     submit: function () {
         let newOrg = this.state.newOrg;
         newOrg.accountName = this.state.accountName;
@@ -76,6 +96,19 @@ var CompAccountInfo = React.createClass({
     handleChanged(key, value){
         this.textOnchange(value, key);
     },
+    returnInfo(){
+        let orgBean = this.state.newOrg.certResultBeans
+        if (!orgBean) {
+        } else {
+            if (orgBean.bankAccountNo) {
+                return (
+                    <Text style={{fontSize: 15, color: '#ff5b58',marginBottom:5}}>
+                        未通过，{orgBean.bankAccountNo.resultDesc},请修改
+                    </Text>
+                )
+            }
+        }
+    },
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
@@ -89,6 +122,20 @@ var CompAccountInfo = React.createClass({
                     <Input type='default' prompt="开户行" max={20} field="openBank" isPwd={false}
                            defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
+                    <View style={{marginTop:18}}>
+                        {this.returnInfo()}
+                        <View style={{flexDirection:"row"}}>
+                            <Text style={{fontSize:15,color:'#ff5b58'}}>
+                                如遇问题,请
+                            </Text>
+                            <TouchableHighlight onPress={()=>{this.callPhone()}} activeOpacity={0.6}
+                                                underlayColor="#ebf1f2">
+                                <Text style={{color:'#ff5b58',fontSize:15,textDecorationLine:"underline"}}>
+                                    联系客服
+                                </Text>
+                            </TouchableHighlight>
+                        </View>
+                    </View>
                 </View>
                 <View style={{margin:10}}>
                     <Button func={this.submit} content="提交" checked={this.state.checked}/>

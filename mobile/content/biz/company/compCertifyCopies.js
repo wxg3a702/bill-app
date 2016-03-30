@@ -229,17 +229,28 @@ var CompCertifyCopies = React.createClass({
                 }
             }
         } else {
-            return (
-                <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
-                                    underlayColor="#ebf1f2" onShowUnderlay={()=>{this.setState({[name+'Click']:true})}}
-                                    onHideUnderlay={()=>{this.setState({[name+'Click']:false})}}>
-                    <View style={[styles.image,styles.radius,{alignItems:'center'}]}>
-                        <Image style={{width:44,height:44,borderRadius:22,marginTop:24}} resizeMode="cover"
-                               source={this.state[name+'Click']?certificateState[name].urlClick:certificateState[name].url}/>
-                        <Text style={{fontSize:11,color:'#cccccc',marginTop:14}}>点击添加</Text>
+            if (data.status == 'AUDITING') {
+                return (
+                    <View>
+                        <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
+                            <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
+                        </Image>
                     </View>
-                </TouchableHighlight>
-            )
+                )
+            } else {
+                return (
+                    <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
+                                        underlayColor="#ebf1f2"
+                                        onShowUnderlay={()=>{this.setState({[name+'Click']:true})}}
+                                        onHideUnderlay={()=>{this.setState({[name+'Click']:false})}}>
+                        <View style={[styles.image,styles.radius,{alignItems:'center'}]}>
+                            <Image style={{width:44,height:44,borderRadius:22,marginTop:24}} resizeMode="cover"
+                                   source={this.state[name+'Click']?certificateState[name].urlClick:certificateState[name].url}/>
+                            <Text style={{fontSize:11,color:'#cccccc',marginTop:14}}>点击添加</Text>
+                        </View>
+                    </TouchableHighlight>
+                )
+            }
         }
     },
     returnAccount(){
@@ -250,7 +261,8 @@ var CompCertifyCopies = React.createClass({
                     <Text style={{paddingTop:32,height:55,fontSize:15}}>关联账户信息</Text>
                     <View
                         style={{flexDirection:'row',height:95,paddingLeft:Adjust.width(20),backgroundColor:'white',borderRadius:5,alignItems:'center',borderWidth:1,borderColor:'#c8c8c8'}}>
-                        <Image style={{width:30,height:30,borderRadius:15,backgroundColor:'red'}}/>
+                        <Image style={{width:30,height:30,borderRadius:15}}
+                               source={require('../../image/company/bank.png')}/>
                         <View style={{marginLeft:Adjust.width(20),flexDirection:'row',alignItems:'center'}}>
                             <Text style={{fontSize:18,color:'#333333'}}>账号：</Text>
                             <Text style={{fontSize:15,color:'#7f7f7f'}}>

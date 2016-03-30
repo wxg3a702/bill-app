@@ -527,18 +527,11 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             if (action.successHandle)action.successHandle();
             break;
         case ActionTypes.UPDATE_EXISTORG:
-            let orgBean = [];
             _data.certifiedOrgBean.map((item, index)=> {
                 if (item.id == action.data.id) {
                     item = _.assign(item, action.data)
-                    let key = _.keys(action.data)[0];
-                    if (key == action.data.id) {
-                        key = _.keys(action.data)[1];
-                    }
-                    delete(item[key])
                 }
             })
-            _data.certifiedOrgBean = orgBean;
             Persister.saveOrg(_data.certifiedOrgBean);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();

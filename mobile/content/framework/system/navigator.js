@@ -49,11 +49,11 @@ var Main = React.createClass({
             if (AppStore.isForceLogout()) {
                 Alert(
                     '账号已在别处登陆,系统将切换到登陆界面',
-                    {text: '确定', onPress: () => this.refs.navigator.resetTo({comp: Home})}
+                    {text: '确定', onPress: () => this.refs.navigator.resetTo({comp: TabView})}
                 )
             } else {
                 Promise.resolve().then(function (resolve) {
-                    this.refs.navigator.resetTo({comp: 'tabView'})
+                    this.refs.navigator.resetTo({comp: TabView})
                 }.bind(this)).catch(function (e) {
                     Alert("系统异常")
                 })
