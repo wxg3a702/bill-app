@@ -153,13 +153,12 @@ var UserInfo = React.createClass({
     logout: function () {
         Alert(
             '确定退出当前帐号?',
-            () => LoginAction.logOut(),
-            function () {
-            })
+            () => LoginAction.logOut()
+        )
     },
     button(){
         return (
-            <RightTopButton func={this.logout} content="退出登录" color="#ff5b58"
+            <RightTopButton func={this.logout} content="注销" color="#ff5b58"
                             source={require('../../image/user/exit.png')}/>
         )
     },

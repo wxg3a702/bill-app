@@ -52,9 +52,7 @@ describe('util', function () {
         })
 
         if(!a[1].certResultBeans['LICENSE_COPY_FILE_ID']){
-            console.log("sasas")
         }else{
-            console.log('dddd')
         }
         a[1].certResultBeans
 
