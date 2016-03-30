@@ -9,6 +9,7 @@ var {
   View,
   TabBarIOS
   } = React;
+var _ = require('lodash');
 var Home = require('../../biz/home/home')
 var Bill = require('../../biz/billNew/billList')
 var Message = require("../../biz/message/messageList")
@@ -31,7 +32,7 @@ var TabView = React.createClass({
       var othMsgNum = 0;
       var sum = 0;
       var billSum = 0;
-      if (!mainMsgBean) {
+      if (_.isEmpty(mainMsgBean)) {
 
       } else {
         mainMsgBean.messageBeans.forEach(function (object) {
@@ -50,11 +51,13 @@ var TabView = React.createClass({
       return {
         othMsgNum: othMsgNum,
         billSum: show,
-        token: token
+        token: token,
+        initialPage: 0
       }
     } else {
       return {
-        token: token
+        token: token,
+        initialPage: 0
       }
     }
   },
@@ -77,12 +80,15 @@ var TabView = React.createClass({
       AppStateIOS.addEventListener('change', this._handleAppStateChange);
 
       if (Platform.OS === 'android') {
-        DeviceEventEmitter.addListener('Test', function (e:Event) {
-          console.log(e.test);
-          CommonAction.onNotification;
-        });
+        DeviceEventEmitter.addListener('Msg', CommonAction.onNotification);
+        DeviceEventEmitter.addListener('MsgByNotification', this.dealNotification);
       }
     }
+  },
+
+  dealNotification(){
+    this.setState({initialPage: 2});
+    CommonAction.onNotification();
   },
 
   componentWillUnmount: function () {
@@ -160,7 +166,7 @@ var TabView = React.createClass({
       );
     } else {
       return (
-        <ScrollableTabView initialPage={0} locked={true}
+        <ScrollableTabView initialPage={this.state.initialPage} locked={true}
                            renderTabBar={() => <AndroidTabBar />}>
           <Home navigator={this.props.navigator}
                 tabLabel="ios-home"

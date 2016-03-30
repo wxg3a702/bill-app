@@ -93,7 +93,7 @@ module.exports = {
         }
     },
     returnIsNull(valid, data){
-        if (!valid) {
+        if (!valid || _.isEmpty(valid)) {
             return '';
         } else {
             return data;
