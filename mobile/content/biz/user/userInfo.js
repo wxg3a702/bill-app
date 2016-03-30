@@ -119,7 +119,7 @@ var UserInfo = React.createClass({
 
     selectAndroid(desc, name){
         console.log(desc + name);
-        PhotoPic.showImagePic(true, (response)=> {
+        PhotoPic.showImagePic(true, name ,(response)=> {
             console.log('Response = ', response);
             this.setState({
                 imageSource: response.uri

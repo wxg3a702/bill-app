@@ -214,7 +214,7 @@ var CompCertifyCopies = React.createClass({
                                                 activeOpacity={0.6} underlayColor="#ebf1f2">
                                 <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover"
                                        source={url}>
-                                    <Text style={{fontSize:11,color:'white'}}>{value}</Text>
+                                    <Text style={{fontSize:11,color:'white'}}>{certResultBeans[name].desc}</Text>
                                 </Image>
                             </TouchableHighlight>
                         )

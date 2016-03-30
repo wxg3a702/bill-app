@@ -3,7 +3,7 @@ var {
     NetInfo
 } = React;
 var info = {
-    initLoadingState: true,
+    initLoadingState: false,
     CHANGE_EVENT: 'change',
     netWorkState: false,
     requestHandle: null,
