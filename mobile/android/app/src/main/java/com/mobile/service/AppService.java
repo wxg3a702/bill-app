@@ -1,18 +1,26 @@
 package com.mobile.service;
 
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 import com.mobile.BuildConfig;
 import com.mobile.MainActivity;
+import com.mobile.R;
+import com.mobile.bean.NtfBean;
 import com.mobile.updatedata.UpdateData;
+import com.mobile.utils.AppUtils;
 import com.mobile.utils.LogUtils;
 
 import java.net.URISyntaxException;
@@ -104,14 +112,39 @@ public class AppService extends Service {
         public void call(Object... args) {
             LogUtils.d("EVENT_CONNECT");
 //            ReactContext currentReactContext = mReactInstanceManager.getCurrentReactContext();
-
-            UpdateData updateData = new UpdateData();
-            updateData.getData(MainActivity.getContext());
         }
     };
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(Object ... args) {
+            LogUtils.d("有消息来了");
+            JSONObject mJSONObject = JSON.parseObject(args[0].toString());
+            String mType = mJSONObject.getString("type");
+//            String title = mJSONObject.getString("title");
+            NtfBean mMsgBody = mJSONObject.getObject("body", NtfBean.class);
+            boolean mBackground = AppUtils.isApplicationBroughtToBackground(AppService.this);
+            if (mBackground) {
+                manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+                Intent mIntent = new Intent(AppService.this, MainActivity.class);
+                mIntent.putExtra("isMsg", true);
+                mIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                PendingIntent mPendingIntent = PendingIntent.getActivity(AppService.this,
+                        0, mIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                Bitmap mBitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
+                mBuilder = new NotificationCompat.Builder(AppService.this)
+                        .setLargeIcon(mBitmap)
+                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentTitle(mMsgBody.getTitle())
+                        .setContentText(mMsgBody.getContent())
+                        .setWhen(System.currentTimeMillis())
+                        .setTicker(mMsgBody.getTitle())
+                        .setAutoCancel(true)
+                        .setContentIntent(mPendingIntent);
+                manager.notify(121, mBuilder.build());
+            } else {
+                UpdateData updateData = new UpdateData();
+                updateData.getData(MainActivity.getContext(), "Msg");
+            }
             /*LogUtils.d("onNewMessage:" + args[0].toString());
             JSONObject mJSONObject = JSON.parseObject(args[0].toString());
             String mType = mJSONObject.getString("type");
