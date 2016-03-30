@@ -73,7 +73,7 @@ var CompAccountInfo = React.createClass({
         newOrg.accountNo = this.state.accountNo;
         newOrg.openBank = this.state.openBank
         this.setState({newOrg: newOrg})
-        if (!this.props.param) {
+        if (!this.props.param && newOrg.status == 'REJECTED') {
             CompAction.deleteOrg(
                 {orgId: this.props.param.item.id}
             )
