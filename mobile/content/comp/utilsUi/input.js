@@ -32,6 +32,18 @@ var Input = React.createClass({
                                keyboardType={this.props.isPhone?'numeric':'ascii-capable'}/>
                 </View>
             )
+        }else if (this.props.type == "name"){
+            return (
+                <View style={[styles.view,styles.radius]}>
+                    <Image style={{height:16,width:16,marginLeft:9}}
+                           source={InputIcon[this.props.icon].icon}/>
+                    <TextInput style={[styles.input,{width:width-Adjust.width(80)}]} underlineColorAndroid="transparent"
+                               onChangeText={(text) => this.textOnchange(text,this.props.field)}
+                               maxLength={this.props.max} defaultValue={this.props.defaultValue}
+                               placeholder={this.props.prompt} secureTextEntry={this.props.isPwd} autoCorrect={false}
+                               autoCapitalize="none" placeholderTextColor="#7f7f7f" clearButtonMode="while-editing"/>
+                </View>
+            )
         }
     }
 })
