@@ -1,5 +1,5 @@
 const SCHEMA_DEVICE = 'device';
-const SCHEMA_TOKEN = 'token';
+const SCHEMA_USER = 'user';
 const SCHEMA_VALUE = 'value';
 const SCHEMA_FLAG = 'flag';
 
@@ -26,15 +26,17 @@ let FlagSchema = {
   primaryKey: 'key',
   properties: {
     key: {type: 'string'},
-    flag: {type: 'bool'}
+    flag: {type: 'string'}
   }
 };
 
-let TokenSchema = {
-  name: SCHEMA_TOKEN,
-  primaryKey: 'token',
+let UserSchema = {
+  name: SCHEMA_USER,
+  primaryKey: 'id',
   properties: {
-    token: {type: 'string'},
+    id: 'int',
+    token: {type: 'string', optional: true},
+    lastLoginTime: {type: 'date', optional: true},
     values: {type: 'list', objectType: SCHEMA_VALUE},
     flags: {type: 'list',  objectType: SCHEMA_FLAG}
   }
@@ -47,6 +49,6 @@ module.exports = {
   SCHEMA_VALUE: SCHEMA_VALUE,
   FlagSchema: FlagSchema,
   SCHEMA_FLAG: SCHEMA_FLAG,
-  TokenSchema: TokenSchema,
-  SCHEMA_TOKEN: SCHEMA_TOKEN
+  UserSchema: UserSchema,
+  SCHEMA_USER: SCHEMA_USER
 };

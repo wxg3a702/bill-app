@@ -25,6 +25,7 @@ import com.facebook.react.modules.core.DefaultHardwareBackBtnHandler;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.shell.MainReactPackage;
 import com.mobile.service.AppService;
+import com.mobile.updatedata.UpdateData;
 import com.mobile.utils.AppUtils;
 import com.rnfs.RNFSPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -72,6 +73,11 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
 
         mReactRootView.startReactApplication(mReactInstanceManager, "mobile", null);
         setContentView(mReactRootView);
+        boolean isMsg = getIntent().getBooleanExtra("isMsg", false);
+        if (isMsg) {
+            UpdateData updateData = new UpdateData();
+            updateData.getData(MainActivity.getContext(), "MsgByNotification");
+        }
     }
 
     public static ReactContext getContext() {

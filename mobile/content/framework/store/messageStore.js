@@ -8,87 +8,70 @@ var MsgContent = require('../../constants/notification').MsgContent;
 var _ = require('lodash');
 var MessageStore = assign({}, EventEmitter.prototype, {
     getMessage(){
-        var mainMsgBean = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG];
+        var mainMsgBean = AppStore.getData().mainMsgBean;
         if (!mainMsgBean) {
             return []
         } else {
             return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
         }
     },
-    getMainMsgBean: ()=>AppStore.getMainMsgBean()[MsgContent.MAIN_MSG],
+    getMainMsgBean: ()=>AppStore.getData().mainMsgBean,
 
     updateUnReadNum(category){
         var categoryBean;
         switch (category) {
             case MsgCategory.BILL_SENT:
-                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].billSentBean.unReadNum = 0;
-                categoryBean = 'billSentBean';
+                AppStore.getData().mainMsgBean.billSentBean.unReadNum = 0;
                 break;
             case MsgCategory.MARKET_NEWS:
-                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].marketNewsBean.unReadNum = 0;
-                categoryBean = 'marketNewsBean';
+                AppStore.getData().mainMsgBean.marketNewsBean.unReadNum = 0;
                 break;
             case MsgCategory.SYSTEM_NOTICE:
-                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].systemNoticeBean.unReadNum = 0;
-                categoryBean = 'systemNoticeBean';
+                AppStore.getData().mainMsgBean.systemNoticeBean.unReadNum = 0;
                 break;
         }
-        Persister.getMsgData(
-          (dataList) => {
-              dataList[MsgContent.MAIN_MSG][categoryBean].unReadNum = 0;
-              Persister.saveMsgData(dataList);
-              AppStore.emitChange();
-          }
-        )
+        Persister.saveAppData(AppStore.getData())
         AppStore.emitChange();
     },
 
     getMsgData () {
-        var mainMsgBean = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG];
-        var messageBeans = mainMsgBean.messageBeans;
-        if (!_.isEmpty(mainMsgBean.systemNoticeBean.category)) {
-            messageBeans = [mainMsgBean.systemNoticeBean].concat(messageBeans)
+        var mainMsgBean = AppStore.getData().mainMsgBean;
+        if (_.isEmpty(mainMsgBean)) {
+            return [];
+        } else {
+            var messageBeans = mainMsgBean.messageBeans;
+            if (!mainMsgBean.systemNoticeBean) {
+                messageBeans = [mainMsgBean.systemNoticeBean].concat(messageBeans)
+            }
+            if (!mainMsgBean.marketNewsBean) {
+                messageBeans = [mainMsgBean.marketNewsBean].concat(messageBeans)
+            }
+            if (!mainMsgBean.billSentBean) {
+                messageBeans = [mainMsgBean.billSentBean].concat(messageBeans)
+            }
+            return messageBeans;
         }
-        if (!_.isEmpty(mainMsgBean.marketNewsBean.category)) {
-            messageBeans = [mainMsgBean.marketNewsBean].concat(messageBeans)
-        }
-        if (!_.isEmpty(mainMsgBean.billSentBean.category)) {
-            messageBeans = [mainMsgBean.billSentBean].concat(messageBeans)
-        }
-
-        return messageBeans;
     },
 
     setMsgReaded(id){
-        var RevBillMsgs = AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans;
+        var RevBillMsgs = AppStore.getData().mainMsgBean.messageBeans;
         for(let item of RevBillMsgs) {
             if (item.id == id) {
               item.isRead = true;
-              AppStore.emitChange();
               return;
             }
         }
-        Persister.getMsgData(
-          (dataList) => {
-              for (let item of dataList[MsgContent.MAIN_MSG].messageBeans){
-                  if (item.id == id) {
-                      item.isRead = true;
-                      return;
-                  }
-              }
-              Persister.saveMsgData(dataList);
-              AppStore.emitChange();
-          }
-        )
+        Persister.saveAppData(AppStore.getData())
+        AppStore.emitChange();
     },
 
     getResult(name){
         if (name == MsgCategory.BILL_SENT) {
-            return AppStore.getMainMsgBean()[MsgContent.SENT_MSG]
+            return AppStore.getData().sentBillMsgBeans
         } else if (name == MsgCategory.MARKET_NEWS) {
-            return AppStore.getMainMsgBean()[MsgContent.MARKET_MSG]
+            return AppStore.getData().marketMsgBeans
         } else {
-            return AppStore.getMainMsgBean()[MsgContent.SYSTEM_MSG]
+            return AppStore.getData().systemMsgBeans
         }
     },
     updateMessage: function (billId) {
@@ -97,13 +80,13 @@ var MessageStore = assign({}, EventEmitter.prototype, {
         //    return item.billId == billId
         //});
         let f = false;
-        AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans.map((item, index)=> {
-            if (item.billId == billId && !AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans[index]["isRead"]) {
-                AppStore.getMainMsgBean()[MsgContent.MAIN_MSG].messageBeans[index]["isRead"] = true;
+        AppStore.getData().mainMsgBean.messageBeans.map((item, index)=> {
+            if (item.billId == billId && !AppStore.getData().mainMsgBean.messageBeans[index]["isRead"]) {
+                AppStore.getData().mainMsgBean.messageBeans[index]["isRead"] = true;
                 f = true;
             }
         });
-        Persister.saveMainMsgBean(AppStore.getMainMsgBean()[MsgContent.MAIN_MSG]);
+        Persister.saveMainMsgBean(AppStore.getData().mainMsgBean);
         if (f) {
             AppStore.emitChange();
         }
