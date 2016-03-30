@@ -7,7 +7,6 @@ var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
 var CompAction = {
-    updateOrgBeans: (p, c, f)=> _updateOrgBeans(p, c, f),
     updateNewOrgInfo: (p, c, f)=> _updateNewOrgInfo(p, c, f),
     updateExist: (p, c, f)=>_updateExist(p, c, f),
     submitOrg: (p, c, f)=> _submitOrg(p, c, f),
@@ -88,7 +87,10 @@ var _submitOrg = function (p, c, f) {
                         openBank: p.openBank
                     },
                     function (data) {
-                        // p.id = data
+
+                        if (!data) {
+                            // p.id = data
+                        }
                         p.status = 'AUDITING'
                         _updateOrgBeans(p, c(data));
                     },
