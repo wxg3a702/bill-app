@@ -51,7 +51,7 @@ var TabView = React.createClass({
                 othMsgNum: othMsgNum,
                 billSum: show,
                 token: token,
-                initialPage: 0
+                initialPage: 0,
             }
         } else {
             return {
@@ -63,25 +63,26 @@ var TabView = React.createClass({
 
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+        if (AppStore.getRevBillMessage()) {
+            if (Platform.OS === 'ios') {
+                if (!AppStore.getAPNSToken()) {
+                    PushNotificationIOS.requestPermissions();
+                }
 
-        if (Platform.OS === 'ios') {
-            if (!AppStore.getAPNSToken()) {
-                PushNotificationIOS.requestPermissions();
-            }
-
-            PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-            PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-            AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+                PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+                PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
+                AppStateIOS.removeEventListener('change', this._handleAppStateChange);
 
 
-            PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
-            PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
+                PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
+                PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
-            AppStateIOS.addEventListener('change', this._handleAppStateChange);
+                AppStateIOS.addEventListener('change', this._handleAppStateChange);
 
-            if (Platform.OS === 'android') {
-                DeviceEventEmitter.addListener('Msg', CommonAction.onNotification);
-                DeviceEventEmitter.addListener('MsgByNotification', this.dealNotification);
+                if (Platform.OS === 'android') {
+                    DeviceEventEmitter.addListener('Msg', CommonAction.onNotification);
+                    DeviceEventEmitter.addListener('MsgByNotification', this.dealNotification);
+                }
             }
         }
     },
@@ -92,20 +93,24 @@ var TabView = React.createClass({
     },
 
     componentWillUnmount: function () {
-        if (Platform.OS === 'ios') {
-            AppStore.removeChangeListener(this._onChange);
-            PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-            PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-            AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-            PushNotificationIOS.setApplicationIconBadgeNumber(0);
+        if (AppStore.getRevBillMessage()) {
+            if (Platform.OS === 'ios') {
+                AppStore.removeChangeListener(this._onChange);
+                PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+                PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
+                AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+                PushNotificationIOS.setApplicationIconBadgeNumber(0);
+            }
         }
     },
 
     _handleAppStateChange: function (currentAppState) {
-        switch (currentAppState) {
-            case "active":
-                CommonAction.freshNotification();
-                break;
+        if (AppStore.getRevBillMessage()) {
+            switch (currentAppState) {
+                case "active":
+                    CommonAction.freshNotification();
+                    break;
+            }
         }
     },
 
