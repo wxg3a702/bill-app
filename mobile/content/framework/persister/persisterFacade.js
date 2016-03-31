@@ -88,7 +88,8 @@ let _getAppData = function (cb, userId) {
     if(userId) {
       _persisterUsers = userData.filtered('id = ' + userId);
     } else {
-      _persisterUsers = userData.sorted('lastLoginTime');
+      _persisterUsers = userData.sorted('lastLoginTime',[true]);
+      console.log(_persisterUsers)
     }
     if (_persisterUsers.length > 0) {
       let _persisterUser = _persisterUsers[0];
@@ -160,6 +161,7 @@ let _saveLoginData = (data, d) => {
     }, true);
   });
   console.log(Realm.defaultPath)
+  console.log(new Date())
 }
 
 let _saveAppData = function (data) {
