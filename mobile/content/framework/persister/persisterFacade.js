@@ -6,16 +6,13 @@ const {
   UserSchema,
   SCHEMA_USER
   } = require('./schemas');
-
 const DEVICE_ID = '-device-id-';
 
 
 // Get the default Realm with support for our objects
 let _realm = new Realm({schema: [DeviceSchema, UserSchema], schemaVersion: 2});
 let _userid = '';
-
 let _clearToken = function (data) {
-  //_userid = '';
   _realm.write(() => {
     _realm.create(SCHEMA_USER, {
       id: data.userInfoBean.id,
@@ -35,41 +32,7 @@ let _clearToken = function (data) {
     }, true);
     _userid = '';
   });
-  /*_realm.write(() => {
-    // Delete multiple books by passing in a `Results`, `List`,
-    // or JavaScript `Array`
-    let _persister = _realm.objects(SCHEMA_TOKEN);
-    _realm.delete(_persister); // Deletes all books
-  });*/
 };
-//_clearToken();
-
-let _setValue = function (key, value, cb) {
-  _realm.write(() => {
-    _realm.create(SCHEMA_USER, {
-      id: _userid,
-      values: [{
-        key: key,
-        value: JSON.stringify(value)
-      }]
-    }, true);
-    if (cb)cb();
-  });
-};
-
-let _setFlag = function (key, flag, cb) {
-  _realm.write(() => {
-    _realm.create(SCHEMA_USER, {
-      id: _userid,
-      flags: [{
-        key: key,
-        flag: Boolean(flag)
-      }]
-    }, true);
-    if (cb)cb();
-  });
-};
-
 
 let _getAppData = function (cb, userId) {
   let deviceData = _realm.objects(SCHEMA_DEVICE);
@@ -79,7 +42,7 @@ let _getAppData = function (cb, userId) {
   if (deviceData.length > 0) {
     let _persisterDevice = deviceData[0];
     _.assign(_appObject, {
-      APNSToken: _persisterDevice.APNSToken,
+      APNSToken: _persisterDevice.APNSToken
     });
   }
 
@@ -107,22 +70,10 @@ let _getAppData = function (cb, userId) {
         systemMsgBeans: _persisterUser.systemMsgBeans ? JSON.parse(_persisterUser.systemMsgBeans) : [],
         sentBillMsgBeans: _persisterUser.sentBillMsgBeans ? JSON.parse(_persisterUser.sentBillMsgBeans) : [],
         demoFlag: _persisterUser.demoFlag ? JSON.parse(_persisterUser.demoFlag) : {},
+        acceptanceBankBeans:_persisterUser.acceptanceBankBeans,
+        revBillMessage:_persisterUser.revBillMessage,
+        newsMessage:_persisterUser.newsMessage
       });
-      console.log(_persisterUser);
-      //_userid = _persisterUser.id;
-      //let _values = _persisterUser.values;
-      //_(_values).forEach((item) => {
-      //  console.log(item.key + ":" + item.value);
-      //  _appObject[item.key] = item.value ? JSON.parse(item.value) : {};
-      //});
-      //
-      //let _flags = _persisterUser.flags.filtered('key == "demoFlag"');
-      //_.assign(_appObject, {
-      //  token: _persisterUser.token,
-      //  demoFlag: JSON.parse(_flags[0].flag)
-      //}
-      //);
-      //let _persisterUser = userData[0];
     }
   }
 
@@ -157,11 +108,12 @@ let _saveLoginData = (data, d) => {
       marketMsgBeans: JSON.stringify(d.marketMsgBeans) ? JSON.stringify(d.marketMsgBeans) : JSON.stringify([]),
       systemMsgBeans: JSON.stringify(d.systemMsgBeans) ? JSON.stringify(d.systemMsgBeans) : JSON.stringify([]),
       sentBillMsgBeans:  JSON.stringify(d.sentBillMsgBeans) ? JSON.stringify(d.sentBillMsgBeans) : JSON.stringify([]),
-      demoFlag: JSON.stringify(d.demoFlag)
+      demoFlag: JSON.stringify(d.demoFlag),
+      acceptanceBankBeans:JSON.stringify(data.acceptanceBankBeans),
+      revBillMessage:true,
+      newsMessage:true
     }, true);
   });
-  console.log(Realm.defaultPath)
-  console.log(new Date())
 }
 
 let _saveAppData = function (data) {
@@ -183,24 +135,20 @@ let _saveAppData = function (data) {
       marketMsgBeans: JSON.stringify(data.marketMsgBeans) ? JSON.stringify(data.marketMsgBeans) : JSON.stringify([]),
       systemMsgBeans: JSON.stringify(data.systemMsgBeans) ? JSON.stringify(data.systemMsgBeans) : JSON.stringify([]),
       sentBillMsgBeans:  JSON.stringify(data.sentBillMsgBeans) ? JSON.stringify(data.sentBillMsgBeans) : JSON.stringify([]),
-      demoFlag: JSON.stringify(data.demoFlag)
+      demoFlag: JSON.stringify(data.demoFlag),
+      acceptanceBankBeans:JSON.stringify(data.acceptanceBankBeans),
+      revBillMessage:true,
+      newsMessage:true
     }, true);
   });
-  console.log(Realm.defaultPath)
 };
-
 
 let PersisterFacade = {
   getAppData: (cb, userId) => _getAppData(cb, userId),
   saveAppData: (data) => _saveAppData(data),
   clearToken: (data) => _clearToken(data),
   saveAPNSToken: (apnsToken, cb) => _saveAPNToken(apnsToken, cb),
-  setItem: (k, v, c) => _setValue(k, v, c),
-  saveUser: (user, cb) => _setValue('userInfoBean', user, cb),
-  saveOrg: (org, cb) => _setValue('certifiedOrgBean', org, cb),
-  saveMainMsgBean: (key, mainMsgBean, cb) => _setValue(key, mainMsgBean, cb),
-  saveDemoFlag: (flag, cb) => _setFlag('demoFlag', flag, cb),
-  saveLoginData: (data, d) => _saveLoginData(data, d),
+  saveLoginData: (data, d) => _saveLoginData(data, d)
 };
 
 module.exports = PersisterFacade;

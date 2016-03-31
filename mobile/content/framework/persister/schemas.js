@@ -28,6 +28,9 @@ let UserSchema = {
     systemMsgBeans: {type: 'string', optional: true},
     sentBillMsgBeans: {type: 'string', optional: true},
     demoFlag: {type: 'string', optional: true},
+    revBillMessage:{type: 'boolean', optional: true},
+    newsMessage:{type: 'boolean', optional: true},
+    acceptanceBankBeans:{type: 'string', optional: true}
   }
 };
 
