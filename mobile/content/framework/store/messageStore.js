@@ -39,14 +39,14 @@ var MessageStore = assign({}, EventEmitter.prototype, {
         if (_.isEmpty(mainMsgBean)) {
             return [];
         } else {
-            var messageBeans = mainMsgBean.messageBeans;
-            if (!mainMsgBean.systemNoticeBean) {
+            var messageBeans = !mainMsgBean.messageBeans ? [] : mainMsgBean.messageBeans;
+            if (mainMsgBean.systemNoticeBean) {
                 messageBeans = [mainMsgBean.systemNoticeBean].concat(messageBeans)
             }
-            if (!mainMsgBean.marketNewsBean) {
+            if (mainMsgBean.marketNewsBean) {
                 messageBeans = [mainMsgBean.marketNewsBean].concat(messageBeans)
             }
-            if (!mainMsgBean.billSentBean) {
+            if (mainMsgBean.billSentBean) {
                 messageBeans = [mainMsgBean.billSentBean].concat(messageBeans)
             }
             return messageBeans;

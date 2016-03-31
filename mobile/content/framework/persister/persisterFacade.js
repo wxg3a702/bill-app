@@ -146,7 +146,7 @@ let _getAppData = function (cb, userId) {
   if (cb) cb(_appObject);
 };
 
-let _saveAPNToken = function (_apnToken, cb) {
+let _saveAPNSToken = function (_apnToken, cb) {
   console.log('apnToken => ' + _apnToken);
   _realm.write(() => {
     _realm.create(SCHEMA_DEVICE, {
@@ -256,7 +256,8 @@ let PersisterFacade = {
   getAppData: (cb, userId) => _getAppData(cb, userId),
   saveAppData: (data) => _saveAppData(data),
   clearToken: (data) => _clearToken(data),
-  saveAPNSToken: (apnsToken, cb) => _saveAPNToken(apnsToken, cb),
+  saveAPNSToken: (apnsToken, cb) => _saveAPNSToken(apnsToken, cb),
+  getAPNSToken: () => _getAPNSToken(),
   setItem: (k, v, c) => _setValue(k, v, c),
   saveUser: (user, cb) => _setValue('userInfoBean', user, cb),
   saveOrg: (org, cb) => _setValue('certifiedOrgBean', org, cb),

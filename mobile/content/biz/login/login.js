@@ -61,7 +61,7 @@ var Login = React.createClass({
                 {
                     userName: this.state.userName,
                     password: this.state.password,
-                    deviceToken: this.state.APNSToken,
+                    deviceToken: 'asdasdhsnsdkbdsngfjhd',
                     deviceModel: this.state.deviceModel,
                     captcha: this.state.verify
                 },

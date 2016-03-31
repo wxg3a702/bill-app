@@ -35,10 +35,20 @@ var TabView = React.createClass({
       if (_.isEmpty(mainMsgBean)) {
 
       } else {
-        mainMsgBean.messageBeans.forEach(function (object) {
-          billSum += ((object.isRead) ? 0 : 1)
-        });
-        othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketNewsBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
+        if (mainMsgBean.messageBeans) {
+          mainMsgBean.messageBeans.forEach(function (object) {
+            billSum += ((object.isRead) ? 0 : 1)
+          });
+        }
+        if (mainMsgBean.billSentBean) {
+          othMsgNum = mainMsgBean.billSentBean.unReadNum;
+        }
+        if (mainMsgBean.marketNewsBean) {
+          othMsgNum = mainMsgBean.marketNewsBean.unReadNum + othMsgNum;
+        }
+        if (mainMsgBean.systemNoticeBean) {
+          othMsgNum = mainMsgBean.systemNoticeBean.unReadNum + othMsgNum;
+        }
       }
       sum = billSum;
       var show;
