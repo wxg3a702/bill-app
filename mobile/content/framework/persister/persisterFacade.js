@@ -10,7 +10,7 @@ const DEVICE_ID = '-device-id-';
 
 
 // Get the default Realm with support for our objects
-let _realm = new Realm({schema: [DeviceSchema, UserSchema], schemaVersion: 2});
+let _realm = new Realm({schema: [DeviceSchema, UserSchema], schemaVersion: 3});
 let _userid = '';
 let _clearToken = function (data) {
   _realm.write(() => {
@@ -28,7 +28,10 @@ let _clearToken = function (data) {
       marketMsgBeans: JSON.stringify(data.marketMsgBeans) ? JSON.stringify(data.marketMsgBeans) : JSON.stringify([]),
       systemMsgBeans: JSON.stringify(data.systemMsgBeans) ? JSON.stringify(data.systemMsgBeans) : JSON.stringify([]),
       sentBillMsgBeans:  JSON.stringify(data.sentBillMsgBeans) ? JSON.stringify(data.sentBillMsgBeans) : JSON.stringify([]),
-      demoFlag: JSON.stringify(data.demoFlag)
+      demoFlag: JSON.stringify(data.demoFlag),
+      acceptanceBankBeans:JSON.stringify(data.acceptanceBankBeans) ? JSON.stringify(data.acceptanceBankBeans) : JSON.stringify([]),
+      revBillMessage:false,
+      newsMessage:false
     }, true);
     _userid = '';
   });
