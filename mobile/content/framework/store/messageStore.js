@@ -85,8 +85,8 @@ var MessageStore = assign({}, EventEmitter.prototype, {
                 AppStore.getData().mainMsgBean.messageBeans[index]["isRead"] = true;
                 f = true;
             }
+            Persister.saveAppData(AppStore.getData());
         });
-        Persister.saveMainMsgBean(AppStore.getData().mainMsgBean);
         if (f) {
             AppStore.emitChange();
         }

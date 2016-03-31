@@ -35,22 +35,22 @@ var ds = new ListView.DataSource({
 var count = 0;
 const PAGE_SIZE = 5;
 var Message = React.createClass({
-    getStateFromStores() {
-        var token = AppStore.getToken()
-        if (token == null) {
-            return {token: token}
-        } else {
-            var messageBean = MessageStore.getMsgData()
-            return {
-                dataSource: messageBean,
-                data: messageBean,
-                token: token
-            }
-        }
-    },
-    componentDidMount() {
-        AppStore.addChangeListener(this._onChange);
-    },
+  getStateFromStores() {
+    var token = AppStore.getToken()
+    if (token == null) {
+      return {token: token}
+    } else {
+      var messageBean = MessageStore.getMsgData()
+      return {
+        dataSource: messageBean,
+        data: messageBean,
+        token: token
+      }
+    }
+  },
+  componentDidMount() {
+    AppStore.addChangeListener(this._onChange);
+  },
 
   componentWillUnmount: function () {
     AppStore.removeChangeListener(this._onChange);

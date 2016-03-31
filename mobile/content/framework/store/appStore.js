@@ -269,10 +269,19 @@ var _analysisMessageData = function (data) {
         }
             break;
         case MsgTypes.ORG_AUTH_FAIL:
+        {
+            _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+            break;
+        }
         case MsgTypes.ORG_AUTH_OK:
         {
-
             _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+            if (data.revBillList) {
+                _addBillPackByNotify('revBillBean', data.revBillList);
+            }
+            if (data.sentBillList) {
+                _addBillPackByNotify('sentBillBean', data.sentBillList);
+            }
         }
             break;//
         case MsgTypes.REV_NEW_BILL://区分
@@ -281,6 +290,7 @@ var _analysisMessageData = function (data) {
             _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
             Persister.saveAppData(_data)
             _addBillPackByNotify('revBillBean', _getBillBody(data));
+            AppStore.emitChange();
         }
             break;
         case MsgTypes.APPROVE_DISCOUNT:
@@ -295,6 +305,7 @@ var _analysisMessageData = function (data) {
             _force_logout();
             break;
     }
+    AppStore.emitChange();
 }
 //
 var _freshMessageData = function (data) {
