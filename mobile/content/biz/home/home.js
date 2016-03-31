@@ -10,6 +10,7 @@ var {
     Image,
     TouchableHighlight,
 }=React
+var ListBottom = require('../../comp/utilsUi/listBottom')
 var Adjust = require('../../comp/utils/adjust')
 var ReturnNum = require('./returnNum')
 var NoRisk = require('../personalCenter/noRisk')
@@ -22,12 +23,11 @@ var PAGES = [
     require('../../image/home/banner2.png'),
     require('../../image/home/banner3.png')
 ];
-
+var dataSource = new ViewPager.DataSource({
+    pageHasChanged: (p1, p2) => p1 !== p2,
+});
 var Home = React.createClass({
     getInitialState(){
-        var dataSource = new ViewPager.DataSource({
-            pageHasChanged: (p1, p2) => p1 !== p2,
-        });
         return ({
             num: 423324,
             dataSource: dataSource.cloneWithPages(PAGES),
@@ -94,10 +94,7 @@ var Home = React.createClass({
 
     _renderPage: function (data:Object) {
         return (
-            <Image
-                resizeMode="stretch"
-                style={styles.page}
-                source={data}/>
+            <Image resizeMode="stretch" style={styles.page} source={data}/>
         );
     },
 
@@ -105,10 +102,8 @@ var Home = React.createClass({
 
     },
     render(){
-
         return (
             <NavBarView navigator={this.props.navigator} title="首页" showBack={false} showBar={true}>
-
                 <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
                     <View style={{flexDirection:'column'}}>
                         <View style={{height:200,width:width}}>
@@ -148,6 +143,7 @@ var Home = React.createClass({
                         </View>
                     </View>
                 </ScrollView>
+                <ListBottom/>
             </NavBarView>
         )
     }

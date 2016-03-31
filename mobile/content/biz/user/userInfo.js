@@ -153,7 +153,8 @@ var UserInfo = React.createClass({
     logout: function () {
         Alert(
             '确定退出当前帐号?',
-            () => LoginAction.logOut()
+            () => LoginAction.logOut(),
+            ()=>{}
         )
     },
     button(){
