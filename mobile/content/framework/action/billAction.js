@@ -1,4 +1,4 @@
-var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
+var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var async = require('async')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
@@ -13,11 +13,13 @@ var BillActions = {
     sendSMSCodeForDiscount: (p, c, f)=>BFetch(api + "/User/sendSMSCodeToOldMobile", p, c, f),
     validateMobileForDiscount: (p, c, f)=>PFetch(api + "/User/validateSMSCodeAfterLogin", p, c, f),
     validateTransPWD: (p, c, f)=>PFetch(api + "/User/validateTransPWD", p, c, f),
-    setDemoFlag: ()=> {
-        AppDispatcher.dispatch({type: ActionTypes.DEMO_FLAG});
-    },
+    setDemoFlag: ()=> _setDemoFlag,
 }
-
+var _setDemoFlag = function () {
+    AppDispatcher.dispatch({
+        type: ActionTypes.DEMO_FLAG
+    });
+}
 var _cancleBillDiscount = function (url, p, c) {
     PFetch(url, p,
         function (msg) {
