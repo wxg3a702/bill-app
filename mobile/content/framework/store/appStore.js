@@ -43,6 +43,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
         if (!event)event = info.CHANGE_EVENT
         this.emit(event);
     },
+    getRevBillMessage: ()=>_data.revBillMessage,
+
+    getNewsMessage: ()=>_data.newsMessage,
 
     getNetWorkState: ()=> info.netWorkState,
 
@@ -86,7 +89,7 @@ var _appInit = function (data) {
     );
     Persister.getAppData(
         function (data) {
-            data.demoFlag = {id: data.userInfoBean.id, flag: false};
+            // data.demoFlag = {id: data.userInfoBean.id, flag: false};
             info.initLoadingState = false;
             _data = data;
             if (_data.token == '') {
@@ -441,6 +444,16 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                     }
                 }
             })
+            Persister.saveAppData(_data);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
+        case ActionTypes.CHANGE_SWITCH:
+            if (action.data.type == 'revBillMessage') {
+                _data.revBillMessage = action.data.value
+            } else if (action.data.type == 'newsMessage') {
+                _data.newsMessage = action.data.value
+            }
             Persister.saveAppData(_data);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();

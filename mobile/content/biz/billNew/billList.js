@@ -97,7 +97,7 @@ var Bill = React.createClass({
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
         var obj = BillStore.getDemoFlag();
-        if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length >= 0)) {
+        if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
             this.props.navigator.push({comp: Demo});
             BillAction.setDemoFlag();
         }

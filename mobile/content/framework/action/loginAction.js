@@ -1,4 +1,4 @@
-var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
+var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var async = require('async')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
@@ -24,9 +24,9 @@ var LoginActions = {
     resetMobileNo: (p, c, f)=>_resetMobileNo(api + "/User/resetMobileNo", p, c, f),
     resetPasswordForChangePwd: (p, c, f)=>BFetch(api + "/User/resetPasswordForChangePwd", p, c, f),
 
-    validateTransPWD: (p,c,f) =>PFetch(api + "/User/validateTransPWD",p,c,f),
-    validatePWDandPersonID: (p,c,f) => PFetch(api + "/User/validatePWDandPersonID",p,c,f),
-    resetTransactionPassword :(p,c,f) => PFetch(api + "/User/resetTransactionPassword",p,c,f),
+    validateTransPWD: (p, c, f) =>PFetch(api + "/User/validateTransPWD", p, c, f),
+    validatePWDandPersonID: (p, c, f) => PFetch(api + "/User/validatePWDandPersonID", p, c, f),
+    resetTransactionPassword: (p, c, f) => PFetch(api + "/User/resetTransactionPassword", p, c, f),
 
     forceLogOut: ()=> {
         AppDispatcher.dispatch({type: ActionTypes.FORCE_LOGOUT});
