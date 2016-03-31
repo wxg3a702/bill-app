@@ -113,13 +113,14 @@ var CompAccountInfo = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator} title="2.关联账户信息">
                 <View style={{flex:1,marginHorizontal:10}}>
-                    <Input type='default' prompt="账户名称" max={20} field="accountName" isPwd={false}
+                    <Input type='name' prompt="账户名称" max={50} field="accountName" isPwd={false}
                            defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
+                    <Inuput type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            defaultValue={this.state.accountNo}
-                           onChanged={this.handleChanged} icon="user"/>
-                    <Input type='default' prompt="开户行" max={20} field="openBank" isPwd={false}
+                           onChanged={this.handleChanged} icon="user"
+                           isPhone={true}/>
+                    <Input type='name' prompt="开户行" max={20} field="openBank" isPwd={false}
                            defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:18}}>

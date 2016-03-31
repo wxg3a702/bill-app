@@ -1,14 +1,14 @@
 var React = require('react-native');
 var {
-  NetInfo
-  } = React;
+    NetInfo
+} = React;
 var info = {
-  initLoadingState: true,
-  CHANGE_EVENT: 'change',
-  netWorkState: false,
-  requestHandle: null,
-  isLogout: false,
-  isForce_Logout: false
+    initLoadingState: true,
+    CHANGE_EVENT: 'change',
+    netWorkState: false,
+    requestHandle: null,
+    isLogout: false,
+    isForce_Logout: false
 }
 var DateHelper = require('../../comp/utils/dateHelper');
 var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
@@ -29,97 +29,100 @@ var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
 var AppStore = assign({}, EventEmitter.prototype, {
 
-  addChangeListener: function (callback, event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.on(event, callback);
-  },
+    addChangeListener: function (callback, event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.on(event, callback);
+    },
 
-  removeChangeListener: function (callback, event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.removeListener(event, callback);
-  },
+    removeChangeListener: function (callback, event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.removeListener(event, callback);
+    },
 
-  emitChange: function (event) {
-    if (!event)event = info.CHANGE_EVENT
-    this.emit(event);
-  },
+    emitChange: function (event) {
+        if (!event)event = info.CHANGE_EVENT
+        this.emit(event);
+    },
 
-  getNetWorkState: ()=> info.netWorkState,
+    getNetWorkState: ()=> info.netWorkState,
 
-  getInitLoadingState: ()=>info.initLoadingState,
+    getInitLoadingState: ()=>info.initLoadingState,
 
-  requestLoadingState: ()=>requestLoadingState,
+    requestLoadingState: ()=>requestLoadingState,
 
-  requestHandle: ()=>info.requestHandle,
+    requestHandle: ()=>info.requestHandle,
 
-  isLogout: ()=>info.isLogout,
+    isLogout: ()=>info.isLogout,
 
-  isForceLogout: ()=>info.isForce_Logout,
+    isForceLogout: ()=>info.isForce_Logout,
 
-  getAPNSToken: ()=>_data.APNSToken,
+    getAPNSToken: ()=>_data.APNSToken,
 
-  getToken: ()=>_data.token,
+    getToken: ()=>_data.token,
 
-  getData: ()=>_data,
+    getData: ()=>_data,
 
-  getUserName: () => _data.userInfoBean.userName,
+    getUserName: () => _data.userInfoBean.userName,
 
-  init: function (data) {
-    info.initLoadingState = false;
-    _data = data;
-  },
+    init: function (data) {
+        info.initLoadingState = false;
+        _data = data;
+    },
 });
 
 var _handleConnectivityChange = function (isConnected) {
-  info.netWorkState = isConnected;
+    info.netWorkState = isConnected;
 }
 //
 var _appInit = function (data) {
-  NetInfo.isConnected.addEventListener(
-    'change',
-    _handleConnectivityChange
-  );
-  NetInfo.isConnected.fetch().done(
-    (isConnected) => {
-      info.netWorkState = isConnected;
-    }
-  );
-  Persister.getAppData(
-    function (data) {
-      info.initLoadingState = false;
-      _data = data;
-      if (_data.token == '') {
-        _data.token = null;
-      }
-      //Notification.setMsgContent(_data.userInfoBean.userName)
-      //Persister.getMsgData(
-      //    (data) => {
-      //        _mainMsgBean = data;
-      //    }
-      //)
-      info.isLogout = false;
-      AppStore.emitChange();
-    })
+    NetInfo.isConnected.addEventListener(
+        'change',
+        _handleConnectivityChange
+    );
+    NetInfo.isConnected.fetch().done(
+        (isConnected) => {
+            info.netWorkState = isConnected;
+        }
+    );
+    Persister.getAppData(
+        function (data) {
+            data.demoFlag = {id: data.userInfoBean.id, flag: false};
+            info.initLoadingState = false;
+            _data = data;
+            if (_data.token == '') {
+                _data.token = null;
+            }
+            //Notification.setMsgContent(_data.userInfoBean.userName)
+            //Persister.getMsgData(
+            //    (data) => {
+            //        _mainMsgBean = data;
+            //    }
+            //)
+            info.isLogout = false;
+            AppStore.emitChange();
+        })
 }
 //
 var _login = function (data) {
-  var id = data.userInfoBean.id;
-  Persister.getAppData((d) => {
-    data.demoFlag = d.demoFlag;
-    if (!d.demoFlag) {
-      data.demoFlag = {id: data.userInfoBean.id, flag: false};
-    }
-    if (_.isEmpty(d)) {
-      Persister.saveAppData(data);
-    } else {
-      Persister.saveLoginData(data, d);
-    }
-    Persister.getAppData((datas) => {
-      _data = datas;
-      initNewOrg();
-      AppStore.emitChange();
-    }, id)
-  }, id);
+    var id = data.userInfoBean.id;
+    Persister.getAppData((d) => {
+        data.demoFlag = d.demoFlag;
+        if (!d.demoFlag) {
+            data.demoFlag = {id: data.userInfoBean.id, flag: false};
+        }
+        if (_.isEmpty(d)) {
+            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
+            Persister.saveAppData(data);
+        } else {
+            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
+            Persister.saveLoginData(data, d);
+        }
+        Persister.getAppData((datas) => {
+            _data = datas;
+            initNewOrg();
+            AppStore.emitChange();
+        }, id)
+    }, id);
 }
 var orgToJson = function (data) {
     var json = {};
@@ -136,76 +139,76 @@ var orgToJson = function (data) {
 }
 //
 var initNewOrg = function () {
-  _data.newOrg = {
-    licenseCopyFileId: '',
-    authFileId: '',
-    corpIdentityFileId: '',
-    authIdentityFileId: '',
-    accountName: '',
-    accountNo: '',
-    openBank: '',
-    picEnough: false,
-  }
+    _data.newOrg = {
+        licenseCopyFileId: '',
+        authFileId: '',
+        corpIdentityFileId: '',
+        authIdentityFileId: '',
+        accountName: '',
+        accountNo: '',
+        openBank: '',
+        picEnough: false,
+    }
 }
 
 var _cancleBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index].status = "NEW";
-    }
-  });
-  Persister.saveAppData(_data);
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index].status = "NEW";
+        }
+    });
+    Persister.saveAppData(_data);
+    AppStore.emitChange();
 }
 //
 var _giveupBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index].status = "IGN";
-    }
-  });
-  Persister.saveAppData(_data);
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index].status = "IGN";
+        }
+    });
+    Persister.saveAppData(_data);
+    AppStore.emitChange();
 }
 //
 var _allowBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index] = data;
-      //_data.revBillBean.contentList[index].status = "DIS";
-    }
-  });
-  Persister.saveAppData(_data);
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index] = data;
+            //_data.revBillBean.contentList[index].status = "DIS";
+        }
+    });
+    Persister.saveAppData(_data);
+    AppStore.emitChange();
 }
 //
 var _rejectBillDiscount = function (data) {
-  _data.sentBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.sentBillBean.contentList[index] = data;
-    }
-  });
-  Persister.saveAppData(_data);
+    _data.sentBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.sentBillBean.contentList[index] = data;
+        }
+    });
+    Persister.saveAppData(_data);
 
-  AppStore.emitChange();
+    AppStore.emitChange();
 }
 
 var _createBillDiscount = function (data) {
-  _data.revBillBean.contentList.map((item, index)=> {
-    if (item.billId == data.billId) {
-      _data.revBillBean.contentList[index].status = "REQ";
-    }
-  });
-  Persister.saveAppData(_data);
-  AppStore.emitChange();
+    _data.revBillBean.contentList.map((item, index)=> {
+        if (item.billId == data.billId) {
+            _data.revBillBean.contentList[index].status = "REQ";
+        }
+    });
+    Persister.saveAppData(_data);
+    AppStore.emitChange();
 }
 
 var _getMsgType = function (msg) {
-  return msg.msgType;
+    return msg.msgType;
 }
 
 var _getMsgBody = function (msg) {
-  return msg.msgBody;
+    return msg.msgBody;
 }
 
 var _changeCompStatus = function (data) {
@@ -219,29 +222,29 @@ var _changeCompStatus = function (data) {
 }
 
 var _pushMsg = function (data, key) {
-  _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
-  Persister.saveAppData(_data)
+    _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
+    Persister.saveAppData(_data)
 }
 //
 var _getBillBody = function (msg) {
-  return msg.billBody;
+    return msg.billBody;
 }
 
 var _updateMainMsgBeanByNotify = function (arrayKeyName, beanKeyName, data) {
-  _pushMsg(data, arrayKeyName);
-  _.isEmpty(_data.mainMsgBean) ? _data.mainMsgBean = new Object() : "";
-  let unReadNum = _.isEmpty(_data.mainMsgBean[beanKeyName]) ? 0 : _data.mainMsgBean[beanKeyName].unReadNum;
-  data.unReadNum = ++unReadNum;
-  _data.mainMsgBean[beanKeyName] = data;
-  Persister.saveAppData(_data)
+    _pushMsg(data, arrayKeyName);
+    _.isEmpty(_data.mainMsgBean) ? _data.mainMsgBean = new Object() : "";
+    let unReadNum = _.isEmpty(_data.mainMsgBean[beanKeyName]) ? 0 : _data.mainMsgBean[beanKeyName].unReadNum;
+    data.unReadNum = ++unReadNum;
+    _data.mainMsgBean[beanKeyName] = data;
+    Persister.saveAppData(_data)
 }
 
 var _addBillPackByNotify = function (keyName, data) {
-  if (_.isEmpty(_data[keyName]) || _.isEmpty(_data[keyName].contentList)) {
-    _data[keyName] = {contentList: new Array()};
-  }
-  _data[keyName].contentList = [data].concat(_data[keyName].contentList);
-  Persister.saveAppData(_data)
+    if (_.isEmpty(_data[keyName]) || _.isEmpty(_data[keyName].contentList)) {
+        _data[keyName] = {contentList: new Array()};
+    }
+    _data[keyName].contentList = [data].concat(_data[keyName].contentList);
+    Persister.saveAppData(_data)
 }
 
 var _analysisMessageData = function (data) {
@@ -276,61 +279,61 @@ var _analysisMessageData = function (data) {
         case MsgTypes.ORG_AUTH_OK:
         {
 
-      _updateMainMsgBeanByNotify(MsgContent.SYSTEM_MSG, 'systemNoticeBean', d);
+            _updateMainMsgBeanByNotify(MsgContent.SYSTEM_MSG, 'systemNoticeBean', d);
+        }
+            break;//
+        case MsgTypes.REV_NEW_BILL://区分
+        {
+            //messageBeans
+            _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+            Persister.saveAppData(_data)
+            _addBillPackByNotify('revBillBean', _getBillBody(data));
+        }
+            break;
+        case MsgTypes.APPROVE_DISCOUNT:
+        {
+            //messageBeans
+            _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+            //批准贴现
+            _allowBillDiscount(_getBillBody(data));
+        }
+            break;//
+        case MsgTypes.LOGIN_OUT:
+            _force_logout();
+            break;
     }
-      break;//
-    case MsgTypes.REV_NEW_BILL://区分
-    {
-      //messageBeans
-      _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
-      Persister.saveAppData(_data)
-      _addBillPackByNotify('revBillBean', _getBillBody(data));
-    }
-      break;
-    case MsgTypes.APPROVE_DISCOUNT:
-    {
-      //messageBeans
-      _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
-      //批准贴现
-      _allowBillDiscount(_getBillBody(data));
-    }
-      break;//
-    case MsgTypes.LOGIN_OUT:
-      _force_logout();
-      break;
-  }
 }
 //
 var _freshMessageData = function (data) {
-  if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
-    return;
-  else {
-    data.nodeMsgBean.map((item, index)=> {
-      _analysisMessageData(item);
-    });
-    AppStore.emitChange();
-  }
+    if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
+        return;
+    else {
+        data.nodeMsgBean.map((item, index)=> {
+            _analysisMessageData(item);
+        });
+        AppStore.emitChange();
+    }
 }
 
 var _getPushMsg = function (url) {
-  //将取到的增量数据存到本地
-  BFetch(url, {}, function (data) {
-    AppDispatcher.dispatch({
-      type: ActionTypes.PUSH_NOTIFICATION,
-      data: data
-    });
-  }, null, {custLoading: true});
+    //将取到的增量数据存到本地
+    BFetch(url, {}, function (data) {
+        AppDispatcher.dispatch({
+            type: ActionTypes.PUSH_NOTIFICATION,
+            data: data
+        });
+    }, null, {custLoading: true});
 }
 
 var _savePushMsg = function (data) {
-  _freshMessageData(data)
+    _freshMessageData(data)
 }
 
 var _force_logout = function () {
-  _data.token = null;
-  Persister.clearToken(_data);
-  info.isLogout = true;
-  info.isForce_Logout = true;
+    _data.token = null;
+    Persister.clearToken(_data);
+    info.isLogout = true;
+    info.isForce_Logout = true;
 }
 
 AppStore.dispatchToken = AppDispatcher.register(function (action) {
@@ -404,8 +407,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                 _data.certifiedOrgBean[_.findIndex(_data.certifiedOrgBean, 'transactionNumber', action.data.transactionNumber)] = _data.newOrg
             }
             initNewOrg();
-            Persister.saveNewOrg(_data.newOrg);
-            Persister.saveOrg(_data.certifiedOrgBean);
+            Persister.saveAppData(_data);
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
@@ -419,6 +421,12 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
+        case ActionTypes.UPDATE_UNAUDITING:
+            _data.certifiedOrgBean = _.assign(_data.certifiedOrgBean, action.data);
+            Persister.saveAppData(_data);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
         case ActionTypes.UPDATE_EXISTORG:
             _data.certifiedOrgBean.map((item, index)=> {
                 if (item.id == action.data.id) {
@@ -428,7 +436,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
                         key = _.keys(action.data)[1];
                     }
                     if (!item.cercertResultBeans) {
-                    }else{
+                    } else {
                         delete(item.cercertResultBeans[key])
                     }
                 }

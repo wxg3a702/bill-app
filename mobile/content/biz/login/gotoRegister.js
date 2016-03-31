@@ -19,7 +19,7 @@ var GotoRegister = React.createClass({
                 <View style={{flex:1,justifyContent:'flex-end',alignItems:'center'}}>
                     <TouchableOpacity
                         onPress={()=>{
-                            this.props.navigator.push({comp:CompCertifyCopies,param:{fromRegister:true,item:''}}
+                            this.props.navigator.push({comp:CompCertifyCopies,param:{item:''}}
                         )}}
                         style={{marginBottom:40, borderColor:'white',borderWidth:1,paddingHorizontal:25,paddingVertical:10,borderRadius:5}}>
                         <Text style={{color:"white", fontSize:25}}>去企业认证</Text>
