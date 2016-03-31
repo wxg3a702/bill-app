@@ -73,7 +73,7 @@ var CompAccountInfo = React.createClass({
         newOrg.accountNo = this.state.accountNo;
         newOrg.openBank = this.state.openBank
         this.setState({newOrg: newOrg})
-        if (!this.props.param && newOrg.status == 'REJECTED') {
+        if (!this.props.param) {
             CompAction.deleteOrg(
                 {orgId: this.props.param.item.id}
             )
@@ -116,11 +116,11 @@ var CompAccountInfo = React.createClass({
                     <Input type='name' prompt="账户名称" max={50} field="accountName" isPwd={false}
                            defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Inuput type='default' prompt="账户" max={50} field="accountNo" isPwd={false}
+                    <Inuput type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            defaultValue={this.state.accountNo}
                            onChanged={this.handleChanged} icon="user"
                            isPhone={true}/>
-                    <Input type='name' prompt="开户行" max={50} field="openBank" isPwd={false}
+                    <Input type='name' prompt="开户行" max={20} field="openBank" isPwd={false}
                            defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:18}}>
