@@ -35,8 +35,10 @@ var ApplyDis = React.createClass({
         var responseData = this.props.param.billBean;
         this.setState(responseData);
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceJson = JSON.parse(acceptanceBankBeans);
 
-        if (acceptanceBankBeans == null || acceptanceBankBeans == "") {
+
+        if (acceptanceJson == null || acceptanceJson == []) {
             this.setState({
                 discountBankName: '请选择贴现银行',
                 description:'',
@@ -44,7 +46,7 @@ var ApplyDis = React.createClass({
             });
         } else {
             let res;
-            acceptanceBankBeans.map((item, index)=> {
+            acceptanceJson.map((item, index)=> {
                 if (item.description == '利率最低') {
                     res = item
                 }

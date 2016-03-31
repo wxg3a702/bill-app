@@ -29,7 +29,7 @@ var ds = new ListView.DataSource({
 
 var SelextBank = React.createClass({
     getInitialState: function () {
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
         if (acceptanceBankBeans == null){
             acceptanceBankBeans = '';
         }
@@ -67,7 +67,7 @@ var SelextBank = React.createClass({
     },
     textChange(text){
         var ret = new Array();
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
         if (acceptanceBankBeans == null || acceptanceBankBeans == ""){
 
         }else {
