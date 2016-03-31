@@ -85,6 +85,7 @@ var _appInit = function (data) {
     );
     Persister.getAppData(
         function (data) {
+            data.demoFlag = {id: data.userInfoBean.id, flag: false};
             info.initLoadingState = false;
             _data = data;
             if (_data.token == '') {
@@ -103,8 +104,10 @@ var _login = function (data) {
             data.demoFlag = {id: data.userInfoBean.id, flag: false};
         }
         if (_.isEmpty(d)) {
+            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveAppData(data);
         } else {
+            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveLoginData(data, d);
         }
         Persister.getAppData((datas) => {

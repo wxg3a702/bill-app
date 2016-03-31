@@ -191,11 +191,9 @@ var CompCertifyCopies = React.createClass({
             }
             if (data.status == 'AUDITING') {
                 return (
-                    <View>
-                        <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
-                            <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
-                        </Image>
-                    </View>
+                    <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
+                        <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
+                    </Image>
                 )
             } else {
                 let certResultBeans = this.state.newOrg.certResultBeans
@@ -214,7 +212,7 @@ var CompCertifyCopies = React.createClass({
                                                 activeOpacity={0.6} underlayColor="#ebf1f2">
                                 <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover"
                                        source={url}>
-                                    <Text style={{fontSize:11,color:'white'}}>{certResultBeans[name].resultValue}</Text>
+                                    <Text style={{fontSize:11,color:'white'}}>{certResultBeans[name].resultValue=="qq"}</Text>
                                 </Image>
                             </TouchableHighlight>
                         )
