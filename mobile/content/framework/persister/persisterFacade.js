@@ -28,7 +28,10 @@ let _clearToken = function (data) {
       marketMsgBeans: JSON.stringify(data.marketMsgBeans) ? JSON.stringify(data.marketMsgBeans) : JSON.stringify([]),
       systemMsgBeans: JSON.stringify(data.systemMsgBeans) ? JSON.stringify(data.systemMsgBeans) : JSON.stringify([]),
       sentBillMsgBeans:  JSON.stringify(data.sentBillMsgBeans) ? JSON.stringify(data.sentBillMsgBeans) : JSON.stringify([]),
-      demoFlag: JSON.stringify(data.demoFlag)
+      demoFlag: JSON.stringify(data.demoFlag),
+      acceptanceBankBeans:JSON.stringify(data.acceptanceBankBeans) ? JSON.stringify(data.acceptanceBankBeans) : JSON.stringify([]),
+      revBillMessage:false,
+      newsMessage:false
     }, true);
     _userid = '';
   });
