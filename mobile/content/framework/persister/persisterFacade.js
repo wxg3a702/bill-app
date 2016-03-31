@@ -11,7 +11,7 @@ const DEVICE_ID = '-device-id-';
 
 
 // Get the default Realm with support for our objects
-let _realm = new Realm({schema: [DeviceSchema, UserSchema], schemaVersion: 2});
+let _realm = new Realm({schema: [DeviceSchema, UserSchema], schemaVersion: 4});
 let _userid = '';
 
 let _clearToken = function (data) {

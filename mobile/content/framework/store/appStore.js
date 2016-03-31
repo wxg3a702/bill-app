@@ -86,7 +86,7 @@ var _appInit = function (data) {
     );
     Persister.getAppData(
         function (data) {
-            data.demoFlag = {id: data.userInfoBean.id, flag: false};
+            // data.demoFlag = {id: data.userInfoBean.id, flag: false};
             info.initLoadingState = false;
             _data = data;
             if (_data.token == '') {
