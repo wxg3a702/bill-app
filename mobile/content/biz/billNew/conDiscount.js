@@ -38,7 +38,6 @@ var ConDiscount = React.createClass({
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
-
     },
     componentDidMount(){
         this.refs['smsTimer'].changeVerify();
@@ -58,7 +57,7 @@ var ConDiscount = React.createClass({
                         <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'sendSMSCodeToNewMobile'}/>
                     </View>
                     <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'请输入注册时设置的交易密码'}</Text>
-                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={false}
+                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={true}
                            onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:36}}>
                         <Button func={this.validateSmsCode} content="完成" checked={this.state.checked}/>
