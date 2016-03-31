@@ -97,6 +97,11 @@ var BillDetail = React.createClass({
             )
         }
     },
+
+    goBack:function(){
+      this.props.navigator.pop();
+    },
+
     viewDetail(){
         this.props.navigator.push({
             comp: BillContent,

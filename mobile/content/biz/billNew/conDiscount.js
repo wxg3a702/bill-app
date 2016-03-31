@@ -80,11 +80,22 @@ var ConDiscount = React.createClass({
     handleChanged(key, value){
         this.textOnchange(value, key);
     },
-    next: function () {
-        this.props.navigator.push({
-            param: {title: '提交结果'},
-            comp: ComResult
-        });
+    //当result为true时返回了错误信息,代表失败结果
+    next: function (data) {
+        if(data){
+            this.props.navigator.push({
+                param: {title: '提交结果'},
+                comp: ComResult,
+                result:true,
+            });
+        }else {
+            this.props.navigator.push({
+                param: {title: '提交结果'},
+                comp: ComResult,
+                result:false,
+            });
+        }
+
     },
     sendSMSCode: function () {
         BillAction.sendSMSCodeForDiscount('',
@@ -145,8 +156,7 @@ var ConDiscount = React.createClass({
                     discountBankName: this.state.discountBankName,
                     payeeBankAccountNo: this.state.payeeBankAccountNo
                 },
-                ()=>this.next,
-                Alert('申请失败')
+                (data)=>this.next(data)
 
             );
         }

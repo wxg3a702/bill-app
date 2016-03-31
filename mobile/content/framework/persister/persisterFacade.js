@@ -39,6 +39,9 @@ let _clearToken = function (data) {
         key: 'certifiedOrgBean',
         value: JSON.stringify({})
       }, {
+        key: 'acceptanceBankBeans',
+        value: JSON.stringify([])
+      }, {
         key: 'newOrg',
         value: JSON.stringify({})
       }, {
@@ -180,6 +183,9 @@ let _saveLoginData = (data, d) => {
         key: 'certifiedOrgBean',
         value: JSON.stringify(data.certifiedOrgBean)
       }, {
+        key: 'acceptanceBankBeans',
+        value: JSON.stringify(data.acceptanceBankBeans)
+      }, {
         key: 'newOrg',
         value: JSON.stringify(data.newOrg) ? JSON.stringify(data.newOrg) : JSON.stringify({})
       }, {
@@ -227,6 +233,9 @@ let _saveAppData = function (data) {
       }, {
         key: 'certifiedOrgBean',
         value: JSON.stringify(data.certifiedOrgBean)
+      }, {
+        key: 'acceptanceBankBeans',
+        value: JSON.stringify(data.acceptanceBankBeans)
       }, {
         key: 'newOrg',
         value: JSON.stringify(data.newOrg) ? JSON.stringify(data.newOrg) : JSON.stringify({})

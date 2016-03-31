@@ -65,7 +65,8 @@ var ApplyDis = React.createClass({
     //},
     callBack(item){
         this.setState({
-            discountRate: item.disRate / 1000,
+            discountRate: item.discountRate / 1000,
+            description:item.description,
             discountBankName: item.bankName
         })
     },
@@ -138,7 +139,7 @@ var ApplyDis = React.createClass({
                                 style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20}}
                                 numberOfLines={1}>{this.state.discountBankName}</Text>
 
-                            <Text style={{color:'#ff5b58',fontSize:18}}>{this.state.description}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:18}}>{'('+this.state.description+')'}</Text>
 
                         </View>
                         <VIcon/>
