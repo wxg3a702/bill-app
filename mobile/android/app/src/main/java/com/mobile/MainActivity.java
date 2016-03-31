@@ -71,7 +71,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
 
-        mReactRootView.startReactApplication(mReactInstanceManager, "mobile", null);
+        mReactRootView.startReactApplication(mReactInstanceManager, "FasApp", null);
         setContentView(mReactRootView);
         boolean isMsg = getIntent().getBooleanExtra("isMsg", false);
         if (isMsg) {
