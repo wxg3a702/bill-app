@@ -23,7 +23,6 @@ var AppConstants = require('../../constants/command');
 var ActionTypes = AppConstants.ActionTypes;
 var Notification = require('../../constants/notification');
 var MsgTypes = Notification.MsgTypes;
-var MsgContent = Notification.MsgContent;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
@@ -43,6 +42,9 @@ var AppStore = assign({}, EventEmitter.prototype, {
         if (!event)event = info.CHANGE_EVENT
         this.emit(event);
     },
+    getRevBillMessage: ()=>_data.revBillMessage,
+
+    getNewsMessage: ()=>_data.newsMessage,
 
     getNetWorkState: ()=> info.netWorkState,
 
@@ -86,6 +88,7 @@ var _appInit = function (data) {
     );
     Persister.getAppData(
         function (data) {
+            // data.demoFlag = {id: data.userInfoBean.id, flag: false};
             info.initLoadingState = false;
             _data = data;
             if (_data.token == '') {
@@ -253,26 +256,35 @@ var _analysisMessageData = function (data) {
         {
             //billPack
             _addBillPackByNotify('sentBillBean', _getBillBody(data));
-            _updateMainMsgBeanByNotify(MsgContent.SENT_MSG, 'billSentBean', d);
+            _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
         }
             break;
         case MsgTypes.OPP_IGNORED:
         {
             //对方放弃贴现
             _rejectBillDiscount(_getBillBody(data));
-            _updateMainMsgBeanByNotify(MsgContent.SENT_MSG, 'billSentBean', d);
+            _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
         }
             break;//
         case MsgTypes.MARKET_NEWS:
         {
-            _updateMainMsgBeanByNotify(MsgContent.MARKET_MSG, 'marketNewsBean', d);
+            _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
         }
             break;
         case MsgTypes.ORG_AUTH_FAIL:
+        {
+            _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+            break;
+        }
         case MsgTypes.ORG_AUTH_OK:
         {
-
-            _updateMainMsgBeanByNotify(MsgContent.SYSTEM_MSG, 'systemNoticeBean', d);
+            _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+            if (data.revBillList) {
+                _addBillPackByNotify('revBillBean', data.revBillList);
+            }
+            if (data.sentBillList) {
+                _addBillPackByNotify('sentBillBean', data.sentBillList);
+            }
         }
             break;//
         case MsgTypes.REV_NEW_BILL://区分
@@ -281,6 +293,7 @@ var _analysisMessageData = function (data) {
             _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
             Persister.saveAppData(_data)
             _addBillPackByNotify('revBillBean', _getBillBody(data));
+            AppStore.emitChange();
         }
             break;
         case MsgTypes.APPROVE_DISCOUNT:
@@ -295,6 +308,7 @@ var _analysisMessageData = function (data) {
             _force_logout();
             break;
     }
+    AppStore.emitChange();
 }
 //
 var _freshMessageData = function (data) {
@@ -438,6 +452,16 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             AppStore.emitChange();
             if (action.successHandle)action.successHandle();
             break;
+        case ActionTypes.CHANGE_SWITCH:
+            if (action.data.type == 'revBillMessage') {
+                _data.revBillMessage = action.data.value
+            } else if (action.data.type == 'newsMessage') {
+                _data.newsMessage = action.data.value
+            }
+            Persister.saveAppData(_data);
+            AppStore.emitChange();
+            if (action.successHandle)action.successHandle();
+            break;
         case ActionTypes.CLEAR_NEWORG:
             initNewOrg();
             Persister.saveAppData(_data);
@@ -453,7 +477,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         case ActionTypes.CLEAR_MESSAGEDETAIL:
             var message = _data.mainMsgBean[action.data];
             message.unReadNum = 0;
-            Persister.saveMsgDetail(_data.mainMsgBean);
+            Persister.saveAppData(_data);
             break;
         case ActionTypes.DEMO_FLAG:
             _data.demoFlag = {id: _data.userInfoBean.id, flag: true};

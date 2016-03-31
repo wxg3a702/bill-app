@@ -35,8 +35,10 @@ var ApplyDis = React.createClass({
         var responseData = this.props.param.billBean;
         this.setState(responseData);
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceJson = JSON.parse(acceptanceBankBeans);
 
-        if (acceptanceBankBeans == null || acceptanceBankBeans == "") {
+
+        if (acceptanceJson == null || acceptanceJson == []) {
             this.setState({
                 discountBankName: '请选择贴现银行',
                 description:'',
@@ -44,7 +46,7 @@ var ApplyDis = React.createClass({
             });
         } else {
             let res;
-            acceptanceBankBeans.map((item, index)=> {
+            acceptanceJson.map((item, index)=> {
                 if (item.description == '利率最低') {
                     res = item
                 }
@@ -65,7 +67,8 @@ var ApplyDis = React.createClass({
     //},
     callBack(item){
         this.setState({
-            discountRate: item.disRate / 1000,
+            discountRate: item.discountRate / 1000,
+            description:item.description,
             discountBankName: item.bankName
         })
     },
@@ -138,7 +141,7 @@ var ApplyDis = React.createClass({
                                 style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20}}
                                 numberOfLines={1}>{this.state.discountBankName}</Text>
 
-                            <Text style={{color:'#ff5b58',fontSize:18}}>{this.state.description}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:18}}>{'('+this.state.description+')'}</Text>
 
                         </View>
                         <VIcon/>

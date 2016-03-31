@@ -1,4 +1,4 @@
-var {BFetch,PFetch,UFetch,host,token} = require('../network/fetch');
+var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var async = require('async')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
@@ -14,11 +14,19 @@ var CommonActions = {
     freshNotification: (notification)=>_onNotification(notification),
     startRPC: (option)=>_startRPC(option),
     endRPC: (option, handle)=>_endRPC(option, handle),
+    changeSwitch: (p, c)=>_changeSwitch(p, c)
 }
 var _appInit = function () {
     AppDispatcher.dispatch({
         type: ActionTypes.APP_INIT,
     });
+}
+var _changeSwitch = function (p, c) {
+    AppDispatcher.dispatch({
+        type: ActionTypes.CHANGE_SWITCH,
+        data: p,
+        successHandle: c
+    })
 }
 var _notificationRegister = function (token) {
     AppDispatcher.dispatch({

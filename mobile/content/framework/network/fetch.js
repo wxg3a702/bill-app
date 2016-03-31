@@ -138,15 +138,12 @@ var process = function (promoise, callback, failure, option) {
 
 };
 
-
-
 var _startRPC = function (option) {
     if (!option.custLoading) {
         AppDispatcher.dispatch({
             type: ActionTypes.REQUEST_START,
         });
     }
-
 }
 
 var _endRPC = function (option, handle) {
