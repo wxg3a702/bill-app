@@ -33,33 +33,43 @@ var TabView = React.createClass({
             var billSum = 0;
             if (_.isEmpty(mainMsgBean)) {
 
-            } else {
-                mainMsgBean.messageBeans.forEach(function (object) {
-                    billSum += ((object.isRead) ? 0 : 1)
-                });
-                othMsgNum = mainMsgBean.billSentBean.unReadNum + mainMsgBean.marketNewsBean.unReadNum + mainMsgBean.systemNoticeBean.unReadNum;
-            }
-            sum = billSum;
-            var show;
-            if (Platform.OS == 'ios') {
-                PushNotificationIOS.setApplicationIconBadgeNumber(sum);
-                show = sum >= 99 ? "99+" : sum;
-            } else {
-                show = sum;
-            }
-            return {
-                othMsgNum: othMsgNum,
-                billSum: show,
-                token: token,
-                initialPage: 0,
-            }
-        } else {
-            return {
-                token: token,
-                initialPage: 0
-            }
+      } else {
+        if (mainMsgBean.messageBeans) {
+          mainMsgBean.messageBeans.forEach(function (object) {
+            billSum += ((object.isRead) ? 0 : 1)
+          });
         }
-    },
+        if (mainMsgBean.billSentBean) {
+          othMsgNum = mainMsgBean.billSentBean.unReadNum;
+        }
+        if (mainMsgBean.marketNewsBean) {
+          othMsgNum = mainMsgBean.marketNewsBean.unReadNum + othMsgNum;
+        }
+        if (mainMsgBean.systemNoticeBean) {
+          othMsgNum = mainMsgBean.systemNoticeBean.unReadNum + othMsgNum;
+        }
+      }
+      sum = billSum;
+      var show;
+      if (Platform.OS == 'ios') {
+        PushNotificationIOS.setApplicationIconBadgeNumber(sum);
+        show = sum >= 99 ? "99+" : sum;
+      } else {
+        show = sum;
+      }
+      return {
+        othMsgNum: othMsgNum,
+        billSum: show,
+        token: token,
+        initialPage: 0
+      }
+    } else {
+      return {
+        token: token,
+        initialPage: 0
+      }
+    }
+  },
 
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
