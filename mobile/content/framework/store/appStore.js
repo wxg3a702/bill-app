@@ -279,6 +279,7 @@ var _analysisMessageData = function (data) {
         }
             break;
         case MsgTypes.ORG_AUTH_FAIL:
+            
         case MsgTypes.ORG_AUTH_OK:
         {
 

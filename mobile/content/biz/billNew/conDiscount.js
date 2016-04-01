@@ -1,12 +1,8 @@
-/**
- * Created by cui on 16/3/10.
- */
 'use strict'
 
 var React = require('react-native');
 var {
     StyleSheet,
-    TouchableHighlight,
     Text,
     View,
     } = React;
@@ -23,8 +19,6 @@ var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
 
 var ConDiscount = React.createClass({
-    //getStateFromStores() {
-    //},
     getInitialState(){
         return {
             checked: true,
@@ -44,9 +38,6 @@ var ConDiscount = React.createClass({
         this.refs['smsTimer'].changeVerify();
         this.sendSMSCode();
     },
-    //componentWillUnmount(){
-    //
-    //},
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}

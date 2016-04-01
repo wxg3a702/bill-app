@@ -50,7 +50,7 @@ var EditTradingPWDsuccess = React.createClass({
 
     render:function(){
         return(
-            <NavBarView navigator={this.props.navigator} title={this.returnResetResult().resultText} contentBackgroundColor="#f0f0f0" showBack={false}>
+            <NavBarView navigator={this.props.navigator} title={this.returnResetResult().resultText} showBack={false}>
                 <View style={[styles.flex,{justifyContent:'space-between'}]}>
 
                     <View style={styles.imageViewItem}>

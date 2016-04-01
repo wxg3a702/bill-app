@@ -33,7 +33,6 @@ var Notice = React.createClass({
             },
             ()=> {}
         )
-        // alert(text + 'ss' + type)
     },
     render(){
         return (
