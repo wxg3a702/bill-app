@@ -57,10 +57,10 @@ var UFetch = function (url, param, callback, failure, options) {
 
 var rawFetch = function (url, param, callback, failure, option) {
 
-    console.log('以下打印一次传出去的param:');
-    console.log(param);
-    console.log('以下打印访问的URL:');
-    console.log(url);
+    //console.log('以下打印一次传出去的param:');
+    //console.log(param);
+    //console.log('以下打印访问的URL:');
+    //console.log(url);
 
     if (!option)option = {}
     var p = Promise.race([fetch(url, param), new Promise(function (resolve, reject) {
@@ -119,8 +119,8 @@ var process = function (promoise, callback, failure, option) {
                 }
 
             }
-            console.log('以下打印一次获取到的json:');
-            console.log(json);
+            //console.log('以下打印一次获取到的json:');
+            //console.log(json);
             _endRPC(option, handle);
         })
         .catch((error) => {

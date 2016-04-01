@@ -36,6 +36,9 @@ var CompCertifyCopies = React.createClass({
             corpIdentityFileId: newOrg.corpIdentityFileId,
             authIdentityFileId: newOrg.authIdentityFileId,
             picEnough: newOrg.picEnough,
+            accountName: newOrg.accountName,
+            accountNo: newOrg.accountNo,
+            openBank: newOrg.openBank,
             data: !this.props.param.item ? {status: 'UNAUDITING'} : this.props.param.item,
             status: newOrg.status,
             newOrg: newOrg,
@@ -65,7 +68,7 @@ var CompCertifyCopies = React.createClass({
 
     next: function () {
         const {navigator} = this.props;
-        if (this.props.param.item || this.state.picEnough) {
+        if (this.props.param.item || (this.state.licenseCopyFileId !='' && this.state.corpIdentityFileId != '')) {
             const {navigator} = this.props;
             if (navigator) {
                 navigator.push({
