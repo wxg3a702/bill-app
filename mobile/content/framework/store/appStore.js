@@ -1,6 +1,7 @@
 var React = require('react-native');
 var {
-    NetInfo
+    NetInfo,
+  Platform
 } = React;
 var info = {
     initLoadingState: true,
@@ -94,9 +95,9 @@ var _appInit = function (data) {
             _data = data;
             if (_data.token == '') {
                 _data.token = null;
-                SP.setTokenToSP(' ');
+                if (Platform.OS === 'android') SP.setTokenToSP(' ');
             } else {
-            SP.setTokenToSP(_data.token);
+                if (Platform.OS === 'android') SP.setTokenToSP(_data.token);
             }
             info.isLogout = false;
             AppStore.emitChange();
@@ -119,7 +120,9 @@ var _login = function (data) {
         }
         Persister.getAppData((datas) => {
             _data = datas;
-            SP.setTokenToSP(_data.token);
+            if (Platform.OS === 'android') {
+                SP.setTokenToSP(_data.token);
+            }
             initNewOrg();
             AppStore.emitChange();
         }, id)

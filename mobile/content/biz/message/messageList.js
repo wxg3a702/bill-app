@@ -33,7 +33,7 @@ var ds = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var count = 0;
-const PAGE_SIZE = 5;
+const PAGE_SIZE = 10;
 var Message = React.createClass({
   getStateFromStores() {
     var token = AppStore.getToken()
@@ -222,7 +222,7 @@ var Message = React.createClass({
   toOther(item){
     let billId = item.billId;
     //remove unread
-    MessageStore.updateMessage(billId);
+    //MessageStore.updateMessage(billId);
     let bill = MessageStore.getRevBillDetail(billId);
     if (_.isEmpty(bill)) {
       Alert('票据信息不存在');
@@ -232,7 +232,7 @@ var Message = React.createClass({
         param: {title: '详情', record: bill, isRead: isRead},
         comp: BillDetailByMsg
       });
-      MessageStore.setMsgReaded(item.id);
+      MessageStore.setMsgReaded(item.billId);
       //MessageAction.setBillRevRead({id: item.id}, function (data) {
       //}, function (data) {
       //  Alert('已读标记设置失败!')
