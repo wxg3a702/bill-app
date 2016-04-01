@@ -23,21 +23,31 @@ var NavBarView = require('../../framework/system/navBarView');
 var VIcon = require('../../comp/icon/vIcon')
 var Item = require('../../comp/utils/item')
 var Space = require('../../comp/utilsUi/space')
+var CompStore = require('../../framework/store/compStore');
 var PersonalCenter = React.createClass({
     getStateFromStores() {
         var token = AppStore.getToken();
         var user = UserStore.getUserInfoBean();
+        var certifiedOrgBeans = CompStore.getCertifiedOrgBean();
+        var orgNum = 0;
         if (token == null) {
             return {
                 userName: '未登录',
                 token: token
             }
         } else {
+            if (!certifiedOrgBeans || _.isEmpty(certifiedOrgBeans)) {
+
+            } else {
+                certifiedOrgBeans.forEach((obj)=>{
+                    orgNum = orgNum + (obj.status == '' ? 1:0)
+                });
+            }
             return {
                 token: token,
                 userName: user.userName,
                 userType: user.userType,
-                userTypeValue: (user.userType == "REGISTERED") ? "注册用户" : "认证用户",
+                userTypeValue: (user.userType == "REGISTERED" && orgNum != 0) ? "注册用户" : "认证用户",
                 photoStoreId: user.photoStoreId
             };
         }

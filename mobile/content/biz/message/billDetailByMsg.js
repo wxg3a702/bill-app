@@ -150,8 +150,10 @@ var BillDetailByMsg = React.createClass({
   },
 
   returnFlow(){
+    if (this.state.role == "payee" && this.state.status != "NEW") {
       return (
-        <View style={{backgroundColor:'white',paddingVertical:8,paddingHorizontal:12,borderTopColor:'#f6f6f6',borderTopWidth:1,marginTop: 10}}>
+        <View
+          style={{backgroundColor:'white',paddingVertical:8,paddingHorizontal:12,borderTopColor:'#f6f6f6',borderTopWidth:1,marginTop: 10}}>
           <View style={{borderBottomColor:'#f0f0f0',borderBottomWidth:1,paddingBottom:12}}>
             <Text>票据状态追踪</Text>
           </View>
@@ -159,6 +161,7 @@ var BillDetailByMsg = React.createClass({
           <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}/>
         </View>
       )
+    }
   },
   renderRow(data){
     return (

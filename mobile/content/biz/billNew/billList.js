@@ -108,6 +108,7 @@ var Bill = React.createClass({
     },
     _onChange: function () {
         this.setState(this.getStateFromStores());
+        this.refs['BillList'].componentDidMount();
     },
     changeRev(){
         Promise.resolve(
