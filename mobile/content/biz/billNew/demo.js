@@ -1,7 +1,4 @@
-/**
- * Created by ljchen on 16/2/19.
- */
-
+'use strict'
 var React = require('react-native');
 var {
     Dimensions,
@@ -17,6 +14,8 @@ var PAGES = [
     {img: require('../../image/bill/teach1.png'), text: '跳过'},
     {img: require('../../image/bill/teach2.png'), text: '跳过'},
     {img: require('../../image/bill/teach3.png'), text: '跳过'},
+    {img: require('../../image/bill/demo4.png'), text: '跳过'},
+    {img: require('../../image/bill/demo5.png'), text: '跳过'},
     {img: require('../../image/bill/teach4.png'), text: '跳过'},
     {img: require('../../image/bill/teach5.png'), text: '跳过'},
     {img: require('../../image/bill/teach6.png'), text: '结束'},

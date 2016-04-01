@@ -134,7 +134,7 @@ var ApplyDis = React.createClass({
                         style={{height:60,flexDirection: 'row',borderStyle:'solid',backgroundColor:'#fff',alignItems:'center',flex:1,borderBottomWidth:1,borderBottomColor:'#e0e0e0'}}>
                         <Image
                             style={{width:30,height:30,marginLeft:15}}
-                            source={require('../../image/bill/payee_new.png')}
+                            source={require('../../image/bill/bankDefault_logo.png')}
                         />
                         <View style={{width:width-175,flex:3,flexDirection:'row'}}>
                             <Text

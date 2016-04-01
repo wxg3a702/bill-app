@@ -1,6 +1,3 @@
-/**
- * Created by wen on 3/9/16.
- */
 
 'use strict'
 
@@ -8,7 +5,6 @@ var React = require('react-native');
 
 var {
     View,
-    Text,
     StyleSheet
     } = React;
 
