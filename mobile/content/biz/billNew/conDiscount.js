@@ -1,12 +1,8 @@
-/**
- * Created by cui on 16/3/10.
- */
 'use strict'
 
 var React = require('react-native');
 var {
     StyleSheet,
-    TouchableHighlight,
     Text,
     View,
     } = React;
@@ -23,8 +19,6 @@ var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
 
 var ConDiscount = React.createClass({
-    //getStateFromStores() {
-    //},
     getInitialState(){
         return {
             checked: true,
@@ -38,15 +32,11 @@ var ConDiscount = React.createClass({
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
-
     },
     componentDidMount(){
         this.refs['smsTimer'].changeVerify();
         this.sendSMSCode();
     },
-    //componentWillUnmount(){
-    //
-    //},
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator}
@@ -58,7 +48,7 @@ var ConDiscount = React.createClass({
                         <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'sendSMSCodeToNewMobile'}/>
                     </View>
                     <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'请输入注册时设置的交易密码'}</Text>
-                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={false}
+                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={true}
                            onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:36}}>
                         <Button func={this.validateSmsCode} content="完成" checked={this.state.checked}/>
@@ -80,11 +70,22 @@ var ConDiscount = React.createClass({
     handleChanged(key, value){
         this.textOnchange(value, key);
     },
-    next: function () {
-        this.props.navigator.push({
-            param: {title: '提交结果'},
-            comp: ComResult
-        });
+    //当result为true时返回了错误信息,代表失败结果
+    next: function (data) {
+        if(data){
+            this.props.navigator.push({
+                param: {title: '提交结果'},
+                comp: ComResult,
+                result:true,
+            });
+        }else {
+            this.props.navigator.push({
+                param: {title: '提交结果'},
+                comp: ComResult,
+                result:false,
+            });
+        }
+
     },
     sendSMSCode: function () {
         BillAction.sendSMSCodeForDiscount('',
@@ -145,8 +146,7 @@ var ConDiscount = React.createClass({
                     discountBankName: this.state.discountBankName,
                     payeeBankAccountNo: this.state.payeeBankAccountNo
                 },
-                ()=>this.next,
-                Alert('申请失败')
+                (data)=>this.next(data)
 
             );
         }

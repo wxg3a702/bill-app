@@ -40,14 +40,14 @@ var EditTradingPWD = React.createClass({
 
     render:function(){
         return(
-            <NavBarView navigator={this.props.navigator} title="修改交易密码" contentBackgroundColor='#f0f0f0'>
+            <NavBarView navigator={this.props.navigator} title="修改交易密码">
 
                 <View style={styles.flex}>
 
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toVerifyOldtradingPWD} style={[styles.rowFlexDirection,styles.touchableItem,{marginTop:18,borderTopWidth:1}]}>
                         <View style={[styles.flex,styles.rowFlexDirection, styles.cellItem]}>
                             <Text style={{fontSize:16}}>我记得交易密码</Text>
-                            <VIcon></VIcon>
+                            <VIcon/>
                         </View>
                     </TouchableHighlight>
 

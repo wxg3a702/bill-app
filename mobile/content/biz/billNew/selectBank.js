@@ -1,24 +1,15 @@
-/**
- * Created by cui on 16/3/15.
- */
-/**
- * Created by cui on 16/3/10.
- */
+'use strict'
 var React = require('react-native');
 var {
-    AppRegistry,
-    Image,
     ListView,
     StyleSheet,
-    TouchableHighlight,
     TouchableOpacity,
     Text,
     View,
     TextInput,
-    ScrollView,
     Dimensions,
     Platform
-    } = React;
+} = React;
 
 var NavBarView = require('../../framework/system/navBarView');
 var BillStore = require('../../framework/store/billStore');
@@ -29,7 +20,7 @@ var ds = new ListView.DataSource({
 
 var SelextBank = React.createClass({
     getInitialState: function () {
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
         if (acceptanceBankBeans == null){
             acceptanceBankBeans = '';
         }
@@ -67,7 +58,7 @@ var SelextBank = React.createClass({
     },
     textChange(text){
         var ret = new Array();
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
         if (acceptanceBankBeans == null || acceptanceBankBeans == ""){
 
         }else {

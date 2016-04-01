@@ -18,7 +18,7 @@ var Setting = React.createClass({
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="设置">
-                <Space/>
+                <Space top={false}/>
                 <Item func={()=>this.toOther(Notice)} desc="消息通知设置"
                       imgPath={require('../../image/user/editPhone.png')}/>
 
