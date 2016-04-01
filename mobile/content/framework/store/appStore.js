@@ -26,6 +26,7 @@ var MsgTypes = Notification.MsgTypes;
 var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
+var SP = require('NativeModules').SPModule;
 var AppStore = assign({}, EventEmitter.prototype, {
 
     addChangeListener: function (callback, event) {
@@ -93,6 +94,9 @@ var _appInit = function (data) {
             _data = data;
             if (_data.token == '') {
                 _data.token = null;
+                SP.setTokenToSP(' ');
+            } else {
+            SP.setTokenToSP(_data.token);
             }
             info.isLogout = false;
             AppStore.emitChange();
@@ -115,6 +119,7 @@ var _login = function (data) {
         }
         Persister.getAppData((datas) => {
             _data = datas;
+            SP.setTokenToSP(_data.token);
             initNewOrg();
             AppStore.emitChange();
         }, id)

@@ -22,6 +22,7 @@ import com.mobile.bean.NtfBean;
 import com.mobile.updatedata.UpdateData;
 import com.mobile.utils.AppUtils;
 import com.mobile.utils.LogUtils;
+import com.mobile.utils.SPUtils;
 
 import java.net.URISyntaxException;
 
@@ -50,7 +51,8 @@ public class AppService extends Service {
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
 //        mSocket.on("user.login", onMessage);
             mSocket.on("new.msg", onNewMessage);
-            mSocket.emit("user.login", "token");
+            LogUtils.d("SPToken", "" + SPUtils.get(AppService.this, "token", ""));
+            mSocket.emit("user.login", "Basic  " + SPUtils.get(AppService.this, "token", ""));
             mSocket.connect();
         Log.d("true", "AppService");
     }
