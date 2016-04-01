@@ -116,7 +116,7 @@ var CompAccountInfo = React.createClass({
                     <Input type='name' prompt="账户名称" max={50} field="accountName" isPwd={false}
                            defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Inuput type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
+                    <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
                            defaultValue={this.state.accountNo}
                            onChanged={this.handleChanged} icon="user"
                            isPhone={true}/>

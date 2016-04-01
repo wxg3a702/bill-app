@@ -1,24 +1,15 @@
-/**
- * Created by cui on 16/3/15.
- */
-/**
- * Created by cui on 16/3/10.
- */
+'use strict'
 var React = require('react-native');
 var {
-    AppRegistry,
-    Image,
     ListView,
     StyleSheet,
-    TouchableHighlight,
     TouchableOpacity,
     Text,
     View,
     TextInput,
-    ScrollView,
     Dimensions,
     Platform
-    } = React;
+} = React;
 
 var NavBarView = require('../../framework/system/navBarView');
 var BillStore = require('../../framework/store/billStore');

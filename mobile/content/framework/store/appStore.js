@@ -247,11 +247,6 @@ var _analysisMessageData = function (data) {
     //数据插入到对应的bean中 并替换main里的
     let d = _getMsgBody(data);
     switch (_getMsgType(data)) {
-        case MsgTypes.COMP_CERTIFICATION:
-        {
-            //compCertification
-            _changeCompStatus(data.comp)
-        }
         case MsgTypes.BILL_DRAW:
         {
             //billPack
@@ -273,11 +268,13 @@ var _analysisMessageData = function (data) {
             break;
         case MsgTypes.ORG_AUTH_FAIL:
         {
+            _changeCompStatus(data.certifiedOrgBody);
             _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
             break;
         }
         case MsgTypes.ORG_AUTH_OK:
         {
+            _changeCompStatus(data.certifiedOrgBody);
             _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
             if (data.revBillList) {
                 _addBillPackByNotify('revBillBean', data.revBillList);

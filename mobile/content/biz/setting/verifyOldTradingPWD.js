@@ -1,7 +1,3 @@
-/**
- * Created by wen on 3/9/16.
- */
-
 'use strict'
 
 var React = require('react-native');
@@ -17,7 +13,6 @@ var SMSTimer = require('../../comp/utilsUi/smsTimer');
 var Input = require('../../comp/utilsUi/input');
 var Button = require('../../comp/utilsUi/button');
 var ResetTradingPWD = require('./resetTradingPWD');
-var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
 var dismissKeyBoard = require('react-native-dismiss-keyboard');
@@ -130,7 +125,7 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={styles.inputViewItem}>
-                        <Input type='default' prompt='交易密码' max={6} field='oldTransactionPassword' isPwd={true}
+                        <Input type='default' prompt='旧交易密码' max={6} field='oldTransactionPassword' isPwd={true}
                                onChanged={this.handleChanged}  icon='trading_PWD' style={styles.flex} />
                     </View>
 
