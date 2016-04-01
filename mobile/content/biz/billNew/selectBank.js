@@ -20,8 +20,8 @@ var ds = new ListView.DataSource({
 
 var SelextBank = React.createClass({
     getInitialState: function () {
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        if (acceptanceBankBeans == null) {
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
+        if (acceptanceBankBeans == null){
             acceptanceBankBeans = '';
         }
         return {
@@ -58,10 +58,10 @@ var SelextBank = React.createClass({
     },
     textChange(text){
         var ret = new Array();
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        if (acceptanceBankBeans == null || acceptanceBankBeans == "") {
+        var acceptanceBankBeans = JSON.parse(BillStore.getAcceptanceBankBeans());
+        if (acceptanceBankBeans == null || acceptanceBankBeans == ""){
 
-        } else {
+        }else {
             if (!text) {
                 ret = acceptanceBankBeans
             } else {
@@ -85,7 +85,7 @@ var SelextBank = React.createClass({
                 <View
                     style={{height:50,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomColor:'#e0e0e0',borderBottomWidth:1}}>
                     <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{item.bankName}</Text>
-                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.discountRate + '‰'}</Text>
+                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.discountRate+'‰'}</Text>
                 </View>
             </TouchableOpacity>
         );

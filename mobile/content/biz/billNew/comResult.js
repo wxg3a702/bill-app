@@ -28,9 +28,9 @@ var ComResult = React.createClass({
                     <View style={{alignItems:'center',marginTop:80}}>
                         <Image
                             style={{width:120,height:120}}
-                            source={require('../../image/bill/apply_success.png')}
+                            source={!this.props.result?require('../../image/bill/apply_success.png'):require('../../image/bill/apply_fail.png')}
                         />
-                        <Text style={{marginTop:10,fontSize:15,color:'#7f7f7f'}}>{'贴现申请发送成功!'}</Text>
+                        <Text style={{marginTop:10,fontSize:15,color:'#7f7f7f'}}>{!this.props.result?'贴现申请发送成功!':'贴现申请发送失败!'}</Text>
                     </View>
                     <View>
                         <BottomButton func={() => {this.props.navigator.popToTop()}} content={'返回票据首页'}/>
