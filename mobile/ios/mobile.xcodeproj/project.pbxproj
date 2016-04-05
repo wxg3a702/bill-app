@@ -20,8 +20,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		58151EE41CA3D2120069192C /* RealmReact.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC0099F1C997A4E00732E01 /* RealmReact.framework */; };
-		58151EE51CA3D2120069192C /* RealmReact.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC0099F1C997A4E00732E01 /* RealmReact.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		205933CE1BD64475977A6AA5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 74E6B505825D4E5DBF4C8389 /* libc++.tbd */; };
 		58292FBD1C9F9DA8005997F8 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 58292FB31C9F9DA8005997F8 /* ioapi.c */; };
 		58292FBE1C9F9DA8005997F8 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 58292FB51C9F9DA8005997F8 /* mztools.c */; };
 		58292FBF1C9F9DA8005997F8 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 58292FB71C9F9DA8005997F8 /* unzip.c */; };
@@ -34,7 +33,9 @@
 		58292FE21C9F9E20005997F8 /* FRCTTabBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 58292FDE1C9F9E20005997F8 /* FRCTTabBar.m */; };
 		58292FE31C9F9E20005997F8 /* FRCTTabBarManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 58292FE01C9F9E20005997F8 /* FRCTTabBarManager.m */; };
 		58292FE51C9F9E6E005997F8 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58292FE41C9F9E6E005997F8 /* libz.1.2.5.tbd */; };
+		78E6ED30E7ED4AFBBF0175F5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E37F3B7956410B8BCC75CE /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		AEEB7CF3FBEE4E488D3D1732 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32BDE5C28AEF457185D2B9D2 /* libRealmReact.a */; };
 		EE0686D41C97E7D3008039B4 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0686D31C97E77D008039B4 /* libRNSearchBar.a */; };
 		EE728A4C1C8E701A00911485 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = EE728A4B1C8E701A00911485 /* Fonts */; };
 		EE728AB91C8ED65100911485 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE728AB81C8ED5B200911485 /* libRCTPushNotification.a */; settings = {ATTRIBUTES = (Required, ); }; };
@@ -105,11 +106,11 @@
 			remoteGlobalIDString = 83CBBA2E1A601D0E00E9B192;
 			remoteInfo = React;
 		};
-		58151EE61CA3D2120069192C /* PBXContainerItemProxy */ = {
+		58B661301CB354CB00640916 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 02B29A151B7CF7C9008A7E6B;
+			containerPortal = 5A888258BD354A3296EFFECB /* RealmReact.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F60690131CA2766F0003FB26;
 			remoteInfo = RealmReact;
 		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
@@ -125,41 +126,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 58B5119B1A9E6C1200147676;
 			remoteInfo = RCTText;
-		};
-		8BC009961C997A4E00732E01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F63FF2F01C16405C00B3B8E0;
-			remoteInfo = GCDWebServers;
-		};
-		8BC009981C997A4E00732E01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F63FF2B11C1241E500B3B8E0;
-			remoteInfo = "RealmJS static";
-		};
-		8BC0099A1C997A4E00732E01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 02B58CB11AE99CEC009B348C;
-			remoteInfo = RealmJS;
-		};
-		8BC0099C1C997A4E00732E01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 02B58CBC1AE99CEC009B348C;
-			remoteInfo = RealmJSTests;
-		};
-		8BC0099E1C997A4E00732E01 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 02B29A161B7CF7C9008A7E6B;
-			remoteInfo = RealmReact;
 		};
 		EE0686D21C97E77D008039B4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -184,7 +150,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				58151EE51CA3D2120069192C /* RealmReact.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -208,6 +173,7 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = mobile/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = mobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
+		32BDE5C28AEF457185D2B9D2 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
 		58292FB21C9F9DA8005997F8 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		58292FB31C9F9DA8005997F8 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		58292FB41C9F9DA8005997F8 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -232,9 +198,11 @@
 		58292FDF1C9F9E20005997F8 /* FRCTTabBarManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FRCTTabBarManager.h; path = mobile/ZipArchive/FRCTTabBarManager.h; sourceTree = "<group>"; };
 		58292FE01C9F9E20005997F8 /* FRCTTabBarManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FRCTTabBarManager.m; path = mobile/ZipArchive/FRCTTabBarManager.m; sourceTree = "<group>"; };
 		58292FE41C9F9E6E005997F8 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		5A888258BD354A3296EFFECB /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
+		71E37F3B7956410B8BCC75CE /* libz.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		74E6B505825D4E5DBF4C8389 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
-		8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RealmJS.xcodeproj; path = ../node_modules/realm/RealmJS.xcodeproj; sourceTree = "<group>"; };
 		EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		EE728A4B1C8E701A00911485 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		EE728AB31C8ED5B200911485 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
@@ -256,7 +224,6 @@
 				58292FE51C9F9E6E005997F8 /* libz.1.2.5.tbd in Frameworks */,
 				EE0686D41C97E7D3008039B4 /* libRNSearchBar.a in Frameworks */,
 				EE8663EC1C92609100970BAB /* AVFoundation.framework in Frameworks */,
-				58151EE41CA3D2120069192C /* RealmReact.framework in Frameworks */,
 				EE728AB91C8ED65100911485 /* libRCTPushNotification.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -268,6 +235,9 @@
 				832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */,
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
+				AEEB7CF3FBEE4E488D3D1732 /* libRealmReact.a in Frameworks */,
+				205933CE1BD64475977A6AA5 /* libc++.tbd in Frameworks */,
+				78E6ED30E7ED4AFBBF0175F5 /* libz.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,6 +349,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		2D94A226C9F4415889D49FD8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				74E6B505825D4E5DBF4C8389 /* libc++.tbd */,
+				71E37F3B7956410B8BCC75CE /* libz.tbd */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		58292FB01C9F9DA8005997F8 /* ZipArchive */ = {
 			isa = PBXGroup;
 			children = (
@@ -406,6 +385,14 @@
 			path = minizip;
 			sourceTree = "<group>";
 		};
+		58B661221CB354CB00640916 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				58B661311CB354CB00640916 /* libRealmReact.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -417,7 +404,6 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */,
 				EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */,
 				EE728AB31C8ED5B200911485 /* RCTPushNotification.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -430,6 +416,7 @@
 				832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */,
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
+				5A888258BD354A3296EFFECB /* RealmReact.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -452,6 +439,7 @@
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* mobileTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
+				2D94A226C9F4415889D49FD8 /* Frameworks */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -462,18 +450,6 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* 票易贴.app */,
 				00E356EE1AD99517003FC87E /* mobileTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		8BC0098E1C997A4E00732E01 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				8BC009971C997A4E00732E01 /* libGCDWebServers.a */,
-				8BC009991C997A4E00732E01 /* libRealmJS.a */,
-				8BC0099B1C997A4E00732E01 /* RealmJS.framework */,
-				8BC0099D1C997A4E00732E01 /* RealmJSTests.xctest */,
-				8BC0099F1C997A4E00732E01 /* RealmReact.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -528,7 +504,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				58151EE71CA3D2120069192C /* PBXTargetDependency */,
 			);
 			name = mobile;
 			productName = "Hello World";
@@ -541,7 +516,7 @@
 		83CBB9F71A601CBA00E9B192 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
@@ -615,8 +590,8 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
-					ProductGroup = 8BC0098E1C997A4E00732E01 /* Products */;
-					ProjectRef = 8BC0098D1C997A4E00732E01 /* RealmJS.xcodeproj */;
+					ProductGroup = 58B661221CB354CB00640916 /* Products */;
+					ProjectRef = 5A888258BD354A3296EFFECB /* RealmReact.xcodeproj */;
 				},
 				{
 					ProductGroup = EE0686C41C97E77D008039B4 /* Products */;
@@ -688,6 +663,13 @@
 			remoteRef = 146834031AC3E56700842450 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		58B661311CB354CB00640916 /* libRealmReact.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRealmReact.a;
+			remoteRef = 58B661301CB354CB00640916 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -700,41 +682,6 @@
 			fileType = archive.ar;
 			path = libRCTText.a;
 			remoteRef = 832341B41AAA6A8300B99B32 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BC009971C997A4E00732E01 /* libGCDWebServers.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libGCDWebServers.a;
-			remoteRef = 8BC009961C997A4E00732E01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BC009991C997A4E00732E01 /* libRealmJS.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRealmJS.a;
-			remoteRef = 8BC009981C997A4E00732E01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BC0099B1C997A4E00732E01 /* RealmJS.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RealmJS.framework;
-			remoteRef = 8BC0099A1C997A4E00732E01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BC0099D1C997A4E00732E01 /* RealmJSTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = RealmJSTests.xctest;
-			remoteRef = 8BC0099C1C997A4E00732E01 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		8BC0099F1C997A4E00732E01 /* RealmReact.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = RealmReact.framework;
-			remoteRef = 8BC0099E1C997A4E00732E01 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		EE0686D31C97E77D008039B4 /* libRNSearchBar.a */ = {
@@ -826,11 +773,6 @@
 			target = 13B07F861A680F5B00A75B9A /* mobile */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
-		58151EE71CA3D2120069192C /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = RealmReact;
-			targetProxy = 58151EE61CA3D2120069192C /* PBXContainerItemProxy */;
-		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -861,6 +803,10 @@
 				INFOPLIST_FILE = mobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mobile.app/mobile";
 			};
@@ -878,6 +824,10 @@
 				INFOPLIST_FILE = mobileTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/mobile.app/mobile";
 			};
@@ -895,6 +845,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = mobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -917,6 +868,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
 					"$(SRCROOT)/../node_modules/react-native/Libraries/PushNotificationIOS",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				INFOPLIST_FILE = mobile/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -966,10 +918,12 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "票易贴";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1006,9 +960,11 @@
 					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../node_modules/react-native/React/**",
+					"$(SRCROOT)/../node_modules/realm/src/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = "票易贴";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
