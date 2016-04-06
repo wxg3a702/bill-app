@@ -2,7 +2,6 @@
 var Qs = require('qs');
 var Alert = require('../../comp/utils/alert');
 var FileUpload = require('NativeModules').FileUpload;
-//var RNFS = require('react-native-fs');
 var AppStore = require('../store/appStore');
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var ChatConstants = require('../../constants/command');

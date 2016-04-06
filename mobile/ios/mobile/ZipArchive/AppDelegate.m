@@ -30,7 +30,7 @@ typedef enum{
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  AppStarMode startType=Debug;
+  AppStarMode startType=Local;
   
   NSURL* latestJSCodeLocation;
   if(startType==AutoUpdate){
