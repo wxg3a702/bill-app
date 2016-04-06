@@ -319,6 +319,14 @@ var GiftedListView = React.createClass({
     });
   },
 
+  componentEmitChange() {
+    this._scrollResponder = this.refs.listview.getScrollResponder();
+
+    InteractionManager.runAfterInteractions(() => {
+      this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+    });
+  },
+
   setNativeProps(props) {
     this.refs.listview.setNativeProps(props);
   },

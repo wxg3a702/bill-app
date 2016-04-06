@@ -28,6 +28,7 @@ var RequestState = require('../../constants/requestState');
 var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
 var SP = require('NativeModules').SPModule;
+var ServiceModule = require('NativeModules').ServiceModule;
 var AppStore = assign({}, EventEmitter.prototype, {
 
     addChangeListener: function (callback, event) {
@@ -122,6 +123,8 @@ var _login = function (data) {
             _data = datas;
             if (Platform.OS === 'android') {
                 SP.setTokenToSP(_data.token);
+                ServiceModule.setIsLoginToSP(true);
+                ServiceModule.startAppService();
             }
             initNewOrg();
             AppStore.emitChange();
@@ -251,6 +254,12 @@ var _addBillPackByNotify = function (keyName, data) {
     Persister.saveAppData(_data)
 }
 
+var _updateUserInfo = (data) => {
+    _data.userInfoBean = data;
+    Persister.saveAppData(_data);
+    AppStore.emitChange();
+}
+
 var _analysisMessageData = function (data) {
     //数据插入到对应的bean中 并替换main里的
     let d = _getMsgBody(data);
@@ -283,6 +292,7 @@ var _analysisMessageData = function (data) {
         case MsgTypes.ORG_AUTH_OK:
         {
             _changeCompStatus(data.certifiedOrgBody);
+            _updateUserInfo(data.userInfoBean);
             _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
             if (data.revBillList) {
                 _addBillPackByNotify('revBillBean', data.revBillList);
@@ -367,6 +377,10 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             _giveupBillDiscount(action.data)
             break;
         case ActionTypes.LOGOUT:
+          if (Platform.OS === 'android') {
+              ServiceModule.setIsLoginToSP(false);
+              ServiceModule.stopAppService();
+          }
             _data.token = null;
             Persister.clearToken(_data);
             info.isLogout = true;

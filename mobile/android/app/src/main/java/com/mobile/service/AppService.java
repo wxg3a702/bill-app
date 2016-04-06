@@ -50,9 +50,9 @@ public class AppService extends Service {
             mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
 //        mSocket.on("user.login", onMessage);
-            mSocket.on("new.msg", onNewMessage);
             LogUtils.d("SPToken", "" + SPUtils.get(AppService.this, "token", ""));
             mSocket.emit("user.login", "Basic  " + SPUtils.get(AppService.this, "token", ""));
+            mSocket.on("new.msg", onNewMessage);
             mSocket.connect();
         Log.d("true", "AppService");
     }

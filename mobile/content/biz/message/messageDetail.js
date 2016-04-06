@@ -48,7 +48,9 @@ var MessageDetail = React.createClass({
   },
   _onChange: function () {
     this.setState(this.getStateFromStores());
-    this.refs['MsgList'].componentDidMount();
+    if (this.state.token && !_.isEmpty(this.refs['MsgList'])) {
+      this.refs['MsgList'].componentEmitChange();
+    }
   },
   getInitialState: function () {
     return this.getStateFromStores();

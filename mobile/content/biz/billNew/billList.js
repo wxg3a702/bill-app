@@ -108,7 +108,9 @@ var Bill = React.createClass({
     },
     _onChange: function () {
         this.setState(this.getStateFromStores());
-        this.refs['BillList'].componentDidMount();
+        if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
+            this.refs['BillList'].componentEmitChange();
+        }
     },
     changeRev(){
         Promise.resolve(

@@ -47,7 +47,7 @@ var PersonalCenter = React.createClass({
                 token: token,
                 userName: user.userName,
                 userType: user.userType,
-                userTypeValue: (user.userType == "REGISTERED" && orgNum != 0) ? "注册用户" : "认证用户",
+                userTypeValue: (user.userType == "REGISTERED" && orgNum == 0) ? "注册用户" : "认证用户",
                 photoStoreId: user.photoStoreId
             };
         }
