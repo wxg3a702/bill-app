@@ -49,6 +49,11 @@ var Register_setInfo = React.createClass({
                 return false;
             }
 
+            if(this.state.userName === this.state.password){
+                Alert("密码不能和用户名一致")
+                return false;
+            }
+
             if (this.state.password.length < 6) {
                 Alert("密码最少为6位");
                 return false;

@@ -111,6 +111,7 @@ var Login = React.createClass({
                     <View style={{marginTop:24}}>
                         <Button func={this.login} content="登录" checked={this.state.checked}/>
                     </View>
+
                     <View style={styles.menu}>
                         <TouchableOpacity onPress={(()=>{this.toOther(Register_checkPhone)})}>
                             <Text style={styles.colorPath}>新用户注册</Text>

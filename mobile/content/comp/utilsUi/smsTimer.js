@@ -31,7 +31,9 @@ var SMSTimer = React.createClass({
     changeVerify: function () {
         if (this.state.time == "重新获取" || this.props.isNeed) {
             LoginAction[this.props.func](
-                '',
+                {
+                    mobileNo: this.props.parameter
+                },
                 function () {
                     this.setState({
                         startTime: new Date().getTime(),
@@ -73,7 +75,6 @@ var SMSTimer = React.createClass({
                 tim: this.setInterval(this.updateText, 1000)
             })
         }
-
     },
 
     selectVerifyFunction:function(){
