@@ -35,6 +35,7 @@
 		58292FE51C9F9E6E005997F8 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 58292FE41C9F9E6E005997F8 /* libz.1.2.5.tbd */; };
 		78E6ED30E7ED4AFBBF0175F5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 71E37F3B7956410B8BCC75CE /* libz.tbd */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A2C320611CB5E8C300AFF7F0 /* main.jsbundle in Resources */ = {isa = PBXBuildFile; fileRef = A2C320601CB5E8C300AFF7F0 /* main.jsbundle */; };
 		AEEB7CF3FBEE4E488D3D1732 /* libRealmReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32BDE5C28AEF457185D2B9D2 /* libRealmReact.a */; };
 		EE0686D41C97E7D3008039B4 /* libRNSearchBar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = EE0686D31C97E77D008039B4 /* libRNSearchBar.a */; };
 		EE728A4C1C8E701A00911485 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = EE728A4B1C8E701A00911485 /* Fonts */; };
@@ -203,6 +204,7 @@
 		74E6B505825D4E5DBF4C8389 /* libc++.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A2C320601CB5E8C300AFF7F0 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		EE0686C31C97E77D008039B4 /* RNSearchBar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNSearchBar.xcodeproj; path = "../node_modules/react-native-search-bar/RNSearchBar.xcodeproj"; sourceTree = "<group>"; };
 		EE728A4B1C8E701A00911485 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Fonts; path = "../node_modules/react-native-vector-icons/Fonts"; sourceTree = "<group>"; };
 		EE728AB31C8ED5B200911485 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 		13B07FAE1A68108700A75B9A /* mobile */ = {
 			isa = PBXGroup;
 			children = (
+				A2C320601CB5E8C300AFF7F0 /* main.jsbundle */,
 				58292FB01C9F9DA8005997F8 /* ZipArchive */,
 				58292FDB1C9F9E20005997F8 /* AppDelegate.h */,
 				58292FDC1C9F9E20005997F8 /* AppDelegate.m */,
@@ -715,6 +718,7 @@
 				EE728A4C1C8E701A00911485 /* Fonts in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A2C320611CB5E8C300AFF7F0 /* main.jsbundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
