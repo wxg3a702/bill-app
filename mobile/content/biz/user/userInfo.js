@@ -176,13 +176,10 @@ var UserInfo = React.createClass({
     returnImg(){
         let url = require('../../image/user/head.png');
         if (!_.isEmpty(this.state.photoStoreId)) {
-            Promise.resolve(url = UserAction.getFile(this.state.photoStoreId))
-                .then(url = {uri: url, isStatic: true})
-            return url
-        } else {
-            return url
+            //url = { uri: UserAction.getFile(this.state.photoStoreId), isStatic: true };
+            url = { uri: UserAction.getFile(this.state.photoStoreId) };
         }
-
+        return url;
     },
 
     selectPhoto(){
@@ -211,8 +208,11 @@ var UserInfo = React.createClass({
                         <TouchableHighlight onPress={this.selectPhoto}
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={styles.img}
-                                   resizeMode="cover" source={this.returnImg()} onLoad={this.loadSuccess}
-                                   onLoadEnd={this.onLoadEnd} onLoadStart={this.onLoadStart}/>
+                                   resizeMode="cover"
+                                   source={this.returnImg()}
+                                   onLoad={this.loadSuccess}
+                                   onLoadEnd={this.onLoadEnd}
+                                   onLoadStart={this.onLoadStart}/>
                         </TouchableHighlight>
                         <Text style={styles.name}>{this.state.userName}</Text>
                     </View>
