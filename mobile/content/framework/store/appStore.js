@@ -208,25 +208,21 @@ var _createBillDiscount = function (data) {
     });
     Persister.saveAppData(_data);
     AppStore.emitChange();
-}
+};
 
 var _getMsgType = function (msg) {
     return msg.msgType;
-}
+};
 
 var _getMsgBody = function (msg) {
     return msg.msgBody;
-}
+};
 
 var _changeCompStatus = function (data) {
-    _data.certifiedOrgBean.map((item, index)=> {
-        if (item.id == data.id) {
-            _data.certifiedOrgBean[index] = data
-        }
-    })
-    Persister.saveAppData(_data)
+    _data.certifiedOrgBean = data;
+    Persister.saveAppData(_data);
     AppStore.emitChange();
-}
+};
 
 var _pushMsg = function (data, key) {
     _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
@@ -292,7 +288,9 @@ var _analysisMessageData = function (data) {
         case MsgTypes.ORG_AUTH_OK:
         {
             _changeCompStatus(data.certifiedOrgBody);
-            _updateUserInfo(data.userInfoBean);
+            if (!_.isEmpty(data.userInfoBean) && data.userInfoBean) {
+                _updateUserInfo(data.userBody);
+            }
             _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
             if (data.revBillList) {
                 _addBillPackByNotify('revBillBean', data.revBillList);

@@ -37,7 +37,7 @@ public class SPModule extends ReactContextBaseJavaModule {
     public void setTokenToSP(String token){
         LogUtils.d("token", token + " ");
         if(token != null)
-        SPUtils.put(getReactApplicationContext(), "token", token);
+        SPUtils.put(getReactApplicationContext(), "token", "Basic  " + token);
     }
 
     @ReactMethod

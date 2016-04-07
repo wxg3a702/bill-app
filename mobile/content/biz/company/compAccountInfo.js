@@ -6,7 +6,8 @@ var {
     View,
     ActionSheetIOS,
     Text,
-    TouchableHighlight
+    TouchableHighlight,
+  Image
 } = React;
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -86,7 +87,7 @@ var CompAccountInfo = React.createClass({
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
-        if (this.state.accountName.length == 0 || this.state.accountNo.length == 0 || this.state.openBank.length == 0) {
+        if (_.isEmpty(this.state.accountName) || _.isEmpty(this.state.accountNo) || _.isEmpty(this.state.openBank)) {
             this.setState({checked: true})
         } else {
             this.setState({checked: false})
@@ -131,14 +132,19 @@ var CompAccountInfo = React.createClass({
                             </Text>
                             <TouchableHighlight onPress={()=>{this.callPhone()}} activeOpacity={0.6}
                                                 underlayColor="#ebf1f2">
-                                <Text style={{color:'#ff5b58',fontSize:15,textDecorationLine:"underline"}}>
+                                <Text style={{color:'#ff5b58',fontSize:15,textDecorationLine:"underline",marginTop: 1}}>
                                     联系客服
                                 </Text>
                             </TouchableHighlight>
                         </View>
                     </View>
+                    <Image
+                      style={styles.img}
+                      resizeMode="cover"
+                      source = {{uri: "file:///storage/emulated/0/authFileId.jpg"}}/>
                 </View>
                 <View style={{margin:10}}>
+
                     <Button func={this.submit} content="提交" checked={this.state.checked}/>
                 </View>
             </NavBarView>
@@ -163,5 +169,13 @@ var styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
+    img: {
+        width: 63,
+        height: 63,
+        borderRadius: 5,
+        marginTop: 18,
+        borderColor: '#7f7f7f',
+        borderWidth: 1
+    }
 })
 module.exports = CompAccountInfo;

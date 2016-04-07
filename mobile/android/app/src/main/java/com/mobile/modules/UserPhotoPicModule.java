@@ -22,6 +22,7 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
+import com.mobile.utils.SDCardUtils;
 import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
@@ -35,10 +36,11 @@ import java.io.IOException;
 public class UserPhotoPicModule extends ReactContextBaseJavaModule implements ActivityEventListener {
     private static final int USER_IMAGE_REQUEST_CODE = 0x01;
     private static final int USER_CAMERA_REQUEST_CODE = 0x02;
-    private Callback mCallback ;
+    private Callback mCallback;
     private boolean crop;
     private String fileName;
     private WritableMap response;
+
     public UserPhotoPicModule(ReactApplicationContext reactContext) {
         super(reactContext);
         reactContext.addActivityEventListener(this);
@@ -50,9 +52,9 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     }
 
     @ReactMethod
-    public void showImagePic(boolean needCrop ,String name, final Callback callback) {
+    public void showImagePic(boolean needCrop, String name, final Callback callback) {
         crop = needCrop;
-        fileName = name;
+        fileName = name+".jpg";
         Activity currentActivity = getCurrentActivity();
         String[] items = {"拍照上传", "本地上传"};
         new AlertDialog.Builder(currentActivity)
@@ -77,11 +79,18 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                     }
                 }).show();
     }
+
     @ReactMethod
     public void launchCamera(Callback callback) {
         Activity activity = getCurrentActivity();
         mCallback = callback;
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // 判断存储卡是否可用，存储照片文件
+        if (SDCardUtils.hasSdcard()) {
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri
+                    .fromFile(new File(Environment
+                            .getExternalStorageDirectory(), fileName)));
+        }
         activity.startActivityForResult(cameraIntent, USER_CAMERA_REQUEST_CODE);
     }
 
@@ -89,23 +98,23 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     public void launchImage(Callback callback) {
         mCallback = callback;
         Activity activity = getCurrentActivity();
-        Intent imageIntent ;
-        if (Build.VERSION.SDK_INT < 19){
+        Intent imageIntent;
+        if (Build.VERSION.SDK_INT < 19) {
             imageIntent = new Intent();
             imageIntent.setAction(Intent.ACTION_GET_CONTENT);
             imageIntent.setType("image/*");
-            try{
+            try {
                 activity.startActivityForResult(imageIntent, USER_IMAGE_REQUEST_CODE);
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.d("Exception", e.toString());
             }
-        }else{
-            imageIntent = new Intent(Intent.ACTION_PICK,MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        } else {
+            imageIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             imageIntent.setType("image/*");
-            try{
+            try {
                 activity.startActivityForResult(imageIntent, USER_IMAGE_REQUEST_CODE);
-            }catch (Exception e){
-                Log.d("Exception",e.toString());
+            } catch (Exception e) {
+                Log.d("Exception", e.toString());
             }
         }
 
@@ -114,40 +123,36 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode != Activity.RESULT_OK){
+        if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        Uri uri =null;
+        Uri uri = null;
         switch (requestCode) {
             case USER_CAMERA_REQUEST_CODE:
-                if (data == null) {
-                    return;
-                } else {
-                    Bundle extras = data.getExtras();
-                    if (extras != null) {
-                        Bitmap bitMap = extras.getParcelable("data");
-                        uri= saveBitMap(bitMap);
-                    }
-                    if (crop){
-                        beginCrop(uri);
-                    }else{
+                if (SDCardUtils.hasSdcard()) {
+                    File tempFile = new File(
+                            Environment.getExternalStorageDirectory(),
+                            fileName);
+                    //cropRawPhoto(Uri.fromFile(tempFile));
+                    if (crop) {
+                        beginCrop(Uri.fromFile(tempFile));
+                    } else {
                         response = Arguments.createMap();
-                        response.putString("uri",uri.toString());
+                        response.putString("uri", Uri.fromFile(tempFile).toString());
                         mCallback.invoke(response);
                     }
                 }
-
                 break;
             case USER_IMAGE_REQUEST_CODE:
                 if (data == null) {
                     return;
                 }
                 uri = data.getData();
-                if (crop){
+                if (crop) {
                     beginCrop(uri);
-                }else{
+                } else {
                     response = Arguments.createMap();
-                    response.putString("uri",uri.toString());
+                    response.putString("uri", uri.toString());
                     mCallback.invoke(response);
                 }
                 break;
@@ -162,7 +167,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
         try {
             reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                     .emit(eventName, params);
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.d("Exception", e.toString());
         }
     }
@@ -170,10 +175,10 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     //开始裁剪，到裁剪界面
     private void beginCrop(Uri source) {
         Uri destination = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "crop.jpg"));
-        try{
+        try {
             Crop.of(source, destination).asSquare().start(getCurrentActivity());
-        }catch (Exception e){
-            Log.d("Exception",e.toString());
+        } catch (Exception e) {
+            Log.d("Exception", e.toString());
         }
 
     }
@@ -184,7 +189,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
             Log.d("Crop", Crop.getOutput(result) + "00");
             Uri uri = Crop.getOutput(result);
             response = Arguments.createMap();
-            response.putString("uri",uri.toString());
+            response.putString("uri", uri.toString());
             mCallback.invoke(response);
         } else if (resultCode == Crop.RESULT_ERROR) {
             Toast.makeText(getCurrentActivity(), "裁剪出错", Toast.LENGTH_SHORT).show();
@@ -197,7 +202,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
         if (!tmpDir.exists()) {
             tmpDir.mkdir();
         }
-        File image = new File(tmpDir.getAbsolutePath() + "/" + fileName +".png");
+        File image = new File(tmpDir.getAbsolutePath() + "/" + fileName + ".png");
         try {
             FileOutputStream fos = new FileOutputStream(image);
             bm.compress(Bitmap.CompressFormat.PNG, 85, fos);

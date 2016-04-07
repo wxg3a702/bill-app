@@ -22,11 +22,16 @@ var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var DatePicker = require('NativeModules').DatePickerDialogModule;
+var now = new Date();
+var year = now.getFullYear();    //获取完整的年份(4位,1970-????)
+var month = now.getMonth() + 1;       //获取当前月份(0-11,0代表1月)
+var day = now.getDate();
+var NOW_DATE = year + '-' + month + '-' + day;
 var Calculator = React.createClass({
     getInitialState: function () {
         return {
-            discountDate: '',
-            dueDate: '',
+            discountDate: NOW_DATE,
+            dueDate: NOW_DATE,
             monthRate: '',
             amount: '',
             discountAmount: '',
@@ -120,8 +125,8 @@ var Calculator = React.createClass({
     },
     clear(){
         this.setState({
-            discountDate: '',
-            dueDate: '',
+            discountDate: NOW_DATE,
+            dueDate: NOW_DATE,
             monthRate: '',
             amount: '',
             discountAmount: '',
@@ -168,7 +173,7 @@ var Calculator = React.createClass({
             <TouchableHighlight onPress={()=>this.showDate(word,key,value==holder?'':value,type,'','')}>
                 <View style={[styles.layout,{paddingRight:10}]}>
                     <Text style={[styles.text,{width:Adjust.width(109)}]}>{desc}</Text>
-                    <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'space-between'}}>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center',justifyContent:'space-between', marginLeft: Platform.OS == 'android' ? 12:0}}>
                         <Text style={{fontSize:15,color:color}}>{value}</Text>
                         <VIcon/>
                     </View>
