@@ -28,7 +28,6 @@ import com.mobile.service.AppService;
 import com.mobile.updatedata.UpdateData;
 import com.mobile.utils.AppUtils;
 import com.mobile.utils.SPUtils;
-import com.rnfs.RNFSPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.mobile.packages.ZXReactPackage;
 import com.soundcloud.android.crop.Crop;
