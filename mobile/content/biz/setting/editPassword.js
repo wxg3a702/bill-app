@@ -68,7 +68,7 @@ var EditPassword = React.createClass({
     },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="修改密码" actionButton={this.button()}>
+            <NavBarView navigator={this.props.navigator} title="修改登录密码" actionButton={this.button()}>
                 <View style={{flexDirection: 'column',paddingHorizontal:12}}>
                     <Input type='default' prompt="请输入旧密码" max={16} field="password" isPwd={true}
                            onChanged={this.handleChanged} icon="password"/>

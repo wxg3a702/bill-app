@@ -269,7 +269,7 @@ var styles = StyleSheet.create({
     },
     head: {
         height: 122,
-        backgroundColor: '#f0f0f0',
+        //backgroundColor: '#f0f0f0',
         alignItems: 'center',
         borderColor: '#cccccc',
         borderBottomWidth: 1
