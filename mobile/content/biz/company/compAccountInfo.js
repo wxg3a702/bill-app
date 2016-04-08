@@ -138,10 +138,6 @@ var CompAccountInfo = React.createClass({
                             </TouchableHighlight>
                         </View>
                     </View>
-                    <Image
-                      style={styles.img}
-                      resizeMode="cover"
-                      source = {{uri: "file:///storage/emulated/0/authFileId.jpg"}}/>
                 </View>
                 <View style={{margin:10}}>
 
