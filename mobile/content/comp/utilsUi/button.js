@@ -14,7 +14,7 @@ var Button = React.createClass({
     },
     underCo(){
         if (this.props.checked) {
-            return '#3fada4'
+            return '#9ad6d1'
         } else {
             return '#9ad6d1'
         }

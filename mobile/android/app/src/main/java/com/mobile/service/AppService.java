@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.facebook.stetho.common.LogUtil;
 import com.github.nkzawa.emitter.Emitter;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
@@ -50,9 +51,9 @@ public class AppService extends Service {
             mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
             mSocket.on(Socket.EVENT_CONNECT, onConnect);
 //        mSocket.on("user.login", onMessage);
-            LogUtils.d("SPToken", "" + SPUtils.get(AppService.this, "token", ""));
-            mSocket.emit("user.login", "Basic  " + SPUtils.get(AppService.this, "token", ""));
             mSocket.on("new.msg", onNewMessage);
+            LogUtils.d("SPToken", "" + SPUtils.get(AppService.this, "token", ""));
+            mSocket.emit("user.login", SPUtils.get(AppService.this, "token", ""));
             mSocket.connect();
         Log.d("true", "AppService");
     }
@@ -119,12 +120,15 @@ public class AppService extends Service {
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(Object ... args) {
-            LogUtils.d("有消息来了");
+
             JSONObject mJSONObject = JSON.parseObject(args[0].toString());
+            LogUtils.d("有消息来了", args[0].toString());
             String mType = mJSONObject.getString("type");
 //            String title = mJSONObject.getString("title");
             NtfBean mMsgBody = mJSONObject.getObject("body", NtfBean.class);
+            LogUtils.d("有消息来了", mMsgBody.getContent());
             boolean mBackground = AppUtils.isApplicationBroughtToBackground(AppService.this);
+            LogUtils.d("newMsg", mBackground ?  "true": "false");
             if (mBackground) {
                 manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 Intent mIntent = new Intent(AppService.this, MainActivity.class);
@@ -144,6 +148,7 @@ public class AppService extends Service {
                         .setContentIntent(mPendingIntent);
                 manager.notify(121, mBuilder.build());
             } else {
+                LogUtils.d("GoJs", "yes");
                 UpdateData updateData = new UpdateData();
                 updateData.getData(MainActivity.getContext(), "Msg");
             }

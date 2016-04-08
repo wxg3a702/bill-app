@@ -65,6 +65,7 @@ var Message = React.createClass({
     return this.getStateFromStores();
   },
   detail(name){
+    MessageStore.updateUnReadNum(name);
     var title
     if (name == MsgCategory.BILL_SENT) {
       title = '开出的票'
@@ -83,8 +84,6 @@ var Message = React.createClass({
         }
       })
     }
-
-    MessageStore.updateUnReadNum(name);
     /*MessageAction.setOtherMsgRead({category: name}, function (data) {
      //更新未读标记
 
@@ -276,7 +275,7 @@ var Message = React.createClass({
             <View style={{height:68, flex:1,flexDirection:'column',justifyContent:'space-between'}}>
               <View style={{flex: 1,flexDirection:'row',justifyContent:'space-between', marginTop: 12}}>
                 <Text numberOfLines={1}
-                      style={{width:    width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
+                      style={{width: width-Adjust.width(150),fontSize:16,color:'#333333'}}>{item.title}</Text>
                 <Text
                   style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(item.receiveDate)}</Text>
               </View>

@@ -37,7 +37,7 @@ var _notificationRegister = function (token) {
 }
 
 var _onNotification = function (notification) {
-    console.log('Basic  ' + AppStore.getToken());
+    console.log('111111Basic  ' + AppStore.getToken());
     BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
         AppDispatcher.dispatch({
             type: ActionTypes.PUSH_NOTIFICATION,

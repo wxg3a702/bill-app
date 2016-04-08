@@ -190,7 +190,7 @@ var CompCertifyCopies = React.createClass({
             if (this.state[name].indexOf("@userId") > -1) {
                 url = {uri: UserAction.getFile(this.state[name])}
             } else {
-                url = {uri: this.state[name], isStatic: true};
+                url = {uri: this.state[name]};
             }
             if (data.status == 'AUDITING') {
                 return (
@@ -202,8 +202,9 @@ var CompCertifyCopies = React.createClass({
                 let certResultBeans = this.state.newOrg.certResultBeans
                 if (!certResultBeans) {
                     return (
-                        <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
-                                            activeOpacity={0.6} underlayColor="#ebf1f2">
+                        <TouchableHighlight
+                                         onPress={()=>{this.selectPhoto(desc, name)}}
+                                         activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
                         </TouchableHighlight>
                     )
@@ -287,15 +288,12 @@ var CompCertifyCopies = React.createClass({
                 })()}
                 <View style={{flexDirection:"row"}}>
                     <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
-                        {certificateState[status].alter}
-                    </Text>
-                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
                         如遇问题,请
                     </Text>
                     <TouchableHighlight onPress={()=>{this.callPhone()}}
                                         activeOpacity={0.6} underlayColor="#ebf1f2">
                         <Text
-                            style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
+                            style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline", marginTop: 1}}>
                             联系客服
                         </Text>
                     </TouchableHighlight>
@@ -405,7 +403,6 @@ var styles = StyleSheet.create({
     image: {
         height: 113,
         width: Dimensions.get("window").width / 2 - 18,
-        backgroundColor: "white",
         marginTop: 5,
     },
     copyName: {
