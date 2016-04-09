@@ -238,7 +238,7 @@ var UserInfo = React.createClass({
 
                         <Item desc="电子邮箱:" imgPath={require('../../image/user/email.png')}
                               value={this.state.email}
-                              func={() => this.toEdit("电子邮箱", 'email', this.state.email, '', 60, Validation.isEmail)}/>
+                              func={() => this.toEdit("电子邮箱", 'email', this.state.email, '', 80, Validation.isEmail)}/>
 
                         <Space top={false}/>
 

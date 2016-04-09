@@ -10,10 +10,13 @@ var LoginAction = require("../../framework/action/loginAction")
 var NavBarView = require('../../framework/system/navBarView')
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
+var Button = require('../../comp/utilsUi/button');
+
 var EditPhone = React.createClass({
     getInitialState: function () {
         return {
-            password: ''
+            password: '',
+            checked:true
         };
     },
     button(){
@@ -25,7 +28,7 @@ var EditPhone = React.createClass({
         if (this.state.password.length == 0) {
             Alert("请输入密码")
         } else {
-            var validPassword = this._validPassword();
+            this._validPassword();
         }
     },
     _validPassword(){
@@ -42,15 +45,30 @@ var EditPhone = React.createClass({
         )
     },
     handleChanged(key, value){
-        this.setState({[key]: value});
+        this.textOnchange(value, key);
     },
+
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.password.length == 0) {
+            this.setState({checked: true,})
+        } else {
+            this.setState({checked: false,})
+        }
+    },
+
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="修改手机号" actionButton={this.button()}>
+            <NavBarView navigator={this.props.navigator} title="登录密码验证" >
                 <View style={{flexDirection: 'column',paddingHorizontal:12}} scrollEnabled={false}>
                     <Input type='default' prompt="请输入登录密码" max={16} field="password" isPwd={true}
                            onChanged={this.handleChanged} icon="password"/>
                 </View>
+
+                <View style={{marginTop:20,marginLeft:10,marginRight:10}}>
+                    <Button  func={this.next} checked={this.state.checked} content='下一步' />
+                </View>
+
             </NavBarView>
         )
     }

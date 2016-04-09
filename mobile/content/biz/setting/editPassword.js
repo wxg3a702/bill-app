@@ -61,7 +61,7 @@ var EditPassword = React.createClass({
         )
     },
     back: function () {
-        this.props.navigator.popToTop();
+        this.props.navigator.pop();
     },
     handleChanged(key, value){
         this.setState({[key]: value});
