@@ -72,24 +72,30 @@ var CompAccountInfo = React.createClass({
         let newOrg = this.state.newOrg;
         newOrg.accountName = this.state.accountName;
         newOrg.accountNo = this.state.accountNo;
-        newOrg.openBank = this.state.openBank
+        newOrg.openBank = this.state.openBank;
+        var reg = new RegExp("^[0-9]{16,19}$");
         this.setState({newOrg: newOrg})
-        if (!this.props.param) {
-            CompAction.deleteOrg(
-                {orgId: this.props.param.item.id}
+        if (reg.test(newOrg.accountNo)) {
+            if (!this.props.param) {
+                CompAction.deleteOrg(
+                  {orgId: this.props.param.item.id}
+                )
+            }
+            CompAction.submitOrg(
+              this.state.newOrg,
+              ()=>{
+                  //this.props.navigator.push({comp: CertifySuccess})
+                  Alert("资料提交成功,请耐心等待认证结果", () => {
+                      var routes = this.props.navigator.getCurrentRoutes();
+                      this.props.navigator.popToRoute(routes[routes.length - 4]);
+                  })
+              },
+              ()=>Alert("认证失败")
             )
+        } else {
+            Alert("请输入正确的银行账号")
         }
-        CompAction.submitOrg(
-            this.state.newOrg,
-            ()=>{
-                //this.props.navigator.push({comp: CertifySuccess})
-                Alert("资料提交成功,请耐心等待认证结果", () => {
-                    var routes = this.props.navigator.getCurrentRoutes();
-                    this.props.navigator.popToRoute(routes[routes.length - 4]);
-                })
-            },
-            ()=>Alert("认证失败")
-        )
+
     },
     textOnchange: function (text, type) {
         this.setState({[type]: text})
@@ -107,13 +113,23 @@ var CompAccountInfo = React.createClass({
         let orgBean = this.state.newOrg.certResultBeans
         if (!orgBean) {
         } else {
-            if (orgBean.bankAccountNo) {
+            for (let item of orgBean) {
+                if (item.columnName == 'bankAccountNo') {
+                    return (
+                      <Text style={{fontSize: 15, color: '#ff5b58',marginBottom:5}}>
+                          未通过，{orgBean.bankAccountNo.resultValue},请修改
+                      </Text>
+                    )
+                    break;
+                }
+            }
+            /*if (orgBean.bankAccountNo) {
                 return (
                     <Text style={{fontSize: 15, color: '#ff5b58',marginBottom:5}}>
                         未通过，{orgBean.bankAccountNo.resultValue},请修改
                     </Text>
                 )
-            }
+            }*/
         }
     },
     render: function () {

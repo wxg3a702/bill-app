@@ -22,7 +22,7 @@ let _clearToken = function (data) {
             sentBillBean: JSON.stringify({}),
             filterBeans: JSON.stringify({}),
             userInfoBean: JSON.stringify({}),
-            certifiedOrgBean: JSON.stringify({}),
+            certifiedOrgBean: JSON.stringify([]),
             newOrg: JSON.stringify({}),
             mainMsgBean: JSON.stringify(data.mainMsgBean) ? JSON.stringify(data.mainMsgBean) : JSON.stringify({}),
             marketMsgBeans: JSON.stringify(data.marketMsgBeans) ? JSON.stringify(data.marketMsgBeans) : JSON.stringify([]),
@@ -30,8 +30,8 @@ let _clearToken = function (data) {
             sentBillMsgBeans: JSON.stringify(data.sentBillMsgBeans) ? JSON.stringify(data.sentBillMsgBeans) : JSON.stringify([]),
             demoFlag: JSON.stringify(data.demoFlag),
             acceptanceBankBeans: JSON.stringify(data.acceptanceBankBeans) ? JSON.stringify(data.acceptanceBankBeans) : JSON.stringify([]),
-            revBillMessage: false,
-            newsMessage: false
+            revBillMessage: Boolean(data.revBillMessage),
+            newsMessage: Boolean(data.newsMessage)
         }, true);
         _userid = '';
     });
@@ -113,8 +113,8 @@ let _saveLoginData = (data, d) => {
             sentBillMsgBeans: JSON.stringify(d.sentBillMsgBeans) ? JSON.stringify(d.sentBillMsgBeans) : JSON.stringify([]),
             demoFlag: JSON.stringify(d.demoFlag),
             acceptanceBankBeans: JSON.stringify(data.acceptanceBankBeans),
-            revBillMessage: d.revBillMessage ? d.revBillMessage : true,
-            newsMessage: d.newsMessage ? d.newsMessage : true
+            revBillMessage: d.revBillMessage,
+            newsMessage: d.newsMessage
         }, true);
     });
 }

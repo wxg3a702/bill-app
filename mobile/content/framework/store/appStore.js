@@ -111,12 +111,12 @@ var _login = function (data) {
         data.demoFlag = d.demoFlag;
         if (!d.demoFlag) {
             data.demoFlag = {id: data.userInfoBean.id, flag: false};
+            data.revBillMessage = true;
+            data.newsMessage = true;
         }
         if (_.isEmpty(d)) {
-            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveAppData(data);
         } else {
-            data.certifiedOrgBean = !data.certifiedOrgBean ? '' : orgToJson(data.certifiedOrgBean)
             Persister.saveLoginData(data, d);
         }
         Persister.getAppData((datas) => {
@@ -320,6 +320,11 @@ var _analysisMessageData = function (data) {
         case MsgTypes.LOGIN_OUT:
             _force_logout();
             break;
+        default:
+            if (data.certifiedOrgBody && !_.isEmpty(data.certifiedOrgBody) && data.certifiedOrgBody.length > 0) {
+                _changeCompStatus(data.certifiedOrgBody);
+            }
+            break;
     }
     AppStore.emitChange();
 }
@@ -382,9 +387,6 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
             _data.token = null;
             Persister.clearToken(_data);
             info.isLogout = true;
-            Persister.getAppData((datas) => {
-                var a = datas;
-            }, _data.userInfoBean.id)
             AppStore.emitChange();
             break;
         case ActionTypes.FORCE_LOGOUT:

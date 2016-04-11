@@ -22,7 +22,8 @@ var MessageStore = require('../../framework/store/messageStore');
 var Alert = require('../../comp/utils/alert');
 var Login = require('../../biz/login/login')
 var ScrollableTabView = require('../../comp/tabBar/android/tabContainer')
-var AndroidTabBar = require('../../comp/tabBar/android/tabBar')
+var AndroidTabBar = require('../../comp/tabBar/android/tabBar');
+var NotificationManager = require('./notificationManager');
 
 var TabView = React.createClass({
   getStateFromStores() {
@@ -74,43 +75,52 @@ var TabView = React.createClass({
 
   componentDidMount() {
     AppStore.addChangeListener(this._onChange);
-    if (AppStore.getRevBillMessage()) {
-      if (Platform.OS === 'ios') {
-        if (!AppStore.getAPNSToken()) {
-          PushNotificationIOS.requestPermissions();
-        }
-
-        PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-        PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-        AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-
-
-        PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
-        PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
-
-        AppStateIOS.addEventListener('change', this._handleAppStateChange);
-
+    //if (this.state.token) {
+      if (AppStore.getRevBillMessage()) {
+        //if (Platform.OS === 'ios') {
+        //  if (!AppStore.getAPNSToken()) {
+        //    PushNotificationIOS.requestPermissions();
+        //  }
+        //
+        //  PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+        //  PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
+        //  AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+        //
+        //
+        //  PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
+        //  PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
+        //
+        //  AppStateIOS.addEventListener('change', this._handleAppStateChange);
+        //
+        //}else{
+        //  DeviceEventEmitter.addListener('Msg', (e:Event)=>CommonAction.onNotification());
+        //  DeviceEventEmitter.addListener('MsgByNotification', (e:Event)=>{
+        //    this.setState({initialPage: 2});
+        //    CommonAction.onNotification();
+        //  });
+        //
+        //}
+        NotificationManager.openNotification();
+        //this.setState({initialPage: 2});
       }
-    }
-    if (Platform.OS == 'android') {
-      DeviceEventEmitter.addListener('Msg', (e:Event)=>CommonAction.onNotification());
-      DeviceEventEmitter.addListener('MsgByNotification', (e:Event)=>{
-        this.setState({initialPage: 2});
-        CommonAction.onNotification();
-      });
-    }
+    //}
+
   },
 
   componentWillUnmount: function () {
-    if (AppStore.getRevBillMessage()) {
-      if (Platform.OS === 'ios') {
-        AppStore.removeChangeListener(this._onChange);
-        PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-        PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-        AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-        PushNotificationIOS.setApplicationIconBadgeNumber(0);
+   // if (this.state.token) {
+      if (AppStore.getRevBillMessage()) {
+        //if (Platform.OS === 'ios') {
+
+        //  PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
+        //  PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
+        //  AppStateIOS.removeEventListener('change', this._handleAppStateChange);
+        //  PushNotificationIOS.setApplicationIconBadgeNumber(0);
+        //}
+        NotificationManager.closeNotification();
       }
-    }
+  //  }
+    AppStore.removeChangeListener(this._onChange);
   },
 
   _handleAppStateChange: function (currentAppState) {

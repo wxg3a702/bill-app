@@ -32,7 +32,7 @@ var CompCertification = React.createClass({
         let ret = new Array();
         let i = 0;
         var orgBean = CompStore.getCertifiedOrgBean();
-        orgBean.map((item, index)=> {
+        /*orgBean.map((item, index)=> {
             if (!item.status) {
                 item.status = 'AUDITING';
             }
@@ -41,10 +41,10 @@ var CompCertification = React.createClass({
 
             }
             ret.push(item)
-        });
+        });*/
         return {
             bean: orgBean,
-            dataSource: ds.cloneWithRows(ret)
+            dataSource: ds.cloneWithRows(orgBean)
         }
     },
 
@@ -103,7 +103,7 @@ var CompCertification = React.createClass({
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>
-                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
+                                {data.status == 'CERTIFIED' ? data.stdOrgBean.orgName : data.orgName}
                             </Text>
                             <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
                                 {certificateState[data.status].desc}

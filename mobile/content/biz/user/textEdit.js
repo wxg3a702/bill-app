@@ -103,7 +103,7 @@ var TextEdit = React.createClass({
 
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
 
-        } else if(this.state.newValue.length > this.props.param.maxLength){
+        } else if(this.state.newValue.length > this.props.param.maxLength && this.props.param.name != 'discountDate' && this.props.param.name != 'dueDate'){
             Alert('字数超过'+ this.props.param.maxLength +'字的限制');
         } else if(this.props.param.title == 'QQ' && !reg.test(this.state.newValue)){
             Alert('输入格式不正确');

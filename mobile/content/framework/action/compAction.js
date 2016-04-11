@@ -115,7 +115,7 @@ var _submitOrg = function (p, c, f) {
 }
 var uploadFileHandle = function (params, fileFieldName) {
     return function (callback) {
-        if (params[fileFieldName].indexOf("@userId") > -1) {
+        if (params[fileFieldName].indexOf("_userId") > -1) {
             var data = {fileId: params[fileFieldName]}
             callback(null, {[fileFieldName]: data});
         } else {
