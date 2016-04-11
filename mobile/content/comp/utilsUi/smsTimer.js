@@ -4,6 +4,7 @@ var React = require('react-native');
 var {
     StyleSheet,
     TouchableOpacity,
+    TouchableHighlight,
     View,
     TextInput,
     Text,
@@ -130,11 +131,13 @@ var SMSTimer = React.createClass({
                                clearButtonMode="while-editing"/>
                 </View>
                 <View style={{width:75,marginLeft:12}}>
-                    <TouchableOpacity
+                    <TouchableHighlight
                         style={[{width:75,height:47},styles.radius, styles.button,this.state.click && styles.color]}
-                        onPress={this.selectVerifyFunction}>
+                        onPress={this.selectVerifyFunction}
+                        activeOpacity={1}
+                        underlayColor="#9ad6d1">
                         <Text style={[styles.fontColor]}>{this.state.time}</Text>
-                    </TouchableOpacity>
+                    </TouchableHighlight>
                 </View>
             </View>
         )

@@ -19,18 +19,6 @@ var dismissKeyboard = require('react-native-dismiss-keyboard');
 var GotoReister = require("./gotoRegister");
 var Alert = require('../../comp/utils/alert');
 
-//数据访问parameter
-//{
-//    "mobileNo": "15893647732",
-//    "smsCode": "723456",
-//    "captcha": "abcd",
-//    "userName": "test0330",
-//    "password": "11111111",
-//    "transactionPassword": "111111",
-//    "deviceToken": "deviceToken",
-//    "deviceModel": "deviceModel"
-//}
-
 var Register_setTradingPWD = React.createClass({
     getInitialState:function(){
         return{
@@ -78,7 +66,7 @@ var Register_setTradingPWD = React.createClass({
             }
 
             if (this.state.transactionPassword == this.state.transactionPassword_again) {
-                var setInfo = this.setInfo();
+                this.setInfo();
             } else {
                 Alert("密码输入不一致，请重新输入")
             }

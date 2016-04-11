@@ -100,13 +100,16 @@ var TextEdit = React.createClass({
 
         dismissKeyboard();
         var reg = /^\d{5,}$/g;
+        var reg_userName = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g;
 
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
 
         } else if(this.state.newValue.length > this.props.param.maxLength && this.props.param.name != 'discountDate' && this.props.param.name != 'dueDate'){
             Alert('字数超过'+ this.props.param.maxLength +'字的限制');
-        } else if(this.props.param.title == 'QQ' && !reg.test(this.state.newValue)){
-            Alert('输入格式不正确');
+        } else if(this.props.param.name == 'qqNo' && !reg.test(this.state.newValue)){
+            Alert('请输入正确的QQ号格式');
+        }else if(this.props.param.name == 'realName' && !reg_userName.test(this.state.newValue)){
+            Alert('请输入20个字符内的中文或英文');
         } else {
             const {navigator} = this.props;
             this.props.callback(

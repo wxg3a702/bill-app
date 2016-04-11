@@ -65,6 +65,7 @@ var EditComp = React.createClass({
             this.setState({dataSource: ds.cloneWithRows(ret)})
         }
     },
+
     setValue(data){
         const { navigator } = this.props;
         CompAction.updateDefaultOrgByUser(
@@ -73,25 +74,50 @@ var EditComp = React.createClass({
                 comp: data.orgName
             }, function () {
                 navigator.pop()
-            },
-            function () {
-            }
+            }.bind(this)
         )
     },
+
+    setDefalutOrg:function(){
+        const { navigator } = this.props;
+        CompAction.unSetDefaultOrg(
+            {
+                comp:undefined
+            },
+            function () {
+                navigator.pop()
+            }.bind(this)
+        )
+    },
+
     returnItem(data){
         return (
-            <TouchableHighlight onPress={()=>this.setValue(data)} underlayColor='#7f7f7f'>
+            <TouchableHighlight onPress={()=>this.setValue(data)}
+                                style={{borderBottomColor:'#f7f7f7',borderBottomWidth:1}}
+                                underlayColor='#7f7f7f'>
                 <View style={styles.content}>
                     <Text style={{fontSize:18}}>{data.orgName}</Text>
                 </View>
             </TouchableHighlight>
         )
     },
+
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="公司">
+
                 <SearchBar onChange={this.pick}/>
+
+                <TouchableHighlight style={{borderBottomColor:'#f7f7f7',borderBottomWidth:1}}
+                                    onPress={()=>this.setDefalutOrg()}
+                                    underlayColor='#7f7f7f'>
+                    <View style={styles.content}>
+                        <Text style={{fontSize:18}}>暂不设置</Text>
+                    </View>
+                </TouchableHighlight>
+
                 <ListView dataSource={this.state.dataSource} renderRow={this.returnItem}/>
+
             </NavBarView>
         )
     }

@@ -28,6 +28,9 @@ var LoginActions = {
     validatePWDandPersonID: (p, c, f) => PFetch(api + "/User/validatePWDandPersonID", p, c, f),
     resetTransactionPassword: (p, c, f) => PFetch(api + "/User/resetTransactionPassword", p, c, f),
 
+    //登录时校验注册用户信息
+    validaterRegisterUserInfo:(p, c, f) => BFetch(pub + "validaterRegisterUserInfo", p, c, f),
+
     forceLogOut: ()=> {
         AppDispatcher.dispatch({type: ActionTypes.FORCE_LOGOUT});
     },

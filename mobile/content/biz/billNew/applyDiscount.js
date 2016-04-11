@@ -34,6 +34,7 @@ var ApplyDis = React.createClass({
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
+
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
         var acceptanceJson = JSON.parse(acceptanceBankBeans);
 
@@ -45,18 +46,18 @@ var ApplyDis = React.createClass({
                 discountRate:0
             });
         } else {
-            let res;
-            acceptanceJson.map((item, index)=> {
-                if (item.description == '利率最低') {
-                    res = item
-                }
-            })
-
-            this.setState({
-                discountBankName: res.bankName,
-                description:res.description,
-                discountRate:res.discountRate
-            });
+            //let res;
+            //acceptanceJson.map((item, index)=> {
+            //    if (item.description == '利率最低') {
+            //        res = item
+            //    }
+            //})
+            //
+            //this.setState({
+            //    discountBankName: res.bankName,
+            //    description:res.description,
+            //    discountRate:res.discountRate
+            //});
         }
     },
     //componentDidMount(){
@@ -118,6 +119,9 @@ var ApplyDis = React.createClass({
             </View>
         );
     },
+
+
+
     renderSelectBank(){
         var {height, width} = Dimensions.get('window');
         return (

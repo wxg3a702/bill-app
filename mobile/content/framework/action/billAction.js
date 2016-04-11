@@ -13,7 +13,7 @@ var BillActions = {
     sendSMSCodeForDiscount: (p, c, f)=>BFetch(api + "/User/sendSMSCodeToOldMobile", p, c, f),
     validateMobileForDiscount: (p, c, f)=>PFetch(api + "/User/validateSMSCodeAfterLogin", p, c, f),
     validateTransPWD: (p, c, f)=>PFetch(api + "/User/validateTransPWD", p, c, f),
-    setDemoFlag: ()=> _setDemoFlag,
+    setDemoFlag: ()=> _setDemoFlag(),
 }
 var _setDemoFlag = function () {
     AppDispatcher.dispatch({

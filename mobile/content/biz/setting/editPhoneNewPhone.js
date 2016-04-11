@@ -79,7 +79,7 @@ var EditPhoneNewPhone = React.createClass({
                 </View>
 
                 <View style={{marginTop:20,marginLeft:10,marginRight:10}}>
-                    <Button  func={this.next} checked={this.state.checked} content='确定' />
+                    <Button  func={this.next} checked={this.state.checked} content='下一步' />
                 </View>
 
             </NavBarView>
