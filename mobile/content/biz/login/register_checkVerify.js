@@ -40,7 +40,7 @@ var Register_checkVerify = React.createClass({
     next: function () {
         if (this.state.verify.length == 0) {
         } else {
-            var isVerify = this.isVerify();
+            this.isVerify();
         }
     },
     isVerify(){

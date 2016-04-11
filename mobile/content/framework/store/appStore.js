@@ -499,6 +499,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         case ActionTypes.DEMO_FLAG:
             _data.demoFlag = {id: _data.userInfoBean.id, flag: true};
             Persister.saveAppData(_data);
+            break;
         //Persister.saveDemoFlag({flag: true, id: AppStore.getUserId()});
         case ActionTypes.GET_PUSH_MSG:
             _getPushMsg(action.data);

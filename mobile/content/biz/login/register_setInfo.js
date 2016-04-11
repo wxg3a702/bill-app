@@ -66,7 +66,7 @@ var Register_setInfo = React.createClass({
                 return false;
             }
             if (this.state.password == this.state.passwordAgain) {
-                var setInfo = this.setInfo();
+                this.setInfo();
             } else {
                 Alert("密码输入不一致，请重新输入")
             }
@@ -78,33 +78,28 @@ var Register_setInfo = React.createClass({
     },
     setInfo(){
         dismissKeyboard();
-
-        const { navigator } = this.props;
-        if (navigator) {
-            navigator.push({
-                comp: Register_setTradingPWD,
-                param:{
-                    mobileNo: this.props.param.mobileNo,
-                    userName:this.state.userName,
-                    password:this.state.password,
+        LoginAction.validaterRegisterUserInfo(
+            {
+                userName: this.state.userName,
+                password: this.state.password
+            },
+            function () {
+                const { navigator } = this.props;
+                if (navigator) {
+                    navigator.push({
+                        comp: Register_setTradingPWD,
+                        param:{
+                            mobileNo: this.props.param.mobileNo,
+                            userName:this.state.userName,
+                            password:this.state.password,
+                        }
+                    });
                 }
-            });
-        }
-
-        //LoginAction.register(
-        //    {
-        //        userName: this.state.userName,
-        //        password: this.state.password
-        //    },
-        //    function () {
-        //        const { navigator } = this.props;
-        //        if (navigator) {
-        //            navigator.replace({
-        //                comp: GotoReister
-        //            });
-        //        }
-        //    }.bind(this)
-        //)
+            }.bind(this),
+            function (msg){
+                Alert(msg.msgContent);
+            }
+        )
     },
 
     render: function () {

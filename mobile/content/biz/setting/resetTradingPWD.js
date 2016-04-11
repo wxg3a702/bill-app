@@ -84,17 +84,20 @@ var ResetTradingPWD = React.createClass({
                 }
             }.bind(this),
             function(msg){
-                const {navigator} = this.props;
-                console.log(msg.msgContent);
-                if(navigator){
-                    navigator.push({
-                        comp:EditTradingPWDsuccess,
-                        param:{
-                            resetSuccess:false,
-                        }
-                    });
-                }
-            }.bind(this)
+                Alert(msg.msgContent);
+            }
+            //function(msg){
+            //    const {navigator} = this.props;
+            //    console.log(msg.msgContent);
+            //    if(navigator){
+            //        navigator.push({
+            //            comp:EditTradingPWDsuccess,
+            //            param:{
+            //                resetSuccess:false,
+            //            }
+            //        });
+            //    }
+            //}.bind(this)
         );
     },
 

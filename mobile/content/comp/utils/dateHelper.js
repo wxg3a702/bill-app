@@ -62,7 +62,7 @@ module.exports = {
         return dateFormat(new Date(data), 'yyyy年mm月dd日 HH:MM')
     },
     formatBillList(data){
-        return dateFormat(new Date(data), 'yyyy.mm.dd HH:MM')
+        return dateFormat(new Date(data), 'yyyy.mm.dd')
     },
     formatBillContent(data){
         return dateFormat(new Date(data), 'yyyy年mm月dd日')

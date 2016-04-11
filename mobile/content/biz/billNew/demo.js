@@ -47,7 +47,8 @@ var Demo = React.createClass({
                 dataSource={this.state.dataSource}
                 renderPage={this._renderPage}
                 onChangePage={this._onChangePage}
-                isLoop={true}
+                isLoop={false}
+                locked={true}
                 autoPlay={false}/>
         );
     }

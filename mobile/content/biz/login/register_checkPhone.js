@@ -60,7 +60,7 @@ var Register_checkPhone = React.createClass({
             if (!Validation.isPhone(this.state.phoneNumber)) {
                 return false;
             } else {
-                var isCheckPhone = this.checkPhone();
+                this.checkPhone();
             }
 
         }
