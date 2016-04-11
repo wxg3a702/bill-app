@@ -14,6 +14,8 @@ var NavBarView = require('../../framework/system/navBarView')
 var dateFormat = require('dateformat')
 var date = dateFormat(new Date(), 'yyyy-mm-dd');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
+var Alert = require('../../comp/utils/alert');
+
 var TextEdit = React.createClass({
     getInitialState: function () {
         var value = this.props.param.value;
@@ -85,7 +87,7 @@ var TextEdit = React.createClass({
         }
         if (this.props.param.type == 'number') {
             this.setState({
-                newValue: Number(this.state.newValue)
+                newValue: this.state.newValue
             })
         }
         if (this.props.param.type == 'telephone') {
@@ -95,9 +97,16 @@ var TextEdit = React.createClass({
                 })
             }
         }
+
         dismissKeyboard();
+        var reg = /^\d{5,}$/g;
+
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
 
+        } else if(this.state.newValue.length > this.props.param.maxLength){
+            Alert('字数超过'+ this.props.param.maxLength +'字的限制');
+        } else if(this.props.param.title == 'QQ' && !reg.test(this.state.newValue)){
+            Alert('输入格式不正确');
         } else {
             const {navigator} = this.props;
             this.props.callback(
@@ -117,6 +126,7 @@ var TextEdit = React.createClass({
             )
 
     },
+    
     render: function () {
         if (this.props.param.type == "date") {
             return (

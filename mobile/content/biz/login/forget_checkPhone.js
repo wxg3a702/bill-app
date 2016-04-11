@@ -38,7 +38,7 @@ var Forget_checkPhone = React.createClass({
             if (!Validation.isPhone(this.state.phoneNumber)) {
                 return false;
             } else {
-                var isCheckPhone = this.checkPhone();
+                this.checkPhone();
             }
         }
     },
@@ -72,7 +72,7 @@ var Forget_checkPhone = React.createClass({
                            onChanged={this.handleChanged} icon="phone"/>
                     <VerifyCode ref="verifyCode" onChanged={this.handleChanged}/>
                     <View style={{marginTop:36}}>
-                        <Button func={this.next} checked={this.state.checked} content='下一步'/>
+                        <Button func={() => this.next()} checked={this.state.checked} content='下一步'/>
                     </View>
                 </View>
             </NavBarView>

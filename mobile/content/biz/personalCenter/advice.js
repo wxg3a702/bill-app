@@ -19,6 +19,8 @@ var Advice = React.createClass({
     submit(){
         if(this.state.opinion.length == 0){
 
+        }else if(this.state.opinion.length > 300){
+           Alert('请输入300字以内意见')
         }else{
             const { navigator } = this.props;
             UserAction.feedbackOpinion(
@@ -47,6 +49,11 @@ var Advice = React.createClass({
                 opinion:text,
             });
 
+        }else if(text.length > 300){
+            this.setState({
+                rightTopButtonColor:'red',
+                opinion:text,
+            });
         }else {
             this.setState({
                 rightTopButtonColor:'#44bcbc',
@@ -64,7 +71,7 @@ var Advice = React.createClass({
                 <TextInput placeholder="尊敬的用户，您遇到什么问题，想要什么功能，都可以在这里向我们反馈，我们需要你们的帮助" autoCapitalize="none"
                            style={{borderRadius:5,marginTop:10,fontSize: 14,paddingHorizontal:10,paddingTop:5,marginHorizontal:10,height:160,borderColor:'#cccccc',backgroundColor:'white'}}
                            multiline={true}
-                           maxLength={30}
+                           maxLength={300}
                            onChangeText={(text) => this.textChange(text)}/>
             </NavBarView>
         )

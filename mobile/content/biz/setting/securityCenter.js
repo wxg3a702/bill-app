@@ -15,7 +15,7 @@ var NavBarView = require('../../framework/system/navBarView')
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
-var EditTradingPWD = require('./editTradingPWD');
+var VerifyOldTradingPWD = require('./verifyOldTradingPWD');
 
 var SecurityCenter = React.createClass({
     getStateFromStores() {
@@ -60,7 +60,7 @@ var SecurityCenter = React.createClass({
         const { navigator } = this.props;
         if(navigator) {
             navigator.push({
-                comp:EditTradingPWD
+                comp:VerifyOldTradingPWD
             });
         }
     },
@@ -93,7 +93,7 @@ var SecurityCenter = React.createClass({
                             <View style={[styles.flexOne,styles.flexRow,{alignItems:'center'}]}>
                                 <Image style={styles.circle} source={require('../../image/user/editPwd.png')}/>
                                 <View style={{marginLeft:16}}>
-                                    <Text style={styles.title}>修改密码</Text>
+                                    <Text style={styles.title}>修改登录密码</Text>
                                 </View>
                             </View>
                             <View style={[styles.flexRow]}>

@@ -120,7 +120,12 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={styles.smsTimerViewItem}>
-                        <SMSTimer ref="smsTimer" func={'afterLoginSendSMSCodeToOldMobile'} isNeed={true} style={styles.flex} onChanged={this.handleChanged}>
+                        <SMSTimer ref="smsTimer"
+                                  func={'afterLoginSendSMSCodeToOldMobile'}
+                                  isNeed={true}
+                                  style={styles.flex}
+                                  onChanged={this.handleChanged}
+                                  isLogin={true}  >
                         </SMSTimer>
                     </View>
 

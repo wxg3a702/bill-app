@@ -21,15 +21,12 @@ var SMSTimer = React.createClass({
             time: "60秒",
             active: '',
             click: false,
+            isNeed:this.props.isNeed,
         };
     },
-    getDefaultProps(){
-      return{
-          isNeed:false
-      }
-    },
+
     changeVerify: function () {
-        if (this.state.time == "重新获取" || this.props.isNeed) {
+        if (this.state.time == "重新获取") {
             LoginAction[this.props.func](
                 {
                     mobileNo: this.props.parameter
@@ -54,7 +51,7 @@ var SMSTimer = React.createClass({
     },
 
     afterLoginChangeVerify:function(){
-        if (this.state.time == "重新获取" || this.props.isNeed) {
+        if (this.state.time == "重新获取" || this.state.isNeed) {
            BillAction.sendSMSCodeForDiscount(
                 {
                     mobileNo: this.props.parameter
@@ -67,13 +64,18 @@ var SMSTimer = React.createClass({
                         tim: this.setInterval(this.updateText, 1000)
                     })
                 }.bind(this)
-            )
+            );
+
+              this.state.isNeed=false;
+
         } else if (this.state.time == "60秒") {
             this.setState({
                 startTime: new Date().getTime(),
                 deadline: 60,
                 tim: this.setInterval(this.updateText, 1000)
-            })
+            });
+
+            this.state.isNeed=true;
         }
     },
 

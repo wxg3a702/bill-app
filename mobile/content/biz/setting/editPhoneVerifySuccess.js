@@ -6,8 +6,9 @@ var {
     View,
     Image,
     } = React;
-var RightTopButton = require('../../comp/utilsUi/rightTopButton')
-var NavBarView = require('../../framework/system/navBarView')
+var RightTopButton = require('../../comp/utilsUi/rightTopButton');
+var NavBarView = require('../../framework/system/navBarView');
+
 var EditPhoneVerifySuccess = React.createClass({
     button(){
         return (
@@ -17,7 +18,7 @@ var EditPhoneVerifySuccess = React.createClass({
     back: function () {
         const { navigator } = this.props;
         if (navigator) {
-            navigator.popToTop()
+            navigator._popN(4);
         }
     },
     render: function () {
