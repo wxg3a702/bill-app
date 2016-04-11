@@ -18,6 +18,7 @@ var AboutUs = React.createClass({
             phone: '021-35885888-2627',
             email: 'contacts@izirong.com',
             web: 'www.izirong.com',
+            chat: 'bill',
             content: '       票易贴是安硕织信旗下的金融新产品，以“服务”为本，创新“互联网+票据”，坚定打造真正服务于中小微企业用户的票据贴现互联网平台，为企业票据融资提供渠道，切实帮助中小微企业解决资金短缺问题，助力企业发展。'
         }
     },
@@ -61,6 +62,7 @@ var AboutUs = React.createClass({
                     <Item desc="客服热线:" img={false} icon={false} top={true} value={this.state.phone} func={this.send}/>
                     <Item desc="网站邮箱:" img={false} icon={false} value={this.state.email}/>
                     <Item desc="官方网站:" img={false} icon={false} value={this.state.web}/>
+                    <Item desc="官方微信:" img={false} icon={false} value={this.state.chat}/>
                     <Item desc="平台优势:" img={false} func={this.toAdvantage}/>
                 </View>
                 <View style={{paddingTop:32,alignItems:'center'}}>

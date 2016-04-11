@@ -40,7 +40,7 @@ var MXAlert = function (title, _ok, _cancel) {
     if (Platform.OS == 'ios') {
         AlertIOS.alert(title, null, btnAry);
     } else {
-        Alert.alert(title, null, btnAry)
+        Alert.alert("提示", title, btnAry)
     }
 }
 module.exports = MXAlert;

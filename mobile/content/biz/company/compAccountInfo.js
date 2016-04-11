@@ -81,7 +81,13 @@ var CompAccountInfo = React.createClass({
         }
         CompAction.submitOrg(
             this.state.newOrg,
-            ()=>this.props.navigator.push({comp: CertifySuccess}),
+            ()=>{
+                //this.props.navigator.push({comp: CertifySuccess})
+                Alert("资料提交成功,请耐心等待认证结果", () => {
+                    var routes = this.props.navigator.getCurrentRoutes();
+                    this.props.navigator.popToRoute(routes[routes.length - 4]);
+                })
+            },
             ()=>Alert("认证失败")
         )
     },
@@ -117,11 +123,11 @@ var CompAccountInfo = React.createClass({
                     <Input type='name' prompt="账户名称" max={50} field="accountName" isPwd={false}
                            defaultValue={this.state.accountName}
                            onChanged={this.handleChanged} icon="user"/>
-                    <Input type='default' prompt="账户" max={20} field="accountNo" isPwd={false}
+                    <Input type='default' prompt="账号" max={50} field="accountNo" isPwd={false}
                            defaultValue={this.state.accountNo}
                            onChanged={this.handleChanged} icon="user"
                            isPhone={true}/>
-                    <Input type='name' prompt="开户行" max={20} field="openBank" isPwd={false}
+                    <Input type='name' prompt="开户行" max={50} field="openBank" isPwd={false}
                            defaultValue={this.state.openBank}
                            onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:18}}>

@@ -187,7 +187,7 @@ var CompCertifyCopies = React.createClass({
         let data = this.state.data;
         let url;
         if (!_.isEmpty(this.state[name])) {
-            if (this.state[name].indexOf("@userId") > -1) {
+            if (this.state[name].indexOf("_userId") > -1) {
                 url = {uri: UserAction.getFile(this.state[name])}
             } else {
                 url = {uri: this.state[name]};
@@ -216,16 +216,16 @@ var CompCertifyCopies = React.createClass({
                                                 activeOpacity={0.6} underlayColor="#ebf1f2">
                                 <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover"
                                        source={url}>
-                                    <Text style={{fontSize:11,color:'white'}}>{certResultBeans[name].resultValue=="qq"}</Text>
+                                    <Text style={{fontSize:11,color:'white'}}>{certResultBeans[name].resultValue}</Text>
                                 </Image>
                             </TouchableHighlight>
                         )
                     } else {
                         return (
-                            <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
-                                                underlayColor="#ebf1f2">
-                                <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
-                            </TouchableHighlight>
+                          <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
+                                              underlayColor="#ebf1f2">
+                              <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
+                          </TouchableHighlight>
                         )
                     }
                 }
@@ -350,7 +350,7 @@ var CompCertifyCopies = React.createClass({
                         <View style={styles.licenseItem}>
                             <Text style={{fontSize:18,color:"#333333"}}>法定代表人</Text>
                             <Text
-                                style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>{}</Text>
+                                style={{fontSize:15,color:"#7F7F7F",width:Adjust.width(192),textAlign:"right"}}>{this.state.data.stdOrgBean.legalPersonName}</Text>
                         </View>
                     </View>
                 </View>
@@ -403,7 +403,7 @@ var styles = StyleSheet.create({
     image: {
         height: 113,
         width: Dimensions.get("window").width / 2 - 18,
-        marginTop: 5,
+        marginTop: 5
     },
     copyName: {
         alignItems: "center",
