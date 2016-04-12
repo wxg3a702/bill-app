@@ -10,6 +10,7 @@ var AppStore = require('../../framework/store/appStore');
 var NavBarView = require('../../framework/system/navBarView')
 var Space = require('../../comp/utilsUi/space')
 var CommonAction = require('../../framework/action/commonAction');
+var NotificationManager = require('../../framework/system/notificationManager');
 var Notice = React.createClass({
     getStateFromStores(){
         return {
@@ -31,7 +32,8 @@ var Notice = React.createClass({
                 value: text,
                 type: type
             },
-            ()=> {}
+            () => text? NotificationManager.openNotification():NotificationManager.closeNotification()
+
         )
     },
     render(){

@@ -29,7 +29,17 @@ var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var Communications = require('../personalCenter/communication');
 var CompCertifyCopies = React.createClass({
     getStateFromStores(){
-        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item
+        var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item;
+        let title;
+        if (this.props.param.item) {
+            if (newOrg.status == 'CERTIFIED'){
+                title = newOrg.stdOrgBean.orgName;
+            } else {
+                title = newOrg.orgName;
+            }
+        } else {
+            title = '1.认证资料副本';
+        }
         return {
             licenseCopyFileId: newOrg.licenseCopyFileId,
             authFileId: newOrg.authFileId,
@@ -46,7 +56,9 @@ var CompCertifyCopies = React.createClass({
             licenseCopyFileIdClick: false,
             corpIdentityFileIdClick: false,
             authFileIdClick: false,
-            authIdentityFileIdClick: false
+            authIdentityFileIdClick: false,
+            checked: true,
+            title: title
         }
     },
 
@@ -199,7 +211,7 @@ var CompCertifyCopies = React.createClass({
                     </Image>
                 )
             } else {
-                let certResultBeans = this.state.newOrg.certResultBeans
+                let certResultBeans = this.state.newOrg.certResultBeans;
                 if (!certResultBeans) {
                     return (
                         <TouchableHighlight
@@ -209,7 +221,32 @@ var CompCertifyCopies = React.createClass({
                         </TouchableHighlight>
                     )
                 } else {
-                    let flag = !certResultBeans[name] ? false : true
+                    let isError = false;
+                    for (let item of certResultBeans){
+                        console.log(item);
+                        if (item.columnName == name){
+                            isError = true;
+                            return (
+                              <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
+                                                  activeOpacity={0.6} underlayColor="#ebf1f2">
+                                  <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover"
+                                         source={url}>
+                                      <Text style={{fontSize:11,color:'white'}}>{item.resultValue}</Text>
+                                  </Image>
+                              </TouchableHighlight>
+                            )
+                            break;
+                        }
+                    }
+                    if (!isError) {
+                        return (
+                          <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
+                                              underlayColor="#ebf1f2">
+                              <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
+                          </TouchableHighlight>
+                        )
+                    }
+                    /*let flag = certResultBeans[name];
                     if (flag) {
                         return (
                             <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}}
@@ -227,7 +264,7 @@ var CompCertifyCopies = React.createClass({
                               <Image style={[styles.image,styles.radius]} resizeMode="cover" source={url}/>
                           </TouchableHighlight>
                         )
-                    }
+                    }*/
                 }
             }
         } else {
@@ -287,6 +324,9 @@ var CompCertifyCopies = React.createClass({
                     }
                 })()}
                 <View style={{flexDirection:"row"}}>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA, marginTop: 1}}>
+                        {certificateState[status].alter}
+                    </Text>
                     <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
                         如遇问题,请
                     </Text>
@@ -359,7 +399,7 @@ var CompCertifyCopies = React.createClass({
     },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="1.认证资料副本">
+            <NavBarView navigator={this.props.navigator} title={this.state.title}>
                 <ScrollView>
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
                         {this.returnImg()}
