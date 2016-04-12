@@ -29,7 +29,7 @@ var LoginActions = {
     resetTransactionPassword: (p, c, f) => PFetch(api + "/User/resetTransactionPassword", p, c, f),
 
     //登录时校验注册用户信息
-    validaterRegisterUserInfo:(p, c, f) => BFetch(pub + "validaterRegisterUserInfo", p, c, f),
+    validaterRegisterUserInfo:(p, c, f) => BFetch(pub + "/validaterRegisterUserInfo", p, c, f),
 
     forceLogOut: ()=> {
         AppDispatcher.dispatch({type: ActionTypes.FORCE_LOGOUT});
@@ -44,7 +44,9 @@ var _logout = function (url, c) {
             AppDispatcher.dispatch({
                 type: ActionTypes.LOGOUT,
             });
-        }, null, {isLogout: true}
+        },
+        null,
+        {isLogout: true}
     )
 }
 

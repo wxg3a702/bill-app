@@ -9,7 +9,10 @@ var {
     StyleSheet,
     Dimensions
     } = React;
-var VIcon = require('../icon/vIcon')
+
+var VIcon = require('../icon/vIcon');
+var ScreenWindow = Dimensions.get('window');
+
 var Item = React.createClass({
     getDefaultProps(){
         return {
@@ -36,14 +39,21 @@ var Item = React.createClass({
         return (
             <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.props.func}>
                 <View style={[styles.listLayout,this.props.top && styles.borderTop]}>
+
                     <View style={{flex:1,flexDirection:'row'}}>
                         {this.returnImg()}
                         <Text style={styles.title} numberOfLines={1}>{this.props.desc}</Text>
                     </View>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Text style={[{fontSize: 15,color: '#7f7f7f'}]}>{this.props.value}</Text>
-                        {this.returnIcon()}
+
+                    <View style={[{flexDirection:'row',alignItems:'center'},{justifyContent:'space-between'}]}>
+                        <Text style={[{fontSize: 15,color: '#7f7f7f',width:ScreenWindow.width-180,textAlign:'right'}]}
+                              numberOfLines={1}
+                        >
+                            {this.props.value}
+                        </Text>
                     </View>
+                    {this.returnIcon()}
+
                 </View>
             </TouchableHighlight>
         )

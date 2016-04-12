@@ -26,10 +26,12 @@ var Space = require('../../comp/utilsUi/space')
 var CompStore = require('../../framework/store/compStore');
 var PersonalCenter = React.createClass({
     getStateFromStores() {
+
         var token = AppStore.getToken();
         var user = UserStore.getUserInfoBean();
         var certifiedOrgBeans = CompStore.getCertifiedOrgBean();
         var orgNum = 0;
+
         if (token == null) {
             return {
                 userName: '未登录',
@@ -43,14 +45,14 @@ var PersonalCenter = React.createClass({
                     orgNum = orgNum + (obj.status == '' ? 1:0)
                 });
             }
-            return {
-                token: token,
-                userName: user.userName,
-                userType: user.userType,
-                userTypeValue: (user.userType == "REGISTERED" && orgNum == 0) ? "注册用户" : "认证用户",
-                photoStoreId: user.photoStoreId
-            };
         }
+        return {
+            token: token,
+            userName: user.userName,
+            userType: user.userType,
+            userTypeValue: (user.userType == "REGISTERED" && orgNum == 0) ? "注册用户" : "认证用户",
+            photoStoreId: user.photoStoreId
+        };
     },
 
     getInitialState: function () {
@@ -92,10 +94,12 @@ var PersonalCenter = React.createClass({
     },
     returnPic(){
         var source
-        if (this.state.userType == 'REGISTERED') {
+        if (this.state.userType == 'REGISTERED' ) {
             source = require('../../image/personalCenter/register.png');
-        } else {
+        } else if(this.state.userType == 'CERTIFIED' ) {
             source = require('../../image/personalCenter/certify.png');
+        }else {
+            source = require('../../image/personalCenter/user_Nologin.png');
         }
         return source;
     },
@@ -104,25 +108,35 @@ var PersonalCenter = React.createClass({
             <NavBarView navigator={this.props.navigator} title="个人中心" showBack={false} showBar={true}>
                 <Space top={false}/>
                 <View style={{backgroundColor:'white'}}>
+
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#f0f0f0'
                                         onPress={()=>this.toPage(()=>this.toOther(UserInfo))}>
                         <View style={styles.layout}>
                             <View style={{flexDirection:'row'}}>
+
                                 <Image style={styles.head} resizeMode="cover" source={this.returnImg()}/>
+
                                 <View style={{marginLeft:13,marginTop:10}}>
+
                                     <Text style={{fontSize: 18,color: '#323232'}}>{this.state.userName}</Text>
+
                                     <View style={{flexDirection:'row',alignItems:'flex-end'}}>
+
                                         <Image style={styles.circle} resizeMode="cover" source={this.returnPic()}/>
+
                                         <Text style={{marginTop:16,marginLeft:8, fontSize: 15,color: '#7f7f7f'}}>
                                             {this.state.userTypeValue}
                                         </Text>
+
                                     </View>
                                 </View>
                             </View>
                             <VIcon/>
                         </View>
                     </TouchableHighlight>
+
                     <Space/>
+
                     <Item func={()=>this.toPage(()=>this.toOther(Setting))} desc="设置"
                           imgPath={require('../../image/personalCenter/securityCenter.png')}/>
                     <Item func={()=>this.toPage(()=>this.toOther(CompCertification))} desc="企业认证"
@@ -135,6 +149,7 @@ var PersonalCenter = React.createClass({
                           imgPath={require('../../image/personalCenter/advice.png')}/>
                     <Item func={()=>this.toOther(AboutUs)} desc="关于我们"
                           imgPath={require('../../image/personalCenter/aboutUs.png')}/>
+
                 </View>
             </NavBarView>
         )

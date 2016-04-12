@@ -107,6 +107,10 @@ var _appInit = function (data) {
 //
 var _login = function (data) {
     var id = data.userInfoBean.id;
+    // modify isLogOutFlag
+    info.isLogout = false;
+    info.isForce_Logout = false;
+
     Persister.getAppData((d) => {
         data.demoFlag = d.demoFlag;
         if (!d.demoFlag) {

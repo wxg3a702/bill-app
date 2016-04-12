@@ -48,14 +48,19 @@ var EditPhoneVerify = React.createClass({
                 newMobileNo: this.props.param.phoneNumber,
                 smsCode: this.state.verify
             },
-            function (msg) {
-                const { navigator } = this.props;
-                if (navigator) {
-                    navigator.push({
-                        comp: EditPhoneVerifySuccess,
+            function(){
+                Alert('修改成功!',
+                    ()=>{
+                        const { navigator } = this.props;
+                        if (navigator) {
+                            navigator._popN(3);
+                        }
                     });
-                }
-            }.bind(this))
+                }.bind(this),
+            function(){
+
+            }
+        )
     },
     handleChanged(key, value){
         this.textOnchange(value, key);

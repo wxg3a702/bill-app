@@ -66,7 +66,7 @@ var Forget_checkVerify = React.createClass({
                     <Text style={[styles.marginTitle]}>请输入{this.state.phoneNum}收到的短信验证码</Text>
                     <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'sendSMSCodeToOldMobile'}/>
                     <View style={{marginTop:36}}>
-                        <Button func={() => this.next()} checked={this.state.checked} content='下一步'/>
+                        <Button func={this.next} checked={this.state.checked} content='下一步'/>
                     </View>
                 </View>
             </NavBarView>
