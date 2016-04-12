@@ -73,31 +73,13 @@ var ResetTradingPWD = React.createClass({
                 transPWD:this.state.transPWD
             },
             function(){
-                const {navigator} = this.props;
-                if(navigator){
-                    navigator.push({
-                        comp:EditTradingPWDsuccess,
-                        param:{
-                            resetSuccess:true,
-                        }
-                    });
-                }
+                Alert('修改成功!请妥善保管您的交易密码',
+                    ()=>{this.props.navigator._popN(2)}
+                )
             }.bind(this),
             function(msg){
                 Alert(msg.msgContent);
             }
-            //function(msg){
-            //    const {navigator} = this.props;
-            //    console.log(msg.msgContent);
-            //    if(navigator){
-            //        navigator.push({
-            //            comp:EditTradingPWDsuccess,
-            //            param:{
-            //                resetSuccess:false,
-            //            }
-            //        });
-            //    }
-            //}.bind(this)
         );
     },
 
@@ -108,11 +90,25 @@ var ResetTradingPWD = React.createClass({
                 <View  style={[styles.flex,{marginLeft:10,marginRight:10}]}>
 
                     <View style={styles.inputViewItem}>
-                        <Input type='default' prompt='交易密码' max={6} field='transPWD' isPwd={true}
-                               onChanged={this.handleChanged} icon='trading_PWD'/>
+                        <Input type='default'
+                               prompt='交易密码'
+                               max={6}
+                               field='transPWD'
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon='trading_PWD'
+                               isPhone="numeric"
+                        />
 
-                        <Input type='default' prompt='再输一次交易密码' max={6} field='transPWD_Again' isPwd={true}
-                               onChanged={this.handleChanged} icon='trading_PWD'/>
+                        <Input type='default'
+                               prompt='再输一次交易密码'
+                               max={6}
+                               field='transPWD_Again'
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon='trading_PWD'
+                               isPhone="numeric"
+                        />
                     </View>
 
                     <View style={{marginTop:36}}>

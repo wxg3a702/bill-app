@@ -12,6 +12,7 @@ var Button = require('../../comp/utilsUi/button');
 var Validation = require('../../comp/utils/validation');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
+
 var Forget_setPassword = React.createClass({
     getInitialState: function () {
         return {

@@ -130,8 +130,16 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={styles.inputViewItem}>
-                        <Input type='default' prompt='旧交易密码' max={6} field='oldTransactionPassword' isPwd={true}
-                               onChanged={this.handleChanged}  icon='trading_PWD' style={styles.flex} />
+                        <Input type='default'
+                               prompt='旧交易密码'
+                               max={6}
+                               field='oldTransactionPassword'
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon='trading_PWD'
+                               isPhone="numeric"
+                               style={styles.flex}
+                        />
                     </View>
 
                     <View style={{marginTop:40}}>

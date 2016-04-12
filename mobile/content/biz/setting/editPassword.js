@@ -10,14 +10,18 @@ var NavBarView = require('../../framework/system/navBarView')
 var Input = require('../../comp/utilsUi/input')
 var Validation = require('../../comp/utils/validation')
 var Alert = require('../../comp/utils/alert');
+var Button = require('../../comp/utilsUi/button');
+
 var EditPassword = React.createClass({
     getInitialState: function () {
         return {
             password: '',
             newPassword: '',
-            confirmNewPassword: ''
+            confirmNewPassword: '',
+            checked:true
         };
     },
+
     next: function () {
         if (this.state.password.length == 0 || this.state.newPassword.length == 0 || this.state.confirmNewPassword.length == 0) {
             Alert("请完整输入密码");
@@ -44,6 +48,7 @@ var EditPassword = React.createClass({
             var confirmPassword = this._confirmPassword();
         }
     },
+
     _confirmPassword(){
         LoginAction.resetPasswordForChangePwd(
             {
@@ -55,20 +60,28 @@ var EditPassword = React.createClass({
             }.bind(this)
         )
     },
-    button(){
-        return (
-            <RightTopButton func={this.next} content="确定"/>
-        )
-    },
+
     back: function () {
         this.props.navigator.pop();
     },
+
     handleChanged(key, value){
-        this.setState({[key]: value});
+        this.textOnchange(value, key);
     },
+
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (this.state.password.length == 0 || this.state.newPassword.length == 0 || this.state.confirmNewPassword.length == 0) {
+            this.setState({checked: true})
+        } else {
+            this.setState({checked: false})
+        }
+    },
+
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="修改登录密码" actionButton={this.button()}>
+            <NavBarView navigator={this.props.navigator} title="修改登录密码">
+
                 <View style={{flexDirection: 'column',paddingHorizontal:12}}>
                     <Input type='default' prompt="请输入旧密码" max={16} field="password" isPwd={true}
                            onChanged={this.handleChanged} icon="password"/>
@@ -77,6 +90,11 @@ var EditPassword = React.createClass({
                     <Input type='default' prompt="确认新密码" max={16} field="confirmNewPassword" isPwd={true}
                            onChanged={this.handleChanged} icon="password"/>
                 </View>
+
+                <View style={{marginTop:20,marginLeft:10,marginRight:10}}>
+                    <Button  func={this.next} checked={this.state.checked} content=' 确定' />
+                </View>
+
             </NavBarView>
         )
     }

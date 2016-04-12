@@ -8,6 +8,7 @@ var {
     View,
     Platform
     } = React;
+
 var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var LoginAction = require("../../framework/action/loginAction");
@@ -19,6 +20,8 @@ var VerifyCode = require('../../comp/utilsUi/verifyCode');
 var Button = require('../../comp/utilsUi/button');
 var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
+var TabView = require('../../framework/system/tabView');
+
 var Login = React.createClass({
     getStateFromStores() {
         var user = UserStore.getUserInfoBean();
@@ -65,8 +68,11 @@ var Login = React.createClass({
                     captcha: this.state.verify
                 },
                 () => {
-                    //CommonAction.freshNotification();
-                    this.props.navigator.pop()},
+                    const { navigator } = this.props;
+                    if (navigator) {
+                        navigator.resetTo({comp: 'tabView'})
+                    }
+                },
                 (msg)=> {
                     Alert(msg.msgContent);
                     this.refs['verifyCode'].changeVerify()

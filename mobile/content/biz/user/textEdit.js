@@ -99,7 +99,11 @@ var TextEdit = React.createClass({
         }
 
         dismissKeyboard();
+
+        //最小5位全数字筛选
         var reg = /^\d{5,}$/g;
+
+        //中英文,下划线筛选
         var reg_userName = /^[a-zA-Z0-9_\u4e00-\u9fa5]+$/g;
 
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
