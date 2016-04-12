@@ -21,6 +21,7 @@ var TextEdit = require('./../user/textEdit');
 var NavBarView = require('../../framework/system/navBarView')
 var Alert = require('../../comp/utils/alert');
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
+var Input = require('../../comp/utilsUi/input');
 var DatePicker = require('NativeModules').DatePickerDialogModule;
 var now = new Date();
 var year = now.getFullYear();    //获取完整的年份(4位,1970-????)
@@ -36,7 +37,8 @@ var Calculator = React.createClass({
             amount: '',
             discountAmount: '',
             actAmount: '',
-            interestDay: ''
+            interestDay: '',
+            checked: true
         }
     },
     componentDidMount() {
@@ -98,10 +100,10 @@ var Calculator = React.createClass({
             Alert("请填写到期日")
             return false;
         }
-        if (this.state.monthRate == 0) {
-            Alert("请填写月利率")
-            return false;
-        }
+        //if (this.state.monthRate == 0) {
+        //    Alert("请填写月利率")
+        //    return false;
+        //}
         var reg = /^\d{1,6}(\.\d{1,2})?$/
         if (!reg.test(this.state.amount)) {
             Alert("票面金额在0~999999.99之间");
@@ -145,15 +147,30 @@ var Calculator = React.createClass({
                 <Text style={[styles.text,{width:Adjust.width(109)}]}>{desc}</Text>
                 <View style={{flex:1}}>
                     <TextInput style={{height:32,fontSize:15,color:'#7f7f7f'}}
+                               ref={key}
                                underlineColorAndroid="transparent"
                                keyboardType="numeric" maxLength={max}
-                               onChangeText={(text) => this.setState({[key]:text})} value={this.state[key]}
+                               onChangeText={(text) => this.handleChanged(key, text)} defaultValue={this.state[key]}
                                placeholderTextColor='#cccccc' placeholder={holder}/>
                 </View>
                 <Text style={styles.text}>{unit}</Text>
             </View>
         )
     },
+
+    textOnchange: function (text, type) {
+        this.setState({[type]: text})
+        if (_.isEmpty(this.state.amount) || _.isEmpty(this.state.monthRate)) {
+            this.setState({checked: true})
+        } else {
+            this.setState({checked: false})
+        }
+    },
+
+    handleChanged(key, value){
+        this.textOnchange(value, key);
+    },
+
     showDate(word, key, value, type){
          if (Platform.OS == 'ios') {
             this.toEdit(word, key, value, type, '', '')
@@ -205,7 +222,7 @@ var Calculator = React.createClass({
                     {this.returnResult('贴现利息', this.state.discountAmount, '万元')}
                     {this.returnResult('贴现金额', this.state.actAmount, '万元')}
                 </ScrollView>
-                <BottomButton func={this.calculate} content="开始计算"/>
+                <BottomButton func={this.calculate} content="开始计算" checked={this.state.checked}/>
             </NavBarView>
         )
     }

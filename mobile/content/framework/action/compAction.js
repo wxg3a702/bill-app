@@ -91,26 +91,38 @@ var _updateUnAuditing = function (p, c) {
     });
 }
 var _submitOrg = function (p, c, f) {
-    async.series([
-            uploadFileHandle(p, 'licenseCopyFileId'),
-            uploadFileHandle(p, 'corpIdentityFileId'),
-            uploadFileHandle(p, 'authFileId'),
-            uploadFileHandle(p, 'authIdentityFileId')
-        ],
+    let arrs = [uploadFileHandle(p, 'licenseCopyFileId'),
+      uploadFileHandle(p, 'corpIdentityFileId')];
+    if (p.authFileId && !_.isEmpty(p.authFileId)) {
+      arrs.push(uploadFileHandle(p, 'authFileId'))
+    }
+    if (p.authIdentityFileId && !_.isEmpty(p.authIdentityFileId)) {
+      arrs.push(uploadFileHandle(p, 'authIdentityFileId'))
+    }
+    async.series(arrs,
         function (err, res) {
             if (err) {
                 f();
             } else {
+                let params = {
+                  licenseCopyFileId: res[0].licenseCopyFileId.fileId,
+                  corpIdentityFileId: res[1].corpIdentityFileId.fileId,
+                  accountName: p.accountName,
+                  accountNo: p.accountNo,
+                  openBank: p.openBank
+                };
+                if(res.length > 2) {
+                  if (res[2].authFileId && !_.isEmpty(res[2].authFileId)) {
+                    params.authFileId = res[2].authFileId.fileId;
+                    if (res.length > 3 && res[3].authIdentityFileId && !_.isEmpty(res[3].authIdentityFileId)) {
+                      params.authIdentityFileId = res[3].authIdentityFileId.fileId;
+                    }
+                  } else if (res[2].authIdentityFileId && !_.isEmpty(res[2].authIdentityFileId)) {
+                    params.authIdentityFileId = res[2].authIdentityFileId.fileId;
+                  }
+                }
                 BFetch(api + "/Organization/updateOrg",
-                    {
-                        licenseCopyFileId: res[0].licenseCopyFileId.fileId,
-                        corpIdentityFileId: res[1].corpIdentityFileId.fileId,
-                        authFileId: res[2].authFileId.fileId,
-                        authIdentityFileId: res[3].authIdentityFileId.fileId,
-                        accountName: p.accountName,
-                        accountNo: p.accountNo,
-                        openBank: p.openBank
-                    },
+                    params,
                     function (data) {
                         if (!data) {
                             p.id = data.id

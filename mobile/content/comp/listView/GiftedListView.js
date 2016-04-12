@@ -311,6 +311,12 @@ var GiftedListView = React.createClass({
     }
   },
 
+  setDataSource () {
+    this.setState({
+      dataSource: ds.cloneWithRowsAndSections(this._getRows())
+    });
+  },
+
   componentDidMount() {
     this._scrollResponder = this.refs.listview.getScrollResponder();
 
