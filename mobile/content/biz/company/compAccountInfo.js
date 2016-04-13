@@ -117,7 +117,7 @@ var CompAccountInfo = React.createClass({
                 if (item.columnName == 'bankAccountNo') {
                     return (
                       <Text style={{fontSize: 15, color: '#ff5b58',marginBottom:5}}>
-                          未通过，{orgBean.bankAccountNo.resultValue},请修改
+                          未通过,{item.resultValue},请修改
                       </Text>
                     )
                     break;

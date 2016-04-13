@@ -259,7 +259,16 @@ var _updateUserInfo = (data) => {
     Persister.saveAppData(_data);
     AppStore.emitChange();
 }
-
+var _updateBillList = function (role, data) {
+    let type = role == 'payee' ? 'revBillBean' : 'sentBillBean';
+    for (var item of _data[type].contentList) {
+        if (item.billId == data.billId) {
+            item = data;
+            Persister.saveAppData(_data);
+            break;
+        }
+    }
+};
 var _analysisMessageData = function (data) {
     //数据插入到对应的bean中 并替换main里的
     let d = _getMsgBody(data);
@@ -327,6 +336,9 @@ var _analysisMessageData = function (data) {
         default:
             if (data.certifiedOrgBody && !_.isEmpty(data.certifiedOrgBody) && data.certifiedOrgBody.length > 0) {
                 _changeCompStatus(data.certifiedOrgBody);
+            }
+            if (data.billBody && !_.isEmpty(data.billBody) && data.billBody.length > 0) {
+                _updateBillList(data.role, data.billBody);
             }
             break;
     }

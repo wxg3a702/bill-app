@@ -28,7 +28,8 @@ var Input = React.createClass({
                                onChangeText={(text) => this.textOnchange(text,this.props.field)}
                                maxLength={this.props.max} defaultValue={this.props.defaultValue}
                                placeholder={this.props.prompt} secureTextEntry={this.props.isPwd} autoCorrect={false}
-                               autoCapitalize="none" placeholderTextColor="#7f7f7f" clearButtonMode="while-editing"
+                               autoCapitalize="none" placeholderTextColor={this.props.placeholderTextCol ? this.props.placeholderTextCol : "#7f7f7f"}
+                               clearButtonMode="while-editing"
                                keyboardType={this.props.isPhone?'numeric':'ascii-capable'}/>
                 </View>
             )

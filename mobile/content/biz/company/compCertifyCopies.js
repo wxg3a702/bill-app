@@ -57,8 +57,10 @@ var CompCertifyCopies = React.createClass({
             corpIdentityFileIdClick: false,
             authFileIdClick: false,
             authIdentityFileIdClick: false,
-            checked: true,
-            title: title
+            checked: !newOrg.licenseCopyFileId || !newOrg.corpIdentityFileId,
+            title: title,
+            firstIsUpload: newOrg.licenseCopyFileId ? true : false,
+            secondIsUpload: newOrg.corpIdentityFileId ? true : false
         }
     },
 
@@ -121,6 +123,22 @@ var CompCertifyCopies = React.createClass({
             this.selectAndroid(desc, name)
         }
     },
+
+    updateState (name) {
+        if (name == 'licenseCopyFileId' && this.state.checked) {
+            this.setState({firstIsUpload: true});
+            if (this.state.secondIsUpload) {
+                this.setState({checked: false});
+            }
+        }
+        if (name == 'corpIdentityFileId' && this.state.checked) {
+            this.setState({secondIsUpload: true});
+            if (this.state.firstIsUpload) {
+                this.setState({checked: false});
+            }
+        }
+    },
+
     selectIOS(desc, name){
         var options = {
             title: desc, // specify null or empty string to remove the title
@@ -162,6 +180,7 @@ var CompCertifyCopies = React.createClass({
                     CompAction.updateNewOrgInfo(
                         {[name]: source}
                     )
+                    this.updateState(name);
                 } else {
                     CompAction.updateExist(
                         {
@@ -185,6 +204,7 @@ var CompCertifyCopies = React.createClass({
                 CompAction.updateNewOrgInfo(
                     {[name]: source}
                 )
+                this.updateState(name);
             } else {
                 CompAction.updateExist(
                     {
@@ -312,6 +332,24 @@ var CompCertifyCopies = React.createClass({
                 </View>
             )
     },
+    returnWorkNo(){
+        let data = this.state.data;
+        if (data.status == 'AUDITING') {
+            return (
+              <View style={{flexDirection:'row', borderTopWidth:1, borderBottomWidth: 1,
+               borderColor: '#c8c7cc', padding: 16, marginTop: 20, backgroundColor: 'white'}}>
+                  <Text style={{fontSize:14}}>事务号：</Text>
+                  <Text style={{color: '#808080'}}>{this.getWorkNo(0)}</Text>
+              </View>
+            )
+        }
+    },
+    getWorkNo(date){
+        var date = new Date(date);
+        return 'RZ ' + date.getFullYear() + ' ' + ((date.getMonth()+1)>9?(date.getMonth()+1):'0' + (date.getMonth()+1)) +
+          (date.getDate()>9?date.getDate():'0' + date.getDate()) + ' ' + (date.getHours()>9?date.getHours():'0' +
+          date.getHours()) + (date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes());
+    },
     returnWarn(){
         let status = this.state.data.status;
         return (
@@ -401,6 +439,7 @@ var CompCertifyCopies = React.createClass({
         return (
             <NavBarView navigator={this.props.navigator} title={this.state.title}>
                 <ScrollView>
+                    {this.returnWorkNo()}
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>
                         {this.returnImg()}
                         {this.returnAccount()}
@@ -408,7 +447,7 @@ var CompCertifyCopies = React.createClass({
                         <ListBottom/>
                     </View>
                 </ScrollView>
-                <BottomButton func={this[certificateState[this.state.data.status].button]}
+                <BottomButton checked={this.state.checked} func={this[certificateState[this.state.data.status].button]}
                               content={certificateState[this.state.data.status].content}/>
 
             </NavBarView>
