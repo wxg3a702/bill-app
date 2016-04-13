@@ -71,7 +71,7 @@ var EditComp = React.createClass({
         CompAction.updateDefaultOrgByUser(
             {
                 orgId: data.id,
-                comp: data.orgName
+                defaultOrgName: data.orgName
             }, function () {
                 navigator.pop()
             }.bind(this)
@@ -82,7 +82,7 @@ var EditComp = React.createClass({
         const { navigator } = this.props;
         CompAction.unSetDefaultOrg(
             {
-                comp:undefined
+                defaultOrgName:undefined
             },
             function () {
                 navigator.pop()
@@ -112,7 +112,7 @@ var EditComp = React.createClass({
                                     onPress={()=>this.setDefalutOrg()}
                                     underlayColor='#7f7f7f'>
                     <View style={styles.content}>
-                        <Text style={{fontSize:18}}>暂不设置</Text>
+                        <Text style={{fontSize:18}}>未设置</Text>
                     </View>
                 </TouchableHighlight>
 

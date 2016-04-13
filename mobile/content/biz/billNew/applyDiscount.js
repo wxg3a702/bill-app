@@ -29,8 +29,13 @@ var BillStore = require('../../framework/store/billStore');
 var BillAction = require('../../framework/action/billAction');
 
 var ApplyDis = React.createClass({
-    //getInitialState(){
-    //},
+    getInitialState(){
+        return{
+            discountBankName: '请选择贴现银行',
+            description:'利率最低',
+            discountRate:0
+        }
+    },
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
@@ -60,12 +65,7 @@ var ApplyDis = React.createClass({
             //});
         }
     },
-    //componentDidMount(){
-    //
-    //},
-    //componentWillUnmount(){
-    //
-    //},
+
     callBack(item){
         this.setState({
             discountRate: item.discountRate / 1000,

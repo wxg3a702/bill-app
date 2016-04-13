@@ -104,7 +104,7 @@ var Register_setInfo = React.createClass({
 
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="注册">
+            <NavBarView navigator={this.props.navigator} title="注册账号">
                 <View style={[{flexDirection: 'column',paddingLeft: 12, paddingRight: 12}]}>
                     <Input type='default' prompt="用户名" max={20} field="userName" isPwd={false}
                            onChanged={this.handleChanged} icon="user"/>

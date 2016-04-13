@@ -62,7 +62,7 @@ var Register_checkVerify = React.createClass({
     },
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title="注册">
+            <NavBarView navigator={this.props.navigator} title="短信验证">
                 <View style={[styles.container,styles.paddingLR]}>
                     <Text style={[styles.marginTitle]}>请输入{this.state.phoneNum}收到的短信验证码</Text>
                     <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'sendSMSCodeToNewMobile'}/>

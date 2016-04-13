@@ -32,28 +32,28 @@ var _deleteOrg = function (p, c, f) {
   )
 }
 var _updateDefaultOrgByUser = function (p, c, f) {
-  PFetch(api + '/Organization/updateDefaultOrgByUser',
-    {orgId: p.orgId}, function (msg) {
-      AppDispatcher.dispatch({
-        type: ActionTypes.UPDATE_USERINFO,
-        data: {comp: p.comp}
-      })
-      c(msg);
-    }, f
-  )
+    PFetch(api + '/Organization/updateDefaultOrgByUser',
+        {orgId: p.orgId}, function (msg) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.UPDATE_USERINFO,
+                data: {defaultOrgName: p.defaultOrgName}
+            })
+            c(msg);
+        }, f
+    )
 }
 
 var _unSetDefaultOrg = function (p, c, f) {
-  BFetch(api + '/unSetDefaultOrg',
-    undefined,
-    function (msg) {
-      AppDispatcher.dispatch({
-        type: ActionTypes.UPDATE_USERINFO,
-        data: {comp: p.comp}
-      })
-      c(msg);
-    }, f
-  )
+    BFetch(api + '/User/unSetDefaultOrg',
+        {},
+        function (msg) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.UPDATE_USERINFO,
+                data: {defaultOrgName: p.defaultOrgName}
+            })
+            c(msg);
+        }, f
+    )
 };
 
 var _updateExist = function (p, c, f) {
