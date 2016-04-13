@@ -57,10 +57,12 @@ var CompCertifyCopies = React.createClass({
             corpIdentityFileIdClick: false,
             authFileIdClick: false,
             authIdentityFileIdClick: false,
-            checked: !newOrg.licenseCopyFileId || !newOrg.corpIdentityFileId,
+            checked: !(newOrg.licenseCopyFileId && (newOrg.corpIdentityFileId || (newOrg.authFileId && newOrg.authIdentityFileId))),
             title: title,
             firstIsUpload: newOrg.licenseCopyFileId ? true : false,
-            secondIsUpload: newOrg.corpIdentityFileId ? true : false
+            secondIsUpload: newOrg.corpIdentityFileId ? true : false,
+            thirdIsUpload: newOrg.authFileId ? true : false,
+            FourthIsUpload: newOrg.authIdentityFileId ? true : false
         }
     },
 
@@ -82,7 +84,7 @@ var CompCertifyCopies = React.createClass({
 
     next: function () {
         const {navigator} = this.props;
-        if (this.props.param.item || (this.state.licenseCopyFileId !='' && this.state.corpIdentityFileId != '')) {
+        if (this.props.param.item || !this.state.checked) {
             const {navigator} = this.props;
             if (navigator) {
                 navigator.push({
@@ -129,13 +131,31 @@ var CompCertifyCopies = React.createClass({
             this.setState({firstIsUpload: true});
             if (this.state.secondIsUpload) {
                 this.setState({checked: false});
+            } else if(this.state.thirdIsUpload && this.state.FourthIsUpload){
+                this.setState({checked: false});
             }
+            return;
         }
         if (name == 'corpIdentityFileId' && this.state.checked) {
             this.setState({secondIsUpload: true});
             if (this.state.firstIsUpload) {
                 this.setState({checked: false});
             }
+            return;
+        }
+        if (name == 'authFileId' && this.state.checked) {
+            this.setState({thirdIsUpload: true});
+            if (this.state.firstIsUpload && this.state.FourthIsUpload) {
+                this.setState({checked: false});
+            }
+            return;
+        }
+        if (name == 'authIdentityFileId' && this.state.checked) {
+            this.setState({FourthIsUpload: true});
+            if (this.state.firstIsUpload && this.state.thirdIsUpload) {
+                this.setState({checked: false});
+            }
+            return;
         }
     },
 
@@ -227,7 +247,7 @@ var CompCertifyCopies = React.createClass({
             if (data.status == 'AUDITING') {
                 return (
                     <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
-                        <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
+                        <Text style={{fontSize:11,color:'white'}}>等待认证</Text>
                     </Image>
                 )
             } else {

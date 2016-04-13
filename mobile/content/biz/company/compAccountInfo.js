@@ -73,8 +73,8 @@ var CompAccountInfo = React.createClass({
         newOrg.accountName = this.state.accountName;
         newOrg.accountNo = this.state.accountNo;
         newOrg.openBank = this.state.openBank;
-        var reg = new RegExp("^[0-9]{16,19}$");
-        this.setState({newOrg: newOrg})
+        var reg = new RegExp("^[0-9]{1,50}$");
+        this.setState({newOrg: newOrg});
         if (reg.test(newOrg.accountNo)) {
             if (!this.props.param) {
                 CompAction.deleteOrg(
