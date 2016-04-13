@@ -36,7 +36,7 @@ var _updateDefaultOrgByUser = function (p, c, f) {
         {orgId: p.orgId}, function (msg) {
             AppDispatcher.dispatch({
                 type: ActionTypes.UPDATE_USERINFO,
-                data: {comp: p.comp}
+                data: {defaultOrgName: p.defaultOrgName}
             })
             c(msg);
         }, f
@@ -44,12 +44,12 @@ var _updateDefaultOrgByUser = function (p, c, f) {
 }
 
 var _unSetDefaultOrg = function (p, c, f) {
-    BFetch(api + '/unSetDefaultOrg',
-        undefined,
+    BFetch(api + '/User/unSetDefaultOrg',
+        {},
         function (msg) {
             AppDispatcher.dispatch({
                 type: ActionTypes.UPDATE_USERINFO,
-                data: {comp: p.comp}
+                data: {defaultOrgName: p.defaultOrgName}
             })
             c(msg);
         }, f
