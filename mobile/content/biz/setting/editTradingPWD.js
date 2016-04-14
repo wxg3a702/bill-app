@@ -51,8 +51,6 @@ var EditTradingPWD = React.createClass({
                         </View>
                     </TouchableHighlight>
 
-
-
                 </View>
 
             </NavBarView>

@@ -94,15 +94,23 @@ var BillDetail = React.createClass({
                         Alert("撤销成功!", ()=>this.goBack());
                     }.bind(this),
                     function () {
-                    }
+                        Alert(msg.msgContent,
+                            function () {
+                                const { navigator } = this.props;
+                                if (navigator) {
+                                    navigator.popToTop()
+                                }
+                            }.bind(this)
+                        )
+                    }.bind(this)
                 ), function () {
                 }
             )
         }
     },
 
-    goBack:function(){
-      this.props.navigator.pop();
+    goBack: function () {
+        this.props.navigator.pop();
     },
 
     viewDetail(){
@@ -127,7 +135,8 @@ var BillDetail = React.createClass({
         } else if (obj.value == 'dateT') {
             return (
                 <View style={[styles.margin,styles.center]}>
-                    <Text style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDueDate)}</Text>
+                    <Text
+                        style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDueDate)}</Text>
                     <Text style={{fontSize:15,color:'#7f7f7f'}}>贴现</Text>
                 </View>
             )
@@ -146,8 +155,13 @@ var BillDetail = React.createClass({
         var fontColor = obj.button == '撤销申请' ? '#ff5b58' : 'white';
         var underColor = obj.button == '撤销申请' ? '#cccccc' : '#a6c7f2';
         return (
-            <BottomButton func={()=>this.func(obj.go)} backColor={backColor} fontColor={fontColor}
-                          borderColor={borderColor} underColor={underColor} content={obj.button}/>
+            <BottomButton func={()=>this.func(obj.go)}
+                          backColor={backColor}
+                          fontColor={fontColor}
+                          borderColor={borderColor}
+                          underColor={underColor}
+                          content={obj.button}
+            />
         )
     },
     returnTitle(){

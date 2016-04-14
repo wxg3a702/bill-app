@@ -7,8 +7,8 @@ var _ = require('lodash');
 var pub = "/pub";
 var api = "/api"
 var BillActions = {
-    cancleBillDiscount: (p, c)=>_cancleBillDiscount(api + "/BillDiscountAdmin/cancleBillDiscount", p, c),
-    createBillDiscount: (p, c)=>_createBillDiscount(api + "/BillDiscountAdmin/createBillDiscount", p, c),
+    cancleBillDiscount: (p, c, f)=>_cancleBillDiscount(api + "/BillDiscountAdmin/cancleBillDiscount", p, c, f),
+    createBillDiscount: (p, c, f)=>_createBillDiscount(api + "/BillDiscountAdmin/createBillDiscount", p, c, f),
     giveUpBillDiscount: (p, c)=>_giveUpBillDiscount(api + "/BillDiscountAdmin/giveUpBillDiscount", p, c),
     sendSMSCodeForDiscount: (p, c, f)=>BFetch(api + "/User/sendSMSCodeToOldMobile", p, c, f),
     validateMobileForDiscount: (p, c, f)=>PFetch(api + "/User/validateSMSCodeAfterLogin", p, c, f),
@@ -20,7 +20,7 @@ var _setDemoFlag = function () {
         type: ActionTypes.DEMO_FLAG
     });
 }
-var _cancleBillDiscount = function (url, p, c) {
+var _cancleBillDiscount = function (url, p, c, f) {
     PFetch(url, p,
         function (msg) {
             AppDispatcher.dispatch({
@@ -28,11 +28,12 @@ var _cancleBillDiscount = function (url, p, c) {
                 data: p
             });
             c();
-        }
+        },
+        f
     );
 }
 
-var _createBillDiscount = function (url, p, c) {
+var _createBillDiscount = function (url, p, c, f) {
     BFetch(url, p,
         function (msg) {
             AppDispatcher.dispatch({
@@ -40,7 +41,8 @@ var _createBillDiscount = function (url, p, c) {
                 data: p
             });
             c();
-        }
+        },
+        f
     );
 }
 
