@@ -42,31 +42,18 @@ var ConDiscount = React.createClass({
             <NavBarView navigator={this.props.navigator}
                         title="确认贴现">
                 <View style={{flexDirection:'column',paddingLeft: 12, paddingRight: 12,}}>
-
-                    <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>
-                        {'已发送短信验证码至手机' + NumberHelper.phoneNumber(this.state.mobileNo)}
-                    </Text>
-
+                    <Text
+                        style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'已发送短信验证码至手机' + NumberHelper.phoneNumber(this.state.mobileNo)}</Text>
                     <View style={{flexDirection:'row',marginTop:10}}>
-                        <SMSTimer ref="smsTimer" onChanged={this.handleChanged} func={'afterLoginSendSMSCodeToOldMobile'}/>
+                        <SMSTimer ref="smsTimer" onChanged={this.handleChanged}
+                                  func={'afterLoginSendSMSCodeToOldMobile'}/>
                     </View>
-
                     <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'请输入注册时设置的交易密码'}</Text>
-
-                    <Input type='default'
-                           prompt="交易密码"
-                           max={6}
-                           field="trading_PWD"
-                           isPwd={true}
-                           onChanged={this.handleChanged}
-                           icon="user"
-                           isPhone="numeric"
-                    />
-
+                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={true}
+                           onChanged={this.handleChanged} icon="user"/>
                     <View style={{marginTop:36}}>
                         <Button func={this.validateSmsCode} content="完成" checked={this.state.checked}/>
                     </View>
-
                 </View>
 
             </NavBarView>
@@ -86,17 +73,17 @@ var ConDiscount = React.createClass({
     },
     //当result为true时返回了错误信息,代表失败结果
     next: function (data) {
-        if(data){
+        if (data) {
             this.props.navigator.push({
                 param: {title: '提交结果'},
                 comp: ComResult,
-                result:true,
+                result: true,
             });
-        }else {
+        } else {
             this.props.navigator.push({
                 param: {title: '提交结果'},
                 comp: ComResult,
-                result:false,
+                result: false,
             });
         }
 
@@ -160,8 +147,17 @@ var ConDiscount = React.createClass({
                     discountBankName: this.state.discountBankName,
                     payeeBankAccountNo: this.state.payeeBankAccountNo
                 },
-                (data)=>this.next(data)
-
+                (data)=>this.next(data),
+                function (msg) {
+                    Alert(msg.msgContent,
+                        function () {
+                            const { navigator } = this.props;
+                            if (navigator) {
+                                navigator.popToTop()
+                            }
+                        }.bind(this)
+                    )
+                }.bind(this)
             );
         }
 
