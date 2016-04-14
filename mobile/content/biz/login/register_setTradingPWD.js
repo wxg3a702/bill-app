@@ -103,11 +103,24 @@ var Register_setTradingPWD = React.createClass({
                         <Text style={{fontSize:15,color:'#7f7f7f'}}>此密码用于票据贴现,请妥善保存</Text>
                     </View>
 
-                    <Input type='default' prompt='交易密码' max={6} field='transactionPassword' isPwd={true}
-                           onChanged={this.handleChanged}  icon='trading_PWD'/>
+                    <Input type='default'
+                           prompt='交易密码'
+                           max={6}
+                           field='transactionPassword'
+                           isPwd={true}
+                           onChanged={this.handleChanged}
+                           icon='trading_PWD'
+                           isPhone="numeric"
+                    />
 
-                    <Input type='default' prompt='再输一次交易密码' max={6} field='transactionPassword_again' isPwd={true}
-                           onChanged={this.handleChanged} icon='trading_PWD'/>
+                    <Input type='default'
+                           prompt='再输一次交易密码'
+                           max={6} field='transactionPassword_again'
+                           isPwd={true}
+                           onChanged={this.handleChanged}
+                           icon='trading_PWD'
+                           isPhone="numeric"
+                    />
 
                     <View style={{marginTop:36}}>
                         <Button func={this.next} checked={this.state.checked} content='完成'/>

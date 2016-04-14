@@ -46,7 +46,7 @@ var Item = React.createClass({
                     </View>
 
                     <View style={[{flexDirection:'row',alignItems:'center'},{justifyContent:'space-between'}]}>
-                        <Text style={[{fontSize: 15,color: '#7f7f7f',width:ScreenWindow.width-200,textAlign:'right'}]}
+                        <Text style={[{fontSize: 15,color: '#7f7f7f',width:ScreenWindow.width-220,textAlign:'right'}]}
                               numberOfLines={1}
                         >
                             {this.props.value}

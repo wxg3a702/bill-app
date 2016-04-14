@@ -124,7 +124,7 @@ var BillDetail = React.createClass({
         } else if (obj.value == 'dateT') {
             return (
                 <View style={[styles.margin,styles.center]}>
-                    <Text style={{color:obj.color,fontSize:15}}>1</Text>
+                    <Text style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDueDate)}</Text>
                     <Text style={{fontSize:15,color:'#7f7f7f'}}>贴现</Text>
                 </View>
             )

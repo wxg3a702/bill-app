@@ -16,6 +16,7 @@ var AppStore = require('../../framework/store/appStore');
 var UserStore = require('../../framework/store/userStore');
 var phoneNumber = require('../../comp/utils/numberHelper').phoneNumber;
 var VerifyOldTradingPWD = require('./verifyOldTradingPWD');
+var BillAction = require('../../framework/action/billAction');
 
 var SecurityCenter = React.createClass({
     getStateFromStores() {
@@ -57,12 +58,20 @@ var SecurityCenter = React.createClass({
     },
 
     toEditTradingPWD: function() {
-        const { navigator } = this.props;
-        if(navigator) {
-            navigator.push({
-                comp:VerifyOldTradingPWD
-            });
-        }
+
+        BillAction.sendSMSCodeForDiscount(
+            {
+                mobileNo: this.props.parameter
+            },
+            function () {
+                const { navigator } = this.props;
+                if(navigator) {
+                    navigator.push({
+                        comp:VerifyOldTradingPWD
+                    });
+                }
+            }.bind(this)
+        );
     },
 
     render: function () {
