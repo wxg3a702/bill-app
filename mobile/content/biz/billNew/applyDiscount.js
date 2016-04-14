@@ -210,10 +210,16 @@ var ApplyDis = React.createClass({
         });
     },
     goToConDiscount: function (item:Object) {
-        this.props.navigator.push({
-            param: {title: '确认贴现', billBean: item},
-            comp: ConDiscount
-        });
+
+        BillAction.sendSMSCodeForDiscount(
+            {},
+            function () {
+                this.props.navigator.push({
+                    param: {title: '确认贴现', billBean: item},
+                    comp: ConDiscount
+                });
+            }.bind(this)
+        )
     },
 });
 
