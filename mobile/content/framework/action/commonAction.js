@@ -38,12 +38,15 @@ var _notificationRegister = function (token) {
 
 var _onNotification = function (notification) {
     console.log('111111Basic  ' + AppStore.getToken());
-    BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
-        AppDispatcher.dispatch({
-            type: ActionTypes.PUSH_NOTIFICATION,
-            data: data
-        });
-    }, null, {custLoading: true});
+    //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
+    if (!!AppStore.getToken()) {
+        BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.PUSH_NOTIFICATION,
+                data: data,
+            });
+        }, null, {custLoading: true});
+    }
 }
 var _startRPC = function (option) {
     if (!option.custLoading) {

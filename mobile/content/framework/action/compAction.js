@@ -77,18 +77,24 @@ var _clearNewOrg = function () {
 }
 
 var _updateOrgBeans = function (p, c) {
-  AppDispatcher.dispatch({
-    type: ActionTypes.UPDATE_ORGBEANS,
-    data: p,
-    successHandle: c
-  });
+  //AppDispatcher.dispatch({
+  //  type: ActionTypes.UPDATE_ORGBEANS,
+  //  data: p,
+  //  successHandle: c
+  //});
 }
 var _updateUnAuditing = function (p, c) {
-  AppDispatcher.dispatch({
-    type: ActionTypes.UPDATE_UNAUDITING,
-    data: p,
-    successHandle: c
-  });
+  BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+    AppDispatcher.dispatch({
+      type: ActionTypes.PUSH_NOTIFICATION,
+      data: data,
+    });
+  }, null, {custLoading: true});
+  //AppDispatcher.dispatch({
+  //  type: ActionTypes.UPDATE_UNAUDITING,
+  //  data: p,
+  //  successHandle: c
+  //});
 }
 var _submitOrg = function (p, c, f) {
   let arrs = [uploadFileHandle(p, 'licenseCopyFileId')];
@@ -126,19 +132,14 @@ var _submitOrg = function (p, c, f) {
           params.authFileId = res[1].authFileId.fileId;
           params.authIdentityFileId = res[2].authIdentityFileId.fileId;
         }
+        if (p.status == 'REJECTED'){
+          params.id = p.id;
+        }
         BFetch(api + "/Organization/updateOrg",
           params,
           function (data) {
-            if (!data) {
-              p.id = data.id
-            }
-            if (p.status == 'UNAUDITING') {
-              p.status = 'AUDITING'
-              _updateUnAuditing(p, c(data))
-            } else {
-              p.status = 'AUDITING'
-              _updateOrgBeans(p, c(data));
-            }
+            p.status = 'AUDITING'
+            _updateUnAuditing(p, c(data))
           },
           function (err) {
             p.status = 'UNAUDITING'

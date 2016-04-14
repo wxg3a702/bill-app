@@ -32,16 +32,16 @@ var CompCertification = React.createClass({
         let ret = new Array();
         let i = 0;
         var orgBean = CompStore.getCertifiedOrgBean();
-        /*orgBean.map((item, index)=> {
-            if (!item.status) {
-                item.status = 'AUDITING';
-            }
-            if (item.status != 'CERTIFIED') {
-                item.orgName = '认证企业信息' + ++i;
-
-            }
-            ret.push(item)
-        });*/
+        //orgBean.map((item, index)=> {
+        //    if (!item.status) {
+        //        item.status = 'AUDITING';
+        //    }
+        //    if (item.status != 'CERTIFIED') {
+        //        item.orgName = '认证企业信息' + ++i;
+        //
+        //    }
+        //    ret.push(item)
+        //});
         return {
             bean: orgBean,
             dataSource: ds.cloneWithRows(orgBean)
@@ -103,7 +103,7 @@ var CompCertification = React.createClass({
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>
-                                {data.status == 'CERTIFIED' ? data.stdOrgBean.orgName : data.orgName}
+                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
                             </Text>
                             <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
                                 {certificateState[data.status].desc}

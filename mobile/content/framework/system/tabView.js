@@ -8,6 +8,7 @@ var {
   ScrollView,
   View,
   TabBarIOS,
+  InteractionManager,
   DeviceEventEmitter
   } = React;
 var _ = require('lodash');
@@ -75,36 +76,11 @@ var TabView = React.createClass({
 
   componentDidMount() {
     AppStore.addChangeListener(this._onChange);
-    //if (this.state.token) {
-      if (AppStore.getRevBillMessage()) {
-        //if (Platform.OS === 'ios') {
-        //  if (!AppStore.getAPNSToken()) {
-        //    PushNotificationIOS.requestPermissions();
-        //  }
-        //
-        //  PushNotificationIOS.removeEventListener('register', CommonAction.notificationRegister);
-        //  PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
-        //  AppStateIOS.removeEventListener('change', this._handleAppStateChange);
-        //
-        //
-        //  PushNotificationIOS.addEventListener('register', CommonAction.notificationRegister);
-        //  PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
-        //
-        //  AppStateIOS.addEventListener('change', this._handleAppStateChange);
-        //
-        //}else{
-        //  DeviceEventEmitter.addListener('Msg', (e:Event)=>CommonAction.onNotification());
-        //  DeviceEventEmitter.addListener('MsgByNotification', (e:Event)=>{
-        //    this.setState({initialPage: 2});
-        //    CommonAction.onNotification();
-        //  });
-        //
-        //}
+    InteractionManager.runAfterInteractions(() => {
+      //if (AppStore.getRevBillMessage()) {
         NotificationManager.openNotification();
-        //this.setState({initialPage: 2});
-      }
-    //}
-
+      //}
+    });
   },
 
   componentWillUnmount: function () {

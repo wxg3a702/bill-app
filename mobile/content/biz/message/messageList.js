@@ -59,7 +59,7 @@ var Message = React.createClass({
     this.setState(this.getStateFromStores());
     if (this.state.token && !_.isEmpty(this.refs['MsgList'])) {
       this.refs['MsgList'].componentEmitChange();
-      //this.refs['MsgList'].setDataSource();
+      this.refs['MsgList'].setDataSource();
     }
   },
   getInitialState: function () {

@@ -94,6 +94,10 @@ var _appInit = function (data) {
       // data.demoFlag = {id: data.userInfoBean.id, flag: false};
       info.initLoadingState = false;
       _data = data;
+      if (!data.demoFlag) {
+        _data.revBillMessage = true;
+        _data.newsMessage = true;
+      }
       if (_data.token == '') {
         _data.token = null;
         if (Platform.OS === 'android') SP.setTokenToSP(' ');
@@ -117,8 +121,6 @@ var _login = function (data) {
       data.demoFlag = {id: data.userInfoBean.id, flag: false};
       data.revBillMessage = true;
       data.newsMessage = true;
-    }
-    if (_.isEmpty(d)) {
       Persister.saveAppData(data);
     } else {
       Persister.saveLoginData(data, d);
@@ -299,7 +301,9 @@ var _analysisMessageData = function (data) {
       break;//
     case MsgTypes.MARKET_NEWS:
     {
-      _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
+      if (_data.newsMessage){
+        _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
+      }
     }
       break;
     case MsgTypes.ORG_AUTH_FAIL:
@@ -325,9 +329,10 @@ var _analysisMessageData = function (data) {
       break;//
     case MsgTypes.REV_NEW_BILL://区分
     {
-      //messageBeans
-      _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
-      Persister.saveAppData(_data)
+      if (_data.revBillMessage){
+        //messageBeans
+        _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+      }
       _addBillPackByNotify('revBillBean', _getBillBody(data));
       AppStore.emitChange();
     }
