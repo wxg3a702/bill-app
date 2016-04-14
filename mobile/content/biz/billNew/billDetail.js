@@ -11,6 +11,7 @@ var {
     Dimensions,
     StyleSheet,
     } = React;
+
 var _ = require('lodash');
 var Adjust = require('../../comp/utils/adjust')
 var Circle = require('./../../comp/utilsUi/circle')
@@ -27,9 +28,11 @@ var NumberHelper = require('../../comp/utils/numberHelper')
 var ApplyDis = require('./applyDiscount')
 var Alert = require('../../comp/utils/alert')
 var AppStore = require('../../framework/store/appStore');
+
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+
 var BillDetail = React.createClass({
     getStateFromStores(){
         let id = this.props.param.item.billId
@@ -124,7 +127,7 @@ var BillDetail = React.createClass({
         } else if (obj.value == 'dateT') {
             return (
                 <View style={[styles.margin,styles.center]}>
-                    <Text style={{color:obj.color,fontSize:15}}>1</Text>
+                    <Text style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDueDate)}</Text>
                     <Text style={{fontSize:15,color:'#7f7f7f'}}>贴现</Text>
                 </View>
             )
@@ -192,8 +195,17 @@ var BillDetail = React.createClass({
     returnItem(desc, value){
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
-                <Text style={{fontSize:16,color:'#333333',flex:1}}>{desc}</Text>
-                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}>{value}</Text>
+
+                <Text style={{fontSize:16,color:'#333333',flex:1}}>
+                    {desc}
+                </Text>
+
+                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}
+                      numberOfLines={2}
+                >
+                    {value}
+                </Text>
+
             </View>
         )
     },
@@ -282,7 +294,8 @@ var BillDetail = React.createClass({
             </NavBarView>
         )
     }
-})
+});
+
 var styles = StyleSheet.create({
     circle: {
         width: Adjust.width(49), height: 18, borderRadius: 8, justifyContent: 'center', alignItems: 'center'
@@ -296,5 +309,6 @@ var styles = StyleSheet.create({
     layout: {
         paddingTop: 4, backgroundColor: 'white', borderBottomWidth: 1, borderColor: '#c8c8c8', paddingHorizontal: 12
     }
-})
+});
+
 module.exports = BillDetail;

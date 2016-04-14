@@ -24,7 +24,7 @@ var numeral = require('numeral');
 var dateFormat = require('dateformat');
 var window = Dimensions.get('window');
 var dismissKeyboard = require('react-native-dismiss-keyboard');
-
+var window = Dimensions.get('window');
 var BillStore = require('../../framework/store/billStore');
 var BillAction = require('../../framework/action/billAction');
 
@@ -32,7 +32,7 @@ var ApplyDis = React.createClass({
     getInitialState(){
         return{
             discountBankName: '请选择贴现银行',
-            description:'利率最低',
+            description:'费率最低',
             discountRate:0
         }
     },
@@ -140,10 +140,11 @@ var ApplyDis = React.createClass({
                             style={{width:30,height:30,marginLeft:15}}
                             source={require('../../image/bill/bankDefault_logo.png')}
                         />
-                        <View style={{width:width-175,flex:3,flexDirection:'row'}}>
-                            <Text
-                                style={{fontSize:18,color:'#4e4e4e',flexDirection: 'row',justifyContent: 'center',alignItems:'center',marginLeft:20}}
-                                numberOfLines={1}>{this.state.discountBankName}</Text>
+                        <View style={{width:width-175,flex:3,flexDirection:'row',justifyContent:'space-between'}}>
+                            <Text style={{fontSize:18,color:'#4e4e4e',marginLeft:20,width:window.width-220}}
+                                  numberOfLines={1}>
+                                {this.state.discountBankName}
+                            </Text>
 
                             <Text style={{color:'#ff5b58',fontSize:18}}>{'('+this.state.description+')'}</Text>
 
@@ -209,10 +210,16 @@ var ApplyDis = React.createClass({
         });
     },
     goToConDiscount: function (item:Object) {
-        this.props.navigator.push({
-            param: {title: '确认贴现', billBean: item},
-            comp: ConDiscount
-        });
+
+        BillAction.sendSMSCodeForDiscount(
+            {},
+            function () {
+                this.props.navigator.push({
+                    param: {title: '确认贴现', billBean: item},
+                    comp: ConDiscount
+                });
+            }.bind(this)
+        )
     },
 });
 

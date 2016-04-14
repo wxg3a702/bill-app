@@ -23,10 +23,17 @@ var BillContent = React.createClass({
     renderRow(data){
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
-                <Text style={{fontSize:16,color:'#333333',flex:1}}>{data.desc}</Text>
-                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}>
+
+                <Text style={{fontSize:16,color:'#333333',flex:1}}>
+                    {data.desc}
+                </Text>
+
+                <Text style={{fontSize:16,color:'#7f7f7f',width:Adjust.width(235)}}
+                      numberOfLines={2}
+                >
                     {!data.deal ? this.state.item[data.key] : data.deal(this.state.item[data.key]) + (data.unit ? '万元' : '')}
                 </Text>
+
             </View>
         )
     },
