@@ -10,7 +10,7 @@ module.exports = {
         }
         var reg = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/
         if (!reg.test(data)) {
-            Alert("您输入的手机号码格式不对");
+            Alert("请输入一个正确的11位手机号");
             return false;
         } else {
             return true;

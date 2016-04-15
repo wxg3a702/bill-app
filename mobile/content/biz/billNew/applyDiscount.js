@@ -31,47 +31,52 @@ var BillAction = require('../../framework/action/billAction');
 var ApplyDis = React.createClass({
     getInitialState(){
         return{
+            acceptanceJson:[],
             discountBankName: '请选择贴现银行',
-            description:'费率最低',
+            description:'',
             discountRate:0
         }
     },
+
     componentWillMount(){
         var responseData = this.props.param.billBean;
         this.setState(responseData);
 
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        var acceptanceJson = JSON.parse(acceptanceBankBeans);
+        this.acceptanceJson = JSON.parse(acceptanceBankBeans);
 
-
-        if (acceptanceJson == null || acceptanceJson == []) {
+        if (this.acceptanceJson == null || this.acceptanceJson == []) {
             this.setState({
                 discountBankName: '请选择贴现银行',
                 description:'',
                 discountRate:0
             });
         } else {
-            //let res;
-            //acceptanceJson.map((item, index)=> {
-            //    if (item.description == '利率最低') {
-            //        res = item
-            //    }
-            //})
-            //
-            //this.setState({
-            //    discountBankName: res.bankName,
-            //    description:res.description,
-            //    discountRate:res.discountRate
-            //});
+            let res = this.acceptanceJson[0];
+            this.setState({
+                discountBankName: res.bankName,
+                description:'(费率最低)',
+                discountRate:res.discountRate
+            });
         }
     },
 
     callBack(item){
-        this.setState({
-            discountRate: item.discountRate / 1000,
-            description:item.description,
-            discountBankName: item.bankName
-        })
+
+        if(item.bankName == this.acceptanceJson[0].bankName && item.discountRate == this.acceptanceJson[0].discountRate ){
+            this.setState({
+                discountRate: item.discountRate / 1000,
+                description:'(费率最低)',
+                discountBankName: item.bankName
+            })
+        }else {
+            this.setState({
+                discountRate: item.discountRate / 1000,
+                description:'',
+                discountBankName: item.bankName
+            })
+        }
+
     },
     render: function () {
         return (
@@ -120,8 +125,6 @@ var ApplyDis = React.createClass({
         );
     },
 
-
-
     renderSelectBank(){
         var {height, width} = Dimensions.get('window');
         return (
@@ -146,7 +149,7 @@ var ApplyDis = React.createClass({
                                 {this.state.discountBankName}
                             </Text>
 
-                            <Text style={{color:'#ff5b58',fontSize:18}}>{'('+this.state.description+')'}</Text>
+                            <Text style={{color:'#ff5b58',fontSize:18}}>{this.state.description}</Text>
 
                         </View>
                         <VIcon/>
@@ -210,7 +213,6 @@ var ApplyDis = React.createClass({
         });
     },
     goToConDiscount: function (item:Object) {
-
         BillAction.sendSMSCodeForDiscount(
             {},
             function () {
