@@ -274,9 +274,7 @@ var GiftedListView = React.createClass({
       <View style={[this.defaultStyles.separator, this.props.customStyles.separator]} />
     );
   },
-
-  getInitialState() {
-
+  getStateFromStores() {
     if (this.props.refreshable === true && Platform.OS !== 'android') {
       this._setY(this.props.refreshableViewHeight);
     } else {
@@ -310,10 +308,16 @@ var GiftedListView = React.createClass({
       };
     }
   },
+  getInitialState() {
+    return this.getStateFromStores();
+  },
 
   setDataSource () {
+    let ds = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    });
     this.setState({
-      dataSource: ds.cloneWithRowsAndSections(this._getRows())
+      dataSource: ds.cloneWithRows(this._getRows())
     });
   },
 

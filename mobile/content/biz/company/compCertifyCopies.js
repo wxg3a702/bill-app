@@ -90,7 +90,8 @@ var CompCertifyCopies = React.createClass({
                 navigator.push({
                     comp: CompAccountInfo,
                     param: {
-                        item: this.props.param.item
+                        item: this.props.param.item,
+                        isFirst: this.props.param.isFirst
                     }
                 })
             }
@@ -359,7 +360,7 @@ var CompCertifyCopies = React.createClass({
               <View style={{flexDirection:'row', borderTopWidth:1, borderBottomWidth: 1,
                borderColor: '#c8c7cc', padding: 16, marginTop: 20, backgroundColor: 'white'}}>
                   <Text style={{fontSize:14}}>事务号：</Text>
-                  <Text style={{color: '#808080'}}>{this.getWorkNo(0)}</Text>
+                  <Text style={{color: '#808080'}}>{data.serialNo}</Text>
               </View>
             )
         }
@@ -382,16 +383,16 @@ var CompCertifyCopies = React.createClass({
                     }
                 })()}
                 <View style={{flexDirection:"row"}}>
-                    <Text style={{fontSize: 15, color: certificateState[status].colorA, marginTop: 1}}>
+                    <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
                         {certificateState[status].alter}
                     </Text>
                     <Text style={{fontSize: 15, color: certificateState[status].colorA}}>
-                        如遇问题,请
+                        如遇问题，请
                     </Text>
                     <TouchableHighlight onPress={()=>{this.callPhone()}}
                                         activeOpacity={0.6} underlayColor="#ebf1f2">
                         <Text
-                            style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline", marginTop: 1}}>
+                            style={{color: certificateState[status].colorA,fontSize: 15, textDecorationLine:"underline"}}>
                             联系客服
                         </Text>
                     </TouchableHighlight>
@@ -469,7 +470,6 @@ var CompCertifyCopies = React.createClass({
                 </ScrollView>
                 <BottomButton checked={this.state.checked} func={this[certificateState[this.state.data.status].button]}
                               content={certificateState[this.state.data.status].content}/>
-
             </NavBarView>
         )
     }

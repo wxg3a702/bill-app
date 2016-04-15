@@ -30,8 +30,8 @@ let _clearToken = function (data) {
             sentBillMsgBeans: JSON.stringify(data.sentBillMsgBeans) ? JSON.stringify(data.sentBillMsgBeans) : JSON.stringify([]),
             demoFlag: JSON.stringify(data.demoFlag),
             acceptanceBankBeans: JSON.stringify(data.acceptanceBankBeans) ? JSON.stringify(data.acceptanceBankBeans) : JSON.stringify([]),
-            revBillMessage: Boolean(data.revBillMessage),
-            newsMessage: Boolean(data.newsMessage)
+            revBillMessage: data.revBillMessage,
+            newsMessage: data.newsMessage
         }, true);
         _userid = '';
     });
