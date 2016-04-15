@@ -32,6 +32,19 @@ var CompCertification = React.createClass({
         let ret = new Array();
         let i = 0;
         var orgBean = CompStore.getCertifiedOrgBean();
+        let certifiedCon = [];
+        let auditingCon = [];
+        let rejectedCon = [];
+        orgBean.map((item, index)=>{
+            if (item.status == 'CERTIFIED') {
+                certifiedCon.push(item);
+            } else if(item.status == 'AUDITING'){
+                auditingCon.push(item);
+            } else {
+                rejectedCon.push(item);
+            }
+        });
+        let con = certifiedCon.concat(auditingCon).concat(rejectedCon);
         //orgBean.map((item, index)=> {
         //    if (!item.status) {
         //        item.status = 'AUDITING';
@@ -43,8 +56,8 @@ var CompCertification = React.createClass({
         //    ret.push(item)
         //});
         return {
-            bean: orgBean,
-            dataSource: ds.cloneWithRows(orgBean)
+            bean: con,
+            dataSource: ds.cloneWithRows(con)
         }
     },
 

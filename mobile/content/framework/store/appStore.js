@@ -448,7 +448,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       AppStore.emitChange('rpc');
       break;
     case ActionTypes.DELETE_ORGBEANS:
-      let con = new Array();
+      let con = [];
       _data.certifiedOrgBean.map((item, index)=> {
         if (action.data.orgId != item.id) {
           con.push(item)
@@ -525,6 +525,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
     case ActionTypes.CLEAR_NEWORG:
       initNewOrg();
       Persister.saveAppData(_data);
+      if (action.successHandle)action.successHandle();
       break;
     case ActionTypes.SAVE_APNS_TOKEN:
       _data.APNSToken = action.token;

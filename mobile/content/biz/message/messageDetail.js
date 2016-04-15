@@ -142,7 +142,7 @@ var MessageDetail = React.createClass({
         Alert('票据信息不存在');
       } else {
         this.props.navigator.push({
-          param: {title: '详情', record: bill},
+          param: {title: '详情', item: bill},
           comp: Detail
         });
       }

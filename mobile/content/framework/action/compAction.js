@@ -13,11 +13,10 @@ var CompAction = {
   getOrgList: (c, f)=>PFetch(api + '/Organization／getOrg', '', c, f),
   deleteOrg: (p, c, f)=>_deleteOrg(p, c, f),
   updateDefaultOrgByUser: (p, c, f)=>_updateDefaultOrgByUser(p, c, f),
-
   //重置用户默认公司,即把用户公司设置成未设置状态
   unSetDefaultOrg: (p, c, f) =>_unSetDefaultOrg(p, c, f),
 
-  clearNewOrg: ()=>_clearNewOrg(),
+  clearNewOrg: (c)=>_clearNewOrg(c),
 }
 var _deleteOrg = function (p, c, f) {
   PFetch(api + '/Organization/deleteOrg', p,
@@ -76,9 +75,10 @@ var _updateNewOrgInfo = function (p, c, f) {
     successHandle: c
   });
 }
-var _clearNewOrg = function () {
+var _clearNewOrg = function (c) {
   AppDispatcher.dispatch({
-    type: ActionTypes.CLEAR_NEWORG
+    type: ActionTypes.CLEAR_NEWORG,
+    successHandle: c
   });
 }
 

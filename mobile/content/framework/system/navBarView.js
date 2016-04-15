@@ -85,7 +85,7 @@ var NavBarView = React.createClass({
             return (
                 <TouchableOpacity
                     style={{flex:1,justifyContent:"center",alignItems:"flex-start" ,paddingLeft:10}}
-                    onPress={() => {this.props.navigator.pop()}}>
+                    onPress={() => {this.props.backPress ? this.props.backPress() : this.props.navigator.pop()}}>
                     <VIcon
                         direction='left'
                         size={30}

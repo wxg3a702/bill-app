@@ -79,7 +79,16 @@ var CompAccountInfo = React.createClass({
       newOrg.status = 'UNAUDITING';
     }
     var reg = new RegExp("^[0-9]{1,50}$");
+    var reg1 = new RegExp("^[a-zA-Z0-9_u4e00-u9fa5]+$");
     this.setState({newOrg: newOrg});
+    if (!reg1.test(newOrg.accountName)) {
+      Alert("请输入正确的账户名称")
+      return;
+    }
+    if (!reg1.test(newOrg.openBank)) {
+      Alert("请输入正确的开户行")
+      return;
+    }
     if (reg.test(newOrg.accountNo)) {
       if (!this.props.param) {
         CompAction.deleteOrg(
