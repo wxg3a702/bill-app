@@ -22,6 +22,12 @@ var CompAction = {
 var _deleteOrg = function (p, c, f) {
   PFetch(api + '/Organization/deleteOrg', p,
     function (msg) {
+      BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+        AppDispatcher.dispatch({
+          type: ActionTypes.PUSH_NOTIFICATION,
+          data: data,
+        });
+      }, null, {custLoading: true});
       AppDispatcher.dispatch({
         type: ActionTypes.DELETE_ORGBEANS,
         data: p
@@ -90,11 +96,9 @@ var _updateUnAuditing = function (p, c) {
       data: data,
     });
   }, null, {custLoading: true});
-  //AppDispatcher.dispatch({
-  //  type: ActionTypes.UPDATE_UNAUDITING,
-  //  data: p,
-  //  successHandle: c
-  //});
+  AppDispatcher.dispatch({
+    type: ActionTypes.UPDATE_UNAUDITING
+  });
 }
 var _submitOrg = function (p, c, f) {
   let arrs = [uploadFileHandle(p, 'licenseCopyFileId')];

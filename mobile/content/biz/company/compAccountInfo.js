@@ -20,7 +20,6 @@ var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var Communications = require('../personalCenter/communication');
-//var CompCertification = require('./compCertification');
 var CompAccountInfo = React.createClass({
   getStateFromStores(){
     let check
@@ -43,17 +42,18 @@ var CompAccountInfo = React.createClass({
     return this.getStateFromStores();
   },
 
-  componentDidMount() {
-    AppStore.addChangeListener(this._onChange);
-  },
+  //componentDidMount() {
+  //  AppStore.addChangeListener(this._onChange);
+  //},
+  //
+  //componentWillUnmount: function () {
+  //  AppStore.removeChangeListener(this._onChange);
+  //},
+  //
+  //_onChange: function () {
+  //  this.setState(this.getStateFromStores());
+  //},
 
-  componentWillUnmount: function () {
-    AppStore.removeChangeListener(this._onChange);
-  },
-
-  _onChange: function () {
-    this.setState(this.getStateFromStores());
-  },
   callPhone: function () {
     let phone = this.state.phone;
     ActionSheetIOS.showActionSheetWithOptions({
@@ -92,7 +92,12 @@ var CompAccountInfo = React.createClass({
           //this.props.navigator.push({comp: CertifySuccess})
           Alert("资料提交成功，请耐心等待认证结果", () => {
             var routes = this.props.navigator.getCurrentRoutes();
-            this.props.navigator.popToRoute(routes[routes.length - 4]);
+            if(this.props.param.isFirst){
+              this.props.navigator.resetTo({comp: 'tabView',tabName:'personCenter'});
+            }else{
+              this.props.navigator.popToRoute(routes[routes.length - 4]);
+            }
+
           })
         },
         ()=>Alert("认证失败")

@@ -81,7 +81,7 @@ var CompCertification = React.createClass({
                     if (data.status == 'AUDITING') {
                         Alert('认证中的企业不能删除')
                     } else {
-                        Alert('您确定要删除该机构么',
+                        Alert('您正在试图删除一条企业信息，确认操作后，您将无法继续查看该企业所有的业务信息，确认删除吗？',
                             ()=> {
                                 CompAction.deleteOrg(
                                     {orgId: data.id},
@@ -103,7 +103,7 @@ var CompCertification = React.createClass({
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
                             <Text style={{width:width-Adjust.width(90)}}>
-                                {!data.orgName ? data.stdOrgBean.orgName : data.orgName}
+                                {data.status == 'CERTIFIED' ? data.stdOrgBean.orgName : data.orgName}
                             </Text>
                             <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
                                 {certificateState[data.status].desc}

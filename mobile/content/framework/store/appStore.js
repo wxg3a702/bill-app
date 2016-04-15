@@ -102,7 +102,12 @@ var _appInit = function (data) {
         _data.token = null;
         if (Platform.OS === 'android') SP.setTokenToSP(' ');
       } else {
-        if (Platform.OS === 'android') SP.setTokenToSP(_data.token);
+        if (Platform.OS === 'android') {
+          SP.setTokenToSP(_data.token);
+          ServiceModule.setIsLoginToSP(true);
+          ServiceModule.startAppService();
+        }
+
       }
       info.isLogout = false;
       AppStore.emitChange();
@@ -315,14 +320,14 @@ var _analysisMessageData = function (data) {
     case MsgTypes.ORG_AUTH_OK:
     {
       _changeCompStatus(data.certifiedOrgBody);
-      if (!_.isEmpty(data.userInfoBean) && data.userInfoBean) {
+      if (!_.isEmpty(data.userBody) && data.userBody) {
         _updateUserInfo(data.userBody);
       }
       _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
-      if (data.revBillList) {
+      if (data.revBillList && _.isEmpty(data.revBillList) && data.revBillList.length > 0) {
         _addBillPackByNotify('revBillBean', data.revBillList);
       }
-      if (data.sentBillList) {
+      if (data.sentBillList&& _.isEmpty(data.sentBillList) && data.sentBillList.length > 0) {
         _addBillPackByNotify('sentBillBean', data.sentBillList);
       }
     }
@@ -354,6 +359,9 @@ var _analysisMessageData = function (data) {
       }
       if (data.billBody && !_.isEmpty(data.billBody) && data.billBody.length > 0) {
         _updateBillList(data.role, data.billBody);
+      }
+      if (data.userBody && !_.isEmpty(data.userBody)) {
+        _updateUserInfo(data.userBody);
       }
       break;
   }
@@ -479,15 +487,17 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       if (action.successHandle)action.successHandle();
       break;
     case ActionTypes.UPDATE_UNAUDITING:
-      _data.certifiedOrgBean = _.assign(_data.certifiedOrgBean, action.data);
+      //_data.certifiedOrgBean = _.assign(_data.certifiedOrgBean, action.data);
+      //Persister.saveAppData(_data);
+      //AppStore.emitChange();
+      //if (action.successHandle)action.successHandle();
+      initNewOrg();
       Persister.saveAppData(_data);
-      AppStore.emitChange();
-      if (action.successHandle)action.successHandle();
       break;
     case ActionTypes.UPDATE_EXISTORG:
       _data.certifiedOrgBean.map((item, index)=> {
         if (item.id == action.data.id) {
-          item = _.assign(item, action.data)
+          item = _.assign(item, action.data);
           let key = _.keys(action.data)[0];
           if (key == action.data.id) {
             key = _.keys(action.data)[1];
