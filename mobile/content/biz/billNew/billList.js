@@ -14,29 +14,30 @@ var {
     InteractionManager
 } = React;
 var _ = require('lodash');
-var Demo = require('./demo')
-var Adjust = require('../../comp/utils/adjust')
-var ListBottom = require('../../comp/utilsUi/listBottom')
+var Demo = require('./demo');
+var Adjust = require('../../comp/utils/adjust');
+var ListBottom = require('../../comp/utilsUi/listBottom');
 var {width, height} = Dimensions.get('window');
 var NavBarView = require('../../framework/system/navBarView');
 var AppStore = require('../../framework/store/appStore');
-var NumberHelper = require('../../comp/utils/numberHelper')
+var NumberHelper = require('../../comp/utils/numberHelper');
 var DateHelper = require('../../comp/utils/dateHelper');
 var ToLogin = require('../../comp/utilsUi/toLogin');
-var Login = require('../login/login')
+var Login = require('../login/login');
 var UserStore = require('../../framework/store/userStore');
 var BillStore = require('../../framework/store/billStore');
 var BillAction = require('../../framework/action/billAction');
-var BillDetail = require('./billDetail')
-var VIcon = require('../../comp/icon/vIcon')
-var BillStates = require('./../../constants/billStates')
-var Validation = require('../../comp/utils/validation')
+var BillDetail = require('./billDetail');
+var VIcon = require('../../comp/icon/vIcon');
+var BillStates = require('./../../constants/billStates');
+var Validation = require('../../comp/utils/validation');
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
 
 var GiftedListView = require('../../comp/listView/GiftedListView');
 const PAGE_SIZE = 5;
+
 var Bill = React.createClass({
     getDataSouce(bean, key1, key2, key3){
         if (!bean || _.isEmpty(bean)) {
@@ -98,7 +99,9 @@ var Bill = React.createClass({
         AppStore.addChangeListener(this._onChange);
         var obj = BillStore.getDemoFlag();
         if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
-            this.props.navigator.push({comp: Demo});
+            this.props.navigator.push({
+                comp: Demo
+            });
             BillAction.setDemoFlag();
         }
     },
@@ -271,7 +274,7 @@ var Bill = React.createClass({
                     ()=> this._fetchData(page - 1, callback, options)
                 )
             );
-        }, 300)
+        }, 500)
     },
 
     _fetchData: function (page, callback, options) {

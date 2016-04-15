@@ -103,7 +103,8 @@ var BillDetail = React.createClass({
                             }.bind(this)
                         )
                     }.bind(this)
-                ), function () {
+                ),
+                function () {
                 }
             )
         }
@@ -114,12 +115,16 @@ var BillDetail = React.createClass({
     },
 
     viewDetail(){
-        this.props.navigator.push({
-            comp: BillContent,
-            param: {
-                item: this.state.item
-            }
-        })
+        const { navigator } = this.props;
+        if (navigator) {
+            navigator.push({
+                comp: BillContent,
+                param: {
+                    item: this.state.item
+                }
+            })
+        }
+
     },
     returnDes(){
         let obj = BillStates[this.state.type][this.state.item.status]

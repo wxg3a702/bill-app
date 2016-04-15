@@ -9,9 +9,11 @@ var {
 var Adjust=require('../../comp/utils/adjust')
 var NavBarView = require('../../framework/system/navBarView');
 var BillStates = require('./../../constants/billStates');
+
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
+
 var BillContent = React.createClass({
     getInitialState(){
         let item = !this.props.param.item ? this.props.param : this.props.param.item
@@ -20,6 +22,7 @@ var BillContent = React.createClass({
             dataSource: BillStates.content
         }
     },
+
     renderRow(data){
         return (
             <View style={{flexDirection:'row',alignItems:'center',paddingVertical:8}}>
@@ -37,6 +40,7 @@ var BillContent = React.createClass({
             </View>
         )
     },
+
     returnList(){
         return (
             <View style={{paddingTop:4,backgroundColor:'white'}}>
@@ -45,6 +49,7 @@ var BillContent = React.createClass({
             </View>
         )
     },
+
     returnNeedTitle(){
         if (this.props.needTitle == false) {
             return (
@@ -60,9 +65,10 @@ var BillContent = React.createClass({
             )
         }
     },
+
     render(){
         return (
-            <View>
+            <View style={{flex:1}}>
                 {this.returnNeedTitle()}
             </View>
         )
