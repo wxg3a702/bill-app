@@ -112,14 +112,17 @@ var Bill = React.createClass({
     },
     _onChange: function () {
         this.setState(this.getStateFromStores());
-        //if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
-        //    this.refs.BillList._refresh();
-        //}
-        setTimeout(() => {
-            InteractionManager.runAfterInteractions(
-                () => this.refs.BillList._refreshWithoutSpinner()
+        if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
+            InteractionManager.runAfterInteractions(() => {
+                    this.refs['BillList']._refreshWithoutSpinner();
+                }
             )
-        }, 1000)
+        }
+        //setTimeout(() => {
+        //    InteractionManager.runAfterInteractions(
+        //        () => this.refs.BillList._refreshWithoutSpinner()
+        //    )
+        //}, 1000)
 
     },
     changeRev(){
@@ -269,8 +272,9 @@ var Bill = React.createClass({
 
     _onFetch(page = 1, callback, options) {
         setTimeout(() => {
-            InteractionManager.runAfterInteractions(
-                ()=> this._fetchData(page - 1, callback, options)
+            InteractionManager.runAfterInteractions(() => {
+                    this._fetchData(page - 1, callback, options);
+                }
             )
         }, 1000)
     },

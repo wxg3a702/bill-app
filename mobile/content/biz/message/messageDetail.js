@@ -24,6 +24,8 @@ var DateHelper = require("../../comp/utils/dateHelper");
 var Alert = require('../../comp/utils/alert');
 var VIcon = require('../../comp/icon/vIcon');
 var GiftedListView = require('../../comp/listView/GiftedListView');
+var MsgCategory = require('../../constants/notification').MsgCategory;
+var CompCertification = require('../company/compCertification')
 var PAGE_SIZE = 5;
 var ds = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
@@ -52,8 +54,9 @@ var MessageDetail = React.createClass({
       //this.refs['MsgList']._refreshWithoutSpinner();
 
       setTimeout(() => {
-        InteractionManager.runAfterInteractions(
-            () => this.refs['MsgList']._refreshWithoutSpinner()
+        InteractionManager.runAfterInteractions(() => {
+              this.refs['MsgList']._refreshWithoutSpinner();
+            }
         )
       }, 1000);
     }
@@ -136,20 +139,44 @@ var MessageDetail = React.createClass({
   },
 
   toOther(item){
-    let billId = item.billId;
-    if (billId == null || billId == undefined) {
-      return;
-    }
-    let bill = MessageStore.getSentBillDetail(billId);
-    if (_.isEmpty(bill)) {
-      Alert('票据信息不存在');
-    } else {
+    if (this.props.param.name == MsgCategory.BILL_SENT) {
+      let billId = item.billId;
+      if (billId == null || billId == undefined) {
+        return;
+      }
+      let bill = MessageStore.getSentBillDetail(billId);
+      if (_.isEmpty(bill)) {
+        Alert('票据信息不存在');
+      } else {
+        this.props.navigator.push({
+          param: {title: '详情', item: bill},
+          comp: Detail
+        });
+      }
+    } else if (this.props.param.name == MsgCategory.SYSTEM_NOTICE){
       this.props.navigator.push({
-        param: {title: '详情', record: bill},
-        comp: Detail
+        comp: CompCertification
       });
     }
+
   },
+
+  toDetailView(){
+    if (this.props.param.title != '市场动态') {
+      return (
+        <View>
+          <View
+            style={{marginHorizontal:10,borderBottomWidth: 0.5, borderColor: '#c8c7cc'}}></View>
+          <View
+            style={{height:40,flexDirection:'row',paddingHorizontal:12,alignItems:'center',justifyContent:'space-between'}}>
+            <Text style={{fontSize:14,color:'#7f7f7f'}}>查看详情</Text>
+            <VIcon/>
+          </View>
+        </View>
+      )
+    }
+  },
+
   renderLists: function (item) {
     var {width,height} = Dimensions.get('window');
     return (
@@ -158,20 +185,14 @@ var MessageDetail = React.createClass({
         <TouchableHighlight underlayColor={'#cccccc'} onPress={()=>this.toOther(item)}>
           <View>
             <View style={{flexDirection:'row',justifyContent:'space-between',padding:12}}>
-              <Text numberOfLines={1}
+              <Text numberOfLines={2}
                     style={{width:width-Adjust.width(100),fontSize:16,color:'#333333'}}>{item.title}</Text>
               <Text
                 style={{fontSize:11,color:'#7f7f7f'}}>{DateHelper.descDate(new Date(item.receiveDate))}</Text>
             </View>
             <Text
-              style={[{marginLeft:12, fontSize:14,color:'#7f7f7f',flex:1,paddingHorizontal:12}, styles.contentMargin]}>{item.content}</Text>
-            <View
-              style={{marginTop:10,marginHorizontal:10,borderBottomWidth: 0.5, borderColor: '#c8c7cc'}}></View>
-            <View
-              style={{height:40,flexDirection:'row',paddingHorizontal:12,alignItems:'center',justifyContent:'space-between'}}>
-              <Text style={{fontSize:14,color:'#7f7f7f'}}>查看详情</Text>
-              <VIcon/>
-            </View>
+              style={[{marginBottom: 10, marginLeft:12, fontSize:14,color:'#7f7f7f',flex:1,paddingHorizontal:12}, styles.contentMargin]}>{item.content}</Text>
+            {this.toDetailView()}
           </View>
         </TouchableHighlight>
       </View>

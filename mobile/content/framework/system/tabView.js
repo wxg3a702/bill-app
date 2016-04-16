@@ -26,6 +26,14 @@ var ScrollableTabView = require('../../comp/tabBar/android/tabContainer')
 var AndroidTabBar = require('../../comp/tabBar/android/tabBar');
 var NotificationManager = require('./notificationManager');
 
+const PageDic = {
+  home:0,
+  bills:1,
+  messages:2,
+  personCenter:3
+
+};
+
 var TabView = React.createClass({
   getStateFromStores() {
     var token = AppStore.getToken();
@@ -114,9 +122,15 @@ var TabView = React.createClass({
   },
 
   getInitialState: function () {
+    let tabName = this.props.tabName;
+    if(!tabName){
+      tabName = 'home';
+    }
+    let initialPage = PageDic[tabName];
+
     return _.assign(
       this.getStateFromStores(),
-      {selectedTab: 'home'}
+      {selectedTab: tabName, initialPage: initialPage}
     );
   },
 
