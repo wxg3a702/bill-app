@@ -90,6 +90,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
             cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri
                     .fromFile(new File(Environment
                             .getExternalStorageDirectory(), fileName)));
+            Log.d("Directory",Environment.getExternalStorageDirectory().toString() + fileName);
             File file = new File(Environment.getExternalStorageDirectory(), fileName);
             if (file.exists()){
                 file.delete();

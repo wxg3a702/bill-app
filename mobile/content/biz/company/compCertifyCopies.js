@@ -456,9 +456,23 @@ var CompCertifyCopies = React.createClass({
             )
         }
     },
+
+    backPress(){
+        Alert("退出后将不保存已添加的信息,确定退出吗?",
+          ()=> {
+              CompAction.clearNewOrg(
+                ()=>{
+                    this.props.navigator.pop();
+                }
+              )
+          },
+          function () {
+          });
+    },
+
     render: function () {
         return (
-            <NavBarView navigator={this.props.navigator} title={this.state.title}>
+            <NavBarView navigator={this.props.navigator} title={this.state.title} backPress={this.props.param.item ? null : this.backPress}>
                 <ScrollView>
                     {this.returnWorkNo()}
                     <View style={{flex:1,marginTop:32,marginHorizontal:Adjust.width(12)}}>

@@ -15,12 +15,13 @@ var Setting = React.createClass({
             })
         }
     },
+    /*<Item func={()=>this.toOther(Notice)} desc="消息通知设置"
+      imgPath={require('../../image/user/editPhone.png')}/>*/
     render: function () {
         return (
             <NavBarView navigator={this.props.navigator} title="设置">
                 <Space top={false}/>
-                <Item func={()=>this.toOther(Notice)} desc="消息通知设置"
-                      imgPath={require('../../image/user/editPhone.png')}/>
+
 
                 <Item func={()=>this.toOther(SecurityCenter)} desc="安全设置"
                       imgPath={require('../../image/user/editPwd.png')}/>
