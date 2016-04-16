@@ -58,8 +58,13 @@ var Message = React.createClass({
   _onChange: function () {
     this.setState(this.getStateFromStores());
     if (this.state.token && !_.isEmpty(this.refs['MsgList'])) {
-      this.refs['MsgList'].componentEmitChange();
-      this.refs['MsgList'].setDataSource();
+
+      setTimeout(() => {
+        InteractionManager.runAfterInteractions(
+            () => this.refs['MsgList']._refreshWithoutSpinner()
+        )
+      }, 1000);
+      // this.refs['MsgList'].setDataSource();
     }
   },
   getInitialState: function () {

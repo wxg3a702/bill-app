@@ -27,7 +27,7 @@ var _cancleBillDiscount = function (url, p, c, f) {
                 type: ActionTypes.CANCLE_BILL_DISCOUNT,
                 data: p
             });
-            c();
+           c();
         },
         f
     );

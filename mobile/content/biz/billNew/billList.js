@@ -97,6 +97,7 @@ var Bill = React.createClass({
     },
     componentDidMount() {
         AppStore.addChangeListener(this._onChange);
+
         var obj = BillStore.getDemoFlag();
         if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
             this.props.navigator.push({
@@ -111,38 +112,37 @@ var Bill = React.createClass({
     },
     _onChange: function () {
         this.setState(this.getStateFromStores());
-        if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
-            this.refs['BillList'].componentEmitChange();
-        }
+        //if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
+        //    this.refs.BillList._refresh();
+        //}
+        setTimeout(() => {
+            InteractionManager.runAfterInteractions(
+                () => this.refs.BillList._refreshWithoutSpinner()
+            )
+        }, 1000)
+
     },
     changeRev(){
-        Promise.resolve(
-            this.setState({
-                checkColor: 'white',
-                unCheckColor: '#44bcb2',
-                pick: this.state.resPick,
-                pickStatus: 'rev',
-                status: '全部',
-                dataSource: this.state.resPick[0].dataSource
-            })
-            )
-            .then(
-                !this.state.token ? '' : this.refs.BillList._refresh()
-            )
+        if (this.state.token) this.refs.BillList._refresh();
+        this.setState({
+            checkColor: 'white',
+            unCheckColor: '#44bcb2',
+            pick: this.state.resPick,
+            pickStatus: 'rev',
+            status: '全部',
+            dataSource: this.state.resPick[0].dataSource
+        });
     },
     changeSend(){
-        Promise.resolve(
-            this.setState({
-                checkColor: '#44bcb2',
-                unCheckColor: 'white',
-                pick: this.state.sentPick,
-                pickStatus: 'sent',
-                status: '全部',
-                dataSource: this.state.sentPick[0].dataSource
-            })
-        ).then(
-            !this.state.token ? '' : this.refs.BillList._refresh()
-        )
+        if (this.state.token) this.refs.BillList._refresh();
+        this.setState({
+            checkColor: '#44bcb2',
+            unCheckColor: 'white',
+            pick: this.state.sentPick,
+            pickStatus: 'sent',
+            status: '全部',
+            dataSource: this.state.sentPick[0].dataSource
+        });
     },
     changePick(){
         this.setState({
@@ -269,12 +269,10 @@ var Bill = React.createClass({
 
     _onFetch(page = 1, callback, options) {
         setTimeout(() => {
-            Promise.resolve().then(
-                InteractionManager.runAfterInteractions(
-                    ()=> this._fetchData(page - 1, callback, options)
-                )
-            );
-        }, 500)
+            InteractionManager.runAfterInteractions(
+                ()=> this._fetchData(page - 1, callback, options)
+            )
+        }, 1000)
     },
 
     _fetchData: function (page, callback, options) {
@@ -354,7 +352,7 @@ var Bill = React.createClass({
     },
     render(){
         return (
-            <NavBarView navigator={this.props.navigator} showBar={false} contentBackgroundColor={this.state.backColor}>
+            <NavBarView navigator={this.props.navigator} showBar={false} contentBackgroundColor={this.state.backColor} style={{flex:1}}>
                 <View style={{backgroundColor:'#f0f0f0'}}>
                     <View style={[styles.comStyle]}>
                         <TouchableOpacity onPress={this.changeRev} activeOpacity={0.9}>

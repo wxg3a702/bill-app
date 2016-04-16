@@ -73,7 +73,7 @@ let _getAppData = function (cb, userId) {
                 systemMsgBeans: _persisterUser.systemMsgBeans ? JSON.parse(_persisterUser.systemMsgBeans) : [],
                 sentBillMsgBeans: _persisterUser.sentBillMsgBeans ? JSON.parse(_persisterUser.sentBillMsgBeans) : [],
                 demoFlag: _persisterUser.demoFlag ? JSON.parse(_persisterUser.demoFlag) : {},
-                acceptanceBankBeans: _persisterUser.acceptanceBankBeans,
+                acceptanceBankBeans: _persisterUser.acceptanceBankBeans ? JSON.parse(_persisterUser.acceptanceBankBeans) : {},
                 revBillMessage: _persisterUser.revBillMessage,
                 newsMessage: _persisterUser.newsMessage
             });

@@ -43,7 +43,7 @@ var ApplyDis = React.createClass({
         this.setState(responseData);
 
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        this.acceptanceJson = JSON.parse(acceptanceBankBeans);
+        this.acceptanceJson = acceptanceBankBeans;
 
         if (this.acceptanceJson == null || this.acceptanceJson == []) {
             this.setState({

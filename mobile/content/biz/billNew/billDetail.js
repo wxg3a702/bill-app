@@ -73,8 +73,10 @@ var BillDetail = React.createClass({
         this.setState(this.getStateFromStores());
     },
     func(key){
+
         const {navigator}=this.props
         let item = this.state.item;
+
         if (key == 'back') {
             navigator.pop()
         } else if (key == 'tie') {
@@ -141,7 +143,7 @@ var BillDetail = React.createClass({
             return (
                 <View style={[styles.margin,styles.center]}>
                     <Text
-                        style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDueDate)}</Text>
+                        style={{color:obj.color,fontSize:15}}>{DateHelper.formatBillDetail(this.state.item.discountDate)}</Text>
                     <Text style={{fontSize:15,color:'#7f7f7f'}}>贴现</Text>
                 </View>
             )

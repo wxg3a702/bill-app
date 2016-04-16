@@ -65,7 +65,7 @@ var GiftedListView = React.createClass({
         progressBackgroundColor: '#c8c7cc',
       },
 
-      refreshText: '下拉刷新',
+      refreshText: '数据加载中,请稍后...',
       loadingText: '更多...',
       allLoadedText: '全部加载完成',
 
@@ -198,9 +198,7 @@ var GiftedListView = React.createClass({
     return (
       <View>
         <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
-          <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
-            ↻
-          </Text>
+          <GiftedSpinner />
         </View>
         {this.headerView()}
       </View>
@@ -214,9 +212,7 @@ var GiftedListView = React.createClass({
     return (
       <View>
         <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
-          <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
-            ↓
-          </Text>
+          <GiftedSpinner />
         </View>
         {this.headerView()}
       </View>
@@ -329,16 +325,31 @@ var GiftedListView = React.createClass({
     });
   },
 
-  componentEmitChange() {
-    this._scrollResponder = this.refs.listview.getScrollResponder();
-
-    InteractionManager.runAfterInteractions(() => {
-      this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
-    });
-  },
+  //componentEmitChange() {
+  //  this._scrollResponder = this.refs.listview.getScrollResponder();
+  //
+  //  InteractionManager.runAfterInteractions(() => {
+  //    this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+  //  });
+  //},
 
   setNativeProps(props) {
     this.refs.listview.setNativeProps(props);
+  },
+
+  _refreshWithoutSpinner() {
+    //InteractionManager.runAfterInteractions(() => {
+      let ds = new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      });
+      this.setState({
+        dataSource: ds.cloneWithRows(this._getRows())
+      });
+
+      this._scrollResponder.scrollTo({y: 0});
+      this._setPage(1);
+      this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
+    //});
   },
 
   _refresh() {
@@ -346,16 +357,25 @@ var GiftedListView = React.createClass({
   },
 
   _onRefresh(options = {}) {
-    if (this.isMounted()) {
-      //this._scrollResponder.scrollTo(0);
-      this._scrollResponder.scrollTo({y: 0});
-      this.setState({
-        refreshStatus: 'fetching',
-        isRefreshing: true,
+    //InteractionManager.runAfterInteractions(() => {
+      let ds = new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
       });
-      this._setPage(1);
-      this.props.onFetch(this._getPage(), this._postRefresh, options);
-    }
+      this.setState({
+        dataSource: ds.cloneWithRows(this._getRows())
+      });
+
+      if (this.isMounted()) {
+        //this._scrollResponder.scrollTo(0);
+        this._scrollResponder.scrollTo({y: 0});
+        this.setState({
+          refreshStatus: 'fetching',
+          isRefreshing: true,
+        });
+        this._setPage(1);
+        this.props.onFetch(this._getPage(), this._postRefresh, options);
+      }
+    //});
   },
 
   _postRefresh(rows = [], options = {}) {

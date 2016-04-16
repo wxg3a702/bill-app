@@ -23,7 +23,9 @@ var ComResult = React.createClass({
     render: function (){
         return(
             <NavBarView navigator={this.props.navigator}
-                        title="提交结果">
+                        title="提交结果"
+                        style={{flex:1}}
+            >
                 <View style={{justifyContent:'space-between',flex:1}}>
                     <View style={{alignItems:'center',marginTop:80}}>
                         <Image

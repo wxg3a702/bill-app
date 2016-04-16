@@ -49,8 +49,14 @@ var ConDiscount = React.createClass({
                                   func={'afterLoginSendSMSCodeToOldMobile'}/>
                     </View>
                     <Text style={{fontSize:15,color:'#7f7f7f',marginTop:10}}>{'请输入注册时设置的交易密码'}</Text>
-                    <Input type='default' prompt="交易密码" max={6} field="trading_PWD" isPwd={true}
-                           onChanged={this.handleChanged} icon="user"/>
+                    <Input type='default'
+                           prompt="交易密码"
+                           max={6} field="trading_PWD"
+                           isPwd={true}
+                           onChanged={this.handleChanged}
+                           icon="user"
+                           isPhone="numeric"
+                    />
                     <View style={{marginTop:36}}>
                         <Button func={this.validateSmsCode} content="完成" checked={this.state.checked}/>
                     </View>

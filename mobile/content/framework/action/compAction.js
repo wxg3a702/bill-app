@@ -44,8 +44,11 @@ var _updateDefaultOrgByUser = function (p, c, f) {
 }
 
 var _unSetDefaultOrg = function (p, c, f) {
-    BFetch(api + '/User/unSetDefaultOrg',
-        {},
+    BFetch(api + '/User/updateUser',
+        {
+            column:'isSetDefaultOrg',
+            value:false
+        },
         function (msg) {
             AppDispatcher.dispatch({
                 type: ActionTypes.UPDATE_USERINFO,

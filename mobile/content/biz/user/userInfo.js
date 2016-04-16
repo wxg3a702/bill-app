@@ -47,7 +47,7 @@ var UserInfo = React.createClass({
             email: Validation.isNull(user.email) ? '未设置' : user.email,
             jobTitle: Validation.isNull(user.jobTitle) ? '未设置' : user.jobTitle,
             location: Validation.isNull(user.location) ? '未设置' : user.location,
-            comp: user.setDefaultOrg ? '未设置' : (Validation.isNull(user.defaultOrgName) ? '未设置' : user.defaultOrgName),
+            comp: user.setDefaultOrg ?(Validation.isNull(user.defaultOrgName) ? '未设置' : user.defaultOrgName):'未设置',
             photoStoreId: user.photoStoreId
         };
     },
