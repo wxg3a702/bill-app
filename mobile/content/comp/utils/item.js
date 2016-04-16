@@ -40,7 +40,7 @@ var Item = React.createClass({
             <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.props.func}>
                 <View style={[styles.listLayout,this.props.top && styles.borderTop]}>
 
-                    <View style={{flex:1,flexDirection:'row'}}>
+                    <View style={{flex:1,flexDirection:'row',alignItems:'center'}}>
                         {this.returnImg()}
                         <Text style={styles.title} numberOfLines={1}>{this.props.desc}</Text>
                     </View>
@@ -76,7 +76,6 @@ var styles = StyleSheet.create({
     circle: {
         width: 16,
         height: 16,
-        borderRadius: 8,
         marginTop: 1,
         marginRight: 16
     },

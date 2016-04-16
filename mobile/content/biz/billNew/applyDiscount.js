@@ -34,7 +34,9 @@ var ApplyDis = React.createClass({
             acceptanceJson:[],
             discountBankName: '请选择贴现银行',
             description:'',
-            discountRate:0
+            discountRate:0,
+            amount:0,
+            dueDate:0,
         }
     },
 
@@ -65,13 +67,13 @@ var ApplyDis = React.createClass({
 
         if(item.bankName == this.acceptanceJson[0].bankName && item.discountRate == this.acceptanceJson[0].discountRate ){
             this.setState({
-                discountRate: item.discountRate / 1000,
+                discountRate: item.discountRate,
                 description:'(费率最低)',
                 discountBankName: item.bankName
             })
         }else {
             this.setState({
-                discountRate: item.discountRate / 1000,
+                discountRate: item.discountRate,
                 description:'',
                 discountBankName: item.bankName
             })

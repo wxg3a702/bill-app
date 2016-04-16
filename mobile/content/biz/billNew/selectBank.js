@@ -13,6 +13,7 @@ var {
 
 var NavBarView = require('../../framework/system/navBarView');
 var BillStore = require('../../framework/store/billStore');
+var numeral = require('numeral');
 
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -85,7 +86,7 @@ var SelextBank = React.createClass({
                 <View
                     style={{height:50,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomColor:'#e0e0e0',borderBottomWidth:1}}>
                     <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{item.bankName}</Text>
-                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{item.discountRate+'‰'}</Text>
+                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{numeral(item.discountRate * 1000).format("0,0.00")+'‰'}</Text>
                 </View>
             </TouchableOpacity>
         );

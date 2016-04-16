@@ -2,7 +2,8 @@
 
 var React = require('react-native');
 var {
-    View
+    View,
+    TextInput
     } = React;
 var RightTopButton = require('../../comp/utilsUi/rightTopButton')
 var LoginAction = require("../../framework/action/loginAction");
@@ -83,20 +84,49 @@ var EditPassword = React.createClass({
             <NavBarView navigator={this.props.navigator} title="修改登录密码">
 
                 <View style={{flexDirection: 'column',paddingHorizontal:12}}>
-                    <Input type='default' prompt="请输入旧密码" max={16} field="password" isPwd={true}
-                           onChanged={this.handleChanged} icon="password"/>
-                    <Input type='default' prompt="请输入新密码" max={16} field="newPassword" isPwd={true}
-                           onChanged={this.handleChanged} icon="password"/>
-                    <Input type='default' prompt="确认新密码" max={16} field="confirmNewPassword" isPwd={true}
-                           onChanged={this.handleChanged} icon="password"/>
+                    <Input type='default'
+                               prompt="请输入旧密码"
+                               max={16}
+                               field="password"
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon="password"/>
+
+                    <Input type='default'
+                               prompt="请输入新密码"
+                               max={16}
+                               field="newPassword"
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon="password"/>
+
+                    <Input type='default'
+                               prompt="确认新密码"
+                               max={16}
+                               field="confirmNewPassword"
+                               isPwd={true}
+                               onChanged={this.handleChanged}
+                               icon="password"/>
                 </View>
 
                 <View style={{marginTop:20,marginLeft:10,marginRight:10}}>
-                    <Button  func={this.next} checked={this.state.checked} content=' 确定' />
+                    <Button  func={this.next} checked={this.state.checked} content='完成' />
                 </View>
 
             </NavBarView>
         )
     }
 })
+
+
+//var styles = StyleSheet.create({
+//    view: {
+//        height: 47, borderColor: '#cccccc', borderWidth: 0.5, marginTop: 12, backgroundColor: 'white',
+//        flexDirection: 'row', alignItems: 'center'
+//    },
+//    input: {
+//        fontSize: 18, color: '#7f7f7f', marginLeft: 9,
+//    },
+//})
+
 module.exports = EditPassword;

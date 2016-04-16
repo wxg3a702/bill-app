@@ -166,7 +166,6 @@ var styles = StyleSheet.create({
     circle: {
         width: 16,
         height: 16,
-        borderRadius: 8,
         marginTop: 1
     },
     title: {
