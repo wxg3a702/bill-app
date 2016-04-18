@@ -54,7 +54,7 @@ var ConDiscount = React.createClass({
                            max={6} field="trading_PWD"
                            isPwd={true}
                            onChanged={this.handleChanged}
-                           icon="user"
+                           icon="trading_PWD"
                            isPhone="numeric"
                     />
                     <View style={{marginTop:36}}>
