@@ -26,7 +26,7 @@ var VIcon = require('../../comp/icon/vIcon');
 var GiftedListView = require('../../comp/listView/GiftedListView');
 var MsgCategory = require('../../constants/notification').MsgCategory;
 var CompCertification = require('../company/compCertification')
-var PAGE_SIZE = 5;
+var PAGE_SIZE = 10;
 var ds = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });

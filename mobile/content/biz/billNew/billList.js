@@ -110,14 +110,14 @@ var Bill = React.createClass({
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
-    _onChange: function () {
+    _onChange: function()  {
         this.setState(this.getStateFromStores());
-        if (this.state.token && !_.isEmpty(this.refs['BillList'])) {
-            InteractionManager.runAfterInteractions(() => {
-                    this.refs['BillList']._refreshWithoutSpinner();
-                }
-            )
-        }
+        InteractionManager.runAfterInteractions(() => {
+            if (this.state.token && this.refs['BillList']) {
+                this.refs['BillList']._refreshWithoutSpinner();
+            }
+        });
+
         //setTimeout(() => {
         //    InteractionManager.runAfterInteractions(
         //        () => this.refs.BillList._refreshWithoutSpinner()

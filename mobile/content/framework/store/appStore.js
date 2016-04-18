@@ -98,11 +98,11 @@ var _appInit = function (data) {
         _data.revBillMessage = true;
         _data.newsMessage = true;
       }
-      if (_data.token == '') {
+      if (_data.token == '' && _.isEmpty(_data.token)) {
         _data.token = null;
         if (Platform.OS === 'android') SP.setTokenToSP(' ');
       } else {
-        if (Platform.OS === 'android') {
+        if (Platform.OS === 'android' && _data.token) {
           SP.setTokenToSP(_data.token);
           ServiceModule.setIsLoginToSP(true);
           ServiceModule.startAppService();

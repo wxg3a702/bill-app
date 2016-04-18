@@ -120,7 +120,6 @@ public class AppService extends Service {
     private Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(Object ... args) {
-
             JSONObject mJSONObject = JSON.parseObject(args[0].toString());
             LogUtils.d("有消息来了", args[0].toString());
             String mType = mJSONObject.getString("type");

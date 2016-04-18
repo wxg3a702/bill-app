@@ -6,6 +6,7 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.mobile.service.AppService;
+import com.mobile.utils.AppUtils;
 import com.mobile.utils.LogUtils;
 import com.mobile.utils.SPUtils;
 
@@ -25,18 +26,20 @@ public class ServiceModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void setIsLoginToSP(boolean isLogin){
+    public void setIsLoginToSP(boolean isLogin) {
         LogUtils.d("isLogin", isLogin + " ");
         SPUtils.put(getReactApplicationContext(), "isLogin", isLogin);
     }
 
     @ReactMethod
-    public void startAppService(){
-        getReactApplicationContext().startService(new Intent(getReactApplicationContext(), AppService.class));
+    public void startAppService() {
+        if (!AppUtils.isServiceWork(getReactApplicationContext(), "com.mobile.service.AppService")) {
+            getReactApplicationContext().startService(new Intent(getReactApplicationContext(), AppService.class));
+        }
     }
 
     @ReactMethod
-    public void stopAppService(){
+    public void stopAppService() {
         getReactApplicationContext().stopService(new Intent(getReactApplicationContext(), AppService.class));
     }
 }
