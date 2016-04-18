@@ -17,7 +17,8 @@ var CompAction = {
   unSetDefaultOrg: (p, c, f) =>_unSetDefaultOrg(p, c, f),
 
   clearNewOrg: (c)=>_clearNewOrg(c),
-}
+};
+
 var _deleteOrg = function (p, c, f) {
   PFetch(api + '/Organization/deleteOrg', p,
     function (msg) {
@@ -35,29 +36,39 @@ var _deleteOrg = function (p, c, f) {
     },
     f
   )
-}
+};
+
 var _updateDefaultOrgByUser = function (p, c, f) {
     PFetch(api + '/Organization/updateDefaultOrgByUser',
-        {orgId: p.orgId}, function (msg) {
+        {
+            orgId: p.orgId
+        },
+        function (msg) {
             AppDispatcher.dispatch({
                 type: ActionTypes.UPDATE_USERINFO,
-                data: {defaultOrgName: p.defaultOrgName}
+                data: {
+                    defaultOrgName: p.defaultOrgName,
+                    setDefaultOrg: p.setDefaultOrg
+                }
             })
             c(msg);
         }, f
     )
-}
+};
 
 var _unSetDefaultOrg = function (p, c, f) {
     BFetch(api + '/User/updateUser',
         {
             column:'isSetDefaultOrg',
-            value:false
+            value: 'false',
         },
         function (msg) {
             AppDispatcher.dispatch({
                 type: ActionTypes.UPDATE_USERINFO,
-                data: {defaultOrgName: p.defaultOrgName}
+                data: {
+                    defaultOrgName: p.defaultOrgName,
+                    setDefaultOrg: p.setDefaultOrg
+                }
             })
             c(msg);
         }, f
@@ -70,20 +81,22 @@ var _updateExist = function (p, c, f) {
     data: p,
     successHandle: c
   });
-}
+};
+
 var _updateNewOrgInfo = function (p, c, f) {
   AppDispatcher.dispatch({
     type: ActionTypes.UPDATE_NEWORG,
     data: p,
     successHandle: c
   });
-}
+};
+
 var _clearNewOrg = function (c) {
   AppDispatcher.dispatch({
     type: ActionTypes.CLEAR_NEWORG,
     successHandle: c
   });
-}
+};
 
 var _updateOrgBeans = function (p, c) {
   //AppDispatcher.dispatch({
@@ -91,7 +104,8 @@ var _updateOrgBeans = function (p, c) {
   //  data: p,
   //  successHandle: c
   //});
-}
+};
+
 var _updateUnAuditing = function (p, c) {
   BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
     AppDispatcher.dispatch({
@@ -102,7 +116,8 @@ var _updateUnAuditing = function (p, c) {
   AppDispatcher.dispatch({
     type: ActionTypes.UPDATE_UNAUDITING
   });
-}
+};
+
 var _submitOrg = function (p, c, f) {
   let arrs = [uploadFileHandle(p, 'licenseCopyFileId')];
   if (p.corpIdentityFileId && !_.isEmpty(p.corpIdentityFileId)) {
@@ -155,7 +170,8 @@ var _submitOrg = function (p, c, f) {
         )
       }
     })
-}
+};
+
 var uploadFileHandle = function (params, fileFieldName) {
   return function (callback) {
     if (params[fileFieldName].indexOf("_userId") > -1) {
@@ -176,8 +192,6 @@ var uploadFileHandle = function (params, fileFieldName) {
         });
     }
   }
+};
 
-
-}
-
-module.exports = CompAction
+module.exports = CompAction;

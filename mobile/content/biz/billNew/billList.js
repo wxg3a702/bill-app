@@ -13,6 +13,7 @@ var {
     TouchableOpacity,
     InteractionManager
 } = React;
+
 var _ = require('lodash');
 var Demo = require('./demo');
 var Adjust = require('../../comp/utils/adjust');
@@ -31,6 +32,8 @@ var BillDetail = require('./billDetail');
 var VIcon = require('../../comp/icon/vIcon');
 var BillStates = require('./../../constants/billStates');
 var Validation = require('../../comp/utils/validation');
+var Alert = require('../../comp/utils/alert');
+
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
 });
@@ -99,17 +102,28 @@ var Bill = React.createClass({
         AppStore.addChangeListener(this._onChange);
 
         var obj = BillStore.getDemoFlag();
+
+        if (this.state.token) {
+            var userType = UserStore.getUserType();
+            if (userType !== 'CERTIFIED') {
+                Alert('您还未完成企业认证');
+            }
+        }
+
         if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
             this.props.navigator.push({
                 comp: Demo
             });
             BillAction.setDemoFlag();
         }
+
+
     },
 
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
+
     _onChange: function () {
         this.setState(this.getStateFromStores());
         if (this.state.token && !_.isEmpty(this.refs['BillList'])) {

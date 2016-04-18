@@ -71,8 +71,10 @@ var EditComp = React.createClass({
         CompAction.updateDefaultOrgByUser(
             {
                 orgId: data.id,
-                defaultOrgName: data.orgName
-            }, function () {
+                defaultOrgName: data.orgName,
+                setDefaultOrg: true
+            },
+            function () {
                 navigator.pop()
             }.bind(this)
         )
@@ -82,7 +84,8 @@ var EditComp = React.createClass({
         const { navigator } = this.props;
         CompAction.unSetDefaultOrg(
             {
-                defaultOrgName:undefined
+                defaultOrgName: undefined,
+                setDefaultOrg: false
             },
             function () {
                 navigator.pop()

@@ -10,6 +10,7 @@ var {
     } = React;
 var InputIcon=require('../../constants/inputIcon')
 var Adjust=require('../../comp/utils/adjust')
+
 var Input = React.createClass({
     getDefaultProps(){
 

@@ -29,6 +29,7 @@ var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
 var SP = require('NativeModules').SPModule;
 var ServiceModule = require('NativeModules').ServiceModule;
+
 var AppStore = assign({}, EventEmitter.prototype, {
 
   addChangeListener: function (callback, event) {
