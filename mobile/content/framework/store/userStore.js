@@ -12,6 +12,8 @@ var UserStore = assign({}, EventEmitter.prototype, {
 
     getUserInfoBean: ()=>AppStore.getData().userInfoBean,
 
+    getUserType: ()=>AppStore.getData().userInfoBean.userType,
+
     getArea: ()=>LocationJson,
 
     getKeyPoint: ()=>KeyPointFile,

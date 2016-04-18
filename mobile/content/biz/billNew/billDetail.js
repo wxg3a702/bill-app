@@ -95,7 +95,7 @@ var BillDetail = React.createClass({
                     function () {
                         Alert("撤销成功!", ()=>this.goBack());
                     }.bind(this),
-                    function () {
+                    function (msg) {
                         Alert(msg.msgContent,
                             function () {
                                 const { navigator } = this.props;

@@ -82,7 +82,7 @@ var SecurityCenter = React.createClass({
                     <TouchableHighlight activeOpacity={0.8} underlayColor='#cccccc' onPress={this.toEditPhone}>
                         <View
                             style={[styles.flexRow,styles.between,styles.listLayout,styles.borderTop,styles.borderBottom,{alignItems:'center'}]}>
-                            <View style={[styles.flexOne,styles.flexRow]}>
+                            <View style={[styles.flexOne,styles.flexRow,{alignItems:'center'}]}>
                                 <Image style={styles.circle}
                                        source={require('../../image/user/editPhone.png')}/>
                                 <View style={{marginLeft:16}}>
