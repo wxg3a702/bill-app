@@ -28,6 +28,7 @@ var NumberHelper = require('../../comp/utils/numberHelper')
 var ApplyDis = require('./applyDiscount')
 var Alert = require('../../comp/utils/alert')
 var AppStore = require('../../framework/store/appStore');
+var dateFormat = require('dateformat');
 
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -37,6 +38,7 @@ var BillDetail = React.createClass({
     getStateFromStores(){
         let id = this.props.param.item.billId
         let item = BillStore.getBill(id)
+
         //let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
         if (!flow) {
@@ -247,7 +249,7 @@ var BillDetail = React.createClass({
             if (item.status == 'REQ' || item.status == 'HAN') {
                 return (
                     <View style={styles.layout}>
-                        {this.returnItemReference('起  息  日：', DateHelper.formatBillContent(item.dueDate))}
+                        {this.returnItemReference('起  息  日：', dateFormat((new Date((item.applyDiscountDate / 1000 + 86400 * 2) * 1000)), 'yyyy年mm月dd日'))}
                         {this.returnItem('贴  现  行：', item.discountBankName)}
                         {this.returnItem('贴现利率：', NumberHelper.formatRate(item.discountRate))}
                         {this.returnItem('收款账号：', NumberHelper.formatNum(item.payeeBankAccountNo, 3, 2))}
@@ -256,7 +258,7 @@ var BillDetail = React.createClass({
             } else if (item.status == 'DIS') {
                 return (
                     <View style={styles.layout}>
-                        {this.returnItem('起  息  日：', DateHelper.formatBillContent(item.dueDate))}
+                        {this.returnItem('起  息  日：', dateFormat((new Date((item.applyDiscountDate / 1000 + 86400 * 2) * 1000)), 'yyyy年mm月dd日'))}
                         {this.returnItem('贴  现  行：', item.discountBankName)}
                         {this.returnItem('贴现利率：', NumberHelper.formatRate(item.discountRate))}
                         {this.returnItem('收款账号：', NumberHelper.formatNum(item.payeeBankAccountNo, 3, 2))}

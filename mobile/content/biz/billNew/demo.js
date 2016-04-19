@@ -29,6 +29,7 @@ var Demo = React.createClass({
             dataSource: dataSource.cloneWithPages(PAGES),
         }
     },
+
     _renderPage: function (data:Object) {
         return (
             <Image style={{width:width,height:height}} resizeMode="stretch" source={data.img}>
@@ -40,6 +41,7 @@ var Demo = React.createClass({
             </Image>
         );
     },
+
     render(){
         return (
             <ViewPager

@@ -73,7 +73,11 @@ var VerifyOldTradingPWD = React.createClass({
             },
             ()=>this.thisValideateOldTradingPWD(),
             function(msg){
-                Alert(msg.msgContent);
+                if (msg.msgCode == 'USER_TRANSACTION_PASSWORD_VALIDATION_WRONG_TIMES_ILLEGAL') {
+                    Alert(msg.msgContent, ()=>LoginAction.forceLogOut());
+                } else {
+                    Alert(msg.msgContent);
+                }
             }
         );
     },

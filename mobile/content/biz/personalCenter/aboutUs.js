@@ -7,6 +7,7 @@ var {
     ActionSheetIOS,
     Text,
     View,
+    ScrollView,
     } = React;
 var Item = require('../../comp/utils/item');
 var Advantage = require('./advantage')
@@ -23,7 +24,7 @@ var AboutUs = React.createClass({
         }
     },
     send(){
-        let phone=this.state.phone;
+        let phone = this.state.phone;
         ActionSheetIOS.showActionSheetWithOptions({
             options: [
                 '拨打电话',
@@ -48,28 +49,31 @@ var AboutUs = React.createClass({
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="关于我们">
-                <View style={{paddingBottom:24,backgroundColor:'white'}}>
-                    <View style={{marginTop:20,flexDirection:'column',alignItems:'center',paddingHorizontal:16}}>
-                        <Image style={styles.circle} source={require('../../image/user/icon.png')}/>
-                        <Text style={styles.title}>版本号: 1.23.0</Text>
-                        <Text style={styles.title}>票易贴•票据贴现新境界</Text>
+                <ScrollView>
+                    <View style={{paddingBottom:24,backgroundColor:'white'}}>
+                        <View style={{marginTop:20,flexDirection:'column',alignItems:'center',paddingHorizontal:16}}>
+                            <Image style={styles.circle} source={require('../../image/user/icon.png')}/>
+                            <Text style={styles.title}>版本号: 1.23.0</Text>
+                            <Text style={styles.title}>票易贴•票据贴现新境界</Text>
+                        </View>
+                        <Text style={styles.content}>
+                            {this.state.content}
+                        </Text>
                     </View>
-                    <Text style={styles.content}>
-                        {this.state.content}
-                    </Text>
-                </View>
-                <View style={[{backgroundColor:'white'}]}>
-                    <Item desc="客服热线:" img={false} icon={false} top={true} value={this.state.phone} func={this.send}/>
-                    <Item desc="网站邮箱:" img={false} icon={false} value={this.state.email}/>
-                    <Item desc="官方网站:" img={false} icon={false} value={this.state.web}/>
-                    <Item desc="官方微信:" img={false} icon={false} value={this.state.chat}/>
-                    <Item desc="平台优势:" img={false} func={this.toAdvantage}/>
-                </View>
-                <View style={{paddingTop:32,alignItems:'center'}}>
-                    <Text style={styles.font}>隐私政策</Text>
-                    <Text style={styles.font}>© 2015,all rights reserved.</Text>
-                </View>
-                <View style={[styles.borderBottom,{marginTop:6,marginHorizontal:12}]}></View>
+                    <View style={[{backgroundColor:'white'}]}>
+                        <Item desc="客服热线:" img={false} icon={false} top={true} value={this.state.phone}
+                              func={this.send}/>
+                        <Item desc="网站邮箱:" img={false} icon={false} value={this.state.email}/>
+                        <Item desc="官方网站:" img={false} icon={false} value={this.state.web}/>
+                        <Item desc="官方微信:" img={false} icon={false} value={this.state.chat}/>
+                        <Item desc="平台优势:" img={false} func={this.toAdvantage}/>
+                    </View>
+                    <View style={{paddingTop:32,alignItems:'center'}}>
+                        <Text style={styles.font}>隐私政策</Text>
+                        <Text style={styles.font}>© 2015,all rights reserved.</Text>
+                    </View>
+                    <View style={[styles.borderBottom,{marginTop:6,marginHorizontal:12}]}></View>
+                </ScrollView>
             </NavBarView>
         )
     },
