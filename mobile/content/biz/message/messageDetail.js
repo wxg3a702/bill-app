@@ -69,10 +69,16 @@ var MessageDetail = React.createClass({
       dataSource: this.state.result
     });
   },
+
+  _backPress () {
+    MessageStore.updateUnReadNum(this.props.param.name);
+    this.props.navigator.pop();
+  },
+
   render(){
     return (
       <NavBarView navigator={this.props.navigator} title={this.props.param.title}
-                  contentBackgroundColor='#f0f0f0'>
+                  contentBackgroundColor='#f0f0f0' backPress={this._backPress}>
         <GiftedListView
           ref="MsgList"
           rowView={this.renderLists}

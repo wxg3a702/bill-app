@@ -5,6 +5,7 @@ var {
   Text,
   TouchableOpacity,
   Image,
+  Platform
   } = React;
 
 var GiftedSpinner = require('../listView/GiftedSpinner');

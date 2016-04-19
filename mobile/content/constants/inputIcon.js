@@ -3,5 +3,7 @@ module.exports = {
     password: {icon: require('../image/utils/password.png')},
     user: {icon: require('../image/utils/user.png')},
     trading_PWD: {icon: require('../image/user/trading_PWD.png')},
-    personId: {icon: require('../image/user/personId.png')}
+    personId: {icon: require('../image/user/personId.png')},
+    accountNo: {icon: require('../image/utils/accountno.png')},
+    bankNo: {icon: require('../image/utils/bankno.png')}
 }

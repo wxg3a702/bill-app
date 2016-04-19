@@ -128,7 +128,7 @@ public class AppService extends Service {
             LogUtils.d("有消息来了", mMsgBody.getContent());
             boolean mBackground = AppUtils.isApplicationBroughtToBackground(AppService.this);
             LogUtils.d("newMsg", mBackground ?  "true": "false");
-            if (mBackground) {
+            if (mBackground && "BILL_REV".equals(mMsgBody.getCategory())) {
                 manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 Intent mIntent = new Intent(AppService.this, MainActivity.class);
                 mIntent.putExtra("isMsg", true);
