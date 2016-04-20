@@ -277,7 +277,7 @@ var CompCertifyCopies = React.createClass({
             desc={name}
             //errorPress={this._errorPress}
             //errorView={this._errorView}
-            imageStyle={styles.image}
+            imageStyle={styles.addImage}
             centerText='等待认证'
             source={url.uri}
           />
