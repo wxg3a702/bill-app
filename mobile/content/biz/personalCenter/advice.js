@@ -17,10 +17,15 @@ var Advice = React.createClass({
         }
     },
     submit(){
+        //文本筛选
+        var reg = /^[^/~^*-=+*:;☆()]+$/g;
+
         if(this.state.opinion.length == 0){
 
         }else if(this.state.opinion.length > 300){
            Alert('请输入300字以内意见')
+        } else if (!reg.test(this.state.opinion)) {
+            Alert('请输入正确的中英文文本')
         }else{
             const { navigator } = this.props;
             UserAction.feedbackOpinion(

@@ -216,6 +216,8 @@ var _createBillDiscount = function (data) {
   _data.revBillBean.contentList.map((item, index)=> {
     if (item.billId == data.billId) {
       _data.revBillBean.contentList[index].status = "REQ";
+      _data.revBillBean.contentList[index].acceptBankName = data.acceptBankName;
+      _data.revBillBean.contentList[index].discountRate = data.discountRate;
     }
   });
   Persister.saveAppData(_data);

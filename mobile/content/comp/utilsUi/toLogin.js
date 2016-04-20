@@ -25,8 +25,8 @@ var ToLogin = React.createClass({
             <TouchableHighlight style={[styles.content,{marginTop:this.props.mar?height-196:height-164}]}
                                 onPress={this.props.func} underlayColor="#cccccc">
                 <View style={{ flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center', height: 50,padding: 8,}}>
-                    <Text style={{fontSize:18}}>你还没有登陆</Text>
-                    <Text style={{fontSize:18}}>点击去登陆</Text>
+                    <Text style={{fontSize:18}}>你还没有登录</Text>
+                    <Text style={{fontSize:18}}>点击去登录</Text>
                 </View>
             </TouchableHighlight>
         )

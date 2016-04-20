@@ -44,7 +44,7 @@ var AboutUs = React.createClass({
     } else {
       Alert("拨打电话", () => {
         CallModule.call(phone)
-      })
+      }, ()=>{})
     }
   },
   toAdvantage(){

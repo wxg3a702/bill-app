@@ -44,7 +44,11 @@ var KeyPoint = React.createClass({
 
     renderList: function (item) {
         return (
-            <Item func={()=>this.detail(item)} desc={item.title} img={false}/>
+            <Item func={()=>this.detail(item)}
+                  desc={item.title}
+                  img={false}
+                  detailEnable={false}
+            />
         )
     },
 });

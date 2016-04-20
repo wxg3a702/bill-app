@@ -112,8 +112,9 @@ var TextEdit = React.createClass({
             Alert('字数超过'+ this.props.param.maxLength +'字的限制');
         } else if(this.props.param.name == 'qqNo' && !reg.test(this.state.newValue)){
             Alert('请输入正确的QQ号格式');
-        }else if(this.props.param.name == 'realName' && !reg_userName.test(this.state.newValue)){
-            Alert('请输入20个字符内的中文或英文');
+        } else if ((this.props.param.name == 'realName' && !reg_userName.test(this.state.newValue))
+            || (this.props.param.name == 'jobTitle' && !reg_userName.test(this.state.newValue))) {
+            Alert('请输入20个字符内的中英文或数字');
         } else {
             const {navigator} = this.props;
             this.props.callback(

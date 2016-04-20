@@ -45,8 +45,8 @@ var _logout = function (url, c) {
                 type: ActionTypes.LOGOUT,
             });
         },
-        null,
-        {isLogout: true}
+        null
+        //{isLogout: true}
     )
 }
 

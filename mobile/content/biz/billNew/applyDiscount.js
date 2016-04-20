@@ -107,7 +107,7 @@ var ApplyDis = React.createClass({
     //贴现金额=票面金额*[1-贴现利率*（到期日-贴现日期）/30]
     calDis: function (amount, discountRate, dueDate) {
         var days = this.dataDiff(dateFormat(new Date(this.state.dueDate), 'yyyy-mm-dd'), dateFormat(_.now(), 'yyyy-mm-dd'));
-        return amount * (1 - discountRate * days / 30);
+        return amount * (1 - discountRate * (days - 2) / 30);
 
     },
 
@@ -219,7 +219,10 @@ var ApplyDis = React.createClass({
             {},
             function () {
                 this.props.navigator.push({
-                    param: {title: '确认贴现', billBean: item},
+                    param: {
+                        title: '确认贴现',
+                        billBean: item,
+                    },
                     comp: ConDiscount
                 });
             }.bind(this)
