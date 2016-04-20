@@ -50,16 +50,14 @@ var MessageDetail = React.createClass({
   },
   _onChange: function () {
     this.setState(this.getStateFromStores());
-    if (this.state.token && !_.isEmpty(this.refs['MsgList'])) {
-      //this.refs['MsgList']._refreshWithoutSpinner();
 
-      setTimeout(() => {
-        InteractionManager.runAfterInteractions(() => {
-              this.refs['MsgList']._refreshWithoutSpinner();
-            }
-        )
-      }, 1000);
-    }
+    setTimeout(() => {
+      InteractionManager.runAfterInteractions(() => {
+        if (this.state.token && this.refs['MsgList']) {
+          this.refs['MsgList']._refreshWithoutSpinner();
+        }
+      })
+    }, 1000);
   },
   getInitialState: function () {
     return this.getStateFromStores();
@@ -159,7 +157,7 @@ var MessageDetail = React.createClass({
           comp: Detail
         });
       }
-    } else if (this.props.param.name == MsgCategory.SYSTEM_NOTICE){
+    } else if (this.props.param.name == MsgCategory.SYSTEM_NOTICE) {
       this.props.navigator.push({
         comp: CompCertification
       });
