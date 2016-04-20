@@ -79,14 +79,18 @@ var SelextBank = React.createClass({
         this.props.callback(item);
         this.props.navigator.pop();
     },
-    _renderRow(item){
+    _renderRow(rowData, sectionId, rowId){
         return (
-            <TouchableOpacity underlayColor='#ebf1f2' onPress={()=>this.select(item)}
+            <TouchableOpacity underlayColor='#ebf1f2' onPress={()=>this.select(rowData)}
                               style={{flex:1}}>
                 <View
                     style={{height:50,backgroundColor:'#fff',flexDirection:'row',justifyContent:'space-between',alignItems:'center',borderBottomColor:'#e0e0e0',borderBottomWidth:1}}>
-                    <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{item.bankName}</Text>
-                    <Text style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{numeral(item.discountRate * 1000).format("0,0.00")+'‰'}</Text>
+                    <Text style={{marginLeft:16,color:'#333333',fontSize:18}}>{rowData.bankName}</Text>
+
+                    {rowId == 0 ? <Text style={{color:'#ff5b58',fontSize:18}}>(费率最低)</Text> : <Text></Text>}
+
+                    <Text
+                        style={{marginRight:16,color:'#7f7f7f',fontSize:15}}>{numeral(rowData.discountRate * 1000).format("0,0.00") + '‰'}</Text>
                 </View>
             </TouchableOpacity>
         );
