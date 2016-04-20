@@ -63,7 +63,7 @@ var CustomImage = React.createClass({
 
     if (this.props.centerText) {
       return (
-        <Text style={{fontSize:11,color:'white', backgroundColor:this.props.centerText == ' ' ? 'transparent' : null}}>{this.props.centerText}</Text>
+        <Text style={{fontSize:11,color:'white', backgroundColor:'transparent'}}>{this.props.centerText}</Text>
       );
     }
   },
