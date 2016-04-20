@@ -7,12 +7,15 @@ var {
   ActionSheetIOS,
   Text,
   View,
+  Platform,
   ScrollView
   } = React;
 var Item = require('../../comp/utils/item');
 var Advantage = require('./advantage')
 var NavBarView = require('../../framework/system/navBarView')
 var Communications = require('./communication');
+var CallModule = require('NativeModules').CallModule;
+var Alert = require('../../comp/utils/alert');
 var AboutUs = React.createClass({
   getInitialState(){
     return {
@@ -25,18 +28,24 @@ var AboutUs = React.createClass({
   },
   send(){
     let phone = this.state.phone;
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [
-        '拨打电话',
-        '取消'
-      ],
-      cancelButtonIndex: 1,
-      destructiveButtonIndex: 0,
-    }, function (index) {
-      if (index == 0) {
-        Communications.phonecall(phone, false);
-      }
-    })
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: [
+          '拨打电话',
+          '取消'
+        ],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0,
+      }, function (index) {
+        if (index == 0) {
+          Communications.phonecall(phone, false);
+        }
+      })
+    } else {
+      Alert("拨打电话", () => {
+        CallModule.call(phone)
+      })
+    }
   },
   toAdvantage(){
     const {navigator}=this.props;

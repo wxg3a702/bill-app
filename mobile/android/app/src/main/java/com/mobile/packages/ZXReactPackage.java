@@ -5,6 +5,7 @@ import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
+import com.mobile.modules.CallModule;
 import com.mobile.modules.DatePickerDialogModule;
 import com.mobile.modules.SPModule;
 import com.mobile.modules.ServiceModule;
@@ -28,6 +29,7 @@ public class ZXReactPackage implements ReactPackage {
         modules.add(new DatePickerDialogModule(reactContext));
         modules.add(new SPModule(reactContext));
         modules.add(new ServiceModule(reactContext));
+        modules.add(new CallModule(reactContext));
         return modules;
     }
 

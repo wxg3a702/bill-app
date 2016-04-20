@@ -137,7 +137,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 new Thread(){
                     @Override
                     public void run() {
-                        handler.postDelayed(run, 3000);
+                        handler.postDelayed(run, 5000);
                     }
                 }.start();
             }

@@ -20,6 +20,7 @@ var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var Communications = require('../personalCenter/communication');
+var CallModule = require('NativeModules').CallModule;
 var CompAccountInfo = React.createClass({
   getStateFromStores(){
     let check
@@ -56,19 +57,24 @@ var CompAccountInfo = React.createClass({
 
   callPhone: function () {
     let phone = this.state.phone;
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [
-        '拨打电话',
-        '取消'
-      ],
-      cancelButtonIndex: 1,
-      destructiveButtonIndex: 0,
-    }, function (index) {
-      if (index == 0) {
-        Communications.phonecall(phone, false);
-      }
-    })
-
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: [
+          '拨打电话',
+          '取消'
+        ],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0,
+      }, function (index) {
+        if (index == 0) {
+          Communications.phonecall(phone, false);
+        }
+      })
+    } else {
+      Alert("拨打电话", () => {
+        CallModule.call(phone)
+      }, () => {})
+    }
   },
   submit: function () {
     let newOrg = this.state.newOrg;

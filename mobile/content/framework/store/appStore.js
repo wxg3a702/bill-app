@@ -237,7 +237,17 @@ var _changeCompStatus = function (data) {
 };
 
 var _pushMsg = function (data, key) {
-  _.isEmpty(_data[key]) ? _data[key] = new Array(data) : _data[key] = [data].concat(_data[key]);
+  if (_.isEmpty(_data[key])) _data[key] = new Array();
+  let isRecur = false;
+  for (var item of _data[key]) {
+    if (item.id == data._id) {
+      isRecur = true;
+      break;
+    }
+  }
+  if (!isRecur) {
+    _data[key] = [data].concat(_data[key])
+  }
   Persister.saveAppData(_data)
 }
 //
@@ -395,6 +405,10 @@ var _savePushMsg = function (data) {
 }
 
 var _force_logout = function () {
+  if (Platform.OS === 'android') {
+    ServiceModule.setIsLoginToSP(false);
+    ServiceModule.stopAppService();
+  }
   _data.token = null;
   Persister.clearToken(_data);
   info.isLogout = true;
