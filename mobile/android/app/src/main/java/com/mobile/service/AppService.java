@@ -42,10 +42,22 @@ public class AppService extends Service {
     public void onCreate() {
         super.onCreate();
             try {
-
                 mSocket = IO.socket("http://192.168.64.205:9105");
             } catch (URISyntaxException e) {
                 e.printStackTrace();
+            }
+            if (mSocket.hasListeners("new.msg")) {
+                Log.d("TAG", "hasListeners");
+                mSocket.off("new.msg", onNewMessage);
+            }
+            if (mSocket.hasListeners(Socket.EVENT_CONNECT)) {
+                mSocket.off(Socket.EVENT_CONNECT, onConnect);
+            }
+            if (mSocket.hasListeners(Socket.EVENT_CONNECT_ERROR)) {
+                mSocket.off(Socket.EVENT_CONNECT_ERROR, onConnectError);
+            }
+            if (mSocket.hasListeners(Socket.EVENT_CONNECT_TIMEOUT)) {
+                mSocket.off(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
             }
             mSocket.on(Socket.EVENT_CONNECT_ERROR, onConnectError);
             mSocket.on(Socket.EVENT_CONNECT_TIMEOUT, onConnectError);
@@ -125,10 +137,8 @@ public class AppService extends Service {
             String mType = mJSONObject.getString("type");
 //            String title = mJSONObject.getString("title");
             NtfBean mMsgBody = mJSONObject.getObject("body", NtfBean.class);
-            LogUtils.d("有消息来了", mMsgBody.getContent());
             boolean mBackground = AppUtils.isApplicationBroughtToBackground(AppService.this);
-            LogUtils.d("newMsg", mBackground ?  "true": "false");
-            if (mBackground) {
+            if (mBackground && "BILL_REV".equals(mMsgBody.getCategory())) {
                 manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
                 Intent mIntent = new Intent(AppService.this, MainActivity.class);
                 mIntent.putExtra("isMsg", true);

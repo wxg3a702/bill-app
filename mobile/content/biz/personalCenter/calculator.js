@@ -146,7 +146,7 @@ var Calculator = React.createClass({
             <View style={styles.layout}>
                 <Text style={[styles.text,{width:Adjust.width(109)}]}>{desc}</Text>
                 <View style={{flex:1}}>
-                    <TextInput style={{height:32,fontSize:15,color:'#7f7f7f'}}
+                    <TextInput style={{height:60,fontSize:15,color:'#7f7f7f'}}
                                ref={key}
                                underlineColorAndroid="transparent"
                                keyboardType="numeric" maxLength={max}

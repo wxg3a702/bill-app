@@ -57,16 +57,15 @@ var Message = React.createClass({
   },
   _onChange: function () {
     this.setState(this.getStateFromStores());
-
-    setTimeout(() => {
-      InteractionManager.runAfterInteractions(() => {
-        if (this.state.token && this.refs['MsgList']) {
-          this.refs['MsgList']._refreshWithoutSpinner();
-        }
-      });
-
-    }, 1000);
-    // this.refs['MsgList'].setDataSource();
+    if (this.state.token && !_.isEmpty(this.refs['MsgList'])) {
+      setTimeout(() => {
+        InteractionManager.runAfterInteractions(() => {
+              this.refs['MsgList']._refreshWithoutSpinner();
+            }
+        )
+      }, 1000);
+      // this.refs['MsgList'].setDataSource();
+    }
   },
   getInitialState: function () {
     return this.getStateFromStores();
@@ -214,7 +213,7 @@ var Message = React.createClass({
       return (
         <View style={[{marginLeft:28,width:20,height:20,borderRadius:10,backgroundColor:'red',
                 flexDirection:'row',justifyContent:'center',alignItems:'center'},item.unReadNum>=99&&{height:20,width:25,marginLeft:23}]}>
-          <Text style={{color:'white',fontSize:11}}>{item.unReadNum >= 99 ? "99+" : item.unReadNum}</Text>
+          <Text style={{color:'white',fontSize:11}}>{item.unReadNum > 99 ? "99+" : item.unReadNum}</Text>
         </View>
       )
     }

@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by vison on 16/3/11.
@@ -54,7 +55,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
     @ReactMethod
     public void showImagePic(boolean needCrop, String name, final Callback callback) {
         crop = needCrop;
-        fileName = name+".jpg";
+        fileName = name + new Date().getTime() +".jpg";
         Activity currentActivity = getCurrentActivity();
         String[] items = {"拍照上传", "本地上传"};
         new AlertDialog.Builder(currentActivity)
@@ -96,7 +97,9 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                 file.delete();
             }
         }
-        activity.startActivityForResult(cameraIntent, USER_CAMERA_REQUEST_CODE);
+        if (activity != null) {
+            activity.startActivityForResult(cameraIntent, USER_CAMERA_REQUEST_CODE);
+        }
     }
 
     @ReactMethod
@@ -138,6 +141,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                     File tempFile = new File(
                             Environment.getExternalStorageDirectory(),
                             fileName);
+                    Log.d("Directory",Environment.getExternalStorageDirectory().toString() + fileName);
                     //cropRawPhoto(Uri.fromFile(tempFile));
                     if (crop) {
                         beginCrop(Uri.fromFile(tempFile));
@@ -179,7 +183,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
 
     //开始裁剪，到裁剪界面
     private void beginCrop(Uri source) {
-        Uri destination = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "crop.jpg"));
+        Uri destination = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), new Date().getTime() + ".jpg"));
         try {
             Crop.of(source, destination).asSquare().start(getCurrentActivity());
         } catch (Exception e) {

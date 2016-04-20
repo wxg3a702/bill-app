@@ -5,6 +5,7 @@ var {
   Text,
   TouchableOpacity,
   Image,
+  Platform
   } = React;
 
 var GiftedSpinner = require('../listView/GiftedSpinner');
@@ -25,7 +26,7 @@ var CustomImage = React.createClass({
 
   getInitialState() {
     return {
-      loadError: false,
+      loadError: true,
       loading: false,
       ts: new Date().getTime()
     };
@@ -73,14 +74,13 @@ var CustomImage = React.createClass({
         style={this.props.style}
         underlayColor="#ebf1f2"
         activeOpacity={0.6}
-        onShowUnderlay={this.props.onShowUnderlay}
-        onHideUnderlay={this.props.onHideUnderlay}
         onPress={this._onPress}
       >
         <Image
           style={this.props.imageStyle}
           onLoadStart={() => this.setState({ loading: true })}
           onLoad={() => this.setState({ loading: false, loadError: false })}
+          onLoadEnd={() => this.setState({ loading: false})}
           onError={() => this.setState({ loading: false, loadError: true })}
           //defaultSource={require('image!loading')}
           source={{uri: this.props.source.indexOf("_userId") > -1 ? this.props.source + '&ts=' + this.state.ts : this.props.source}}

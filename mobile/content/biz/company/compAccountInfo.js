@@ -20,6 +20,7 @@ var Input = require('../../comp/utilsUi/input');
 var Alert = require('../../comp/utils/alert');
 var Button = require('../../comp/utilsUi/button');
 var Communications = require('../personalCenter/communication');
+var CallModule = require('NativeModules').CallModule;
 var CompAccountInfo = React.createClass({
   getStateFromStores(){
     let check
@@ -56,19 +57,24 @@ var CompAccountInfo = React.createClass({
 
   callPhone: function () {
     let phone = this.state.phone;
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [
-        '拨打电话',
-        '取消'
-      ],
-      cancelButtonIndex: 1,
-      destructiveButtonIndex: 0,
-    }, function (index) {
-      if (index == 0) {
-        Communications.phonecall(phone, false);
-      }
-    })
-
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: [
+          '拨打电话',
+          '取消'
+        ],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0,
+      }, function (index) {
+        if (index == 0) {
+          Communications.phonecall(phone, false);
+        }
+      })
+    } else {
+      Alert("拨打电话", () => {
+        CallModule.call(phone)
+      }, () => {})
+    }
   },
   submit: function () {
     let newOrg = this.state.newOrg;
@@ -82,7 +88,7 @@ var CompAccountInfo = React.createClass({
     var reg1 =new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5]+$");
     this.setState({newOrg: newOrg});
     if (!reg1.test(newOrg.accountName)) {
-      Alert("请输入正确的账户名称")
+      Alert("请输入正确的账户名称");
       return;
     }
     if (!reg1.test(newOrg.openBank)) {
@@ -90,9 +96,11 @@ var CompAccountInfo = React.createClass({
       return;
     }
     if (reg.test(newOrg.accountNo)) {
+      this.setState({checked: true});
       if (!this.props.param) {
         CompAction.deleteOrg(
-          {orgId: this.props.param.item.id}
+          {orgId: this.props.param.item.id},
+          () => {this.setState({checked: false})}
         )
       }
       CompAction.submitOrg(
@@ -104,12 +112,15 @@ var CompAccountInfo = React.createClass({
             if(this.props.param.isFirst){
               this.props.navigator.resetTo({comp: 'tabView',tabName:'personCenter'});
             }else{
-              this.props.navigator.popToRoute(routes[routes.length - 4]);
+              this.props.navigator.popToRoute(routes[routes.length - 3]);
             }
 
           })
         },
-        ()=>Alert("认证失败")
+        ()=>{
+          Alert("认证失败")
+          this.setState({checked: false});
+        }
       )
     } else {
       Alert("请输入正确的银行账号")
@@ -156,10 +167,10 @@ var CompAccountInfo = React.createClass({
         <View style={{flex:1,marginHorizontal:10}}>
           <Input type='name' prompt="账户名称" max={50} field="accountName" isPwd={false}
                  defaultValue={this.state.accountName}
-                 onChanged={this.handleChanged} icon="user"/>
+                 onChanged={this.handleChanged} icon="accountNo"/>
           <Input type='default' prompt="账号" max={50} field="accountNo" isPwd={false}
                  defaultValue={this.state.accountNo}
-                 onChanged={this.handleChanged} icon="user"
+                 onChanged={this.handleChanged} icon="bankNo"
                  isPhone={true}/>
           <Input type='name' prompt="开户行" max={50} field="openBank" isPwd={false}
                  defaultValue={this.state.openBank}

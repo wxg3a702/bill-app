@@ -29,6 +29,7 @@ var UIImagePickerManager = require('NativeModules').UIImagePickerManager;
 var PhotoPic = require('NativeModules').UserPhotoPicModule;
 var Communications = require('../personalCenter/communication');
 var _ = require('lodash');
+var CallModule = require('NativeModules').CallModule;
 var CompCertifyCopies = React.createClass({
   getStateFromStores(){
     var newOrg = !this.props.param.item ? CompStore.getNewOrg() : this.props.param.item;
@@ -106,19 +107,25 @@ var CompCertifyCopies = React.createClass({
   },
   callPhone: function () {
     let phone = this.state.phone;
-    ActionSheetIOS.showActionSheetWithOptions({
-      options: [
-        '拨打电话',
-        '取消'
-      ],
-      cancelButtonIndex: 1,
-      destructiveButtonIndex: 0,
-    }, function (index) {
-      if (index == 0) {
-        Communications.phonecall(phone, false);
-      }
-    })
-
+    if (Platform.OS === 'ios') {
+      ActionSheetIOS.showActionSheetWithOptions({
+        options: [
+          '拨打电话',
+          '取消'
+        ],
+        cancelButtonIndex: 1,
+        destructiveButtonIndex: 0,
+      }, function (index) {
+        if (index == 0) {
+          Communications.phonecall(phone, false);
+        }
+      })
+    } else {
+      Alert("拨打电话", () => {
+        CallModule.call(phone)
+      }, () => {
+      })
+    }
   },
 
   selectPhoto(desc, name){
@@ -286,19 +293,22 @@ var CompCertifyCopies = React.createClass({
             </TouchableHighlight>
           )
         } else {
-          let isError = false;
+          var isError = false;
+          var bean;
           for (let item of certResultBeans) {
             console.log(item);
             if (item.columnName == name) {
               isError = true;
-              return (
-                <CustomImage
-                  imageStyle={styles.image}
-                  onPress={()=>{this.selectPhoto(desc, name)}}
-                  source={url.uri}
-                  centerText={item.resultValue}
-                />
-              )
+              bean = item
+              //return (
+              //  <CustomImage
+              //    ref="reloadImage"
+              //    imageStyle={styles.image}
+              //    onPress={()=>{this.selectPhoto(desc, name)}}
+              //    source={url.uri}
+              //    centerText={item.resultValue}
+              //  />
+              //);
             }
           }
           if (!isError) {
@@ -306,6 +316,16 @@ var CompCertifyCopies = React.createClass({
               <CustomImage
                 imageStyle={styles.addImage}
                 onPress={()=>{this.selectPhoto(desc, name)}}
+                centerText=' '
+                source={url.uri}
+              />
+            )
+          } else {
+            return (
+              <CustomImage
+                imageStyle={styles.addImage}
+                onPress={()=>{this.selectPhoto(desc, name)}}
+                centerText={bean.resultValue}
                 source={url.uri}
               />
             )
@@ -315,20 +335,11 @@ var CompCertifyCopies = React.createClass({
     } else {
       if (data.status == 'AUDITING') {
         return (
-          <View>
-            <Image style={[styles.image,styles.radius,styles.error]} resizeMode="cover" source={url}>
-              <Text style={{fontSize:11,color:'white'}}>等待验证</Text>
-            </Image>
+          <View style={[styles.image]}>
+              <Text style={{fontSize:11,color:'white'}}>未上传副本文件</Text>
           </View>
         )
       } else {
-        if (data.status == 'REJECTED') {
-          return (
-            <View style={styles.image}>
-              <Text style={{color:'white'}}>无图片</Text>
-            </View>
-          );
-        }
         return (
           <TouchableHighlight onPress={()=>{this.selectPhoto(desc, name)}} activeOpacity={0.6}
                               underlayColor="#ebf1f2"

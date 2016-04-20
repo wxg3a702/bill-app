@@ -68,11 +68,8 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
 
         mReactRootView.startReactApplication(mReactInstanceManager, "FasApp", null);
         setContentView(mReactRootView);
-        boolean isMsg = getIntent().getBooleanExtra("isMsg", false);
-        if (isMsg) {
-            UpdateData updateData = new UpdateData();
-            updateData.getData(MainActivity.getContext(), "MsgByNotification");
-        }
+
+
     }
 
     public static ReactContext getContext() {
@@ -100,10 +97,8 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
         @Override
         public void run() {
             if (!AppUtils.isServiceWork(MainActivity.this, "AppService")) {
-                Intent mIntent = new Intent(MainActivity.this, AppService.class);
-                Log.d("hello", "true");
-//            bindService(mIntent, localServiceConnection, BIND_AUTO_CREATE);
-                startService(mIntent);
+                UpdateData updateData = new UpdateData();
+                updateData.getData(MainActivity.getContext(), "MsgByNotification");
             }
         }
     };
@@ -134,6 +129,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
     @Override
     protected void onResume() {
         super.onResume();
+        boolean isMsg = getIntent().getBooleanExtra("isMsg", false);
         if (mReactInstanceManager != null) {
             mReactInstanceManager.onResume(this, this);
             boolean isLogin = (boolean) SPUtils.get(this, "isLogin", false);
@@ -141,7 +137,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 new Thread(){
                     @Override
                     public void run() {
-                        handler.postDelayed(run, 15000);
+                        handler.postDelayed(run, 5000);
                     }
                 }.start();
             }
