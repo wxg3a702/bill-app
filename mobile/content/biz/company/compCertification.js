@@ -57,7 +57,7 @@ var CompCertification = React.createClass({
         //});
         return {
             bean: con,
-            dataSource: ds.cloneWithRows(con)
+            dataSource: con
         }
     },
 
@@ -138,7 +138,7 @@ var CompCertification = React.createClass({
             )
         } else {
             return (
-                <ListView dataSource={this.state.dataSource} renderRow={this.returnRow}/>
+                <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.returnRow}/>
             )
         }
     },

@@ -39,6 +39,11 @@ public class SPModule extends ReactContextBaseJavaModule {
         if(token != null)
         SPUtils.put(getReactApplicationContext(), "token", "Basic  " + token);
     }
+    @ReactMethod
+    public void setDefaultOffscreenPages(int limit){
+        LogUtils.d("limit", limit + " ");
+        SPUtils.put(getReactApplicationContext(), "OffscreenPages", limit);
+    }
 
     @ReactMethod
     public void clearTokenFromSP(String token){

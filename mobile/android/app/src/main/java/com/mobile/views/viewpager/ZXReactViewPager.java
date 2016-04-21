@@ -29,11 +29,11 @@ import com.mobile.views.viewpager.PageScrollEvent;
 import com.mobile.views.viewpager.PageSelectedEvent;
 
 /**
- * Wrapper view for {@link ViewPager}. It's forwarding calls to {@link ViewGroup#addView} to add
  * views to custom {@link PagerAdapter} instance which is used by {@link NativeViewHierarchyManager}
  * to add children nodes according to react views hierarchy.
  */
-/* package */ class ZXReactViewPager extends ViewPager {
+/* package */
+class ZXReactViewPager extends ViewPager {
 
     private class Adapter extends PagerAdapter {
 

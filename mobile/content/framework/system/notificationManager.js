@@ -24,7 +24,7 @@ let _handleAppStateChange = function (currentAppState) {
 
 module.exports = {
 
-  openNotification:function() {
+  openNotification:function(c) {
 
       if (Platform.OS === 'ios') {
         if (!AppStore.getAPNSToken()) {
@@ -43,6 +43,7 @@ module.exports = {
       } else {
         DeviceEventEmitter.addListener('Msg', (e:Event)=>CommonAction.onNotification());
         DeviceEventEmitter.addListener('MsgByNotification', (e:Event)=> {
+          c();
           CommonAction.onNotification();
         });
 

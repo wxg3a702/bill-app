@@ -86,7 +86,7 @@ var TabView = React.createClass({
     AppStore.addChangeListener(this._onChange);
     InteractionManager.runAfterInteractions(() => {
       //if (AppStore.getRevBillMessage()) {
-        NotificationManager.openNotification();
+        NotificationManager.openNotification(()=>{this.setState({initialPage: 2})});
       //}
     });
   },
@@ -198,7 +198,7 @@ var TabView = React.createClass({
 
 
           <Message navigator={this.props.navigator} tabDesc="消息"
-                   badge={this.state.billSum==0?(this.state.othMsgNum == 0 ? null : " "):this.state.billSum}
+                   badge={this.state.billSum==0?(this.state.othMsgNum == 0 ? null : null):this.state.billSum}
                    icon={require('../../image/tab/message.png')}
                    selectedIcon={require('../../image/tab/message_selected.png')}/>
 

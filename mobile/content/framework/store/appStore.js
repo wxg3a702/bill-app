@@ -291,9 +291,9 @@ var _updateUserInfo = (data) => {
 }
 var _updateBillList = function (role, data) {
   let type = role == 'payee' ? 'revBillBean' : 'sentBillBean';
-  for (var item of _data[type].contentList) {
+  for (let [index, item] of _data[type].contentList.entries()) {
     if (item.billId == data.billId) {
-      item = data;
+      _data[type].contentList[index] = data;
       Persister.saveAppData(_data);
       break;
     }
@@ -370,8 +370,8 @@ var _analysisMessageData = function (data) {
       if (data.certifiedOrgBody && !_.isEmpty(data.certifiedOrgBody) && data.certifiedOrgBody.length > 0) {
         _changeCompStatus(data.certifiedOrgBody);
       }
-      if (data.billBody && !_.isEmpty(data.billBody) && data.billBody.length > 0) {
-        _updateBillList(data.role, data.billBody);
+      if (data.billBody && !_.isEmpty(data.billBody)) {
+        _updateBillList(data.billBody.role, data.billBody);
       }
       if (data.userBody && !_.isEmpty(data.userBody)) {
         _updateUserInfo(data.userBody);
@@ -415,6 +415,23 @@ var _force_logout = function () {
   Persister.clearToken(_data);
   info.isLogout = true;
   info.isForce_Logout = true;
+}
+
+var _deleteBill = function (orgCode) {
+  let revCon = [];
+  _data.revBillBean.contentList.map((item, index)=>{
+    if (item.payeeOrgCode != orgCode) {
+      revCon.push(item);
+    }
+  });
+  _data.revBillBean.contentList = revCon;
+  let sentCon = [];
+  _data.sentBillBean.contentList.map((item, index)=>{
+    if (item.drawerOrgCode != orgCode) {
+      sentCon.push(item);
+    }
+  });
+  _data.sentBillBean.contentList = sentCon;
 }
 
 AppStore.dispatchToken = AppDispatcher.register(function (action) {
@@ -466,12 +483,16 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       break;
     case ActionTypes.DELETE_ORGBEANS:
       let con = [];
+      let orgCode;
       _data.certifiedOrgBean.map((item, index)=> {
         if (action.data.orgId != item.id) {
           con.push(item)
+        } else {
+          orgCode = item.stdOrgBean.orgCode;
         }
       })
-      _data.certifiedOrgBean = con
+      _data.certifiedOrgBean = con;
+      _deleteBill(orgCode);
       Persister.saveAppData(_data);
       AppStore.emitChange();
       if (action.successHandle)action.successHandle();

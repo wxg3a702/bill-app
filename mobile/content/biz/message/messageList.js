@@ -240,12 +240,12 @@ var Message = React.createClass({
         param: {title: '详情', record: bill, isRead: isRead},
         comp: BillDetailByMsg
       });
-      MessageStore.setMsgReaded(item.billId);
       //MessageAction.setBillRevRead({id: item.id}, function (data) {
       //}, function (data) {
       //  Alert('已读标记设置失败!')
       //});
     }
+    MessageStore.setMsgReaded(item.billId);
   },
   unReadFlag(f){
     if (!f) {

@@ -41,13 +41,14 @@ import java.util.List;
 
 import io.realm.react.RealmReactPackage;
 
-public class MainActivity  extends Activity implements DefaultHardwareBackBtnHandler {
+public class MainActivity extends Activity implements DefaultHardwareBackBtnHandler {
 
     private static final int IMAGE_REQUEST_CODE = 0x01;
     private static final int CAMERA_REQUEST_CODE = 0x02;
     private static ReactInstanceManager mReactInstanceManager;
     private ReactRootView mReactRootView;
     private Handler handler = new Handler();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
                 .setJSMainModuleName("index.android")
                 .addPackage(new MainReactPackage())
                 .addPackage(new ZXReactPackage())
-                .addPackage((ReactPackage)new RealmReactPackage())
+                .addPackage((ReactPackage) new RealmReactPackage())
                 .setUseDeveloperSupport(BuildConfig.DEBUG)
                 .setInitialLifecycleState(LifecycleState.RESUMED)
                 .build();
@@ -84,6 +85,7 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
         }
         return context;
     }
+
     @Override
     public void onBackPressed() {
         if (mReactInstanceManager != null) {
@@ -96,9 +98,15 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
     Runnable run = new Runnable() {
         @Override
         public void run() {
+            boolean isMsg = getIntent().getBooleanExtra("isMsg", false);
+            Log.d("isMsg", isMsg + "");
+            String tag = "Msg";
+            if (isMsg) {
+                tag = "MsgByNotification";
+            }
             if (!AppUtils.isServiceWork(MainActivity.this, "AppService")) {
                 UpdateData updateData = new UpdateData();
-                updateData.getData(MainActivity.getContext(), "MsgByNotification");
+                updateData.getData(MainActivity.getContext(), tag);
             }
         }
     };
@@ -134,10 +142,10 @@ public class MainActivity  extends Activity implements DefaultHardwareBackBtnHan
             mReactInstanceManager.onResume(this, this);
             boolean isLogin = (boolean) SPUtils.get(this, "isLogin", false);
             if (isLogin) {
-                new Thread(){
+                new Thread() {
                     @Override
                     public void run() {
-                        handler.postDelayed(run, 5000);
+                        handler.postDelayed(run, 3000);
                     }
                 }.start();
             }

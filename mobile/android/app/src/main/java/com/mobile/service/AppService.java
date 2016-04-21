@@ -42,10 +42,15 @@ public class AppService extends Service {
     public void onCreate() {
         super.onCreate();
             try {
-                mSocket = IO.socket("http://192.168.64.205:9105");
+                if (mSocket == null) {
+                    mSocket = IO.socket("http://192.168.64.205:9105");
+                }
             } catch (URISyntaxException e) {
                 e.printStackTrace();
             }
+//        if(mSocket.connected()){
+//            mSocket.disconnect();
+//        }
             if (mSocket.hasListeners("new.msg")) {
                 Log.d("TAG", "hasListeners");
                 mSocket.off("new.msg", onNewMessage);
