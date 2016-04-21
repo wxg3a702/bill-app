@@ -64,7 +64,7 @@ var VerifyOldTradingPWD = React.createClass({
                     Alert(
                         msg.msgContent,
                         ()=> {
-                            LoginAction.logOut();
+                            LoginAction.clear();
                         }
                     );
                 } else {

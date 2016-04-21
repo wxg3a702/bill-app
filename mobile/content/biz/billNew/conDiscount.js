@@ -143,7 +143,7 @@ var ConDiscount = React.createClass({
             Alert(
                 data.msgContent,
                 ()=> {
-                    LoginAction.logOut();
+                    LoginAction.clear();
                 }
             );
         } else {
