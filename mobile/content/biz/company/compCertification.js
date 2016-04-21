@@ -111,7 +111,7 @@ var CompCertification = React.createClass({
             }
         ]
         return (
-            <Swipeout right={swipeoutBtns}>
+            <Swipeout right={swipeoutBtns} autoClose={true}>
                 <TouchableHighlight onPress={()=>this.toOther(data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>

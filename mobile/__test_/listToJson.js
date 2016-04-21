@@ -44,7 +44,7 @@ describe('util', function () {
             if (!item.certResultBeans) {
             } else {
                 item.certResultBeans.map((items)=> {
-                    json[items.columnName] = items
+                        json[items.columnName] = items
                 })
                 item.certResultBeans = json
             }
