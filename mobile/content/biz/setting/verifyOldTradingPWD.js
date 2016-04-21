@@ -29,55 +29,62 @@ var VerifyOldTradingPWD = React.createClass({
     getInitialState: function () {
         return {
             checked: true,
-            verify:'',
-            mobileNo:'',
-            oldTransactionPassword:'',
+            verify: '',
+            mobileNo: '',
+            oldTransactionPassword: '',
         }
     },
 
     componentDidMount: function () {
         this.refs['smsTimer'].afterLoginChangeVerify();
         this.setState({
-            mobileNo:phoneNumber(this.getStateFromStores())
+            mobileNo: phoneNumber(this.getStateFromStores())
         });
     },
 
-    thisValideateOldTradingPWD: function(){
+    thisValideateOldTradingPWD: function () {
         LoginAction.validateTransPWD(
             {
-                transactionPassword:this.state.oldTransactionPassword
+                transactionPassword: this.state.oldTransactionPassword
             },
-            function(){
+            function () {
                 const { navigator } = this.props;
                 if (navigator) {
-                    if (!this.state.checked){
+                    if (!this.state.checked) {
                         navigator.push({
-                            comp:ResetTradingPWD
+                            comp: ResetTradingPWD
                         });
                     }
-                };
+                }
+                ;
             }.bind(this),
-            function(msg){
-                Alert(msg.msgContent);
-            }
+            function (msg) {
+                if (msg.msgCode == 'USER_TRANSACTION_PASSWORD_VALIDATION_WRONG_TIMES_ILLEGAL') {
+                    //Alert(msg.msgContent, ()=>LoginAction.forceLogOut());
+                    Alert(
+                        msg.msgContent,
+                        ()=> {
+                            LoginAction.logOut();
+                        }
+                    );
+                } else {
+                    Alert(msg.msgContent);
+                }
+            }.bind(this)
         )
 
     },
 
-    thisValidateSMSCode: function(){
+    thisValidateSMSCode: function () {
         dismissKeyBoard();
         BillAction.validateMobileForDiscount(
             {
-                mobileNo:this.getStateFromStores(),
-                smsCode:this.state.verify
+                mobileNo: this.getStateFromStores(),
+                smsCode: this.state.verify
             },
             ()=>this.thisValideateOldTradingPWD(),
-            function(msg){
-                if (msg.msgCode == 'USER_TRANSACTION_PASSWORD_VALIDATION_WRONG_TIMES_ILLEGAL') {
-                    Alert(msg.msgContent, ()=>LoginAction.forceLogOut());
-                } else {
-                    Alert(msg.msgContent);
-                }
+            function (msg) {
+                Alert(msg.msgContent);
             }
         );
     },
@@ -95,8 +102,8 @@ var VerifyOldTradingPWD = React.createClass({
         }
     },
 
-    next:function(){
-        if (this.state.verify.length == 0 ||this.state.oldTransactionPassword.length == 0)  {
+    next: function () {
+        if (this.state.verify.length == 0 || this.state.oldTransactionPassword.length == 0) {
             Alert('请输入验证码和交易密码')
         }
         else {
@@ -104,17 +111,17 @@ var VerifyOldTradingPWD = React.createClass({
         }
     },
 
-    toResetTradingPWD:function(){
+    toResetTradingPWD: function () {
         const {navigator}=this.props;
-        if(navigator){
+        if (navigator) {
             navigator.push({
-                comp:ResetTradingPWD,
+                comp: ResetTradingPWD,
             });
         }
     },
 
-    render:function(){
-        return(
+    render: function () {
+        return (
             <NavBarView navigator={this.props.navigator} title="短信和密码验证" contentBackgroundColor="#f0f0f0">
 
                 <View style={[styles.flex,{marginLeft:10,marginRight:10}]}>
@@ -129,7 +136,7 @@ var VerifyOldTradingPWD = React.createClass({
                                   isNeed={true}
                                   style={styles.flex}
                                   onChanged={this.handleChanged}
-                                  isLogin={true}  >
+                                  isLogin={true}>
                         </SMSTimer>
                     </View>
 
@@ -147,7 +154,7 @@ var VerifyOldTradingPWD = React.createClass({
                     </View>
 
                     <View style={{marginTop:40}}>
-                        <Button  func={this.next} checked={this.state.checked} content='下一步' />
+                        <Button func={this.next} checked={this.state.checked} content='下一步'/>
                     </View>
                 </View>
 
@@ -157,27 +164,27 @@ var VerifyOldTradingPWD = React.createClass({
 });
 
 var styles = StyleSheet.create({
-    flex:{
-        flex:1
+    flex: {
+        flex: 1
     },
 
-    rowFlexDirection:{
-        flexDirection:'row'
+    rowFlexDirection: {
+        flexDirection: 'row'
     },
 
-    textItem:{
-        fontSize:15,
-        color:'#7f7f7f'
+    textItem: {
+        fontSize: 15,
+        color: '#7f7f7f'
     },
 
-    smsTimerViewItem:{
-        marginTop:5,
-        height:40,
+    smsTimerViewItem: {
+        marginTop: 5,
+        height: 40,
     },
 
-    inputViewItem:{
-        marginTop:10,
-        height:40,
+    inputViewItem: {
+        marginTop: 10,
+        height: 40,
     },
 })
 

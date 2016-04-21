@@ -8,8 +8,11 @@ var {
     Text,
     StyleSheet
 } = React;
+
 var {height, width} = Dimensions.get('window');
 var ViewPager = require('react-native-viewpager');
+var BillAction = require('../../framework/action/billAction');
+
 var PAGES = [
     {img: require('../../image/bill/teach1.png'), text: '跳过'},
     {img: require('../../image/bill/teach2.png'), text: '跳过'},
@@ -20,14 +23,20 @@ var PAGES = [
     {img: require('../../image/bill/teach5.png'), text: '跳过'},
     {img: require('../../image/bill/teach6.png'), text: '结束'},
 ];
+
 var dataSource = new ViewPager.DataSource({
     pageHasChanged: (p1, p2) => p1 !== p2,
 });
+
 var Demo = React.createClass({
     getInitialState(){
         return {
             dataSource: dataSource.cloneWithPages(PAGES),
         }
+    },
+
+    componentDidMount() {
+        BillAction.setDemoFlag();
     },
 
     _renderPage: function (data:Object) {

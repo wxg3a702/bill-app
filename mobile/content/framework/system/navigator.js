@@ -14,6 +14,7 @@ var Home = require('../../biz/home/home')
 var TabView = require('./tabView');
 var AppStore = require('../store/appStore');
 var Alert = require('../../comp/utils/alert');
+
 if (Platform.OS === 'android') {
     var _navigator;
     BackAndroid.addEventListener('hardwareBackPress', function () {
@@ -24,6 +25,7 @@ if (Platform.OS === 'android') {
         return false;
     });
 }
+
 var Main = React.createClass({
 
     getStateFromStores() {
@@ -48,7 +50,7 @@ var Main = React.createClass({
         if (AppStore.isLogout()) {
             if (AppStore.isForceLogout()) {
                 Alert(
-                    '账号已在别处登陆,系统将切换到登陆界面',
+                    '账号已在别处登录,系统将切换到登录界面',
                     {text: '确定', onPress: () => this.refs.navigator.resetTo({comp: TabView})}
                 )
             } else {

@@ -18,7 +18,8 @@ var Advice = React.createClass({
     },
     submit(){
         //文本筛选
-        var reg = /^[^/~^*-=+*:;☆()]+$/g;
+        //var reg = /^[^/~^*-=+*:;☆()]+$/g;
+        var reg = /[\\ud800\\udc00-\\udbff\\udfff\\ud800-\\udfff]+$/g;
 
         if(this.state.opinion.length == 0){
 

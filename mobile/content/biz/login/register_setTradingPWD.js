@@ -85,7 +85,7 @@ var Register_setTradingPWD = React.createClass({
             function () {
                 const { navigator } = this.props;
                 if (navigator) {
-                    navigator.replace({
+                    navigator.resetTo({
                         comp: GotoReister
                     });
                 }

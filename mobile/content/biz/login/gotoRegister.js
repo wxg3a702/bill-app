@@ -6,11 +6,14 @@ var {
     Text,
     View,
     Image,
-    Dimensions
+    Dimensions,
+    BackAndroid,
     } = React;
 var CompCertifyCopies = require('../company/compCertifyCopies');
 var window = Dimensions.get('window');
+
 var GotoRegister = React.createClass({
+
     render(){
         let {width,height} = window;
         return (

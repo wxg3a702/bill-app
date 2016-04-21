@@ -14,6 +14,7 @@ var Button = require('../../comp/utilsUi/button');
 var Input = require('../../comp/utilsUi/input');
 var SMSTimer = require('../../comp/utilsUi/smsTimer');
 var BillAction = require('../../framework/action/billAction');
+var LoginAction = require('../../framework/action/loginAction');
 var UserStore = require('../../framework/store/userStore');
 var NumberHelper = require('../../comp/utils/numberHelper');
 var Alert = require('../../comp/utils/alert');
@@ -111,11 +112,11 @@ var ConDiscount = React.createClass({
                     smsCode: this.state.verify
                 },
                 this.validateSmsCodeSuccess,
-                this.validataSmsCodeFail)
+                this.validataSmsCodeFail
+            )
         }
-
-
     },
+
     validateSmsCodeSuccess: function (data) {
         if (this.state.trading_PWD.length == 0) {
             //Alert('请填写交易密码');
@@ -126,7 +127,8 @@ var ConDiscount = React.createClass({
                     transactionPassword: this.state.trading_PWD
                 },
                 this.validateTransPwdSuccess,
-                this.validataTransPwdFail)
+                this.validataTransPwdFail
+            )
         }
     },
     validataSmsCodeFail: function (data) {
@@ -137,7 +139,16 @@ var ConDiscount = React.createClass({
         this.applyDiscountAction();
     },
     validataTransPwdFail: function (data) {
-        Alert(data.msgContent);
+        if (data.msgCode == 'USER_TRANSACTION_PASSWORD_VALIDATION_WRONG_TIMES_ILLEGAL') {
+            Alert(
+                data.msgContent,
+                ()=> {
+                    LoginAction.logOut();
+                }
+            );
+        } else {
+            Alert(data.msgContent);
+        }
     },
 
     applyDiscountAction: function () {

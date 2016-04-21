@@ -11,6 +11,7 @@ var info = {
   isLogout: false,
   isForce_Logout: false
 }
+
 var DateHelper = require('../../comp/utils/dateHelper');
 var {BFetch, PFetch, UFetch, host, token} = require('../network/fetch');
 var _data = {};
@@ -29,6 +30,7 @@ var requestLoadingState = RequestState.IDEL;
 var CommonAction = require('../action/commonAction');
 var SP = require('NativeModules').SPModule;
 var ServiceModule = require('NativeModules').ServiceModule;
+var dateFormat = require('dateformat');
 
 var AppStore = assign({}, EventEmitter.prototype, {
 
@@ -216,8 +218,9 @@ var _createBillDiscount = function (data) {
   _data.revBillBean.contentList.map((item, index)=> {
     if (item.billId == data.billId) {
       _data.revBillBean.contentList[index].status = "REQ";
-      _data.revBillBean.contentList[index].acceptBankName = data.acceptBankName;
+      _data.revBillBean.contentList[index].discountBankName = data.discountBankName;
       _data.revBillBean.contentList[index].discountRate = data.discountRate;
+      _data.revBillBean.contentList[index].applyDiscountDate = _.now();
     }
   });
   Persister.saveAppData(_data);

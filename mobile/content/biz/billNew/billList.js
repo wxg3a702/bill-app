@@ -12,7 +12,7 @@ var {
     StyleSheet,
     TouchableOpacity,
     InteractionManager
-} = React;
+    } = React;
 var _ = require('lodash');
 var Demo = require('./demo');
 var Adjust = require('../../comp/utils/adjust');
@@ -56,6 +56,7 @@ var Bill = React.createClass({
             return ret;
         }
     },
+
     getStateFromStores(){
         var sentBill = BillStore.getSentBill();
         var revBill = BillStore.getRevBill();
@@ -98,36 +99,44 @@ var Bill = React.createClass({
         return this.getStateFromStores();
     },
     componentDidMount() {
+
         AppStore.addChangeListener(this._onChange);
 
-        var obj = BillStore.getDemoFlag();
+        InteractionManager.runAfterInteractions(() => {
 
-        if (this.state.token) {
-            var userType = UserStore.getUserType();
-            if (userType !== 'CERTIFIED') {
-                Alert('您还未完成企业认证');
+            if (this.state.token) {
+                var userType = UserStore.getUserType();
+                if (userType !== 'CERTIFIED') {
+                    Alert('您还未完成企业认证');
+                }
             }
-        }
 
-        if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
-            this.props.navigator.push({
-                comp: Demo
-            });
-            BillAction.setDemoFlag();
-        }
+            var obj = BillStore.getDemoFlag();
 
+            if ((obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId())) && (this.state.dataSource != undefined && this.state.dataSource.length > 0)) {
+                if (Platform.OS === 'ios') {
+                    this.props.navigator.push({
+                        comp: Demo
+                    });
+                } else {
+                    this.props.onShowDemo();
+                }
+
+            }
+        });
 
     },
 
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },
-    _onChange: function()  {
+    _onChange: function () {
         this.setState(this.getStateFromStores());
         InteractionManager.runAfterInteractions(() => {
             if (this.state.token && this.refs['BillList']) {
                 this.refs['BillList']._refreshWithoutSpinner();
             }
+
         });
 
         //setTimeout(() => {
@@ -243,6 +252,7 @@ var Bill = React.createClass({
             }
         }
     },
+
     toOther(name, item) {
         this.props.navigator.push({
             comp: name,
@@ -251,6 +261,7 @@ var Bill = React.createClass({
             }
         });
     },
+
     hasBill(){
         if (!this.state.token) {
             return (
@@ -272,6 +283,7 @@ var Bill = React.createClass({
 
         }
     },
+
     _emptyView() {
         return (
             <View style={{marginTop:65,alignItems:'center',flex:1}}>
@@ -368,7 +380,8 @@ var Bill = React.createClass({
     },
     render(){
         return (
-            <NavBarView navigator={this.props.navigator} showBar={false} contentBackgroundColor={this.state.backColor} style={{flex:1}}>
+            <NavBarView navigator={this.props.navigator} showBar={false} contentBackgroundColor={this.state.backColor}
+                        style={{flex:1}}>
                 <View style={{backgroundColor:'#f0f0f0'}}>
                     <View style={[styles.comStyle]}>
                         <TouchableOpacity onPress={this.changeRev} activeOpacity={0.9}>

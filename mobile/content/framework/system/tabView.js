@@ -12,8 +12,11 @@ var {
   DeviceEventEmitter
   } = React;
 var _ = require('lodash');
-var Home = require('../../biz/home/home')
-var Bill = require('../../biz/billNew/billList')
+var Home = require('../../biz/home/home');
+var Bill = require('../../biz/billNew/billList');
+
+var Demo = require('../../biz/billNew/demo');
+
 var Message = require("../../biz/message/messageList")
 var PersonCenter = require("../../biz/personalCenter/personalCenter")
 var CommonAction = require('../action/commonAction');
@@ -33,6 +36,10 @@ const PageDic = {
   personCenter:3
 
 };
+
+var BillStore = require('../../framework/store/billStore');
+var UserStore = require('../../framework/store/userStore');
+var _showDemo = false;
 
 var TabView = React.createClass({
   getStateFromStores() {
@@ -180,8 +187,23 @@ var TabView = React.createClass({
       );
     } else {
       return (
-        <ScrollableTabView initialPage={this.state.initialPage} locked={true}
-                           renderTabBar={() => <AndroidTabBar />}>
+          <ScrollableTabView
+              initialPage={this.state.initialPage}
+              locked={true}
+              renderTabBar={() => <AndroidTabBar />}
+              onChangeTab={(data) => {
+              if (data.i === 1) {
+                var obj = BillStore.getDemoFlag();
+                if (_showDemo && (obj == undefined || obj.flag != true || (obj.id != UserStore.getUserId()))) {
+                  _showDemo = false;
+                  navigator.push({
+                      comp: Demo
+                  });
+                }
+              }
+            }}
+          >
+
           <Home navigator={this.props.navigator}
                 tabLabel="ios-home"
                 tabDesc="首页"
@@ -193,9 +215,12 @@ var TabView = React.createClass({
                 tabLabel="clipboard"
                 tabDesc="票据"
                 icon={require('../../image/tab/bill.png')}
-                selectedIcon={require('../../image/tab/bill_selected.png')}>
+                selectedIcon={require('../../image/tab/bill_selected.png')}
+                onShowDemo={() => {
+                  _showDemo = true;
+                }}
+          >
           </Bill>
-
 
           <Message navigator={this.props.navigator} tabDesc="消息"
                    badge={this.state.billSum==0?(this.state.othMsgNum == 0 ? null : " "):this.state.billSum}
@@ -208,7 +233,8 @@ var TabView = React.createClass({
                         icon={require('../../image/tab/member.png')}
                         selectedIcon={require('../../image/tab/member_selected.png')}>
           </PersonCenter>
-        </ScrollableTabView>
+
+          </ScrollableTabView>
       )
     }
   },
