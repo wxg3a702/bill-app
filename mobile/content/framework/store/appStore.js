@@ -210,8 +210,6 @@ var _rejectBillDiscount = function (data) {
     }
   });
   Persister.saveAppData(_data);
-
-  AppStore.emitChange();
 }
 
 var _createBillDiscount = function (data) {
@@ -238,14 +236,13 @@ var _getMsgBody = function (msg) {
 var _changeCompStatus = function (data) {
   _data.certifiedOrgBean = data;
   Persister.saveAppData(_data);
-  AppStore.emitChange();
 };
 
 var _pushMsg = function (data, key) {
-  if (_.isEmpty(_data[key])) _data[key] = new Array();
+  if (_.isEmpty(_data[key])) _data[key] = [];
   let isRecur = false;
-  for (var item of _data[key]) {
-    if (item.id == data._id) {
+  for (let item of _data[key]) {
+    if (item.id == data.id) {
       isRecur = true;
       break;
     }
@@ -261,26 +258,54 @@ var _getBillBody = function (msg) {
 }
 
 var _updateMainMsgBeanByNotify = function (arrayKeyName, beanKeyName, data) {
-  _pushMsg(data, arrayKeyName);
-  _.isEmpty(_data.mainMsgBean) ? _data.mainMsgBean = new Object() : "";
+  _.isEmpty(_data.mainMsgBean) ? _data.mainMsgBean = {} : "";
   let unReadNum = _.isEmpty(_data.mainMsgBean[beanKeyName]) ? 0 : _data.mainMsgBean[beanKeyName].unReadNum;
-  data.unReadNum = ++unReadNum;
+  let isRecur = false;
+  if (_.isEmpty(_data[arrayKeyName])) {
+    _data[arrayKeyName] = [];
+  } else {
+    if (_data[arrayKeyName].length > 0) {
+      _data[arrayKeyName].map((item, index)=>{
+        if (data.id == item.id) {
+          isRecur = true;
+        }
+      });
+
+      //for (let [index, item] of _data[arrayKeyName].entries()) {
+      //  if (index > 4) {
+      //    break;
+      //  }
+      //  if (data.id == item.id) {
+      //    isRecur = true;
+      //    break;
+      //  }
+      //}
+    }
+  }
+  if (!isRecur) data.unReadNum = ++unReadNum;
   _data.mainMsgBean[beanKeyName] = data;
-  Persister.saveAppData(_data)
+  _pushMsg(data, arrayKeyName);
 }
 
 var _addBillPackByNotify = function (keyName, data) {
   if (_.isEmpty(_data[keyName]) || _.isEmpty(_data[keyName].contentList)) {
-    _data[keyName] = {contentList: new Array()};
+    _data[keyName] = {contentList: []};
   }
   let isRecur = false;
-  for (var item of _data[keyName].contentList) {
+  _data[keyName].contentList.map((item, index)=>{
     if (item.billId == data.billId) {
-      item = data;
       isRecur = true;
-      break;
     }
-  }
+  })
+  //for (let [index, item] of _data[keyName].contentList.entries()) {
+  //  if (index > 4) {
+  //    break;
+  //  }
+  //  if (item.billId == data.billId) {
+  //    isRecur = true;
+  //    break;
+  //  }
+  //}
   if (!isRecur) {
     _data[keyName].contentList = [data].concat(_data[keyName].contentList);
   }
@@ -290,18 +315,51 @@ var _addBillPackByNotify = function (keyName, data) {
 var _updateUserInfo = (data) => {
   _data.userInfoBean = data;
   Persister.saveAppData(_data);
-  AppStore.emitChange();
 }
 var _updateBillList = function (role, data) {
   let type = role == 'payee' ? 'revBillBean' : 'sentBillBean';
-  for (let [index, item] of _data[type].contentList.entries()) {
+  _data[type].contentList.map((item, index)=>{
     if (item.billId == data.billId) {
       _data[type].contentList[index] = data;
       Persister.saveAppData(_data);
-      break;
+    }
+  })
+  //for (let [index, item] of _data[type].contentList.entries()) {
+  //  if (item.billId == data.billId) {
+  //    _data[type].contentList[index] = data;
+  //    Persister.saveAppData(_data);
+  //    break;
+  //  }
+  //}
+};
+
+var addRevBillMsg = function (d) {
+  if (_.isEmpty(_data.mainMsgBean['messageBeans'])) {
+    _data.mainMsgBean['messageBeans'] = new Array(d);
+  } else {
+    let isRecur = false;
+    if (_data.mainMsgBean['messageBeans'].length > 0) {
+      _data.mainMsgBean['messageBeans'].map((item, index)=>{
+        if (item.billId == d.billId) {
+          isRecur = true;
+        }
+      });
+      //for(let [index, item] of _data.mainMsgBean['messageBeans'].entries()) {
+      //  if (index > 4) {
+      //    break;
+      //  }
+      //  if (item.billId == d.billId) {
+      //    isRecur = true;
+      //    break;
+      //  }
+      //}
+      if (!isRecur) {
+        _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+      }
     }
   }
-};
+}
+
 var _analysisMessageData = function (data) {
   //数据插入到对应的bean中 并替换main里的
   let d = _getMsgBody(data);
@@ -309,59 +367,63 @@ var _analysisMessageData = function (data) {
     case MsgTypes.BILL_DRAW:
     {
       //billPack
-      _addBillPackByNotify('sentBillBean', _getBillBody(data));
       _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
+      _addBillPackByNotify('sentBillBean', _getBillBody(data));
     }
       break;
     case MsgTypes.OPP_IGNORED:
     {
+      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
       //对方放弃贴现
       _rejectBillDiscount(_getBillBody(data));
-      _updateMainMsgBeanByNotify('sentBillMsgBeans', 'billSentBean', d);
     }
       break;//
     case MsgTypes.MARKET_NEWS:
     {
       if (_data.newsMessage){
         _updateMainMsgBeanByNotify('marketMsgBeans', 'marketNewsBean', d);
+        Persister.saveAppData(_data);
       }
     }
       break;
     case MsgTypes.ORG_AUTH_FAIL:
     {
-      _changeCompStatus(data.certifiedOrgBody);
       _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
+      _changeCompStatus(data.certifiedOrgBody);
       break;
     }
     case MsgTypes.ORG_AUTH_OK:
     {
-      _changeCompStatus(data.certifiedOrgBody);
+      _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
       if (!_.isEmpty(data.userBody) && data.userBody) {
         _updateUserInfo(data.userBody);
       }
-      _updateMainMsgBeanByNotify('systemMsgBeans', 'systemNoticeBean', d);
       if (data.revBillList && _.isEmpty(data.revBillList) && data.revBillList.length > 0) {
         _addBillPackByNotify('revBillBean', data.revBillList);
       }
       if (data.sentBillList&& _.isEmpty(data.sentBillList) && data.sentBillList.length > 0) {
         _addBillPackByNotify('sentBillBean', data.sentBillList);
       }
+      _changeCompStatus(data.certifiedOrgBody);
     }
       break;//
     case MsgTypes.REV_NEW_BILL://区分
     {
       if (_data.revBillMessage){
         //messageBeans
-        _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+        //_.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+        addRevBillMsg(d);
       }
       _addBillPackByNotify('revBillBean', _getBillBody(data));
-      AppStore.emitChange();
     }
       break;
     case MsgTypes.APPROVE_DISCOUNT:
     {
-      //messageBeans
-      _.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+      if (_data.revBillMessage){
+        //messageBeans
+        //_.isEmpty(_data.mainMsgBean['messageBeans']) ? _data.mainMsgBean['messageBeans'] = new Array(d) : _data.mainMsgBean['messageBeans'] = [d].concat(_data.mainMsgBean['messageBeans']);
+        addRevBillMsg(d);
+      }
       //批准贴现
       _allowBillDiscount(_getBillBody(data));
     }
@@ -381,7 +443,6 @@ var _analysisMessageData = function (data) {
       }
       break;
   }
-  AppStore.emitChange();
 }
 //
 var _freshMessageData = function (data) {
@@ -491,11 +552,15 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
         if (action.data.orgId != item.id) {
           con.push(item)
         } else {
-          orgCode = item.stdOrgBean.orgCode;
+          if (item.status == 'REJECTED') {
+
+          } else {
+            orgCode = item.stdOrgBean.orgCode;
+            _deleteBill(orgCode);
+          }
         }
-      })
+      });
       _data.certifiedOrgBean = con;
-      _deleteBill(orgCode);
       Persister.saveAppData(_data);
       AppStore.emitChange();
       if (action.successHandle)action.successHandle();
