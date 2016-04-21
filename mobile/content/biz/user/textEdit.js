@@ -109,7 +109,7 @@ var TextEdit = React.createClass({
         if (this.props.param.valid.length != 0 && !this.props.param.valid(this.state.newValue, this.props.param.title)) {
 
         } else if(this.state.newValue.length > this.props.param.maxLength && this.props.param.name != 'discountDate' && this.props.param.name != 'dueDate'){
-            Alert('字数超过'+ this.props.param.maxLength +'字的限制');
+            Alert('字符数超过' + this.props.param.maxLength + '字的限制');
         } else if(this.props.param.name == 'qqNo' && !reg.test(this.state.newValue)){
             Alert('请输入正确的QQ号格式');
         } else if ((this.props.param.name == 'realName' && !reg_userName.test(this.state.newValue))
