@@ -74,7 +74,9 @@ var Login = React.createClass({
                     }
                 },
                 (msg)=> {
-                    Alert(msg.msgContent);
+                    Alert(msg.msgContent, () => {
+                        this.setState({checked: true})
+                    });
                     this.refs['verifyCode'].changeVerify()
                 }
             )
