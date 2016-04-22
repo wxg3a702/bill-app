@@ -5,5 +5,6 @@ module.exports = {
     trading_PWD: {icon: require('../image/user/trading_PWD.png')},
     personId: {icon: require('../image/user/personId.png')},
     accountNo: {icon: require('../image/utils/accountno.png')},
-    bankNo: {icon: require('../image/utils/bankno.png')}
+    bankNo: {icon: require('../image/utils/bankno.png')},
+    openBank: {icon: require('../image/utils/openbank.png')}
 }
