@@ -43,9 +43,9 @@ var Register_setInfo = React.createClass({
                 Alert("用户名最少为5位");
                 return false;
             }
-            var reg = /^[A-Za-z0-9_]*$/g;
+            var reg = /^[a-zA-Z0-9_]$/g;
             if (!reg.test(this.state.userName)) {
-                Alert("用户名只可包含字母、数字和下划线")
+                Alert("用户名为包含字母数字,下划线两种字符类型以上的组合")
                 return false;
             }
 
@@ -62,11 +62,13 @@ var Register_setInfo = React.createClass({
                 Alert("密码不能有空格");
                 return false;
             }
-            var regPWD = /^[\w\u0000-\u00FF]+$/g;
-            if (!regPWD.test(this.state.userName)) {
+            //var regPWD = /^[\u0000-\u00FF]+$/g;
+            var regPWD = /^.*\d.*[a-zA-Z_]|.*[a-zA-Z_].*\d$/g;
+            if (!regPWD.test(this.state.password)) {
                 Alert("请输入字母数字半角字符等组成的正确密码格式");
                 return false;
             }
+
             if (this.state.password == this.state.passwordAgain) {
                 this.setInfo();
             } else {

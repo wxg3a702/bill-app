@@ -116,6 +116,7 @@ typedef enum{
 - (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings
 {
   [RCTPushNotificationManager didRegisterUserNotificationSettings:notificationSettings];
+  
 }
 // Required for the register event.
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
@@ -126,6 +127,7 @@ typedef enum{
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
   [RCTPushNotificationManager didReceiveRemoteNotification:notification];
+  [UIApplication sharedApplication].applicationIconBadgeNumber = [[[notification objectForKey:@"aps"] objectForKey: @"badge"] intValue];
 }
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification

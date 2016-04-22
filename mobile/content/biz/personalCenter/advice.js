@@ -18,13 +18,9 @@ var Advice = React.createClass({
     },
     submit(){
         //文本筛选
-        //var reg = /^[^/~^*-=+*:;☆()]+$/g;
 
-        //this.setState({
-        //    opinion:this.utf16toEntities(this.state.opinion)
-        //});
-
-        var reg = /^[\w\u4e00-\u9fa5\u0000-\u00FF\uFF00-\uFFFF]+$/g;
+        var reg = /^[\w\u4e00-\u9fa5\u0000-\u00FF\uFF00-\uFFFF。、“”……——【】《》]+$/g;
+        //var reg = /^[\w\u0000-\u00FF][^\x00-\xff]+$/g;
 
         if (this.state.opinion.length == 0) {
 
