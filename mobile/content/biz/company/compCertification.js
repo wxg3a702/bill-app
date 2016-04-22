@@ -57,7 +57,7 @@ var CompCertification = React.createClass({
         //});
         return {
             bean: con,
-            dataSource: con
+            dataSource: ds.cloneWithRows(con)
         }
     },
 
@@ -111,7 +111,7 @@ var CompCertification = React.createClass({
             }
         ]
         return (
-            <Swipeout right={swipeoutBtns}>
+            <Swipeout right={swipeoutBtns} autoClose={true}>
                 <TouchableHighlight onPress={()=>this.toOther(data)}>
                     <View style={styles.item} removeClippedSubviews={true}>
                         <View style={{width:width,flexDirection:'row',alignItems:'center'}}>
@@ -138,7 +138,7 @@ var CompCertification = React.createClass({
             )
         } else {
             return (
-                <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.returnRow}/>
+                <ListView dataSource={this.state.dataSource} renderRow={this.returnRow}/>
             )
         }
     },

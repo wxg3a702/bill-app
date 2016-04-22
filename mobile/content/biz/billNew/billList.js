@@ -12,7 +12,7 @@ var {
     StyleSheet,
     TouchableOpacity,
     InteractionManager
-    } = React;
+} = React;
 var _ = require('lodash');
 var Demo = require('./demo');
 var Adjust = require('../../comp/utils/adjust');
@@ -417,13 +417,13 @@ var styles = StyleSheet.create({
         justifyContent: 'center', alignItems: 'center', flexDirection: 'row'
     },
     title: {
-        fontSize: 16, color: '#44bcb2',
+        fontSize: 16
     },
     leftRadius: {
-        borderBottomLeftRadius: 4, borderTopLeftRadius: 4
+        borderBottomLeftRadius: 4, borderTopLeftRadius: 4, borderBottomRightRadius: 4, borderTopRightRadius: 4
     },
     rightRadius: {
-        borderBottomRightRadius: 4, borderTopRightRadius: 4
+        borderBottomRightRadius: 4, borderTopRightRadius: 4, borderBottomLeftRadius: 4, borderTopLeftRadius: 4,
     },
     titleView: {
         width: 80, height: 29, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#44bcb2'
