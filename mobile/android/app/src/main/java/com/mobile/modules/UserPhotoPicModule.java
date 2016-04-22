@@ -189,7 +189,7 @@ public class UserPhotoPicModule extends ReactContextBaseJavaModule implements Ac
                             // 保存图片
                             FileOutputStream fos = null;
                             fos = new FileOutputStream(tempFile);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 30, fos);
                             fos.flush();
                             fos.close();
                         }

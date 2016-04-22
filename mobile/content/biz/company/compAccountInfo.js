@@ -7,7 +7,8 @@ var {
   ActionSheetIOS,
   Text,
   TouchableHighlight,
-  Image
+  Image,
+  Platform
   } = React;
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -36,6 +37,7 @@ var CompAccountInfo = React.createClass({
       accountNo: newOrg.accountNo,
       openBank: newOrg.openBank,
       checked: check,
+      phone: '021-35885888-2627',
     }
   },
 
@@ -174,7 +176,7 @@ var CompAccountInfo = React.createClass({
                  isPhone={true}/>
           <Input type='name' prompt="开户行" max={50} field="openBank" isPwd={false}
                  defaultValue={this.state.openBank}
-                 onChanged={this.handleChanged} icon="user"/>
+                 onChanged={this.handleChanged} icon="openBank"/>
           <View style={{marginTop:18}}>
             {this.returnInfo()}
             <View style={{flexDirection:"row"}}>
