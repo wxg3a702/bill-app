@@ -7,7 +7,8 @@ var {
   ActionSheetIOS,
   Text,
   TouchableHighlight,
-  Image
+  Image,
+  Platform
   } = React;
 var AppStore = require('../../framework/store/appStore');
 var CompStore = require('../../framework/store/compStore');
@@ -36,6 +37,7 @@ var CompAccountInfo = React.createClass({
       accountNo: newOrg.accountNo,
       openBank: newOrg.openBank,
       checked: check,
+      phone: '021-35885888-2627',
     }
   },
 
