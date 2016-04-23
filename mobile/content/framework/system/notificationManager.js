@@ -7,17 +7,27 @@ var {
   PushNotificationIOS,
   Platform,
   AppStateIOS,
-  DeviceEventEmitter
+  DeviceEventEmitter,
   } = React;
 var CommonAction = require('../action/commonAction');
 var AppStore = require('../store/appStore');
-
+var Alert = require('../../comp/utils/alert');
+var subscription;
 let _handleAppStateChange = function (currentAppState) {
   if (AppStore.getRevBillMessage()) {
     switch (currentAppState) {
       case "active":
         CommonAction.freshNotification();
         break;
+      case "background":
+        console.log('aaaaa');
+        PushNotificationIOS.getApplicationIconBadgeNumber((num) => {
+          CommonAction.updatePushMsgBadge({
+            messageBadge: num
+          }, ()=>{console.log('yes')}, ()=>{console.log('no')});
+        });
+        break;
+
     }
   }
 }
@@ -39,7 +49,6 @@ module.exports = {
         PushNotificationIOS.addEventListener('notification', CommonAction.onNotification);
 
         AppStateIOS.addEventListener('change', _handleAppStateChange);
-
       } else {
         DeviceEventEmitter.addListener('Msg', (e:Event)=>CommonAction.onNotification());
         DeviceEventEmitter.addListener('MsgByNotification', (e:Event)=> {
@@ -56,6 +65,9 @@ module.exports = {
         PushNotificationIOS.removeEventListener('notification', CommonAction.onNotification);
         AppStateIOS.removeEventListener('change', _handleAppStateChange);
         PushNotificationIOS.setApplicationIconBadgeNumber(0);
+      } else {
+        //DeviceEventEmitter.removeListener('Msg');
+        //DeviceEventEmitter.removeListener('MsgByNotification');
       }
   }
 

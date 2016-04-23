@@ -16,7 +16,8 @@ var CommonActions = {
     freshNotification: (notification)=>_onNotification(notification),
     startRPC: (option)=>_startRPC(option),
     endRPC: (option, handle)=>_endRPC(option, handle),
-    changeSwitch: (p, c)=>_changeSwitch(p, c)
+    changeSwitch: (p, c)=>_changeSwitch(p, c),
+    updatePushMsgBadge: (p, c, f) => PFetch(api + "/MessageSearch/updatePushMsgBadge", p, c, f)
 }
 var _appInit = function () {
     AppDispatcher.dispatch({

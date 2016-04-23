@@ -116,7 +116,6 @@ var CompAccountInfo = React.createClass({
             }else{
               this.props.navigator.popToRoute(routes[routes.length - 3]);
             }
-
           })
         },
         ()=>{

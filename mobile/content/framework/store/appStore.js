@@ -653,6 +653,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
     //Persister.saveDemoFlag({flag: true, id: AppStore.getUserId()});
     case ActionTypes.GET_PUSH_MSG:
       _getPushMsg(action.data);
+      break;
     default:
   }
 });

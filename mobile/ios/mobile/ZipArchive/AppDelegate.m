@@ -10,13 +10,13 @@
 #import "AppDelegate.h"
 
 #import "RCTRootView.h"
-
 #import "RCTPushNotificationManager.h"
 #import "ReactNativeAutoUpdater.h"
-
 #define JS_CODE_METADATA_URL @"http://192.168.64.205:9101/pub/rnupdate/meta?type=IOS_PATCH"
 
 @interface AppDelegate() <ReactNativeAutoUpdaterDelegate>
+
+@property (nonatomic, strong) RCTBridge *bridge;
 
 @end
 
@@ -56,8 +56,6 @@ typedef enum{
   }else{
     latestJSCodeLocation=[[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   }
-
-
   
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   UIViewController *rootViewController = [UIViewController new];
@@ -127,11 +125,16 @@ typedef enum{
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)notification
 {
   [RCTPushNotificationManager didReceiveRemoteNotification:notification];
-  [UIApplication sharedApplication].applicationIconBadgeNumber = [[[notification objectForKey:@"aps"] objectForKey: @"badge"] intValue];
 }
 // Required for the localNotification event.
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
   [RCTPushNotificationManager didReceiveLocalNotification:notification];
+}
+
+- (void) applicationDidEnterBackground:(UIApplication *)application
+{
+//  [UIApplication sharedApplication].applicationIconBadgeNumber = 3;
+  
 }
 @end

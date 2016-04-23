@@ -28,6 +28,7 @@ var ds = new ListView.DataSource({
   rowHasChanged: (row1, row2) => row1 !== row2,
 });
 var CompCertification = React.createClass({
+  bean: [],
   getStateFromStores(){
     let i = 0;
     var orgBean = CompStore.getCertifiedOrgBean();
@@ -43,10 +44,9 @@ var CompCertification = React.createClass({
         rejectedCon.push(item);
       }
     });
-    let con = certifiedCon.concat(auditingCon).concat(rejectedCon);
+    this.bean = certifiedCon.concat(auditingCon).concat(rejectedCon);
     return {
-      bean: con,
-      dataSource: ds.cloneWithRows(con)
+      dataSource: ds.cloneWithRows(this.bean)
     }
   },
 
@@ -118,7 +118,7 @@ var CompCertification = React.createClass({
     )
   },
   returnList(){
-    if (this.state.bean.length == 0) {
+    if (this.bean.length == 0) {
       return (
         <View style={{flex:1,alignItems:'center'}}>
           <Image style={{marginTop:100}} source={require("../../image/company/no_company.png")}/>
@@ -127,12 +127,12 @@ var CompCertification = React.createClass({
       )
     } else {
       return (
-        <ListView style={{flex: 1}} dataSource={this.state.dataSource} renderRow={this.returnRow}/>
+        <ListView style={{flex: 1}}dataSource={this.state.dataSource} renderRow={this.returnRow}/>
       )
     }
   },
   returnTitle(){
-    if (!_.isEmpty(this.state.bean)) {
+    if (!_.isEmpty(this.bean)) {
       return <Space backgroundColor="#f0f0f0" top={false}/>
     }
   },
