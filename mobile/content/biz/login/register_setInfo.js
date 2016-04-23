@@ -45,7 +45,7 @@ var Register_setInfo = React.createClass({
             }
             var reg = /^[a-zA-Z0-9_]+$/g;
             if (!reg.test(this.state.userName)) {
-                Alert("用户名为包含字母数字,下划线两种字符类型以上的组合")
+                Alert("用户名用户名只可包含字母、数字和下划线")
                 return false;
             }
 
@@ -62,12 +62,14 @@ var Register_setInfo = React.createClass({
                 Alert("密码不能有空格");
                 return false;
             }
-            var regPWD = /^[\u0000-\u00FF]+$/g;
+
+            var regPWD = /^((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^\S{6,}$/g;
 
             if (!regPWD.test(this.state.password)) {
-                Alert("请输入字母数字半角字符等组成的正确密码格式");
+                Alert("请输入同时包含字母数字或半角字符中的正确密码格式");
                 return false;
             }
+
             if (this.state.password == this.state.passwordAgain) {
                 this.setInfo();
             } else {

@@ -524,6 +524,7 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       _data.token = null;
       Persister.clearToken(_data);
       info.isLogout = true;
+      info.isForce_Logout = false;
       AppStore.emitChange();
       break;
     case ActionTypes.FORCE_LOGOUT:

@@ -45,9 +45,10 @@ var Forget_setPassword = React.createClass({
                 return false;
             }
 
-            var regPWD = /((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^\S{8,16}$/g;
-            if (regPWD.test(this.state.password)) {
-                Alert("请输入字母数字半角字符等组成的正确密码格式");
+            var regPWD = /^((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^\S{6,}$/g;
+
+            if (!regPWD.test(this.state.password)) {
+                Alert("请输入同时包含字母数字或半角字符中的正确密码格式");
                 return false;
             }
 
