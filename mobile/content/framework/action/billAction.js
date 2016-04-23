@@ -27,6 +27,12 @@ var _cancleBillDiscount = function (url, p, c, f) {
                 type: ActionTypes.CANCLE_BILL_DISCOUNT,
                 data: p
             });
+            BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+                AppDispatcher.dispatch({
+                    type: ActionTypes.PUSH_NOTIFICATION,
+                    data: data,
+                });
+            }, null, {custLoading: true});
            c();
         },
         f
@@ -40,6 +46,12 @@ var _createBillDiscount = function (url, p, c, f) {
                 type: ActionTypes.CREATE_BILL_DISCOUNT,
                 data: p
             });
+            BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+                AppDispatcher.dispatch({
+                    type: ActionTypes.PUSH_NOTIFICATION,
+                    data: data,
+                });
+            }, null, {custLoading: true});
             c();
         },
         f

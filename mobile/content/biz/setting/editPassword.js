@@ -36,11 +36,13 @@ var EditPassword = React.createClass({
             Alert("新密码不能有空格");
             return false;
         }
-        var regPWD = /^[\w\u0000-\u00FF]+$/g;
-        if (!regPWD.test(this.state.userName)) {
+
+        var regPWD = /((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^\S{8,16}$/g;
+        if (regPWD.test(this.state.password)) {
             Alert("请输入字母数字半角字符等组成的正确密码格式");
             return false;
         }
+
         if (this.state.newPassword == this.state.password) {
             Alert("新密码不能和旧密码一样");
             return false;
