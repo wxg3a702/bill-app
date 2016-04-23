@@ -73,10 +73,7 @@ var Bill = React.createClass({
             {desc: '全部', dataSource: Validation.returnIsNull(sentBill, !sentBill ? '' : sentBill.contentList)},
             {desc: '已贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'DIS'))},
             {desc: '不贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'IGN'))},
-            {
-                desc: '等待中',
-                dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))
-            },
+            {desc: '等待中', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))},
         ];
         return ({
             token: token,
@@ -147,7 +144,6 @@ var Bill = React.createClass({
 
     },
     changeRev(){
-        if (this.state.token) this.refs.BillList._refresh();
         this.setState({
             checkColor: 'white',
             unCheckColor: '#44bcb2',
@@ -156,9 +152,9 @@ var Bill = React.createClass({
             status: '全部',
             dataSource: this.state.resPick[0].dataSource
         });
+        if (this.state.token) this.refs.BillList._refresh();
     },
     changeSend(){
-        if (this.state.token) this.refs.BillList._refresh();
         this.setState({
             checkColor: '#44bcb2',
             unCheckColor: 'white',
@@ -167,6 +163,7 @@ var Bill = React.createClass({
             status: '全部',
             dataSource: this.state.sentPick[0].dataSource
         });
+        if (this.state.token) this.refs.BillList._refresh();
     },
     changePick(){
         this.setState({

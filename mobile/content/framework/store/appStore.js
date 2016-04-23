@@ -9,7 +9,8 @@ var info = {
   netWorkState: false,
   requestHandle: null,
   isLogout: false,
-  isForce_Logout: false
+  isForce_Logout: false,
+  isPWD_Logout:false,
 }
 
 var DateHelper = require('../../comp/utils/dateHelper');
@@ -63,6 +64,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
   isLogout: ()=>info.isLogout,
 
   isForceLogout: ()=>info.isForce_Logout,
+
+  isPWD_Logout: () =>info.isPWD_Logout,
 
   getAPNSToken: ()=>_data.APNSToken,
 
@@ -517,15 +520,16 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       _giveupBillDiscount(action.data)
       break;
     case ActionTypes.LOGOUT:
-      if (Platform.OS === 'android') {
-        ServiceModule.setIsLoginToSP(false);
-        ServiceModule.stopAppService();
-      }
       _data.token = null;
       Persister.clearToken(_data);
       info.isLogout = true;
       info.isForce_Logout = false;
       AppStore.emitChange();
+
+      if (Platform.OS === 'android') {
+        ServiceModule.setIsLoginToSP(false);
+        ServiceModule.stopAppService();
+      }
       break;
     case ActionTypes.FORCE_LOGOUT:
       _force_logout();

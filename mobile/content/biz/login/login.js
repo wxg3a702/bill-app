@@ -58,7 +58,7 @@ var Login = React.createClass({
         if (this.state.userName.length == 0 || this.state.password.length == 0 || this.state.verify.length == 0) {
 
         } else {
-            dismissKeyboard()
+            dismissKeyboard();
             LoginAction.login(
                 {
                     userName: this.state.userName,
