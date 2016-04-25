@@ -35,8 +35,10 @@ var LoginActions = {
         AppDispatcher.dispatch({type: ActionTypes.FORCE_LOGOUT});
     },
     clear: ()=> {
-        AppDispatcher.dispatch({type: ActionTypes.LOGOUT,});
+        AppDispatcher.dispatch({type: ActionTypes.LOGOUT});
     },
+
+
 }
 var _logout = function (url, c) {
     BFetch(url, {},
