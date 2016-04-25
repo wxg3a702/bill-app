@@ -110,17 +110,16 @@ var revBill = React.createClass({
     changePick(){
         this.setState({
             direction: 'down',
-            backColor: '#d0d0d0',
-            contentColor: '#e0e0e0',
-            opacity: 1
+            //backColor: '#d0d0d0',
+            //contentColor: '#e0e0e0',
+            opacity: 1,
         })
     },
     hidePick(){
         this.setState({
-            backColor: '#f0f0f0',
             direction: 'left',
-            contentColor: 'white',
-            opacity: 0
+            //contentColor: 'white',
+            opacity: 0,
         });
     },
     changePic(data){
@@ -151,31 +150,32 @@ var revBill = React.createClass({
             )
         }
     },
+
     returnInfo(role, status, discountDate, discountDueDate){
 
-            if (status == 'NEW') {
-                return (
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                        <Text
-                            style={{color:'#ff5b58',fontSize:15}}>{discountDueDate ? DateHelper.formatBillList(discountDueDate) : "未知日期"}</Text>
-                        <Text style={{color:'#333333',fontSize:15}}>出票</Text>
-                    </View>
-                );
-            } else if (status == 'REQ') {
-                return <Text style={{color:'#7f7f7f',fontSize:15}}>请等待银行处理</Text>
-            } else if (status == 'HAN') {
-                return <Text style={{color:'#7f7f7f',fontSize:15}}>请等待银行处理</Text>
-            } else if (status == 'DIS') {
-                return (
-                    <View style={{flexDirection:'row',alignItems: 'center'}}>
-                        <Text
-                            style={{color:'#43bb80',fontSize:15}}>{DateHelper.formatBillList(discountDate)}</Text>
-                        <Text style={{color:'#7f7f7f',fontSize:15}}>贴现</Text>
-                    </View>
-                );
-            } else if (status == 'IGN') {
-                return <Text style={{ color:'#7f7f7f',fontSize:15}}>请等待交易方取票</Text>
-            }
+        if (status == 'NEW') {
+            return (
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Text
+                        style={{color:'#ff5b58',fontSize:15}}>{discountDueDate ? DateHelper.formatBillList(discountDueDate) : "未知日期"}</Text>
+                    <Text style={{color:'#333333',fontSize:15}}>出票</Text>
+                </View>
+            );
+        } else if (status == 'REQ') {
+            return <Text style={{color:'#7f7f7f',fontSize:15}}>请等待银行处理</Text>
+        } else if (status == 'HAN') {
+            return <Text style={{color:'#7f7f7f',fontSize:15}}>请等待银行处理</Text>
+        } else if (status == 'DIS') {
+            return (
+                <View style={{flexDirection:'row',alignItems: 'center'}}>
+                    <Text
+                        style={{color:'#43bb80',fontSize:15}}>{DateHelper.formatBillList(discountDate)}</Text>
+                    <Text style={{color:'#7f7f7f',fontSize:15}}>贴现</Text>
+                </View>
+            );
+        } else if (status == 'IGN') {
+            return <Text style={{ color:'#7f7f7f',fontSize:15}}>请等待交易方取票</Text>
+        }
 
     },
 
@@ -189,26 +189,22 @@ var revBill = React.createClass({
     },
 
     hasBill(){
-        if (!this.state.token) {
-            return (
-                <ToLogin func={()=>this.toOther(Login)} mar={true}/>
-            )
-        } else {
-            return (
-                    <GiftedListView
-                        ref="BillList"
-                        rowView={this._renderRowView}
-                        onFetch={this._onFetch}
-                        emptyView={this._emptyView}
-                        firstLoader={true} // display a loader for the first fetching
-                        pagination={true} // enable infinite scrolling using touch to load more
-                        refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-                        withSections={false} // enable sections
-                        style={{width:width}}
-                    />
-            );
 
-        }
+        return (
+            <GiftedListView
+                ref="BillList"
+                rowView={this._renderRowView}
+                onFetch={this._onFetch}
+                emptyView={this._emptyView}
+                firstLoader={true} // display a loader for the first fetching
+                pagination={true} // enable infinite scrolling using touch to load more
+                refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+                withSections={false} // enable sections
+                style={{width:width}}
+            />
+        );
+
+
     },
 
     _emptyView() {
@@ -308,6 +304,7 @@ var revBill = React.createClass({
             )
         }
     },
+
     render(){
         return (
             <View style={{flex:1}}>
@@ -322,6 +319,7 @@ var revBill = React.createClass({
                 </View>
                 {this.hasBill()}
                 {this.returnView()}
+
             </View>
         )
     }

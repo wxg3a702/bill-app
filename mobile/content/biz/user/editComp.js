@@ -48,23 +48,6 @@ var EditComp = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-    pick(text){
-        let res = this.state.res
-        if (!res) {
-        } else {
-            var ret = new Array();
-            if (!text) {
-                ret = res
-            } else {
-                res.map((item, index)=> {
-                    if (item.orgName.indexOf(text) > -1) {
-                        ret.push(item)
-                    }
-                })
-            }
-            this.setState({dataSource: ds.cloneWithRows(ret)})
-        }
-    },
 
     setValue(data){
         const { navigator } = this.props;
@@ -108,8 +91,6 @@ var EditComp = React.createClass({
     render(){
         return (
             <NavBarView navigator={this.props.navigator} title="公司">
-
-                <SearchBar onChange={this.pick}/>
 
                 <TouchableHighlight style={{borderBottomColor:'#f7f7f7',borderBottomWidth:1}}
                                     onPress={()=>this.setDefalutOrg()}
