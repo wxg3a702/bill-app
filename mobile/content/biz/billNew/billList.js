@@ -55,19 +55,30 @@ var Bill = React.createClass({
     },
 
     getStateFromStores(){
+        var revBill = BillStore.getRevBill();
         var token = AppStore.getToken();
-
+        var resPick = [
+            {desc: '全部', dataSource: Validation.returnIsNull(revBill, !revBill ? '' : revBill.contentList)},
+            {desc: '新票据', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'NEW'))},
+            {desc: '已申请', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'REQ'))},
+            {desc: '受理中', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'HAN'))},
+            {desc: '已贴现', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'DIS'))},
+            {desc: '不贴现', dataSource: Validation.returnIsNull(revBill, this.getDataSouce(revBill, 'IGN'))}
+        ];
         return ({
             token: token,
             checkColor: 'white',
             unCheckColor: '#44bcb2',
             status: '全部',
             direction: 'left',
+            pick: resPick,
             pickStatus: 'rev',
             backColor: '#f0f0f0',
             contentColor: 'white',
+            resPick: resPick,
             opacity: 1,
             billType: 'rev',
+            dataSource: !token ? '' : resPick[0].dataSource
         })
 
     },
@@ -109,7 +120,6 @@ var Bill = React.createClass({
     _onChange: function () {
         this.setState(this.getStateFromStores());
     },
-
     changeRev(){
         this.setState({
             checkColor: 'white',
@@ -130,6 +140,7 @@ var Bill = React.createClass({
             status: '全部',
             billType: 'sent',
         });
+
     },
 
     toOther(name, item) {
@@ -161,7 +172,6 @@ var Bill = React.createClass({
             );
         }
     },
-
 
     returnView(){
         if (!this.state.token) {

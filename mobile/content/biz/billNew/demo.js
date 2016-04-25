@@ -80,7 +80,7 @@ var styles = StyleSheet.create({
     },
     page: {
         width: width,
-        height: Platform.Platform.OS === 'ios' ? height : height-25,
+        height: Platform.OS === 'ios' ? height : height-25,
     },
 })
 
