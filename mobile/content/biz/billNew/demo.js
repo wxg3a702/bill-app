@@ -6,7 +6,8 @@ var {
     View,
     TouchableOpacity,
     Text,
-    StyleSheet
+    StyleSheet,
+    Platform,
 } = React;
 
 var {height, width} = Dimensions.get('window');
@@ -41,7 +42,7 @@ var Demo = React.createClass({
 
     _renderPage: function (data:Object) {
         return (
-            <Image style={{width:width,height:height}} resizeMode="stretch" source={data.img}>
+            <Image style={styles.page} resizeMode="stretch" source={data.img}>
                 <View style={{justifyContent:'flex-end',flexDirection:'row',marginTop:28}}>
                     <TouchableOpacity onPress={()=>this.props.navigator.pop()}>
                         <Text style={styles.layout}>{data.text}</Text>
@@ -79,7 +80,7 @@ var styles = StyleSheet.create({
     },
     page: {
         width: width,
-        height: height
+        height: Platform.Platform.OS === 'ios' ? height : height-25,
     },
 })
 
