@@ -21,11 +21,15 @@ let _handleAppStateChange = function (currentAppState) {
         break;
       case "background":
         console.log('aaaaa');
-        PushNotificationIOS.getApplicationIconBadgeNumber((num) => {
-          CommonAction.updatePushMsgBadge({
-            messageBadge: num
-          }, ()=>{console.log('yes')}, ()=>{console.log('no')});
-        });
+        if (AppStore.getToken() && !_.isEmpty(AppStore.getToken())) {
+          PushNotificationIOS.getApplicationIconBadgeNumber((num) => {
+            CommonAction.updatePushMsgBadge({
+              messageBadge: num
+            }, ()=>{console.log('yes')}, ()=>{console.log('no')});
+          });
+        } else {
+          PushNotificationIOS.setApplicationIconBadgeNumber(0);
+        }
         break;
 
     }

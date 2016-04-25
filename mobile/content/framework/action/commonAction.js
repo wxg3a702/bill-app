@@ -17,7 +17,7 @@ var CommonActions = {
     startRPC: (option)=>_startRPC(option),
     endRPC: (option, handle)=>_endRPC(option, handle),
     changeSwitch: (p, c)=>_changeSwitch(p, c),
-    updatePushMsgBadge: (p, c, f) => PFetch(api + "/MessageSearch/updatePushMsgBadge", p, c, f)
+    updatePushMsgBadge: (p, c, f) => PFetch(api + "/MessageSearch/updatePushMsgBadge", p, c, f, {custLoading: true})
 }
 var _appInit = function () {
     AppDispatcher.dispatch({
@@ -50,11 +50,11 @@ var _onNotification = function (notification) {
 
     console.log('111111Basic  ' + AppStore.getToken());
     //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
-    if (!!AppStore.getToken()) {
+    if (AppStore.getToken() && !_.isEmpty(AppStore.getToken())) {
         BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
             AppDispatcher.dispatch({
                 type: ActionTypes.PUSH_NOTIFICATION,
-                data: data,
+                data: data
             });
         }, null, {custLoading: true});
     }

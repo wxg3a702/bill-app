@@ -1,7 +1,8 @@
 var React = require('react-native');
 var {
   NetInfo,
-  Platform
+  Platform,
+  PushNotificationIOS
   } = React;
 var info = {
   initLoadingState: true,
@@ -104,6 +105,7 @@ var _appInit = function (data) {
       if (_data.token == '' && _.isEmpty(_data.token)) {
         _data.token = null;
         if (Platform.OS === 'android') SP.setTokenToSP(' ');
+        PushNotificationIOS.setApplicationIconBadgeNumber(0);
       } else {
         if (Platform.OS === 'android' && _data.token) {
           SP.setTokenToSP(_data.token);
@@ -479,6 +481,7 @@ var _force_logout = function () {
   Persister.clearToken(_data);
   info.isLogout = true;
   info.isForce_Logout = true;
+  PushNotificationIOS.setApplicationIconBadgeNumber(0);
 }
 
 var _deleteBill = function (orgCode) {
@@ -522,12 +525,11 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       info.isLogout = true;
       info.isForce_Logout = false;
       AppStore.emitChange();
-
+      PushNotificationIOS.setApplicationIconBadgeNumber(0);
       if (Platform.OS === 'android') {
         ServiceModule.setIsLoginToSP(false);
         ServiceModule.stopAppService();
       }
-
       break;
     case ActionTypes.FORCE_LOGOUT:
       _force_logout();
