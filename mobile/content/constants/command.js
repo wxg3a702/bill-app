@@ -24,7 +24,7 @@ module.exports = {
         UPDATE_EXISTORG: null,
         UPDATE_UNAUDITING:null,
         CLEAR_NEWORG: null,
-        CHANGE_SWITCH:null
+        CHANGE_SWITCH:null,
     })
 
 };
