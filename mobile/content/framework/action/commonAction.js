@@ -47,6 +47,7 @@ var _onNotification = function (notification) {
     //       React.PushNotificationIOS.setApplicationIconBadgeNumber(unReadNum)
     //   });
     //}
+
     console.log('111111Basic  ' + AppStore.getToken());
     //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
     if (!!AppStore.getToken()) {

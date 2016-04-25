@@ -446,6 +446,7 @@ var _analysisMessageData = function (data) {
 }
 //
 var _freshMessageData = function (data) {
+  console.log('*** message data *** ' + data);
   if (!data || !data.nodeMsgBean || !data.nodeMsgBean.length)
     return;
   else {

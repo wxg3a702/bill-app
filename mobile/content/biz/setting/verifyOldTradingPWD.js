@@ -20,9 +20,6 @@ var dismissKeyBoard = require('react-native-dismiss-keyboard');
 var LoginAction = require('../../framework/action/loginAction');
 var BillAction = require('../../framework/action/billAction');
 var Alert = require('../../comp/utils/alert');
-var Persister = require('../../framework/persister/persisterFacade');
-var AppStore = require('../../framework/store/appStore');
-var ServiceModule = require('NativeModules').ServiceModule;
 
 var VerifyOldTradingPWD = React.createClass({
     getStateFromStores() {
@@ -68,17 +65,7 @@ var VerifyOldTradingPWD = React.createClass({
                     Alert(
                         msg.msgContent,
                         ()=> {
-                            //if (Platform.OS === 'android') {
-                            //    ServiceModule.setIsLoginToSP(false);
-                            //    ServiceModule.stopAppService();
-                            //}
-                            //AppStore._data.token = null;
-                            //Persister.clearToken(_data);
-                            //AppStore.info.isLogout = true;
-                            //const {navigator}=this.props;
-                            //if (navigator) {
-                            //    navigator.resetTo({comp:'tabView'});
-                            //}
+
                             LoginAction.clear();
                         }
                     );
