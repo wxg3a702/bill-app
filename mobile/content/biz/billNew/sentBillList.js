@@ -66,7 +66,10 @@ var sentBill = React.createClass({
             {desc: '全部', dataSource: Validation.returnIsNull(sentBill, !sentBill ? '' : sentBill.contentList)},
             {desc: '已贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'DIS'))},
             {desc: '不贴现', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'IGN'))},
-            {desc: '等待中', dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))},
+            {
+                desc: '等待中',
+                dataSource: Validation.returnIsNull(sentBill, this.getDataSouce(sentBill, 'NEW', 'REQ', 'HAN'))
+            },
         ];
         return ({
             token: token,
@@ -110,19 +113,20 @@ var sentBill = React.createClass({
     changePick(){
         this.setState({
             direction: 'down',
-            backColor: '#d0d0d0',
-            contentColor: '#e0e0e0',
+            //backColor: '#d0d0d0',
+            //contentColor: '#e0e0e0',
             opacity: 1
         })
     },
+
     hidePick(){
         this.setState({
-            backColor: '#f0f0f0',
             direction: 'left',
-            contentColor: 'white',
+            //contentColor: 'white',
             opacity: 0
         });
     },
+
     changePic(data){
         Promise.resolve(
             this.setState({
@@ -151,19 +155,20 @@ var sentBill = React.createClass({
             )
         }
     },
+
     returnInfo(role, status, discountDate, discountDueDate){
-            if ((status == 'NEW' || status == 'REQ' || status == 'HAN')) {
-                return <Text style={{color:'#999999'}}>请等待承兑行出票</Text>
-            } else if (status == 'IGN') {
-                return <Text style={{color:'#ff5b58'}}>请至承兑行取票</Text>
-            } else if (status == 'DIS') {
-                return (
-                    <View style={{flexDirection:'row'}}>
-                        <Text style={{color:'#44bcb2'}}>{DateHelper.formatBillList(discountDate)}</Text>
-                        <Text style={{color:'#999999'}}>贴现</Text>
-                    </View>
-                )
-            }
+        if ((status == 'NEW' || status == 'REQ' || status == 'HAN')) {
+            return <Text style={{color:'#999999'}}>请等待承兑行出票</Text>
+        } else if (status == 'IGN') {
+            return <Text style={{color:'#ff5b58'}}>请至承兑行取票</Text>
+        } else if (status == 'DIS') {
+            return (
+                <View style={{flexDirection:'row'}}>
+                    <Text style={{color:'#44bcb2'}}>{DateHelper.formatBillList(discountDate)}</Text>
+                    <Text style={{color:'#999999'}}>贴现</Text>
+                </View>
+            )
+        }
     },
 
     toOther(name, item) {
@@ -176,26 +181,19 @@ var sentBill = React.createClass({
     },
 
     hasBill(){
-        if (!this.state.token) {
-            return (
-                <ToLogin func={()=>this.toOther(Login)} mar={true}/>
-            )
-        } else {
-            return (
-                    <GiftedListView
-                        ref="BillList"
-                        rowView={this._renderRowView}
-                        onFetch={this._onFetch}
-                        emptyView={this._emptyView}
-                        firstLoader={true} // display a loader for the first fetching
-                        pagination={true} // enable infinite scrolling using touch to load more
-                        refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
-                        withSections={false} // enable sections
-                        style={{width:width}}
-                    />
-            );
-
-        }
+        return (
+            <GiftedListView
+                ref="BillList"
+                rowView={this._renderRowView}
+                onFetch={this._onFetch}
+                emptyView={this._emptyView}
+                firstLoader={true} // display a loader for the first fetching
+                pagination={true} // enable infinite scrolling using touch to load more
+                refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+                withSections={false} // enable sections
+                style={{width:width}}
+            />
+        );
     },
 
     _emptyView() {
@@ -295,6 +293,7 @@ var sentBill = React.createClass({
             )
         }
     },
+
     render(){
         return (
             <View style={{flex:1}}>
@@ -308,6 +307,7 @@ var sentBill = React.createClass({
                 </View>
                 {this.hasBill()}
                 {this.returnView()}
+
             </View>
         )
     }
