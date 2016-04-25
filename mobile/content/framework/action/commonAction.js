@@ -3,8 +3,10 @@ var async = require('async')
 var AppDispatcher = require('../dispatcher/appDispatcher');
 var Command = require('../../constants/command');
 var ActionTypes = Command.ActionTypes;
+var React = require('react-native');
 var _ = require('lodash');
 var AppStore = require('../store/appStore');
+var Alert = require('../../comp/utils/alert');
 var pub = "/pub";
 var api = "/api"
 var CommonActions = {
@@ -14,7 +16,8 @@ var CommonActions = {
     freshNotification: (notification)=>_onNotification(notification),
     startRPC: (option)=>_startRPC(option),
     endRPC: (option, handle)=>_endRPC(option, handle),
-    changeSwitch: (p, c)=>_changeSwitch(p, c)
+    changeSwitch: (p, c)=>_changeSwitch(p, c),
+    updatePushMsgBadge: (p, c, f) => PFetch(api + "/MessageSearch/updatePushMsgBadge", p, c, f)
 }
 var _appInit = function () {
     AppDispatcher.dispatch({
@@ -37,6 +40,13 @@ var _notificationRegister = function (token) {
 }
 
 var _onNotification = function (notification) {
+    //if (React.Platform.OS === 'ios' && notification) {
+    //   React.PushNotificationIOS.getApplicationIconBadgeNumber((a)=>{
+    //       let unReadNum = ++a;
+    //       Alert(notification.getData().payload + 'aaa')
+    //       React.PushNotificationIOS.setApplicationIconBadgeNumber(unReadNum)
+    //   });
+    //}
     console.log('111111Basic  ' + AppStore.getToken());
     //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
     if (!!AppStore.getToken()) {
