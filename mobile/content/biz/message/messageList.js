@@ -36,16 +36,12 @@ var count = 0;
 const PAGE_SIZE = 10;
 var Message = React.createClass({
   getStateFromStores() {
-    var token = AppStore.getToken()
-    if (token == null) {
-      return {token: token}
-    } else {
-      var messageBean = MessageStore.getMsgData()
-      return {
-        dataSource: messageBean,
-        data: messageBean,
-        token: token
-      }
+    var token = AppStore.getToken();
+    var messageBean = MessageStore.getMsgData();
+    return {
+      dataSource: messageBean,
+      data: messageBean,
+      token: token
     }
   },
   componentDidMount() {
@@ -60,7 +56,7 @@ var Message = React.createClass({
 
     setTimeout(() => {
       InteractionManager.runAfterInteractions(() => {
-        if (this.state.token && this.refs['MsgList']) {
+        if (this.refs['MsgList']) {
           this.refs['MsgList']._refreshWithoutSpinner();
         }
       })
@@ -101,13 +97,13 @@ var Message = React.createClass({
     this.props.navigator.push({comp: Login})
   },
   render: function () {
-    if (this.state.token == null) {
-      return (
-        <NavBarView navigator={this.props.navigator} showBack={false} title="消息">
-          <ToLogin func={this.toLogin}/>
-        </NavBarView>
-      )
-    } else {
+    //if (this.state.token == null) {
+    //  return (
+    //    <NavBarView navigator={this.props.navigator} showBack={false} title="消息">
+    //      <ToLogin func={this.toLogin}/>
+    //    </NavBarView>
+    //  )
+    //} else {
       if (!this.state.data || this.state.data.length == 0) {
         return (
           <NavBarView navigator={this.props.navigator} showBack={false} title="消息"
@@ -143,7 +139,7 @@ var Message = React.createClass({
           </NavBarView>
         );
       }
-    }
+    //}
   },
 
   _emptyView() {

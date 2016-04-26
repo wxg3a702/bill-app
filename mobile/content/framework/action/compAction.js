@@ -165,7 +165,7 @@ var _submitOrg = function (p, c, f) {
           },
           function (err) {
             p.status = 'UNAUDITING'
-            _updateOrgBeans(p, f)
+            f();
           }, {custLoading: true}
         )
       }

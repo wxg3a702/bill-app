@@ -59,6 +59,12 @@ var _login = function (url, p, c, f) {
                 type: ActionTypes.LOGIN,
                 data: msg
             });
+            BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+                AppDispatcher.dispatch({
+                    type: ActionTypes.PUSH_NOTIFICATION,
+                    data: data,
+                });
+            }, null, {custLoading: true});
             c();
         },
         f
