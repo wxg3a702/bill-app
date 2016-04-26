@@ -8,14 +8,9 @@ var {
   TouchableHighlight,
   View,
   Text,
-  PullToRefreshViewAndroid,
-  InteractionManager,
-  Image,
-  Dimensions
-  } = React;
-
-var deviceWidth = Dimensions.get('window').width;
-var deviceHeight = Dimensions.get('window').height;
+  RefreshControl,
+  InteractionManager
+} = React;
 
 
 // small helper function which merged two objects into one
@@ -34,7 +29,7 @@ function MergeRecursive(obj1, obj2) {
   return obj1;
 }
 
-var GiftedSpinner = require('./GiftedSpinner');
+var GiftedSpinner = require('../../comp/listView/GiftedSpinner');
 
 var GiftedListView = React.createClass({
 
@@ -45,30 +40,27 @@ var GiftedListView = React.createClass({
       firstLoader: true,
       pagination: true,
       refreshable: true,
-      refreshableViewHeight: 50,
-      refreshableDistance: 40,
+      refreshableColors: undefined,
+      refreshableProgressBackgroundColor: undefined,
+      refreshableSize: undefined,
+      refreshableTitle: undefined,
+      refreshableTintColor: undefined,
+      renderRefreshControl: null,
       headerView: null,
       sectionHeaderView: null,
+      scrollEnabled: true,
       withSections: false,
       onFetch(page, callback, options) { callback([]); },
 
-      paginationFetchigView: null,
+      paginationFetchingView: null,
       paginationAllLoadedView: null,
       paginationWaitingView: null,
-      refreshableFetchingView: null,
-      refreshableWillRefreshView: null,
-      refreshableWaitingView: null,
       emptyView: null,
       renderSeparator: null,
-      PullToRefreshViewAndroidProps: {
-        colors: ['#000000'],
-        progressBackgroundColor: '#c8c7cc',
-      },
 
-      refreshText: '数据加载中,请稍后...',
+      refreshText: '下拉刷新',
       loadingText: '更多...',
       allLoadedText: '全部加载完成',
-
     };
   },
 
@@ -78,65 +70,58 @@ var GiftedListView = React.createClass({
     firstLoader: React.PropTypes.bool,
     pagination: React.PropTypes.bool,
     refreshable: React.PropTypes.bool,
-    refreshableViewHeight: React.PropTypes.number,
-    refreshableDistance: React.PropTypes.number,
+    refreshableColors: React.PropTypes.array,
+    refreshableProgressBackgroundColor: React.PropTypes.string,
+    refreshableSize: React.PropTypes.string,
+    refreshableTitle: React.PropTypes.string,
+    refreshableTintColor: React.PropTypes.string,
+    renderRefreshControl: React.PropTypes.func,
     headerView: React.PropTypes.func,
     sectionHeaderView: React.PropTypes.func,
+    scrollEnabled: React.PropTypes.bool,
     withSections: React.PropTypes.bool,
     onFetch: React.PropTypes.func,
 
-    paginationFetchigView: React.PropTypes.func,
+    paginationFetchingView: React.PropTypes.func,
     paginationAllLoadedView: React.PropTypes.func,
     paginationWaitingView: React.PropTypes.func,
-    refreshableFetchingView: React.PropTypes.func,
-    refreshableWillRefreshView: React.PropTypes.func,
-    refreshableWaitingView: React.PropTypes.func,
     emptyView: React.PropTypes.func,
     renderSeparator: React.PropTypes.func,
-    PullToRefreshViewAndroidProps: React.PropTypes.object,
 
     refreshText: React.PropTypes.string,
     loadingText: React.PropTypes.string,
     allLoadedText: React.PropTypes.string,
   },
 
-  _setY(y) { this._y = y; },
-  _getY(y) { return this._y; },
   _setPage(page) { this._page = page; },
   _getPage() { return this._page; },
   _setRows(rows) { this._rows = rows; },
   _getRows() { return this._rows; },
 
 
-  paginationFetchigView() {
-    if (this.props.paginationFetchigView) {
-      return this.props.paginationFetchigView();
+  paginationFetchingView() {
+    if (this.props.paginationFetchingView) {
+      return this.props.paginationFetchingView();
     }
 
-    // do not show spinner during first load
-    //if (this.state.paginationStatus === 'firstLoad' && this.props.firstLoader === true) {
-    //  return <View></View>
-    //} else {
     return (
       <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
         <GiftedSpinner />
       </View>
     );
-    //}
-
   },
   paginationAllLoadedView() {
     if (this.props.paginationAllLoadedView) {
       return this.props.paginationAllLoadedView();
     }
 
-    //return (
-    //  <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
-    //    <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
-    //      {this.props.allLoadedText}
-    //    </Text>
-    //  </View>
-    //);
+    // return (
+    //   <View style={[this.defaultStyles.paginationView, this.props.customStyles.paginationView]}>
+    //     <Text style={[this.defaultStyles.actionsLabel, this.props.customStyles.actionsLabel]}>
+    //       ~
+    //     </Text>
+    //   </View>
+    // );
     if (this._getRows().length === 0) {
       return this.emptyView(this._onRefresh);
     }
@@ -168,98 +153,27 @@ var GiftedListView = React.createClass({
     }
     return this.props.headerView();
   },
-  refreshableFetchingView() {
-    if (this.props.refreshableFetchingView) {
-      return this.props.refreshableFetchingView();
-    }
-    return (
-      <View>
-        <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
-          <Text
-            style={{
-              color: 'grey',
-              fontSize: 14,
-              marginVertical: 3
-            }}
-          >
-            {this.props.refreshText}
-          </Text>
-          <GiftedSpinner />
-        </View>
-        {this.headerView()}
-      </View>
-    );
-  },
-  refreshableWillRefreshView() {
-    if (this.props.refreshableWillRefreshView) {
-      return this.props.refreshableWillRefreshView();
-    }
-
-    return (
-      <View>
-        <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
-          <GiftedSpinner />
-        </View>
-        {this.headerView()}
-      </View>
-    );
-  },
-  refreshableWaitingView(refreshCallback) {
-    if (this.props.refreshableWaitingView) {
-      return this.props.refreshableWaitingView(refreshCallback);
-    }
-
-    return (
-      <View>
-        <View style={[this.defaultStyles.refreshableView, this.props.customStyles.refreshableView]}>
-          <GiftedSpinner />
-        </View>
-        {this.headerView()}
-      </View>
-    );
-  },
   emptyView(refreshCallback) {
     if (this.props.emptyView) {
       return this.props.emptyView(refreshCallback);
     }
 
-    return (
-      <View style={[this.defaultStyles.defaultView, this.props.customStyles.defaultView]}>
-        <Text style={[this.defaultStyles.defaultViewTitle, this.props.customStyles.defaultViewTitle]}>
-          Sorry, there is no content to display
-        </Text>
-
-        <TouchableHighlight
-          underlayColor='#c8c7cc'
-          onPress={refreshCallback}
-        >
-          <Text>
-            ↻
-          </Text>
-        </TouchableHighlight>
-      </View>
-    );
-    //return (
-    //  <View
-    //    style={{
-    //      alignItems: 'center',
-    //      justifyContent: 'flex-start'
-    //    }}
-    //  >
-    //    <Image
-    //      style={{
-    //          //marginTop: 100,
-    //          //marginBottom: 50,
-    //          //height: deviceHeight * 0.5,
-    //          width: deviceWidth,
-    //          resizeMode: 'contain',
-    //          marginTop: deviceHeight * 0.1,
-    //          //borderWidth: 2
-    //        }}
-    //      source={require('../../img/empty.png')}
-    //    />
-    //  </View>
-    //);
+    // return (
+    //   <View style={[this.defaultStyles.defaultView, this.props.customStyles.defaultView]}>
+    //     <Text style={[this.defaultStyles.defaultViewTitle, this.props.customStyles.defaultViewTitle]}>
+    //       Sorry, there is no content to display
+    //     </Text>
+    //
+    //     <TouchableHighlight
+    //       underlayColor='#c8c7cc'
+    //       onPress={refreshCallback}
+    //     >
+    //       <Text>
+    //         ↻
+    //       </Text>
+    //     </TouchableHighlight>
+    //   </View>
+    // );
   },
   renderSeparator() {
     if (this.props.renderSeparator) {
@@ -270,13 +184,8 @@ var GiftedListView = React.createClass({
       <View style={[this.defaultStyles.separator, this.props.customStyles.separator]} />
     );
   },
-  getStateFromStores() {
-    if (this.props.refreshable === true && Platform.OS !== 'android') {
-      this._setY(this.props.refreshableViewHeight);
-    } else {
-      this._setY(0);
-    }
 
+  getInitialState() {
     this._setPage(1);
     this._setRows([]);
 
@@ -288,7 +197,6 @@ var GiftedListView = React.createClass({
       });
       return {
         dataSource: ds.cloneWithRowsAndSections(this._getRows()),
-        refreshStatus: 'waiting',
         isRefreshing: false,
         paginationStatus: 'firstLoad',
       };
@@ -298,40 +206,18 @@ var GiftedListView = React.createClass({
       });
       return {
         dataSource: ds.cloneWithRows(this._getRows()),
-        refreshStatus: 'waiting',
         isRefreshing: false,
         paginationStatus: 'firstLoad',
       };
     }
   },
-  getInitialState() {
-    return this.getStateFromStores();
-  },
-
-  setDataSource () {
-    let ds = new ListView.DataSource({
-      rowHasChanged: (row1, row2) => row1 !== row2,
-    });
-    this.setState({
-      dataSource: ds.cloneWithRows(this._getRows())
-    });
-  },
 
   componentDidMount() {
     this._scrollResponder = this.refs.listview.getScrollResponder();
-
     InteractionManager.runAfterInteractions(() => {
       this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
     });
   },
-
-  //componentEmitChange() {
-  //  this._scrollResponder = this.refs.listview.getScrollResponder();
-  //
-  //  InteractionManager.runAfterInteractions(() => {
-  //    this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
-  //  });
-  //},
 
   setNativeProps(props) {
     this.refs.listview.setNativeProps(props);
@@ -346,7 +232,6 @@ var GiftedListView = React.createClass({
         dataSource: ds.cloneWithRows(this._getRows())
       });
 
-      this._scrollResponder.scrollTo({y: 0});
       this._setPage(1);
       this.props.onFetch(this._getPage(), this._postRefresh, {firstLoad: true});
     //});
@@ -357,44 +242,31 @@ var GiftedListView = React.createClass({
   },
 
   _onRefresh(options = {}) {
-    //InteractionManager.runAfterInteractions(() => {
-      let ds = new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
-      });
+    if (this.isMounted()) {
+      this._scrollResponder.scrollTo({y: 0});
       this.setState({
-        dataSource: ds.cloneWithRows(this._getRows())
+        isRefreshing: true,
       });
-
-      if (this.isMounted()) {
-        //this._scrollResponder.scrollTo(0);
-        this._scrollResponder.scrollTo({y: 0});
-        this.setState({
-          refreshStatus: 'fetching',
-          isRefreshing: true,
-        });
-        this._setPage(1);
-        this.props.onFetch(this._getPage(), this._postRefresh, options);
-      }
-    //});
+      this._setPage(1);
+      this.props.onFetch(this._getPage(), this._postRefresh, options);
+    }
   },
 
   _postRefresh(rows = [], options = {}) {
     if (this.isMounted()) {
       this._updateRows(rows, options);
-      if (this.props.refreshable === true && Platform.OS !== 'android') {
-        // @issue
-        // if a scrolling is already in progress, this scroll will not be executed
-        //this._scrollResponder.scrollTo(this.props.refreshableViewHeight);
-        this._scrollResponder.scrollTo({y: this.props.refreshableViewHeight});
-      }
     }
   },
 
   _onPaginate() {
-    this.setState({
-      paginationStatus: 'fetching',
-    });
-    this.props.onFetch(this._getPage() + 1, this._postPaginate, {});
+    if(this.state.paginationStatus==='allLoaded'){
+      return null
+    }else {
+      this.setState({
+        paginationStatus: 'fetching',
+      });
+      this.props.onFetch(this._getPage() + 1, this._postPaginate, {});
+    }
   },
 
   _postPaginate(rows = [], options = {}) {
@@ -414,70 +286,27 @@ var GiftedListView = React.createClass({
       if (this.props.withSections === true) {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRowsAndSections(rows),
-          refreshStatus: 'waiting',
           isRefreshing: false,
           paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
         });
       } else {
         this.setState({
           dataSource: this.state.dataSource.cloneWithRows(rows),
-          refreshStatus: 'waiting',
           isRefreshing: false,
           paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
         });
       }
     } else {
       this.setState({
-        refreshStatus: 'waiting',
         isRefreshing: false,
         paginationStatus: (options.allLoaded === true ? 'allLoaded' : 'waiting'),
       });
     }
   },
 
-  _onResponderRelease() {
-    if (this.props.refreshable === true) {
-      if (Platform.OS !== 'android') {
-        if (this.state.refreshStatus === 'willRefresh') {
-          this._onRefresh();
-        }
-      }
-    }
-  },
-
-  _onScroll(e) {
-    this._setY(e.nativeEvent.contentOffset.y);
-    if (this.props.refreshable === true) {
-      if (Platform.OS !== 'android') {
-        if (this._getY() < this.props.refreshableViewHeight - this.props.refreshableDistance
-          && this.state.refreshStatus === 'waiting'
-          && this._scrollResponder.scrollResponderHandleScrollShouldSetResponder() === true
-        ) {
-          this.setState({
-            refreshStatus: 'willRefresh',
-            isRefreshing: false,
-          });
-        }
-      }
-    }
-  },
-
-  _renderRefreshView() {
-    switch (this.state.refreshStatus) {
-      case 'fetching':
-        return this.refreshableFetchingView();
-        break;
-      case 'willRefresh':
-        return this.refreshableWillRefreshView();
-        break;
-      default:
-        return this.refreshableWaitingView(this._onRefresh);
-    }
-  },
-
   _renderPaginationView() {
     if ((this.state.paginationStatus === 'fetching' && this.props.pagination === true) || (this.state.paginationStatus === 'firstLoad' && this.props.firstLoader === true)) {
-      return this.paginationFetchigView();
+      return this.paginationFetchingView();
     } else if (this.state.paginationStatus === 'waiting' && this.props.pagination === true && (this.props.withSections === true || this._getRows().length > 0)) {
       return this.paginationWaitingView(this._onPaginate);
     } else if (this.state.paginationStatus === 'allLoaded' && this.props.pagination === true) {
@@ -489,95 +318,53 @@ var GiftedListView = React.createClass({
     }
   },
 
-  _calculateContentInset() {
-    if (this.props.refreshable === true && Platform.OS !== 'android') {
-      return {top: -1 * this.props.refreshableViewHeight, bottom: 0, left: 0, right: 0};
-    } else {
-      return {top: 0, bottom: 0, left: 0, right: 0};
+  renderRefreshControl() {
+    if (this.props.renderRefreshControl) {
+      return this.props.renderRefreshControl({ onRefresh: this._onRefresh });
     }
+    return (
+      <RefreshControl
+        onRefresh={this._onRefresh}
+        refreshing={this.state.isRefreshing}
+        colors={this.props.refreshableColors}
+        progressBackgroundColor={this.props.refreshableProgressBackgroundColor}
+        size={this.props.refreshableSize}
+        tintColor={this.props.refreshableTintColor}
+        title={this.props.refreshableTitle}
+      />
+    );
   },
 
-  _calculateContentOffset() {
-    if (this.props.refreshable === true && Platform.OS !== 'android') {
-      return {x: 0, y: this.props.refreshableViewHeight};
-    } else {
-      return {x: 0, y: 0};
-    }
-  },
-
-  _endReachedRender: function () {
-    if (this.state.paginationStatus != 'allLoaded') {
-      this.setState({
-        paginationStatus: 'fetching',
-      });
-      this.props.onFetch(this._getPage() + 1, this._postPaginate, {});
-    }
-  },
-
-  renderListView(style = {}) {
+  render() {
     return (
       <ListView
         ref="listview"
         dataSource={this.state.dataSource}
         renderRow={this.props.rowView}
         renderSectionHeader={this.props.sectionHeaderView}
-
-        renderHeader={this.props.refreshable === true && Platform.OS !== 'android' ? this._renderRefreshView : this.headerView}
+        renderHeader={this.headerView}
         renderFooter={this._renderPaginationView}
-
-        onScroll={this.props.refreshable === true && Platform.OS !== 'android' ? this._onScroll : null}
-        onResponderRelease={this.props.refreshable === true && Platform.OS !== 'android' ? this._onResponderRelease : null}
-
-        scrollEventThrottle={200}
-
-        contentInset={this._calculateContentInset()}
-        contentOffset={this._calculateContentOffset()}
+        renderSeparator={this.renderSeparator}
 
         automaticallyAdjustContentInsets={false}
-        scrollEnabled={true}
+        scrollEnabled={this.props.scrollEnabled}
         canCancelContentTouches={true}
+        refreshControl={this.props.refreshable === true ? this.renderRefreshControl() : null}
 
-        onEndReached={this._endReachedRender}
+        onEndReached={this._onPaginate}
         onEndReachedThreshold={100}
-
-        renderSeparator={this.renderSeparator}
 
         {...this.props}
 
-        style={[this.props.style, style]}
+        style={this.props.style}
       />
     );
-  },
-
-  render() {
-    if (Platform.OS === 'android' && this.props.refreshable === true) {
-      return (
-        <PullToRefreshViewAndroid
-          refreshing={this.state.isRefreshing}
-          onRefresh={this._onRefresh}
-
-          {...this.props.PullToRefreshViewAndroidProps}
-
-          style={[this.props.PullToRefreshViewAndroidProps.style, {flex: 1}]}
-        >
-          {this.renderListView({flex: 1})}
-        </PullToRefreshViewAndroid>
-      );
-    } else {
-      return this.renderListView();
-    }
   },
 
   defaultStyles: {
     separator: {
       height: 1,
       backgroundColor: '#CCC'
-    },
-    refreshableView: {
-      height: 50,
-      backgroundColor: '#DDD',
-      justifyContent: 'center',
-      alignItems: 'center',
     },
     actionsLabel: {
       fontSize: 20,

@@ -24,11 +24,10 @@ var certificateState = require('../../constants/certificateState');
 var _ = require('lodash')
 var Swipeout = require('react-native-swipeout')
 var Alert = require('../../comp/utils/alert');
-var ds = new ListView.DataSource({
-  rowHasChanged: (row1, row2) => row1 !== row2,
-});
+
+var GiftedListView = require('../../comp/listView/GiftedListView');
+
 var CompCertification = React.createClass({
-  bean: [],
   getStateFromStores(){
     let i = 0;
     var orgBean = CompStore.getCertifiedOrgBean();
@@ -44,14 +43,14 @@ var CompCertification = React.createClass({
         rejectedCon.push(item);
       }
     });
-    this.bean = certifiedCon.concat(auditingCon).concat(rejectedCon);
-    return {
-      dataSource: ds.cloneWithRows(this.bean)
-    }
+    let bean = certifiedCon.concat(auditingCon).concat(rejectedCon);
+    return bean;
   },
 
   getInitialState: function () {
-    return this.getStateFromStores();
+    return {
+      dataSource: this.getStateFromStores()
+    };
   },
 
   componentDidMount() {
@@ -63,7 +62,11 @@ var CompCertification = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(this.getStateFromStores());
+    // this.setState(this.getStateFromStores());
+    if (this.refs.certGiftedListView) {
+      // this.refs.certGiftedListView._refresh();
+      this.refs.certGiftedListView._refreshWithoutSpinner();
+    }
   },
   toOther(item){
     this.props.navigator.push({
@@ -117,8 +120,30 @@ var CompCertification = React.createClass({
       </Swipeout>
     )
   },
+
+  /**
+   * Will be called when refreshing
+   * Should be replaced by your own logic
+   * @param {number} page Requested page to fetch
+   * @param {function} callback Should pass the rows
+   * @param {object} options Inform if first load
+   */
+  _onFetch(page = 1, callback, options) {
+    let bean = this.getStateFromStores()
+
+    setTimeout(() => {
+      callback(bean, {
+        allLoaded: true, // the end of the list is reached
+      });
+    }, 1000); // simulating network fetching
+
+    this.setState({
+      dataSource: bean
+    });
+  },
+
   returnList(){
-    if (this.bean.length == 0) {
+    if (this.state.dataSource.length == 0) {
       return (
         <View style={{flex:1,alignItems:'center'}}>
           <Image style={{marginTop:100}} source={require("../../image/company/no_company.png")}/>
@@ -127,12 +152,23 @@ var CompCertification = React.createClass({
       )
     } else {
       return (
-        <ListView style={{flex: 1}}dataSource={this.state.dataSource} renderRow={this.returnRow}/>
+        <GiftedListView
+          ref="certGiftedListView"
+
+          rowView={this.returnRow}
+          onFetch={this._onFetch}
+          firstLoader={true} // display a loader for the first fetching
+          pagination={true} // enable infinite scrolling using touch to load more
+          refreshable={true} // enable pull-to-refresh for iOS and touch-to-refresh for Android
+          withSections={false} // enable sections
+
+          style={{flex: 1}}
+        />
       )
     }
   },
   returnTitle(){
-    if (!_.isEmpty(this.bean)) {
+    if (!_.isEmpty(this.state.dataSource)) {
       return <Space backgroundColor="#f0f0f0" top={false}/>
     }
   },
