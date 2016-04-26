@@ -105,6 +105,7 @@ var _appInit = function (data) {
       if (_data.token == '' && _.isEmpty(_data.token)) {
         _data.token = null;
         if (Platform.OS === 'android') SP.setTokenToSP(' ');
+        else
         PushNotificationIOS.setApplicationIconBadgeNumber(0);
       } else {
         if (Platform.OS === 'android' && _data.token) {
@@ -476,13 +477,14 @@ var _force_logout = function () {
   if (Platform.OS === 'android') {
     ServiceModule.setIsLoginToSP(false);
     ServiceModule.stopAppService();
+  } else {
+    PushNotificationIOS.setApplicationIconBadgeNumber(0);
   }
   _data.token = null;
   Persister.clearToken(_data);
   info.isLogout = true;
   info.isForce_Logout = true;
-  PushNotificationIOS.setApplicationIconBadgeNumber(0);
-}
+};
 
 var _deleteBill = function (orgCode) {
   let revCon = [];
