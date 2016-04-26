@@ -525,10 +525,12 @@ AppStore.dispatchToken = AppDispatcher.register(function (action) {
       info.isLogout = true;
       info.isForce_Logout = false;
       AppStore.emitChange();
-      PushNotificationIOS.setApplicationIconBadgeNumber(0);
+
       if (Platform.OS === 'android') {
         ServiceModule.setIsLoginToSP(false);
         ServiceModule.stopAppService();
+      }else {
+        PushNotificationIOS.setApplicationIconBadgeNumber(0);
       }
       break;
     case ActionTypes.FORCE_LOGOUT:
