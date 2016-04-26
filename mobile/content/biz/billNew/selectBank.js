@@ -31,6 +31,7 @@ var SelextBank = React.createClass({
         return {
             dataSource: ds.cloneWithRows(acceptanceBankBeans),
             acceptanceBankBeans: acceptanceBankBeans,
+            ret:[],
         };
     },
     render: function () {
@@ -78,12 +79,15 @@ var SelextBank = React.createClass({
                 })
             }
         }
-        this.setState({dataSource: ds.cloneWithRows(ret)})
+        this.setState({
+            dataSource: ds.cloneWithRows(ret),
+            ret:ret
+        })
     },
 
     textEditing(text){
 
-        if(this.state.dataSource.length == 0){
+        if(this.state.ret.length === 0){
             Alert('未搜索到结果');
         }
     },
