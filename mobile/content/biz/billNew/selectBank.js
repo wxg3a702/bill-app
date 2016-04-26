@@ -14,6 +14,7 @@ var {
 var NavBarView = require('../../framework/system/navBarView');
 var BillStore = require('../../framework/store/billStore');
 var numeral = require('numeral');
+var Alert = require('../../comp/utils/alert');
 
 var ds = new ListView.DataSource({
     rowHasChanged: (row1, row2) => row1 !== row2,
@@ -21,12 +22,15 @@ var ds = new ListView.DataSource({
 
 var SelextBank = React.createClass({
     getInitialState: function () {
+
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
         if (acceptanceBankBeans == null){
-            acceptanceBankBeans = '';
+            acceptanceBankBeans = "";
         }
+
         return {
             dataSource: ds.cloneWithRows(acceptanceBankBeans),
+            acceptanceBankBeans: acceptanceBankBeans,
         };
     },
     render: function () {
@@ -52,6 +56,7 @@ var SelextBank = React.createClass({
                         placeholder={'搜索'}
                         onChangeText={(text) => this.textChange(text)}
                         returnKeyType={'search'}
+                        onEndEditing={(text) => this.textEditing(text)}
                         style={{height:(Platform.OS === 'ios')?30:60,backgroundColor:'#fff',marginTop:(Platform.OS === 'ios')?0:-15,marginLeft:10,marginRight:10}}></TextInput>
                 </View>
             </View>
@@ -59,14 +64,14 @@ var SelextBank = React.createClass({
     },
     textChange(text){
         var ret = new Array();
-        var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        if (acceptanceBankBeans == null || acceptanceBankBeans == ""){
+
+        if (this.state.acceptanceBankBeans == null || this.state.acceptanceBankBeans == ""){
 
         }else {
             if (!text) {
-                ret = acceptanceBankBeans
+                ret = this.state.acceptanceBankBeans
             } else {
-                acceptanceBankBeans.map((item, index)=> {
+                this.state.acceptanceBankBeans.map((item, index)=> {
                     if (item.bankName.indexOf(text) >= 0) {
                         ret.push(item)
                     }
@@ -75,10 +80,19 @@ var SelextBank = React.createClass({
         }
         this.setState({dataSource: ds.cloneWithRows(ret)})
     },
+
+    textEditing(text){
+
+        if(this.state.dataSource.length == 0){
+            Alert('未搜索到结果');
+        }
+    },
+
     select(item){
         this.props.callback(item);
         this.props.navigator.pop();
     },
+
     _renderRow(rowData, sectionId, rowId){
         return (
             <TouchableOpacity underlayColor='#ebf1f2' onPress={()=>this.select(rowData)}
