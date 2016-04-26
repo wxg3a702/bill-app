@@ -24,9 +24,7 @@ var certificateState = require('../../constants/certificateState');
 var _ = require('lodash')
 var Swipeout = require('react-native-swipeout')
 var Alert = require('../../comp/utils/alert');
-var ds = new ListView.DataSource({
-  rowHasChanged: (row1, row2) => row1 !== row2,
-});
+
 var CompCertification = React.createClass({
   bean: [],
   getStateFromStores(){
@@ -45,6 +43,9 @@ var CompCertification = React.createClass({
       }
     });
     this.bean = certifiedCon.concat(auditingCon).concat(rejectedCon);
+    var ds = new ListView.DataSource({
+      rowHasChanged: (row1, row2) => row1 !== row2,
+    });
     return {
       dataSource: ds.cloneWithRows(this.bean)
     }
@@ -127,7 +128,16 @@ var CompCertification = React.createClass({
       )
     } else {
       return (
-        <ListView style={{flex: 1}}dataSource={this.state.dataSource} renderRow={this.returnRow}/>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.returnRow}
+
+          automaticallyAdjustContentInsets={false}
+          scrollEnabled={true}
+          canCancelContentTouches={true}
+
+          style={{flex: 1}}
+        />
       )
     }
   },
