@@ -164,7 +164,16 @@ var ConDiscount = React.createClass({
                     discountBankName: this.state.discountBankName,
                     payeeBankAccountNo: this.state.payeeBankAccountNo
                 },
-                (data)=>this.next(data),
+                function () {
+                    Alert('贴现申请发送成功!',
+                        function () {
+                            const { navigator } = this.props;
+                            if (navigator) {
+                                navigator.popToTop()
+                            }
+                        }.bind(this)
+                    )
+                }.bind(this),
                 function (msg) {
                     Alert(msg.msgContent,
                         function () {

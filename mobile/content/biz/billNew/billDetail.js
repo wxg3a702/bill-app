@@ -287,7 +287,9 @@ var BillDetail = React.createClass({
                         <Text>票据状态追踪</Text>
                     </View>
                     <View style={{height:12}}/>
-                    <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}/>
+                    <ListView dataSource={ds.cloneWithRows(this.state.dataSource)}
+                              renderRow={this.renderRow}
+                    />
                 </View>
             )
         }
