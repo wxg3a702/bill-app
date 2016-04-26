@@ -44,8 +44,11 @@ var BillContent = React.createClass({
     returnList(){
         return (
             <View style={{paddingTop:4,backgroundColor:'white'}}>
-                <ListView dataSource={ds.cloneWithRows(this.state.dataSource)} renderRow={this.renderRow}
-                          automaticallyAdjustContentInsets={false} style={styles.bottom}/>
+                <ListView dataSource={ds.cloneWithRows(this.state.dataSource)}
+                          renderRow={this.renderRow}
+                          automaticallyAdjustContentInsets={false}
+                          style={styles.bottom}
+                />
             </View>
         )
     },

@@ -126,9 +126,14 @@ var SMSTimer = React.createClass({
                     <Image source={require('../../image/utils/smsCode.png')}
                            style={{height:16,width:16,marginLeft:9}}/>
                     <TextInput style={[styles.input,{width:width-170}]}
-                               placeholder="短信验证码" onChangeText={(text) => this.textOnchange(text,"verify")}
-                               autoCorrect={false} maxLength={6} keyboardType="numeric" placeholderTextColor="#7f7f7f"
-                               clearButtonMode="while-editing"/>
+                               placeholder="短信验证码"
+                               onChangeText={(text) => this.textOnchange(text,"verify")}
+                               autoCorrect={false} maxLength={6}
+                               keyboardType="numeric"
+                               placeholderTextColor="#7f7f7f"
+                               clearButtonMode="while-editing"
+                               underlineColorAndroid="transparent"
+                    />
                 </View>
                 <View style={{width:75,marginLeft:12}}>
                     <TouchableHighlight
