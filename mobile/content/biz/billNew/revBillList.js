@@ -74,7 +74,7 @@ var revBill = React.createClass({
             checkColor: 'white',
             unCheckColor: '#44bcb2',
             status: '全部',
-            direction: 'up',
+            direction: 'down',
             pick: resPick,
             pickStatus: 'rev',
             backColor: '#f0f0f0',
@@ -109,7 +109,7 @@ var revBill = React.createClass({
 
     changePick(){
         this.setState({
-            direction: 'down',
+            direction: 'up',
             //backColor: '#d0d0d0',
             //contentColor: '#e0e0e0',
             opacity: 1,
@@ -117,7 +117,7 @@ var revBill = React.createClass({
     },
     hidePick(){
         this.setState({
-            direction: 'up',
+            direction: 'down',
             //contentColor: 'white',
             opacity: 0,
         });
