@@ -66,7 +66,7 @@ var Register_setInfo = React.createClass({
             var regPWD = /^((?=.*\d)(?=.*\D)|(?=.*[a-zA-Z])(?=.*[^a-zA-Z]))^\S{6,}$/g;
 
             if (!regPWD.test(this.state.password)) {
-                Alert("请输入同时包含字母数字或半角字符中的正确密码格式");
+                Alert("登录密码至少包含字母、数字、半角字符中的2种");
                 return false;
             }
 
