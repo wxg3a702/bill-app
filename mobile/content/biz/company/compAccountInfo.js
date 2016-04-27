@@ -89,6 +89,10 @@ var CompAccountInfo = React.createClass({
     var reg = new RegExp("^[0-9]{1,50}$");
     var reg1 =new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5]+$");
     this.setState({newOrg: newOrg});
+    if (!this.state.accountName || !this.state.accountNo || !this.state.openBank) {
+      Alert("请完善你信息");
+      return;
+    }
     if (!reg1.test(newOrg.accountName)) {
       Alert("请输入正确的账户名称");
       return;
@@ -119,7 +123,7 @@ var CompAccountInfo = React.createClass({
           })
         },
         ()=>{
-          Alert("认证失败")
+          Alert("网络不给力，请重试");
           this.setState({checked: false});
         }
       )

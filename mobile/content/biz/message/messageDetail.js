@@ -53,7 +53,7 @@ var MessageDetail = React.createClass({
 
     setTimeout(() => {
       InteractionManager.runAfterInteractions(() => {
-        if (this.state.token && this.refs['MsgList']) {
+        if (this.refs['MsgList']) {
           this.refs['MsgList']._refreshWithoutSpinner();
         }
       })

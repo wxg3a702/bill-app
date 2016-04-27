@@ -40,18 +40,16 @@ var _notificationRegister = function (token) {
 }
 
 var _onNotification = function (notification) {
-    //if (React.Platform.OS === 'ios' && notification) {
-    //   React.PushNotificationIOS.getApplicationIconBadgeNumber((a)=>{
-    //       let unReadNum = ++a;
-    //       Alert(notification.getData().payload + 'aaa')
-    //       React.PushNotificationIOS.setApplicationIconBadgeNumber(unReadNum)
-    //   });
-    //}
-
-    console.log('111111Basic  ' + AppStore.getToken());
     //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
     if (AppStore.getToken() && !_.isEmpty(AppStore.getToken())) {
         BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+            AppDispatcher.dispatch({
+                type: ActionTypes.PUSH_NOTIFICATION,
+                data: data
+            });
+        }, null, {custLoading: true});
+    } else {
+        PFetch(pub + "/MessageSearch/getPushMsg", {deviceToken: AppStore.getAPNSToken()}, function (data) {
             AppDispatcher.dispatch({
                 type: ActionTypes.PUSH_NOTIFICATION,
                 data: data
