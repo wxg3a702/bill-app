@@ -17,6 +17,8 @@ var VIcon = React.createClass({
                 return 'ios-arrow-right'
             case 'down':
                 return 'ios-arrow-down'
+            case 'up':
+                return 'ios-arrow-up'
             case 'load':
                 return 'load-a'
         }

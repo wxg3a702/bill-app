@@ -74,7 +74,7 @@ var revBill = React.createClass({
             checkColor: 'white',
             unCheckColor: '#44bcb2',
             status: '全部',
-            direction: 'left',
+            direction: 'up',
             pick: resPick,
             pickStatus: 'rev',
             backColor: '#f0f0f0',
@@ -117,7 +117,7 @@ var revBill = React.createClass({
     },
     hidePick(){
         this.setState({
-            direction: 'left',
+            direction: 'up',
             //contentColor: 'white',
             opacity: 0,
         });
@@ -313,7 +313,7 @@ var revBill = React.createClass({
                     <TouchableOpacity onPress={this.changePick} activeOpacity={0.8}>
                         <View style={[styles.pickTitle,styles.bottomColor]}>
                             <Text style={{fontSize:15,color:'#333333'}}>{this.state.status}</Text>
-                            <VIcon direction='down' size={22}/>
+                            <VIcon direction={this.state.direction} size={22}/>
                         </View>
                     </TouchableOpacity>
                 </View>

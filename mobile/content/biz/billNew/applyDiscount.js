@@ -45,21 +45,29 @@ var ApplyDis = React.createClass({
         this.setState(responseData);
 
         var acceptanceBankBeans = BillStore.getAcceptanceBankBeans();
-        this.acceptanceJson = acceptanceBankBeans;
+        this.setState({
+            acceptanceJson:acceptanceBankBeans
+        })
 
-        if (this.acceptanceJson != null && this.acceptanceJson != []) {
-            let res = this.acceptanceJson[0];
+        if (this.state.acceptanceJson !== null && this.state.acceptanceJson !== [] && this.state.acceptanceJson.length !== 0) {
+            let res = this.state.acceptanceJson[0];
             this.setState({
                 discountBankName: res.bankName,
                 description:'(费率最低)',
                 discountRate:res.discountRate
+            });
+        }else {
+            this.setState({
+                discountBankName: '请选择贴现银行',
+                description:'',
+                discountRate:0
             });
         }
     },
 
     callBack(item){
 
-        if(item.bankName == this.acceptanceJson[0].bankName && item.discountRate == this.acceptanceJson[0].discountRate ){
+        if(item.bankName == this.state.acceptanceJson[0].bankName && item.discountRate == this.state.acceptanceJson[0].discountRate ){
             this.setState({
                 discountRate: item.discountRate,
                 description:'(费率最低)',
