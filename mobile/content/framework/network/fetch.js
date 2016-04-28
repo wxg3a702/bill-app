@@ -15,7 +15,7 @@ var BFetch = function (url, param, callback, failure, options) {
         'Content-Type': 'application/json',
         'Authorization': 'Basic  ' + AppStore.getToken()
     };
-    console.log(headers.Authorization);
+    //console.log(headers.Authorization);
     rawFetch(host + url, {
         method: 'POST',
         headers: headers,
@@ -56,10 +56,10 @@ var UFetch = function (url, param, callback, failure, options) {
 
 var rawFetch = function (url, param, callback, failure, option) {
 
-    console.log('以下打印一次传出去的param:');
-    console.log(param);
-    console.log('以下打印访问的URL:');
-    console.log(url);
+    //console.log('以下打印一次传出去的param:');
+    //console.log(param);
+    //console.log('以下打印访问的URL:');
+    //console.log(url);
 
     if (!option)option = {}
     var p = Promise.race([fetch(url, param), new Promise(function (resolve, reject) {
@@ -118,14 +118,13 @@ var process = function (promoise, callback, failure, option) {
                 }
 
             }
-            console.log('以下打印一次获取到的json:');
-            console.log(json);
+            //console.log('以下打印一次获取到的json:');
+            //console.log(json);
             _endRPC(option, handle);
         })
         .catch((error) => {
 
             var handle;
-            console.log(error);
             if (failure) {
                 handle = ()=>failure({msgContent: "系统异常"});
             } else {
