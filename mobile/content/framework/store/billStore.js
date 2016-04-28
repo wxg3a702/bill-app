@@ -1,6 +1,7 @@
 var assign = require('object-assign');
 var EventEmitter = require('events').EventEmitter;
 var AppStore = require('./appStore')
+var _ = require('lodash')
 var BillStore = assign({}, EventEmitter.prototype, {
     getDemoFlag: ()=>AppStore.getData().demoFlag,
     getSentBill: ()=>AppStore.getData().sentBillBean,
@@ -19,6 +20,7 @@ var BillStore = assign({}, EventEmitter.prototype, {
                     res = item
                 }
             })
+            ret.billStatusTraceBeans = _.orderBy(ret.billStatusTraceBeans,'createDate','asc');
         }
         if (!bill.sentBillBean) {
         } else {

@@ -6,6 +6,7 @@ var MsgCategory = require('../../constants/notification').MsgCategory;
 var AppStore = require('./appStore')
 var MsgContent = require('../../constants/notification').MsgContent;
 var _ = require('lodash');
+
 var MessageStore = assign({}, EventEmitter.prototype, {
   getMessage(){
     var mainMsgBean = AppStore.getData().mainMsgBean;
@@ -15,7 +16,9 @@ var MessageStore = assign({}, EventEmitter.prototype, {
       return [mainMsgBean.billSentBean, mainMsgBean.marketNewsBean, mainMsgBean.systemNoticeBean, mainMsgBean.messageBeans]
     }
   },
+
   getMainMsgBean: ()=>AppStore.getData().mainMsgBean,
+  revBillList: ()=> AppStore.getRevBillList(),
 
   updateUnReadNum(category){
     var categoryBean;
@@ -103,11 +106,12 @@ var MessageStore = assign({}, EventEmitter.prototype, {
   },
   getRevBillDetail(id){
     var ret;
-    AppStore.getData().revBillBean.contentList.map((item, index)=> {
+    this.revBillList().map((item, index)=> {
       if (item.billId == id) {
         ret = item;
       }
     });
+    ret.billStatusTraceBeans = _.orderBy(ret.billStatusTraceBeans,'createDate','asc');
     return ret;
   },
 })

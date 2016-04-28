@@ -36,8 +36,8 @@ var ds = new ListView.DataSource({
 
 var BillDetail = React.createClass({
     getStateFromStores(){
-        let id = this.props.param.item.billId
-        let item = BillStore.getBill(id)
+        let id = this.props.param.item.billId;
+        let item = this.props.param.item;
 
         //let item = this.props.param.item;
         let flow = item.billStatusTraceBeans;
@@ -46,15 +46,7 @@ var BillDetail = React.createClass({
         } else {
             flow[0].new = true
         }
-        //if (!flow) {
-        //    flow = ''
-        //} else {
-        //    if (!item.new) {
-        //        flow[flow.length - 1].new = true;
-        //        flow = _(flow).reverse().value();
-        //        item.new = true;
-        //    }
-        //}
+
         return {
             item: item,
             type: item.role == 'payee' ? 'rev' : 'sent',

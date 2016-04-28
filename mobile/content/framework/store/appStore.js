@@ -71,6 +71,8 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
   getData: ()=>_data,
 
+  getRevBillList: ()=>_data.revBillBean.contentList,
+
   getUserName: () => _data.userInfoBean.userName,
 
   init: function (data) {
