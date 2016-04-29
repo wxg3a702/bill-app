@@ -202,7 +202,7 @@ var Calculator = React.createClass({
         return (
             <View style={[styles.result,styles.borderBottom]}>
                 <Text style={[{width:Adjust.width(109)},styles.text]}>{desc}</Text>
-                <Text style={styles.after}>{value.length == 0 ? '' : numeral.number4(value)}</Text>
+                <Text style={styles.after}>{value.length == 0 ? '' : value}</Text>
                 <Text style={styles.text}>{unit}</Text>
             </View>
         )
