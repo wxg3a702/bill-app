@@ -200,6 +200,9 @@ var _giveupBillDiscount = function (data) {
 var _allowBillDiscount = function (data) {
   _data.revBillBean.contentList.map((item, index)=> {
     if (item.billId == data.billId) {
+      if(data.status == 'DIS'){
+        data.discountDate = data.billStatusTraceBeans[0].createDate;
+      }
       _data.revBillBean.contentList[index] = data;
       //_data.revBillBean.contentList[index].status = "DIS";
     }
