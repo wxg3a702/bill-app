@@ -105,7 +105,7 @@ var CompCertification = React.createClass({
     console.log(data.status);
 
     const certificateStateObj = certificateState[data.status];
-    if (certificateStateObj) {
+    if (!certificateStateObj) {
       return (<View />);
     }
     return (
