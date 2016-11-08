@@ -35,12 +35,13 @@ var _updateUserHead = function (p, c, f) {
     async.series([uploadFileHandle(p,'photoStoreId')],
         function (err, res) {
             if (err) {
-                f();
+              console.log('err:', err);
+              f && f();
             } else {
                 UserActions.updateUser(
                     {photoStoreId: res[0].photoStoreId.fileId},
                     function(data){
-                        console.log(data);
+                        console.log('data', data);
                     },
                     function(err){
                         console.log(err);

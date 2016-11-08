@@ -92,7 +92,7 @@ var UserInfo = React.createClass({
         };
 
         UIImagePickerManager.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
+            // console.log('Response = ', response);
 
             if (response.didCancel) {
                 console.log('User cancelled image picker');
@@ -105,9 +105,9 @@ var UserInfo = React.createClass({
             }
             else {
                 var source = response.uri.replace('file://', '')
-                this.setState({
-                    [name]: source
-                });
+                //this.setState({
+                //    [name]: source
+                //});
                 UserAction.updateUserHead(
                     {[name]: source}
                 )
@@ -201,6 +201,7 @@ var UserInfo = React.createClass({
     },
 
     render: function () {
+        console.log('# render');
         return (
             <NavBarView navigator={this.props.navigator} title="个人信息" actionButton={this.button()}>
                 <ScrollView automaticallyAdjustContentInsets={false} horizontal={false}>
@@ -209,10 +210,7 @@ var UserInfo = React.createClass({
                                             activeOpacity={0.6} underlayColor="#ebf1f2">
                             <Image style={styles.img}
                                    resizeMode="cover"
-                                   source={this.returnImg()}
-                                   onLoad={this.loadSuccess}
-                                   onLoadEnd={this.onLoadEnd}
-                                   onLoadStart={this.onLoadStart}/>
+                                   source={this.returnImg()} />
                         </TouchableHighlight>
                         <Text style={styles.name}>{this.state.userName}</Text>
                     </View>

@@ -41,6 +41,13 @@ var Main = React.createClass({
         AppStore.addChangeListener(this._onChange);
     },
 
+    shouldComponentUpdate: function(nextProps, nextState) {
+        if(this.state.initLoading === nextState.initLoading && this.state.token === nextState.token) {
+            return false;
+        }
+        return true;
+    },
+
     componentWillUnmount: function () {
         AppStore.removeChangeListener(this._onChange);
     },

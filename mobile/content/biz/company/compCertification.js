@@ -101,7 +101,13 @@ var CompCertification = React.createClass({
           }
         }
       }
-    ]
+    ];
+    console.log(data.status);
+
+    const certificateStateObj = certificateState[data.status];
+    if (certificateStateObj) {
+      return (<View />);
+    }
     return (
       <Swipeout right={swipeoutBtns} autoClose={true}>
         <TouchableHighlight onPress={()=>this.toOther(data)}>
@@ -110,8 +116,8 @@ var CompCertification = React.createClass({
               <Text style={{width:width-Adjust.width(90)}}>
                 {data.status == 'CERTIFIED' ? data.stdOrgBean.orgName : data.orgName}
               </Text>
-              <Text style={{width:Adjust.width(50),color:certificateState[data.status].color}}>
-                {certificateState[data.status].desc}
+              <Text style={{width:Adjust.width(50),color:certificateStateObj.color}}>
+                {certificateStateObj.desc}
               </Text>
               <VIcon/>
             </View>

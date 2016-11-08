@@ -1,4 +1,4 @@
-var host = "http://192.168.64.205:9103/zxbill";
+var host = "http://192.168.61.84:10001/zxbill";
 //var host="http://192.168.64.169:9081";
 //var host="http://192.168.64.170:9081";
 // var host = "http://192.168.64.205:8484/zxbilldev";
