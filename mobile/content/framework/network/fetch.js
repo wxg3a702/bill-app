@@ -50,11 +50,11 @@ var UFetch = function (url, param, callback, failure, options) {
         method: 'POST',
         headers: headers,
         body:formdata,
-    }, callback, failure, {custLoading:true});
+    }, callback, failure, {custLoading:true}, 80000);
 };
 
 
-var rawFetch = function (url, param, callback, failure, option) {
+var rawFetch = function (url, param, callback, failure, option, timeoutValue) {
 
     //console.log('以下打印一次传出去的param:');
     //console.log(param);
@@ -63,7 +63,7 @@ var rawFetch = function (url, param, callback, failure, option) {
 
     if (!option)option = {}
     var p = Promise.race([fetch(url, param), new Promise(function (resolve, reject) {
-        setTimeout(()=> reject(new Error("链接超时")), 5000);
+        setTimeout(()=> reject(new Error("链接超时")), timeoutValue);
     })]);
     //process(fetch(url, param) ,callback,failure,option);
     process(p, callback, failure, option);
