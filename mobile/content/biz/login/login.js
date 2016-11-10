@@ -67,7 +67,10 @@ var Login = React.createClass({
                     deviceModel: this.state.deviceModel,
                     captcha: this.state.verify
                 },
-                () => {
+                (userType) => {
+                    if (userType !== 'CERTIFIED') {
+                        Alert('您还未完成企业认证');
+                    }
                     const { navigator } = this.props;
                     if (navigator) {
                         navigator.resetTo({comp: 'tabView'})

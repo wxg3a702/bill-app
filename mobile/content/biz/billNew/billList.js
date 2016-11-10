@@ -92,10 +92,10 @@ var Bill = React.createClass({
         InteractionManager.runAfterInteractions(() => {
 
             if (this.state.token) {
-                var userType = UserStore.getUserType();
-                if (userType !== 'CERTIFIED') {
-                    Alert('您还未完成企业认证');
-                }
+                //  var userType = UserStore.getUserType();
+                //  if (userType !== 'CERTIFIED') {
+                //      // Alert('您还未完成企业认证');
+                //  }
             }
 
             var obj = BillStore.getDemoFlag();

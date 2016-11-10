@@ -65,7 +65,7 @@ var _login = function (url, p, c, f) {
                     data: data,
                 });
             }, null, {custLoading: true});
-            c();
+            c(msg && msg.userInfoBean && msg.userInfoBean.userType);
         },
         f
     )

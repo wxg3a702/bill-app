@@ -249,7 +249,7 @@ var sentBill = React.createClass({
                                 style={{fontSize:11,color:'#7f7f7f',marginTop:10}}>{rowData.role == 'payee' ? '开票人' : '收款人'}</Text>
                             <Text numberOfLines={1}
                                   style={{width:width-Adjust.width(170),color:'#7f7f7f',fontSize:15,marginTop:10}}>
-                                {rowData.drawerName}
+                                {rowData.payeeName}
                             </Text>
                         </View>
                         <Image source={BillStates[this.state.pickStatus][rowData.status].pic}
