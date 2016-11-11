@@ -43,7 +43,7 @@ public class AppService extends Service {
         super.onCreate();
             try {
                 if (mSocket == null) {
-                    mSocket = IO.socket("http://192.168.64.205:9105");
+                    mSocket = IO.socket("http://121.40.51.79:3000");
                 }
             } catch (URISyntaxException e) {
                 e.printStackTrace();
@@ -131,6 +131,7 @@ public class AppService extends Service {
         @Override
         public void call(Object... args) {
             LogUtils.d("EVENT_CONNECT");
+            mSocket.emit("user.login", SPUtils.get(AppService.this, "token", ""));
 //            ReactContext currentReactContext = mReactInstanceManager.getCurrentReactContext();
         }
     };

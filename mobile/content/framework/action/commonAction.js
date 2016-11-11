@@ -41,8 +41,10 @@ var _notificationRegister = function (token) {
 
 var _onNotification = function (notification) {
     //TODO: 未登录是可以收到市场动态的,由于后台没有修改,所以暂时无法实现
+    console.log('#######receive new notice');
     if (AppStore.getToken() && !_.isEmpty(AppStore.getToken())) {
         BFetch(api + "/MessageSearch/getPushMsg", {}, function (data) {
+            console.log('#######receive new notice', data);
             AppDispatcher.dispatch({
                 type: ActionTypes.PUSH_NOTIFICATION,
                 data: data
